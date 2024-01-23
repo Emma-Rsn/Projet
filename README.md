@@ -14,4 +14,4 @@ Date de fin de projet :
 
 Temps de travail :
 
-Lien Gantt : https://docs.google.com/spreadsheets/d/1ztj0WcCh9m7Oyz1d7LtRVNm7JXvxKlheRPS5YPnYCNk/edit#gid=0
+Lien Gantt : https://docs.google.com/spreadsheets/d/1ztj0WcCh9m7Oyz1d7LtRVNm7JXvxKlheRPS5YPnYCNk/edit?usp=sharing
