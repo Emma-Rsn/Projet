@@ -24,5 +24,8 @@ int init_window(SDL_Window *window,SDL_Renderer *renderer){
         SDL_Quit();
         return -1;
     }
+    if(0){
+        NULL;
+    }
     return 0;
 }
