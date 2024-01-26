@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "truc.h"
-#include "Pmov.h"
-#include "fenetre.h"
+#include "../libs/truc.h"
+#include "../libs/Pmov.h"
+#include "../libs/fenetre.h"
 
 
 

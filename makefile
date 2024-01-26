@@ -8,6 +8,7 @@ LDFLAGS = -lSDL2
 
 #Macros des repertoires
 SRCDIR   = src
+LIBSDIR = libs
 OBJDIR   = obj
 BINDIR   = bin
 
@@ -24,7 +25,7 @@ $(OBJDIR):
 	
 #recupere les fichiers .c et .h du repertoires sources dans 2 variables
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
-INCLUDES := $(wildcard $(SRCDIR)/*.h)
+INCLUDES := $(wildcard $(LIBSDIR)/*.h)
 
 #creer une liste de tout les .o apartir des .c du repertoire sources
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
@@ -40,12 +41,4 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	
 clean:
 	@rm -f -R $(BINDIR)
-	@rm -f -R $(OBJECTS)
-
-
-
-
-
-
-
-
+	@rm -f -R $(OBJDIR)
