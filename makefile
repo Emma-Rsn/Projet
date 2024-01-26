@@ -3,7 +3,8 @@ FLAGS=-Wall -g
 EXE = TLN
 LFLAGS   = -Wall -I. -lm
 CFLAGS   = -std=c99 -Wall -I.
-LDFLAGS = -lSDL2
+LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf
+
 
 
 #Macros des repertoires
@@ -41,7 +42,6 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	
 clean:
 	@rm -f -R $(BINDIR)
-<<<<<<< HEAD
 	@rm -f -R $(OBJDIR)
 
 
@@ -51,6 +51,3 @@ clean:
 
 
 
-=======
-	@rm -f -R $(OBJDIR)
->>>>>>> 8d2b01ffd0ee7e7026232b151bd3fc176c7dfbd5

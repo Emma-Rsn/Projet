@@ -25,7 +25,6 @@ void pinput(point_mv * pmv){
             case SDLK_d: pmv->x += 1; break;
             default: break;
         }
-        printf("%d",pmv->x);
     }
 }
 
