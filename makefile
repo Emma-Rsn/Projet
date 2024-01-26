@@ -41,16 +41,4 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	
 clean:
 	@rm -f -R $(BINDIR)
-<<<<<<< HEAD
 	@rm -f -R $(OBJDIR)
-
-
-
-
-
-
-
-
-=======
-	@rm -f -R $(OBJDIR)
->>>>>>> 8d2b01ffd0ee7e7026232b151bd3fc176c7dfbd5
