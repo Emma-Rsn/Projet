@@ -12,9 +12,6 @@ struct point{
     //coordonées du point
     int x;
     int y;
-    //vitesse du point
-    int xV;
-    int yV;
     //methode
     void (*ppinput)(point_mv*);
     point_mv (*pinipoint)(void);

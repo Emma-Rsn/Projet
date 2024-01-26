@@ -35,12 +35,12 @@ $(BINDIR)/$(EXE): $(OBJECTS)
 	@$(CC) $(OBJECTS) $(LFLAGS) -o $@ $(LDFLAGS)
 
 	
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	
 clean:
 	@rm -f -R $(BINDIR)
-	@rm -f -R $(OBJECTS)
+	@rm -f -R $(OBJDIR)
 
 
 
