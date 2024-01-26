@@ -2,16 +2,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-<<<<<<< HEAD
 
-#include "truc.h"
-#include "Pmov.h"
-=======
 #include "../libs/truc.h"
 #include "../libs/Pmov.h"
-#include "../libs/fenetre.h"
->>>>>>> 8d2b01ffd0ee7e7026232b151bd3fc176c7dfbd5
-
+#include "../libs/texte.h"
 
 
 int main(){
@@ -36,6 +30,8 @@ int main(){
         SDL_Quit();
         return -1;
     }
+
+    affiche_texte();
 
 	test();
 
