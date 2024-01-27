@@ -6,7 +6,7 @@
 #include "../libs/truc.h"
 #include "../libs/Pmov.h"
 #include "../libs/texte.h"
-
+#include "../libs/printImg.h"
 
 int main(){
      // Initialisation de SDL
@@ -48,16 +48,27 @@ int main(){
             pinput(ppoint);
         }
 
-        // Ecran en rouge
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
+        // Affiche le fond d'ecran
+        print_bg(window,renderer);
         
         // Dessiner un cadre
-        SDL_SetRenderDrawColor(renderer, 200, 50, 0, 255);
-        SDL_Rect rect = {100, 100, 100, 100};
+        SDL_SetRenderDrawColor(renderer, 0, 50, 200, 255);
+        SDL_Rect rect = {300, 200, 100, 100};
         SDL_RenderDrawRect(renderer, &rect);
 
-		//Affiche un point et actualise sa pos
+        //test collision
+        if(ppoint->x >= 300 && ppoint->x <= 400 && ppoint->y == 200){
+            ppoint->x -= 1;
+        }if(ppoint->y >= 200 && ppoint->y <= 300 && ppoint->x == 300){
+            ppoint->y -= 1;
+        }if(ppoint->x >= 300 && ppoint->x <= 400 && ppoint->y == 300){
+            ppoint->x -= 1;
+        }if(ppoint->y >= 200 && ppoint->y <= 300 && ppoint->x == 400){
+            ppoint->y -= 1;
+        }
+        //fin test collision
+
+		//Affiche un point
         affp(ppoint,renderer);
 
         // Mettre à jour l'écran

@@ -30,9 +30,18 @@ void pinput(point_mv * pmv){
 
 //affiche le point
 void affp(point_mv * pmv,SDL_Renderer *renderer){
+    SDL_SetRenderDrawColor(renderer, 200, 50, 0, 255);
+    SDL_Rect rect = {pmv->x, pmv->y, 10, 10};
+    SDL_RenderFillRect(renderer, &rect);
+
     SDL_SetRenderDrawColor(renderer,0, 255, 0, 255);
     SDL_RenderDrawPoint(renderer,pmv->x,pmv->y);
+    SDL_RenderDrawPoint(renderer,pmv->x+9,pmv->y);
+    SDL_RenderDrawPoint(renderer,pmv->x,pmv->y+9);
+    SDL_RenderDrawPoint(renderer,pmv->x+9,pmv->y+9);
 }
+
+
 
 //construit un point
 point_mv initpoint(){
