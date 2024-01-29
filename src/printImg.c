@@ -1,24 +1,61 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 
 
-int print_bg(SDL_Window * w,SDL_Renderer* r){
+int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE){
+    SDL_Rect destRect = {0, 0, LE, lE};  // Taille de l'écran
     SDL_Surface* backgroundSurface = IMG_Load("bg.jpeg");
     if (backgroundSurface == NULL) {
         fprintf(stderr, "Erreur lors du chargement de l'image de fond : %s\n", SDL_GetError());
         return -1;
     }
-    SDL_Texture* backgroundTexture = SDL_CreateTextureFromSurface(r, backgroundSurface);
+    backgroundTexture = SDL_CreateTextureFromSurface(r, backgroundSurface);
     SDL_FreeSurface(backgroundSurface);
-    SDL_Rect destRect = {0, 0, 800, 600};  // Taille de l'écran
     SDL_RenderCopy(r, backgroundTexture, NULL, &destRect);
-    SDL_RenderPresent(r);
     return 0;
-    /*SDL_SetRenderDrawColor(r, 0, 0, 0, 255);
-    SDL_RenderClear(r);
-    return 0;*/
 }
 
-void destroyBg(SDL_Texture* bgTexture){
-    SDL_DestroyTexture(bgTexture);
+int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){
+    if(*(t0) == -1){
+        *(t0) = SDL_GetTicks();
+        *(nfps) = 0;
+    }else{
+        *(t1) = SDL_GetTicks();
+        *(nfps)=*(nfps)+1;
+        if((*(t1) - *(t0)) >= 1000){
+            *(t0) = -1;
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int aff_Fps(int cmpfps,SDL_Renderer *renderer){
+    //chargement de la police d'écriture
+    TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 20);
+    if (!font) {
+        fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+        return -1;
+    }
+    SDL_Color textColor = {0, 0, 0};
+    char texte[20];
+    snprintf(texte, sizeof(texte), "FPS : %d", cmpfps);
+
+    SDL_Surface* textSurface = TTF_RenderText_Blended(font,texte, textColor);
+    if (!textSurface) {
+        fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+        TTF_CloseFont(font);
+        return -1;
+    }
+
+    SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_FreeSurface(textSurface);
+
+    // Position du texte
+    SDL_Rect textRect = {10, 10, textSurface->w, textSurface->h};
+
+    // Afficher la texture sur le rendu
+    SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+    return 0;
 }

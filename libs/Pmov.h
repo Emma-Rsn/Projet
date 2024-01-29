@@ -3,25 +3,20 @@
 
 #include <SDL2/SDL.h>
 
-// Déclaration de la variable globale
-extern SDL_Event event;
-
-// Structure du point
-typedef struct point point_mv;
-struct point{
-    //coordonées du point
-    int x;
-    int y;
-    //methode
-    void (*ppinput)(point_mv*);
-    point_mv (*pinipoint)(void);
-    void (*pprintp)(point_mv*);
+typedef struct personnage p_mv;
+struct personnage{
+    //coordonées du personnage et taille dans un rect
+    SDL_Rect r;//{x,y,w,h}
+    int d; //direction orienté{N,E,S,W}{0,1,2,3}
+    int e; //etat du personnage
 };
 
-void pinput(point_mv * pmv);
+void pinput(p_mv * pmv,SDL_Event event;);
 
-void affp(point_mv * pmv,SDL_Renderer *renderer);
+void affp(p_mv * pmv,SDL_Renderer *renderer);
 
-point_mv initpoint();
+void col_p(SDL_Rect * obj_r,p_mv * pp);
+
+p_mv initp(int x,int y);
 
 #endif
