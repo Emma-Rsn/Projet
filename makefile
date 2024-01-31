@@ -34,11 +34,11 @@ OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 all: $(DIRS) $(BINDIR)/$(EXE)
 
 $(BINDIR)/$(EXE): $(OBJECTS)
-	@$(CC) $(OBJECTS) $(LFLAGS) -o $@ $(LDFLAGS)
+	@$(CC) $(FLAGS) $(OBJECTS) $(LFLAGS) -o $@ $(LDFLAGS)
 
 	
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) $(CFLAGS) -c $< -o $@
 	
 clean:
 	@rm -f -R $(BINDIR)

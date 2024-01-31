@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include <stdlib.h>
 
 int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE);
 

@@ -73,6 +73,12 @@ int main(){
             if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT)) {
                 run = 0;
             }
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
+                pAlex->e=-1;
+            }
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
+                pAlex->e=0;
+            }
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);

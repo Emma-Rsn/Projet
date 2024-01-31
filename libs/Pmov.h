@@ -2,6 +2,7 @@
 #define __PMOV_H__
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 typedef struct personnage p_mv;
 struct personnage{
@@ -9,9 +10,10 @@ struct personnage{
     SDL_Rect r;//{x,y,w,h}
     int d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
+    char * nom;
 };
 
-void pinput(p_mv * pmv,SDL_Event event;);
+void pinput(p_mv * pmv,SDL_Event event);
 
 void affp(p_mv * pmv,SDL_Renderer *renderer);
 
