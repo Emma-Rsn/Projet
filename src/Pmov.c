@@ -53,7 +53,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             //Nord
             if(pmv->d == 0){
                 strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "face2.png");
+                strcpy(empSprit2, "dos2.png");
                 strcat(empSprit1,pmv->nom);
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
@@ -117,7 +117,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             //Nord
             if(pmv->d == 0){
                 strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "face1.png");
+                strcpy(empSprit2, "dos1.png");
                 strcat(empSprit1,pmv->nom);
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
@@ -181,7 +181,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             //Nord
             if(pmv->d == 0){
                 strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "face3.png");
+                strcpy(empSprit2, "dos3.png");
                 strcat(empSprit1,pmv->nom);
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
