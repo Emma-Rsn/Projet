@@ -82,6 +82,7 @@ int main(){
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
+            dialogue(renderer,L_Ecran,event);
         }
         //zone d'affichage
         //ajustement de dfps

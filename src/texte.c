@@ -38,19 +38,17 @@
 
 int affiche_texte(SDL_Renderer * rendu,char *mess,int dim,SDL_Color color){
 
-    if(TTF_Init() == -1){
-	    fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
-	    return -1;
-    }
+
     //initialisation des variables
     SDL_Surface * texte=NULL;
     SDL_Texture * texture=NULL;
     
     SDL_Rect r_text={0,0,0,0};
 
-    TTF_Font  *police = NULL;
+    TTF_Font  *police = TTF_OpenFont("fonts/alagard.ttf", 20); 
+
     //SDL_Color blanc = {255, 255, 255};
-    police= TTF_OpenFont("../fonts/alagard.ttf", 20); 
+
     
     if (police==NULL){
     	SDL_FreeSurface(texte);
@@ -72,6 +70,7 @@ int affiche_texte(SDL_Renderer * rendu,char *mess,int dim,SDL_Color color){
         	return -1;
         }
         TTF_CloseFont(police);
+
         //afiche le texte 
         texture =SDL_CreateTextureFromSurface(rendu,texte);
         SDL_FreeSurface(texte); 
@@ -90,16 +89,14 @@ int affiche_texte(SDL_Renderer * rendu,char *mess,int dim,SDL_Color color){
         
         //changer la position du texte 
         //r_text.y=(dim-r_text.w)/2;
-        r_text.x=(dim-r_text.w)/1.5;
+        r_text.x=(dim-r_text.w)/2;
         
         if(SDL_RenderCopy(rendu,texture,NULL,&r_text)!=0){
         	printf("Impossible d'afficher le texte");
         	TTF_Quit();
         	return -1;
         }
-        
-        SDL_RenderPresent(rendu);
-        SDL_Delay(50);
+        SDL_DestroyTexture(texture);
         
 
         
@@ -130,7 +127,7 @@ int i=0;
 */
 char *mess[2]={"The Last Nightmare","Bonjour"};
 
-void dialogue (SDL_Renderer * rendu,int dim){
+void dialogue (SDL_Renderer * rendu,int dim,SDL_Event event){
 	SDL_Color blanc = {255, 255, 255};
 	SDL_Color noir = {0, 0,0};
 	//si une touche est presser
