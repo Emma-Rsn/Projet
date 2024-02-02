@@ -121,6 +121,7 @@ int main(){
     free(t0);
     free(t1);
     //SDL_DestroyTexture(backgroundTexture);
+    TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
