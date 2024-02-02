@@ -58,7 +58,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -73,7 +73,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -88,7 +88,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -103,7 +103,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -122,7 +122,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -137,7 +137,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -152,7 +152,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -167,7 +167,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -186,7 +186,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -201,7 +201,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -216,7 +216,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -231,7 +231,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
                 strcat(empSprit1, empSprit2);
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
-                    fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
@@ -294,8 +294,8 @@ p_mv initp(int x,int y){
     p_mv p;
     p.r.x=x;
     p.r.y=y;
-    p.r.w=32;
-    p.r.h=32;
+    p.r.w=64;
+    p.r.h=64;
     p.d=0;
     p.e=0;
     p.nom="alex";

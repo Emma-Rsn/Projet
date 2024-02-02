@@ -31,16 +31,18 @@ int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){
     return 0;
 }
 
+//optimiser le chargement du font
 int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     //chargement de la police d'écriture
     TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 20);
     if (!font) {
-        fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+        //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
         return -1;
     }
+
     SDL_Color textColor = {0, 0, 0};
-    char texte[20];
-    snprintf(texte, sizeof(texte), "FPS : %d", cmpfps);
+    char *texte = malloc(12);
+    snprintf(texte, 12, "FPS : %d", cmpfps);
 
     SDL_Surface* textSurface = TTF_RenderText_Blended(font,texte, textColor);
     if (!textSurface) {
@@ -50,12 +52,16 @@ int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     }
 
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-    SDL_FreeSurface(textSurface);
 
     // Position du texte
     SDL_Rect textRect = {10, 10, textSurface->w, textSurface->h};
 
     // Afficher la texture sur le rendu
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
+    SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(textTexture);
+    free(texte);
+    texte=NULL;
+    TTF_CloseFont(font);
     return 0;
 }

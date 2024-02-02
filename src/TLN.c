@@ -63,7 +63,7 @@ int main(){
     SDL_Event event;
 
     //zone declaration objet
-    SDL_Rect obj1 = {300, 200, 100, 100};
+    SDL_Rect obj1 = {100, 200, 288, 288};
     SDL_Rect Ecran = {0,0,L_Ecran,l_Ecran};
 
     //boucle du programme
