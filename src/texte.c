@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL2/SDL_ttf.h>
-#include "../libs/Pmov.h"
+
 
 /**
 *
@@ -43,26 +43,27 @@ int affiche_texte(SDL_Renderer * rendu,char *mess,int dim,SDL_Color color){
     SDL_Surface * texte=NULL;
     SDL_Texture * texture=NULL;
     
-    SDL_Rect r_text={0,0,0,0};
+    SDL_Rect r_text={10,10,0,0};
 
     TTF_Font  *police = TTF_OpenFont("fonts/alagard.ttf", 20); 
 
     //SDL_Color blanc = {255, 255, 255};
 
     
-    if (police==NULL){
+    if (!police){
     	SDL_FreeSurface(texte);
     	TTF_CloseFont(police);
     	TTF_Quit();
-    	printf("probleme a l'ouverture de la police");
+    	fprintf(stderr,"probleme a l'ouverture de la police");
         return -1;
     }
 
-    if(police != 0){
+    if(police){
+        
     	//recupere le texte a afficher
-        SDL_Surface* texte = TTF_RenderText_Solid(police, mess, color) ;
+        texte = TTF_RenderText_Solid(police, mess, color) ;
 
-        if (texte==NULL){
+        if (!texte){
         	SDL_FreeSurface(texte);
     		TTF_CloseFont(police);
         	TTF_Quit();
@@ -75,7 +76,7 @@ int affiche_texte(SDL_Renderer * rendu,char *mess,int dim,SDL_Color color){
         texture =SDL_CreateTextureFromSurface(rendu,texte);
         SDL_FreeSurface(texte); 
         
-        if(texture==NULL){
+        if(!texture){
         	printf("Impossible de creeer la texture");
         	TTF_Quit();
         	return -1;
@@ -88,22 +89,20 @@ int affiche_texte(SDL_Renderer * rendu,char *mess,int dim,SDL_Color color){
         }
         
         //changer la position du texte 
-        //r_text.y=(dim-r_text.w)/2;
+        r_text.y=(dim-r_text.w)/2;
         r_text.x=(dim-r_text.w)/2;
-        
-        if(SDL_RenderCopy(rendu,texture,NULL,&r_text)!=0){
+        SDL_RenderCopy(rendu,texture,NULL,&r_text);
+        /*if(test!=0){
         	printf("Impossible d'afficher le texte");
         	TTF_Quit();
         	return -1;
-        }
+        }*/
         SDL_DestroyTexture(texture);
         
 
         
     }
 
-
-    TTF_Quit();
     return 0;
 }
 
@@ -127,23 +126,27 @@ int i=0;
 */
 char *mess[2]={"The Last Nightmare","Bonjour"};
 
-void dialogue (SDL_Renderer * rendu,int dim,SDL_Event event){
+int dialogue (SDL_Event event,int * etat){
 	SDL_Color blanc = {255, 255, 255};
 	SDL_Color noir = {0, 0,0};
 	//si une touche est presser
-    if(event.type == SDL_KEYDOWN){
+    if(event.type == SDL_KEYDOWN ){
        //quelle touche est presser
         switch(event.key.keysym.sym){
-            case SDLK_f: 
-            	affiche_texte(rendu, mess[i-1],dim,noir); 
-            	printf("%s \n",mess[i]);
-            	affiche_texte(rendu, mess[i],dim,blanc); 
+            case SDLK_f:  
             	i++;
             	break;	
-            default: break;
+            default:break;
         }
         
     }
+    return i;
+}
+
+
+struct mess {
+    char * mess;
+    char * suivant;
 }
 
 

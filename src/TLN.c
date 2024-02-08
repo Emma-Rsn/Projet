@@ -10,8 +10,8 @@
 #include "../libs/printImg.h"
 
 //resolution de l'ecran
-#define L_Ecran 1920
-#define l_Ecran 1080
+#define L_Ecran 1440
+#define l_Ecran 900
 
 //nombre de frame par secondes voulu
 #define FPS 30
@@ -65,6 +65,7 @@ int main(){
     //zone declaration objet
     SDL_Rect obj1 = {100, 200, 288, 288};
     SDL_Rect Ecran = {0,0,L_Ecran,l_Ecran};
+    int dia = 0;
 
     //boucle du programme
     while (run) {
@@ -79,10 +80,14 @@ int main(){
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
                 pAlex->e=0;
             }
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_f)){
+                dia++;
+            }
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
-            dialogue(renderer,L_Ecran,event);
+            
+            
         }
         //zone d'affichage
         //ajustement de dfps
@@ -107,6 +112,11 @@ int main(){
 
 		//Affiche un personnage
         affp(pAlex,renderer);
+
+        //afficher dialogue
+        char *mess[2]={"The Last Nightmare","Bonjour"};
+        SDL_Color blanc = {255, 255, 255};
+        affiche_texte(renderer,mess[dia],900,blanc);
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
