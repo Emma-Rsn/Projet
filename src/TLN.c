@@ -9,10 +9,7 @@
 #include "../libs/texte.h"
 #include "../libs/map.h"
 #include "../libs/printImg.h"
-
-//resolution de l'ecran
-#define L_Ecran 1440
-#define l_Ecran 900
+#include "../libs/save.h"
 
 //nombre de frame par secondes voulu
 #define FPS 30
@@ -20,17 +17,26 @@
 int main(){
 
 
-    /*Liste *maListe = initialisation();
+    //creation liste chaine des dialogues
+    Liste *maListe = initialisation();
 
-    insertion(maListe, "test");
-    insertion(maListe, "8");
+    insertion(maListe, "The last Nightmare");
+    insertion(maListe, "Test");
     insertion(maListe, "bonjour");
-    suppression(maListe);
-
     afficherListe(maListe);
-    
-    destruction(maListe);*/
+
+    maListe->ec=maListe->premier;
+    int * etat=malloc(sizeof(int));
+
+
+
      
+    //resolution de l'ecran
+    save_settings();
+    int * lEcran = malloc(sizeof(int));
+    int * LEcran = malloc(sizeof(int));
+    load_settings(LEcran,lEcran);
+
 
      // Initialisation de SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -43,7 +49,7 @@ int main(){
         return -1;
     }
     // Création de la fenêtre
-    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, L_Ecran, l_Ecran, SDL_WINDOW_FULLSCREEN);
+    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN);
     if (window == NULL) {
         fprintf(stderr, "Erreur de création de la fenêtre : %s\n", SDL_GetError());
         SDL_Quit();
@@ -101,8 +107,9 @@ int main(){
 
     //zone declaration objet
     SDL_Rect obj1 = {100, 200, 288, 288};
-    SDL_Rect Ecran = {0,0,L_Ecran,l_Ecran};
-    int dia = 0;
+
+    SDL_Rect Ecran = {0,0,*LEcran,*lEcran};
+
 
     //boucle du programme
     while (run) {
@@ -117,15 +124,20 @@ int main(){
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
                 pAlex->e=0;
             }
+<<<<<<< HEAD
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_f)){
                 dia++;
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
                 p_map=p_map->est;
             }
+=======
+            
+>>>>>>> b6d3c5044e4aea71997406faa0476f2691de4550
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
+            dialogue(event,etat,maListe);
             
             
         }
@@ -154,9 +166,8 @@ int main(){
         affp(pAlex,renderer);
 
         //afficher dialogue
-        char *mess[2]={"The Last Nightmare","Bonjour"};
-        SDL_Color blanc = {255, 255, 255};
-        affiche_texte(renderer,mess[dia],900,blanc);
+
+        affiche_texte(renderer,maListe,900,etat);
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
@@ -171,6 +182,11 @@ int main(){
     free(nfps);
     free(t0);
     free(t1);
+    destruction(maListe);
+    free(etat);
+
+    free(lEcran);
+    free(LEcran);
     //SDL_DestroyTexture(backgroundTexture);
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
