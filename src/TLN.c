@@ -7,6 +7,7 @@
 
 #include "../libs/Pmov.h"
 #include "../libs/texte.h"
+#include "../libs/map.h"
 #include "../libs/printImg.h"
 
 //resolution de l'ecran
@@ -58,6 +59,28 @@ int main(){
     }
     //IMG de fond
     //SDL_Texture* backgroundTexture = NULL;
+    SDL_Color Blue={0, 204, 203, 255};
+    SDL_Color Pink={254, 231, 240, 255};
+    SDL_Color Green={130, 196, 108, 255};
+
+    //création map
+    carte_t * p_map;
+    carte_t map[ROW][COLUMN];
+    creation_matrice(map);
+    p_map=&(map[0][0]);
+    lien_carte(map);
+    int color_ind,color_ind2;
+    for(color_ind=0;color_ind<COLUMN;color_ind++){
+        for(color_ind2=0;color_ind2<ROW;color_ind2++){
+            switch(color_ind){
+                case 0 : color_carte(&(map[color_ind2][color_ind]),Blue);
+                case 1 : color_carte(&(map[color_ind2][color_ind]),Pink);
+                case 2 : color_carte(&(map[color_ind2][color_ind]),Green);
+                default : break;
+            }
+        }
+    }
+
 
     //variable FPS
     int cmpfps = 0;
@@ -97,6 +120,9 @@ int main(){
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_f)){
                 dia++;
             }
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
+                p_map=p_map->est;
+            }
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
@@ -114,7 +140,7 @@ int main(){
             }
         }
         //efface le rendu
-        SDL_SetRenderDrawColor(renderer, 50, 0, 50, 255);
+        SDL_SetRenderDrawColor(renderer,p_map->bgColor.r,p_map->bgColor.g,p_map->bgColor.b,p_map->bgColor.a);
         SDL_RenderClear(renderer);
 
         //affiche le bg
@@ -141,6 +167,7 @@ int main(){
     }
 
     // Libérer les ressources
+    destroy_map(map);
     free(nfps);
     free(t0);
     free(t1);
