@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL2/SDL_ttf.h>
+#include "../libs/texte.h"
 
 
 /**
@@ -116,7 +117,7 @@ int i=0;
 
 /**
 *
-*\fn dialogue(SDL_Renderer * rendu,char *mess,int dim)
+*\fn dialogue(char *mess,int * etat)
 *\param mess message a afficher
 *\param dim dimension de la fenetre 
 *\param rendu rendu de la fenetre
@@ -126,32 +127,93 @@ int i=0;
 */
 char *mess[2]={"The Last Nightmare","Bonjour"};
 
-int dialogue (SDL_Event event,int * etat){
-	SDL_Color blanc = {255, 255, 255};
-	SDL_Color noir = {0, 0,0};
+void dialogue (SDL_Event event,int * etat){
 	//si une touche est presser
     if(event.type == SDL_KEYDOWN ){
        //quelle touche est presser
         switch(event.key.keysym.sym){
             case SDLK_f:  
-            	i++;
             	break;	
             default:break;
         }
         
     }
-    return i;
-}
-
-
-struct mess {
-    char * mess;
-    char * suivant;
 }
 
 
 
+Liste *initialisation()
+{
+    Liste *liste = malloc(sizeof(*liste));
+    mess_s *element = malloc(sizeof(*element));
 
+    if (liste == NULL || element == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
 
+    element->message = 0;
+    element->suivant = NULL;
+    liste->premier = element;
 
+    return liste;
+}
 
+void insertion(Liste *liste, char * nvMess)
+{
+    /* Création du nouvel élément */
+    mess_s *nouveau = malloc(sizeof(*nouveau));
+    if (liste == NULL || nouveau == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+    nouveau->message = nvMess;
+
+    /* Insertion de l'élément au début de la liste */
+    nouveau->suivant = liste->premier;
+    liste->premier = nouveau;
+}
+
+void suppression(Liste *liste)
+{
+    if (liste == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    if (liste->premier != NULL)
+    {
+        mess_s *aSupprimer = liste->premier;
+        liste->premier = liste->premier->suivant;
+        free(aSupprimer);
+    }
+}
+
+void afficherListe(Liste *liste)
+{
+    if (liste == NULL)
+    {
+        exit(EXIT_FAILURE);
+    }
+
+    mess_s *actuel = liste->premier;
+
+    while (actuel != NULL)
+    {
+        printf("%s -> ", actuel->message);
+        actuel = actuel->suivant;
+    }
+    printf("NULL\n");
+}
+
+void destruction(Liste * liste){
+	mess_s *sup=liste->premier;
+	
+	while(liste->premier!=NULL){
+		liste->premier=liste->premier->suivant;
+		free(sup);
+		sup=liste->premier;
+		
+	}
+	free(liste);
+}

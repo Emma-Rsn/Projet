@@ -17,6 +17,20 @@
 #define FPS 30
 
 int main(){
+
+
+    /*Liste *maListe = initialisation();
+
+    insertion(maListe, "test");
+    insertion(maListe, "8");
+    insertion(maListe, "bonjour");
+    suppression(maListe);
+
+    afficherListe(maListe);
+    
+    destruction(maListe);*/
+     
+
      // Initialisation de SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         fprintf(stderr, "Erreur d'initialisation de SDL : %s\n", SDL_GetError());
