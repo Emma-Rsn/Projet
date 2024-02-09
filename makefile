@@ -12,17 +12,21 @@ SRCDIR   = src
 LIBSDIR = libs
 OBJDIR   = obj
 BINDIR   = bin
+SAVEDIR    = save
 
 #creer les repertoires obj et bin si il n'existe pas deja
 .PHONY: DIRS
-DIRS	 = $(OBJDIR) $(BINDIR) 
+DIRS	 = $(OBJDIR) $(BINDIR) $(SAVEDIR)
 
 
 $(BINDIR):
 	mkdir -p $(BINDIR)
 $(OBJDIR):
 	mkdir -p $(OBJDIR)
-
+$(SAVEDIR):
+	mkdir -p $(SAVEDIR)
+	touch save/settings.txt
+	chmod a+w save/settings.txt
 	
 #recupere les fichiers .c et .h du repertoires sources dans 2 variables
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
@@ -32,6 +36,7 @@ INCLUDES := $(wildcard $(LIBSDIR)/*.h)
 OBJECTS  := $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 all: $(DIRS) $(BINDIR)/$(EXE)
+	
 
 $(BINDIR)/$(EXE): $(OBJECTS)
 	@$(CC) $(FLAGS) $(OBJECTS) $(LFLAGS) -o $@ $(LDFLAGS)
@@ -43,6 +48,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c $(INCLUDES)
 clean:
 	@rm -f -R $(BINDIR)
 	@rm -f -R $(OBJDIR)
+	@rm -f -R $(SAVEDIR)
 
 
 

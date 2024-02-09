@@ -8,10 +8,7 @@
 #include "../libs/Pmov.h"
 #include "../libs/texte.h"
 #include "../libs/printImg.h"
-
-//resolution de l'ecran
-#define L_Ecran 1440
-#define l_Ecran 900
+#include "../libs/save.h"
 
 //nombre de frame par secondes voulu
 #define FPS 30
@@ -30,6 +27,11 @@ int main(){
     
     destruction(maListe);*/
      
+    //resolution de l'ecran
+    save_settings();
+    int * lEcran = malloc(sizeof(int));
+    int * LEcran = malloc(sizeof(int));
+    load_settings(LEcran,lEcran);
 
      // Initialisation de SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -42,7 +44,7 @@ int main(){
         return -1;
     }
     // Création de la fenêtre
-    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, L_Ecran, l_Ecran, SDL_WINDOW_FULLSCREEN);
+    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN);
     if (window == NULL) {
         fprintf(stderr, "Erreur de création de la fenêtre : %s\n", SDL_GetError());
         SDL_Quit();
@@ -78,7 +80,7 @@ int main(){
 
     //zone declaration objet
     SDL_Rect obj1 = {100, 200, 288, 288};
-    SDL_Rect Ecran = {0,0,L_Ecran,l_Ecran};
+    SDL_Rect Ecran = {0,0,*LEcran,*lEcran};
     int dia = 0;
 
     //boucle du programme
@@ -144,6 +146,8 @@ int main(){
     free(nfps);
     free(t0);
     free(t1);
+    free(lEcran);
+    free(LEcran);
     //SDL_DestroyTexture(backgroundTexture);
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
