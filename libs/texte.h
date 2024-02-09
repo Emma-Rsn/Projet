@@ -1,9 +1,7 @@
 #ifndef __TEXTE_H__
 #define __TEXTE_H__
 
-extern SDL_Event event;
-int affiche_texte(SDL_Renderer * rendu,char *mess,int dim,SDL_Color color);
-void dialogue (SDL_Event event,int * etat);
+
 
 typedef struct mess_t mess_s;
 struct mess_t
@@ -16,7 +14,13 @@ typedef struct Liste Liste;
 struct Liste
 {
     mess_s *premier;
+    mess_s * ec;
+    int  test;
 };
+
+extern SDL_Event event;
+int affiche_texte(SDL_Renderer * rendu,Liste *mess,int dim,int * etat);
+void dialogue (SDL_Event event,int * etat,Liste * liste);
 
 
 Liste *initialisation();
