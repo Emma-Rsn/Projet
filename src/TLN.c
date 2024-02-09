@@ -124,16 +124,13 @@ int main(){
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
                 pAlex->e=0;
             }
-<<<<<<< HEAD
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_f)){
                 dia++;
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
                 p_map=p_map->est;
             }
-=======
             
->>>>>>> b6d3c5044e4aea71997406faa0476f2691de4550
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
