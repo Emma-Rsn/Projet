@@ -1,8 +1,34 @@
+//
+//printImg.c
+//Created by Moreau Enzo
+//
+
+/**
+*\file printImg.c
+*\brief programme pour afficher les FPS et le background
+*\author Moreau Enzo
+*\date  Janvier 2024
+*\version 1.0
+*
+*/
+
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
+/**
+*
+*\fn int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE)
+*\param backgroundTexture texture 
+*\param r rendu de la fenetre
+*\param LE Longueur de l'ecran
+*\param lE Largeur de l'ecran
+*\brief fonction pour afficher le background
+*
+*/
 
+//fonction pour afficher le background
 int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE){
     SDL_Rect destRect = {0, 0, LE, lE};  // Taille de l'écran
     SDL_Surface* backgroundSurface = IMG_Load("bg.jpeg");
@@ -16,6 +42,19 @@ int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE){
     return 0;
 }
 
+/**
+*
+*\fn int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1)
+*\param nfps ?
+*\param t0 ?
+*\param t1 ?
+*\brief fonction pour calculer le nombre de FPS 
+*
+*/
+
+
+
+//fonction pour calculer le nombre de FPS 
 int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){
     if(*(t0) == -1){
         *(t0) = SDL_GetTicks();
@@ -30,6 +69,19 @@ int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){
     }
     return 0;
 }
+
+/**
+*
+*\fn int aff_Fps(int cmpfps,SDL_Renderer *renderer)
+*\param cmpfps nombre de FPS
+*\param renderer rendu de la fenetre
+*\brief fonction pour afficher le nombre de FPS 
+*
+*/
+
+
+
+//fonction pour afficher le nombre de FPS 
 
 //optimiser le chargement du font
 int aff_Fps(int cmpfps,SDL_Renderer *renderer){

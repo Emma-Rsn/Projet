@@ -1,3 +1,22 @@
+//
+//TLN.c
+//Created by Moreau Enzo Rasson Emma Pasquier Lina 
+//
+
+/**
+*\file TLN.c
+*\brief programme principale
+*\author Moreau Enzo Rasson Emma Pasquier Lina 
+*\date  janvier 2024
+*\version 1.0
+*
+*/
+
+
+
+
+
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
@@ -22,7 +41,6 @@ int main(){
     insertion(maListe, "The last Nightmare");
     insertion(maListe, "Test");
     insertion(maListe, "bonjour");
-    afficherListe(maListe);
 
     maListe->ec=maListe->premier;
     int * etat = malloc(sizeof(int));

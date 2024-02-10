@@ -1,7 +1,34 @@
+//
+//Pmov.c
+//Created by Moreau Enzo
+//
+
+/**
+*\file Pmov.c
+*\brief programme pour afficher les personnages
+*\author Moreau Enzo
+*\date  Janvier 2024
+*\version 1.0
+*
+*/
+
+
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdlib.h>
 #include <string.h>
+
+
+/**
+*
+*\struct personnage
+*\param r taille du personnage
+*\param d direction orienté{N,E,S,O}{0,1,2,3}
+*\param e etat du personnage
+*\param nom prenom du personnage
+*\brief structure de personnage
+*/
 
 typedef struct personnage p_mv;
 struct personnage{
@@ -11,6 +38,15 @@ struct personnage{
     int e; //etat du personnage
     char * nom;
 };
+
+/**
+*
+*\fn void pinput(p_mv * pmv,SDL_Event event)
+*\param event permet de savoir si il y a un evenement
+*\param pmv structure du personnage
+*\brief fonction qui detecte si unetouche est presser et modifie ses coordonées
+*/
+
 
 //detection de touche presser et modification des coordonées
 void pinput(p_mv * pmv,SDL_Event event){
@@ -31,6 +67,15 @@ void pinput(p_mv * pmv,SDL_Event event){
         pmv->e=0;
     }
 }
+
+
+/**
+*
+*\fn int affp(p_mv * pmv,SDL_Renderer *renderer)
+*\param pmv structure d'un personnage
+*\param renderer rendu de la fenetre
+*\brief fonction qui affiche le personnage
+*/
 
 //affiche le personnage
 int affp(p_mv * pmv,SDL_Renderer *renderer){
@@ -245,8 +290,15 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
     return 0;
 }
 
+/**
+*
+*\fn void col_p(SDL_Rect * obj_r,p_mv * pp)
+*\param pp structure d'un personnage
+*\param obj_r objet avec quoi il y a la collision
+*\brief fonction qui s'occupe des collisions
+*/
 
-
+//fonction qui s'occupe des collisions
 void col_p(SDL_Rect * obj_r,p_mv * pp){
         //Collision entre la partie haute du personnage et la partie haute de l'obj
         if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && pp->r.y == obj_r->y) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && pp->r.y == obj_r->y)){

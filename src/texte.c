@@ -6,9 +6,9 @@
 /**
 *\file texte.c
 *\brief Programme qui affiche un texte sur la fenetre
-*\author Pasquier Lina
+*\author Pasquier Lina 
 *\date 28 janvier 2024
-*\version 0.2
+*\version 0.3
 *
 *
 *
@@ -24,12 +24,12 @@
 
 /**
 *
-*\fn affiche_texte(SDL_Renderer * rendu,Liste* liste,int dim,int * etat)
+*\fn int affiche_texte(SDL_Renderer * rendu,Liste* liste,int dim,int * etat)
 *\param liste structure du message a afficher
 *\param dim dimension de la fenetre 
 *\param rendu rendu de la fenetre
 *\param etat etat du texte afficher
-*
+*\brief fonction qui affiche du texte 
 *
 *
 */
@@ -111,7 +111,7 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
 
 /**
 *
-*\fn dialogue(SDL_Event event,int * etat,Liste * liste)
+*\fn void dialogue(SDL_Event event,int * etat,Liste * liste)
 *\param event permet de savoir si il y a un evenement
 *\param etat etat du texte afficher
 *\param liste liste chaine du texte a afficher
@@ -154,13 +154,15 @@ void dialogue (SDL_Event event,int * etat,Liste * liste){
 
 }
 
+
 /**
 *
-*\fn initialisation()
-*\brief focntion pour initialiser la structure liste
-*
+*\fn int liste_vide(Liste * liste)
+*\param liste liste chainee du texte a afficher
+*\brief fonction pour regarder si la liste chainee est vide 
 */
 
+//fonction pour regarder si la liste chainee est vide 
 int liste_vide(Liste * liste){
     if(liste->premier == NULL){
         return 1;
@@ -169,20 +171,42 @@ int liste_vide(Liste * liste){
     }
 }
 
+/**
+*
+*\fn void liste_premier(Liste * liste)
+*\param liste liste chainee du texte a afficher
+*\brief fonction pour aller au premier element de la liste chainee
+*/
+
+//fonction pour aller au premier element de la liste chainee
 void liste_premier(Liste * liste){
     if(liste != NULL){
         liste->ec = liste->premier;
     }
 }
 
+/**
+*
+*\fn void liste_suivant(Liste * liste)
+*\param liste liste chainee du texte a afficher
+*\brief fonction pour aller a l'element suivant de la liste chainee
+*/
 
+//fonction pour aller a l'element suivant de la liste chainee
 void liste_suivant(Liste * liste){
     if(liste->ec != NULL){
         liste->ec = liste->ec->suivant;
     }
 }
 
-//focntion pour initialiser la structure liste
+/**
+*
+*\fn Liste * initialisation()
+*\brief fonction pour initialiser la liste chainee
+*
+*/
+
+//fonction pour initialiser la liste chainee
 Liste * initialisation()
 {
     Liste *liste = malloc(sizeof(*liste));
@@ -199,15 +223,15 @@ Liste * initialisation()
 }
 /**
 *
-*\fn insertion(Liste *liste, char * nvMess)
-*\param liste liste chaine du texte a afficher
+*\fn void insertion(Liste *liste, char * nvMess)
+*\param liste liste chainee du texte a afficher
 *\param nvMess inserer un message dans la liste
-*\brief fonction pour inserer un element a la structure liste
+*\brief fonction pour inserer un element a la liste chainee
 *
 */
 
 
-//fonction pour inserer un element a la structure liste
+//fonction pour inserer un element a la liste chainee
 void insertion(Liste *liste, char * nvMess)
 {
     /* Création du nouvel élément */
@@ -239,9 +263,15 @@ void insertion(Liste *liste, char * nvMess)
     nouveau = NULL;
 }
 
+/**
+*
+*\fn void liste_suppression(Liste *liste)
+*\param liste liste chainee du texte a afficher
+*\brief fonction pour supprimer le premier element de la liste chainee
+*
+*/
 
-
-//fonction pour supprimer le premier element de la liste
+//fonction pour supprimer le premier element de la liste chainee
 void liste_suppression(Liste *liste)
 {
     if (liste == NULL)
@@ -267,13 +297,13 @@ void liste_suppression(Liste *liste)
 
 /**
 *
-*\fn afficherListe(Liste *liste)
-*\param liste liste chaine du texte a afficher
-*\brief fonction qui affiche la structure liste
+*\fn void afficherListe(Liste *liste)
+*\param liste liste chainee du texte a afficher
+*\brief fonction qui affiche la liste chainee
 *
 */
 
-//fonction qui affiche la structure liste
+//fonction qui affiche la liste chainee
 void afficherListe(Liste *liste)
 {
     if (liste == NULL)
@@ -293,14 +323,14 @@ void afficherListe(Liste *liste)
 }
 /**
 *
-*\fn afficherListe(Liste *liste)
-*\param liste liste chaine du texte a afficher
-*\brief fonction qui detruit la structure liste 
+*\fn void liste_destruction(Liste *liste)
+*\param liste liste chainee du texte a afficher
+*\brief fonction qui detruit la liste chainee
 *
 */
 
 
-//fonction qui detruit la structure liste 
+//fonction qui detruit la liste chainee
 void liste_destruction(Liste * liste){
 	liste_premier(liste);
 	
