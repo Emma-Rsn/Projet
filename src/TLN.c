@@ -16,7 +16,6 @@
 
 int main(){
 
-
     //creation liste chaine des dialogues
     Liste *maListe = initialisation();
 
@@ -26,7 +25,7 @@ int main(){
     afficherListe(maListe);
 
     maListe->ec=maListe->premier;
-    int * etat=malloc(sizeof(int));
+    int * etat = malloc(sizeof(int));
 
 
 
@@ -63,8 +62,9 @@ int main(){
         SDL_Quit();
         return -1;
     }
+    
     //IMG de fond
-    //SDL_Texture* backgroundTexture = NULL;
+   /* //SDL_Texture* backgroundTexture = NULL;
     SDL_Color Blue={0, 204, 203, 255};
     SDL_Color Pink={254, 231, 240, 255};
     SDL_Color Green={130, 196, 108, 255};
@@ -85,7 +85,7 @@ int main(){
                 default : break;
             }
         }
-    }
+    }*/
 
 
     //variable FPS
@@ -124,12 +124,9 @@ int main(){
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
                 pAlex->e=0;
             }
-            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_f)){
-                dia++;
-            }
-            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
+            /*if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
                 p_map=p_map->est;
-            }
+            }*/
             
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
@@ -149,7 +146,7 @@ int main(){
             }
         }
         //efface le rendu
-        SDL_SetRenderDrawColor(renderer,p_map->bgColor.r,p_map->bgColor.g,p_map->bgColor.b,p_map->bgColor.a);
+        //SDL_SetRenderDrawColor(renderer,p_map->bgColor.r,p_map->bgColor.g,p_map->bgColor.b,p_map->bgColor.a);
         SDL_RenderClear(renderer);
 
         //affiche le bg
@@ -175,11 +172,11 @@ int main(){
     }
 
     // Libérer les ressources
-    destroy_map(map);
+    //destroy_map(map);
     free(nfps);
     free(t0);
     free(t1);
-    destruction(maListe);
+    liste_destruction(maListe);
     free(etat);
 
     free(lEcran);

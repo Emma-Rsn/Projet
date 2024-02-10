@@ -18,17 +18,13 @@ void pinput(p_mv * pmv,SDL_Event event){
     if(event.type == SDL_KEYDOWN){
         //quelle touche est presser
         switch(event.key.keysym.sym){
-            case SDLK_z: pmv->r.y -= 1,pmv->d = 0; break;
-            case SDLK_s: pmv->r.y += 1,pmv->d = 2; break;
-            case SDLK_q: pmv->r.x -= 1,pmv->d = 3; break;
-            case SDLK_d: pmv->r.x += 1,pmv->d = 1; break;
+            case SDLK_z: pmv->r.y -= 1,pmv->d = 0,pmv->e++; break;
+            case SDLK_s: pmv->r.y += 1,pmv->d = 2,pmv->e++; break;
+            case SDLK_q: pmv->r.x -= 1,pmv->d = 3,pmv->e++; break;
+            case SDLK_d: pmv->r.x += 1,pmv->d = 1,pmv->e++; break;
             default: break;
         }
-        if(pmv->e == 0){
-            pmv->e=1;
-        }else if(pmv->e == 1){
-            pmv->e=2;
-        }else if(pmv->e == 2){
+        if(pmv->e == 3){
             pmv->e=1;
         }
     }else if(event.type == SDL_KEYUP && pmv->e != -1){

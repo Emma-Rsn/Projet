@@ -13,20 +13,21 @@ struct mess_t
 typedef struct Liste Liste;
 struct Liste
 {
-    mess_s *premier;
+    mess_s * premier;
     mess_s * ec;
     int  test;
 };
 
 extern SDL_Event event;
+
 int affiche_texte(SDL_Renderer * rendu,Liste *mess,int dim,int * etat);
 void dialogue (SDL_Event event,int * etat,Liste * liste);
-
-
+int liste_vide(Liste * liste);
+void liste_premier(Liste * liste);
+void liste_suivant(Liste * liste);
 Liste *initialisation();
-
 void insertion(Liste *liste, char * nvMess);
-void suppression(Liste *liste);
+void liste_suppression(Liste *liste);
 void afficherListe(Liste *liste);
-void destruction(Liste * liste);
+void liste_destruction(Liste * liste);
 #endif

@@ -39,8 +39,6 @@
 
 //fonction qui affiche du texte 
 int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
-    printf("%d\n",*etat);
-
 
     if(*etat==1){
         //initialisation des variables
@@ -49,12 +47,10 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
         
         SDL_Rect r_text={10,10,0,0};
 
-        TTF_Font  *police = TTF_OpenFont("fonts/alagard.ttf", 20); 
+        TTF_Font  * police = TTF_OpenFont("fonts/alagard.ttf", 20); 
 
         SDL_Color blanc = {255, 255, 255};
 
-
-        
         if (!police){
             SDL_FreeSurface(texte);
             TTF_CloseFont(police);
@@ -63,8 +59,7 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
             return -1;
         }
 
-
-        if(police){
+        else if(police){
             
             //recupere le texte a afficher
             texte = TTF_RenderText_Solid(police, liste->ec->message, blanc) ;
@@ -72,11 +67,13 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
             if (!texte){
                 SDL_FreeSurface(texte);
                 TTF_CloseFont(police);
+                police = NULL;
                 TTF_Quit();
                 printf("probleme de texte\n");
                 return -1;
             }
             TTF_CloseFont(police);
+            police = NULL;
 
             //afiche le texte 
             texture =SDL_CreateTextureFromSurface(rendu,texte);
@@ -112,11 +109,6 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
     return 0;
 }
 
-
-
-
-
-
 /**
 *
 *\fn dialogue(SDL_Event event,int * etat,Liste * liste)
@@ -138,8 +130,8 @@ void dialogue (SDL_Event event,int * etat,Liste * liste){
             case SDLK_e:  
                     //dernier texte dans la structure
                     if(liste->ec->suivant==NULL){
-                        printf("%s","test");
-                        liste->test=2;
+                        liste->test=0;
+                        liste_premier(liste);
                         *etat=0;
                     }
                     else{
@@ -147,19 +139,13 @@ void dialogue (SDL_Event event,int * etat,Liste * liste){
                         //premier element de la structure
                         if(liste->test == 0){
                             liste->test=1;
-
                         }
                         //suite des elments de la structure
                         else if (liste->test==1){
-                            printf("%p",liste->ec->suivant);
-                            liste->ec=liste->ec->suivant;               
+                            liste_suivant(liste);              
                         
                         }
-
                     }
-
-                    
-                    
             	break;	
             default:break;
         }
@@ -175,9 +161,29 @@ void dialogue (SDL_Event event,int * etat,Liste * liste){
 *
 */
 
+int liste_vide(Liste * liste){
+    if(liste->premier == NULL){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+void liste_premier(Liste * liste){
+    if(liste != NULL){
+        liste->ec = liste->premier;
+    }
+}
+
+
+void liste_suivant(Liste * liste){
+    if(liste->ec != NULL){
+        liste->ec = liste->ec->suivant;
+    }
+}
 
 //focntion pour initialiser la structure liste
-Liste *initialisation()
+Liste * initialisation()
 {
     Liste *liste = malloc(sizeof(*liste));
 
@@ -185,9 +191,8 @@ Liste *initialisation()
     {
         exit(EXIT_FAILURE);
     }
-
     liste->premier = NULL;
-    liste->ec=liste->premier;
+    liste_premier(liste);
     liste->test=0;
 
     return liste;
@@ -206,41 +211,56 @@ Liste *initialisation()
 void insertion(Liste *liste, char * nvMess)
 {
     /* Création du nouvel élément */
-    mess_s *nouveau = malloc(sizeof(*nouveau));
-    if (liste == NULL || nouveau == NULL)
+    if (liste == NULL)
     {
         exit(EXIT_FAILURE);
     }
+
+    mess_s *nouveau = malloc(sizeof(mess_s));
+
+    if (nouveau == NULL)
+    {
+        printf("Probleme d'allocation de memoire\n");
+        exit(EXIT_FAILURE);
+    }
     
-    nouveau->message = nvMess;
+    nouveau->message = malloc(strlen(nvMess));
+    strcpy(nouveau->message,nvMess);
 
     /* Insertion de l'élément au début de la liste */
     
-    if(liste->premier==NULL){
+    if(liste_vide(liste)){
         nouveau->suivant = NULL;
-
     }
     else{
         nouveau->suivant = liste->premier;  
     }
     liste->premier = nouveau;
-    
+    nouveau = NULL;
 }
 
 
 
-//fonction pour supprimer un element de la liste
-void suppression(Liste *liste)
+//fonction pour supprimer le premier element de la liste
+void liste_suppression(Liste *liste)
 {
     if (liste == NULL)
     {
         exit(EXIT_FAILURE);
     }
 
-    if (liste->premier != NULL)
+     liste_premier(liste);
+
+    if (liste->ec != NULL)
     {
-        mess_s *aSupprimer = liste->premier;
-        liste->premier = liste->premier->suivant;
+        mess_s *aSupprimer = liste->ec;
+        if(liste->ec->suivant != NULL){
+            liste_suivant(liste);
+            liste->premier = liste->ec;
+        }else{
+            liste->premier = NULL;
+        }
+        free(aSupprimer->message);
         free(aSupprimer);
     }
 } 
@@ -261,13 +281,14 @@ void afficherListe(Liste *liste)
         exit(EXIT_FAILURE);
     }
 
-    mess_s *actuel = liste->premier;
+    liste_premier(liste);
 
-    while (actuel != NULL)
+    while (liste->ec != NULL)
     {
-        printf("%s -> ", actuel->message);
-        actuel = actuel->suivant;
+        printf("%s -> ", liste->ec->message);
+        liste_suivant(liste);
     }
+    liste_premier(liste);
     printf("NULL\n");
 }
 /**
@@ -280,18 +301,13 @@ void afficherListe(Liste *liste)
 
 
 //fonction qui detruit la structure liste 
-void destruction(Liste * liste){
-	liste->ec=liste->premier;
-    
+void liste_destruction(Liste * liste){
+	liste_premier(liste);
 	
-	while(liste->ec->suivant!=NULL){
-        mess_s * sup=liste->ec;
-        liste->ec=liste->ec->suivant;
-        sup->suivant=NULL;
-        free(sup);
-		
+	while(liste->ec != NULL){
+        liste_suppression(liste);
+        liste_premier(liste);
 	}
-    free(liste->ec);
     free(liste);
-
+    liste = NULL;
 }
