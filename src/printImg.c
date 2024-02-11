@@ -16,6 +16,8 @@ int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE){
     return 0;
 }
 
+
+
 int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){
     if(*(t0) == -1){
         *(t0) = SDL_GetTicks();

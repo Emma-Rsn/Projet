@@ -5,37 +5,23 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "../libs/save.h"
+#include "../libs/printImg.h"
 #include "../libs/Pmov.h"
 #include "../libs/texte.h"
 #include "../libs/map.h"
-#include "../libs/printImg.h"
-#include "../libs/save.h"
+#include "../libs/PNJ.h"
+#include "../libs/commun.h"
 
 //nombre de frame par secondes voulu
 #define FPS 30
 
 int main(){
-
-    //creation liste chaine des dialogues
-    Liste *maListe = initialisation();
-
-    insertion(maListe, "The last Nightmare");
-    insertion(maListe, "Test");
-    insertion(maListe, "bonjour");
-    afficherListe(maListe);
-
-    maListe->ec=maListe->premier;
-    int * etat = malloc(sizeof(int));
-
-
-
-     
     //resolution de l'ecran
     save_settings();
-    int * lEcran = malloc(sizeof(int));
-    int * LEcran = malloc(sizeof(int));
-    load_settings(LEcran,lEcran);
-
+    int * hEcran = malloc(sizeof(int));
+    int * wEcran = malloc(sizeof(int));
+    load_settings(wEcran,hEcran);
 
      // Initialisation de SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -48,7 +34,7 @@ int main(){
         return -1;
     }
     // Création de la fenêtre
-    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN);
+    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *wEcran, *hEcran, SDL_WINDOW_FULLSCREEN);
     if (window == NULL) {
         fprintf(stderr, "Erreur de création de la fenêtre : %s\n", SDL_GetError());
         SDL_Quit();
@@ -62,7 +48,11 @@ int main(){
         SDL_Quit();
         return -1;
     }
-    
+    //mode de transparence
+    SDL_BlendMode blend = SDL_BLENDMODE_BLEND;
+    SDL_SetRenderDrawBlendMode(renderer, blend);
+
+
     //IMG de fond
    /* //SDL_Texture* backgroundTexture = NULL;
     SDL_Color Blue={0, 204, 203, 255};
@@ -100,6 +90,14 @@ int main(){
 	p_mv Alex;
 	Alex = initp(200,200);
 	p_mv * pAlex = &Alex;
+    //creation d'un pnj
+    pnj_t Alex2;
+    Alex2 = init_pnj("Alex2",500, 200,"sprite/alexdial.png", "sprite/alexface2.png");
+    pnj_t * pAlex2 = &Alex2;
+    insertion(Alex2.dial, "Test d'une longue phrase histoire de voir ce que sa peut donner une tres longue phrase avec des trucs de dans genre un anti slash n : \n est ce que sa fait bien un saut a la ligne ?");
+    insertion(Alex2.dial, "Bonjour");
+    insertion(Alex2.dial, "Test");
+    insertion(Alex2.dial, "The last Nightmare");
     //variable indique l'etat du prog
 	int run = 1;
 
@@ -108,7 +106,7 @@ int main(){
     //zone declaration objet
     SDL_Rect obj1 = {100, 200, 288, 288};
 
-    SDL_Rect Ecran = {0,0,*LEcran,*lEcran};
+    SDL_Rect Ecran = {0,0,*hEcran,*wEcran};
 
 
     //boucle du programme
@@ -131,7 +129,7 @@ int main(){
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
-            dialogue(event,etat,maListe);
+            debut_dialogue(event,Alex2.dial);
             
             
         }
@@ -147,10 +145,8 @@ int main(){
         }
         //efface le rendu
         //SDL_SetRenderDrawColor(renderer,p_map->bgColor.r,p_map->bgColor.g,p_map->bgColor.b,p_map->bgColor.a);
+        SDL_SetRenderDrawColor(renderer,200,50,55,255);
         SDL_RenderClear(renderer);
-
-        //affiche le bg
-        //print_bg(backgroundTexture,renderer,L_Ecran,l_Ecran);
 
         // Dessiner un cadre(obj1)
         SDL_SetRenderDrawColor(renderer, 0, 50, 200, 255);
@@ -159,12 +155,18 @@ int main(){
 		//Affiche un personnage
         affp(pAlex,renderer);
 
-        //afficher dialogue
+        //Affichage pnj
+        aff_pnj(Alex2,renderer);
 
-        affiche_texte(renderer,maListe,900,etat);
+        //afficher dialogue
+        //aff_boite_dia(renderer,Alex2.dial,Alex2.po,*wEcran,*hEcran);
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
+
+        //filtre
+        //SDL_SetRenderDrawColor(renderer,0,0,0,100);
+        //SDL_RenderFillRect(renderer, &Ecran);
 
         // Mettre à jour le rendu
         SDL_RenderPresent(renderer);
@@ -176,12 +178,9 @@ int main(){
     free(nfps);
     free(t0);
     free(t1);
-    liste_destruction(maListe);
-    free(etat);
-
-    free(lEcran);
-    free(LEcran);
-    //SDL_DestroyTexture(backgroundTexture);
+    dest_pnj(pAlex2);
+    free(wEcran);
+    free(hEcran);
     TTF_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);

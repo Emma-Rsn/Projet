@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <SDL2/SDL_ttf.h>
 #include "../libs/texte.h"
+#include "../libs/commun.h"
 
 
 /**
@@ -38,9 +39,9 @@
 
 
 //fonction qui affiche du texte 
-int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
+int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim){
 
-    if(*etat==1){
+    if(liste->etat > 0){
         //initialisation des variables
         SDL_Surface * texte=NULL;
         SDL_Texture * texture=NULL;
@@ -109,6 +110,57 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
     return 0;
 }
 
+//affiche une boite de dialogue en finction du msg de l'ec de la liste et d'un portrait
+int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int we,int he){
+    TTF_Font  * police = TTF_OpenFont("fonts/alagard.ttf", 20); 
+    if (police == NULL){
+            TTF_CloseFont(police);
+            TTF_Quit();
+            fprintf(stderr,"probleme a l'ouverture de la police\n");
+            return -1;
+    }
+    SDL_Color blanc = {255, 255, 255};
+    SDL_Rect r_po = {0,he-TaillePo,TaillePo,TaillePo};
+    SDL_Rect r_text = {TaillePo,he-TaillePo,we-TaillePo,TaillePo};
+
+    //boite portrait
+    SDL_Texture * po_texture = SDL_CreateTextureFromSurface(rendu, po);
+    SDL_RenderCopy(rendu, po_texture, NULL, &r_po);
+    SDL_DestroyTexture(po_texture);
+
+    //boite texte
+    int * w = malloc(sizeof(int));
+    int * h = malloc(sizeof(int));
+    *w= 10;
+    *h= 10;
+    SDL_SetRenderDrawColor(rendu,0,0,0,255);
+    SDL_RenderFillRect(rendu, &r_text);
+    SDL_Surface * texte = TTF_RenderText_Solid(police, liste->ec->message, blanc);
+    if (!texte){
+        SDL_FreeSurface(texte);
+        TTF_CloseFont(police);
+        police = NULL;
+        TTF_Quit();
+        printf("probleme de texte\n");
+        return -1;
+    }
+    SDL_Texture * text_texture = SDL_CreateTextureFromSurface(rendu,texte);
+    SDL_Rect textRect = {r_text.x+5, r_text.y+5, texte->w, texte->h};
+    SDL_FreeSurface(texte); 
+    if(!text_texture){
+        printf("Impossible de creeer la texture\n");
+        TTF_CloseFont(police);
+        police = NULL;
+        TTF_Quit();
+        return -1;
+    }
+    SDL_RenderCopy(rendu, text_texture, NULL, &textRect);
+    free(w);
+    free(h);
+    SDL_DestroyTexture(text_texture);
+    return 0;
+}
+
 /**
 *
 *\fn dialogue(SDL_Event event,int * etat,Liste * liste)
@@ -121,7 +173,7 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
 */
 
 //fonction pour afficher le texte ou non par rapport a son etat
-void dialogue (SDL_Event event,int * etat,Liste * liste){
+void dialogue (SDL_Event event,Liste * liste){
 
 	//si une touche est presser
     if(event.type == SDL_KEYDOWN ){
@@ -130,20 +182,17 @@ void dialogue (SDL_Event event,int * etat,Liste * liste){
             case SDLK_e:  
                     //dernier texte dans la structure
                     if(liste->ec->suivant==NULL){
-                        liste->test=0;
+                        liste->etat = 2;
                         liste_premier(liste);
-                        *etat=0;
                     }
                     else{
-                        *etat=1;
                         //premier element de la structure
-                        if(liste->test == 0){
-                            liste->test=1;
+                        if(liste->etat == 0){
+                            liste->etat=1;
                         }
                         //suite des elments de la structure
-                        else if (liste->test==1){
+                        else if (liste->etat == 1){
                             liste_suivant(liste);              
-                        
                         }
                     }
             	break;	
@@ -153,13 +202,6 @@ void dialogue (SDL_Event event,int * etat,Liste * liste){
     }
 
 }
-
-/**
-*
-*\fn initialisation()
-*\brief focntion pour initialiser la structure liste
-*
-*/
 
 int liste_vide(Liste * liste){
     if(liste->premier == NULL){
@@ -182,6 +224,13 @@ void liste_suivant(Liste * liste){
     }
 }
 
+/**
+*
+*\fn initialisation()
+*\brief focntion pour initialiser la structure liste
+*
+*/
+
 //focntion pour initialiser la structure liste
 Liste * initialisation()
 {
@@ -193,7 +242,7 @@ Liste * initialisation()
     }
     liste->premier = NULL;
     liste_premier(liste);
-    liste->test=0;
+    liste->etat=0;
 
     return liste;
 }
