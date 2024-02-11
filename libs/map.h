@@ -8,8 +8,8 @@
 #define LONG 16
 #define LARG 9
 
-#define ROW 3
-#define COLUMN 3
+#define ROWS 3
+#define COLUMNS 3
 
 /*structure d'une carte
     toute les textured de fond (sous quelle forme ?)
@@ -27,7 +27,7 @@ typedef struct carte_s carte_t;
 struct carte_s{
     int etat_brouillard; // si 1 alors la carte est couverte de brouillard(pas encore explorée), si 0 alors la carte a été explorée
     SDL_Color bgColor;
-    case_t grille[LONG][LARG]; //quadrillage des cases dans une seule carte
+    case_t ***grille; //quadrillage des cases dans une seule carte
     carte_t * nord; // si NULL alors pas de lien avec la carte se trouvant au nord ou bordure de carte
     carte_t * sud; // si NULL alors pas de lien avec la carte se trouvant au sud ou bordure de carte
     carte_t * est; // si NULL alors pas de lien avec la carte se trouvant à l'est ou bordure de carte
@@ -37,8 +37,8 @@ struct carte_s{
 case_t * creation_case();
 carte_t * creation_carte();
 int color_carte(carte_t*c,SDL_Color Color);
-int lien_carte(carte_t map[ROW][COLUMN]);
-int creation_matrice(carte_t map[ROW][COLUMN]);
-int destroy_case(case_t* c);
-int destroy_carte(carte_t* carte);
-int destroy_map(carte_t map[ROW][COLUMN]);
+int lien_carte(carte_t ***map);
+carte_t*** creation_map();
+int destroy_case(case_t** c);
+int destroy_carte(carte_t** carte);
+int destroy_map(carte_t*** map);

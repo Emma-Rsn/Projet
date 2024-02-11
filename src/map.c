@@ -14,6 +14,7 @@
 
 
 #include "../libs/map.h"
+int alloc_cpt=0;
 
 /**
 *
@@ -24,6 +25,7 @@
 //fonction de creation de case
 case_t * creation_case(){
     case_t *c=malloc(sizeof(case_t));
+    alloc_cpt++;
     c->etat=0;
     return c;
 }
@@ -36,13 +38,29 @@ case_t * creation_case(){
 
 //fonction de creation de carte
 carte_t * creation_carte(){
-    carte_t *c=malloc(sizeof(carte_t*));
+    carte_t *c=malloc(sizeof(carte_t));
+    alloc_cpt++;
     c->etat_brouillard=1;
     c->nord=NULL;
     c->sud=NULL;
     c->est=NULL;
     c->ouest=NULL;
+    c->grille = malloc(LONG * sizeof(case_t)); // Allocation des lignes
+    alloc_cpt*=LONG;
+    if (c->grille == NULL) {
+        // Gestion de l'erreur d'allocation
+        free(c); // Libère la mémoire allouée précédemment pour éviter une fuite de mémoire
+        return NULL;
+    }
+    for (int i = 0; i < LONG; i++) {
+        c->grille[i] = malloc(LARG * sizeof(case_t)); // Allocation des colonnes pour chaque ligne
+        alloc_cpt*=LARG;
+        for (int j = 0; j < LARG; j++) {
+            c->grille[i][j] = creation_case(); // Initialise chaque case
+        }
+    }
     return c;
+
 }
 
 /**
@@ -68,21 +86,21 @@ int color_carte(carte_t*c,SDL_Color Color){
 */
 
 //fonction créant les liens entre les cartes
-int lien_carte(carte_t map[ROW][COLUMN]){
+int lien_carte(carte_t ***map){
     int x,y;
-    for(x=0;x<ROW;x++){
-        for(y=0;y<COLUMN;y++){
+    for(x=0;x<ROWS;x++){
+        for(y=0;y<COLUMNS;y++){
             if(y!=0){
-                map[x][y].ouest=&(map[x][y-1]);
+                map[x][y]->ouest=map[x][y-1];
             }
-            if(y!=COLUMN-1){
-                map[x][y].est=&(map[x][y+1]);
+            if(y!=COLUMNS-1){
+                map[x][y]->est=map[x][y+1];
             }
             if(x!=0){
-                map[x][y].nord=&(map[x-1][y]);
+                map[x][y]->nord=map[x-1][y];
             }
-            if(x!=ROW-1){
-                map[x][y].sud=&(map[x+1][y]);
+            if(x!=ROWS-1){
+                map[x][y]->sud=map[x+1][y];
             }
         }
     }
@@ -98,16 +116,17 @@ int lien_carte(carte_t map[ROW][COLUMN]){
 
 //fonction de creation de la matrice de cartes
 
-int creation_matrice(carte_t map[ROW][COLUMN]){
-    int i,j;
-
-    for(i=0;i<ROW;i++){
-        for(j=0;j<COLUMN;j++){
-            map[i][j]=*(creation_carte());
+carte_t*** creation_map() {
+    carte_t*** map = malloc(ROWS * sizeof(carte_t));
+    alloc_cpt*=ROWS;
+    for(int i = 0; i < ROWS; i++) {
+        map[i] = malloc(COLUMNS * sizeof(carte_t));
+        alloc_cpt*=COLUMNS;
+        for(int j = 0; j < COLUMNS; j++) {
+            map[i][j] = creation_carte(); // Initialise chaque carte
         }
     }
-    return 0;
-
+    return map;
 }
 /**
 *
@@ -118,9 +137,10 @@ int creation_matrice(carte_t map[ROW][COLUMN]){
 
 //fonction de destruction d'une case
 
-int destroy_case(case_t* c){
-    free(c);
-    c=NULL;
+int destroy_case(case_t** c){
+    free(*c);
+    alloc_cpt--;
+    *c=NULL;
     return 0;
 }
 
@@ -132,18 +152,21 @@ int destroy_case(case_t* c){
 */
 
 //fonction de destruction d'une carte
- 
- int destroy_carte(carte_t*carte){
-    int i,j;
-    for(i=0;i<LONG;i++){
-        for(j=0;j<LARG;j++){
-            destroy_case(&(carte->grille[i][j]));
+
+int destroy_carte(carte_t** carte) {
+    if (carte && *carte) {
+        for (int i = 0; i < LONG; i++) {
+            for (int j = 0; j < LARG; j++) {
+                destroy_case(&((*carte)->grille[i][j]));
+            }
+            free((*carte)->grille[i]);
         }
+        free((*carte)->grille);
+        free(*carte);
     }
-    free (carte);
-    carte=NULL;
     return 0;
- }
+}
+
 
  /**
 *
@@ -154,15 +177,35 @@ int destroy_case(case_t* c){
 
 //fontion de destruction de la matrice de carte
 
-int destroy_map(carte_t map[ROW][COLUMN]){
-    int i,j;
-    for(i=0;i<ROW;i++){
-        for(j=0;j<COLUMN;j++){
-            destroy_carte(&(map[i][j]));
+int destroy_map(carte_t*** map) {
+    if (map && *map) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                destroy_carte(&(map[i][j]));
+            }
+            free((*map)[i]);
+            (*map)[i] = NULL;
         }
+        free(*map);
+        *map = NULL;
     }
     return 0;
 }
+/*
+int destroy_map(carte_t*** map) {
+    if (map && *map) {
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                destroy_carte(&((*map)[i][j])); // Passe l'adresse du pointeur de carte
+            }
+            free((*map)[i]); // Libère la ligne de cartes
+            (*map)[i] = NULL; // Optionnel, met à NULL le pointeur de ligne après libération
+        }
+        free(*map); // Libère la matrice de cartes
+        *map = NULL; // Met à NULL le pointeur de la matrice après libération
+    }
+    return 0;
+}*/
 
 //fonction d'affichage du bg de la carte actuelle au format cadriallge
 
