@@ -82,28 +82,28 @@ int main(){
     }
     
     //IMG de fond
-   /* //SDL_Texture* backgroundTexture = NULL;
+    //SDL_Texture* backgroundTexture = NULL;
     SDL_Color Blue={0, 204, 203, 255};
     SDL_Color Pink={254, 231, 240, 255};
     SDL_Color Green={130, 196, 108, 255};
-
     //création map
     carte_t * p_map;
-    carte_t map[ROW][COLUMN];
-    creation_matrice(map);
-    p_map=&(map[0][0]);
+    carte_t ***map=creation_map();
+    
+    p_map=map[0][0];
     lien_carte(map);
     int color_ind,color_ind2;
-    for(color_ind=0;color_ind<COLUMN;color_ind++){
-        for(color_ind2=0;color_ind2<ROW;color_ind2++){
+    for(color_ind=0;color_ind<COLUMNS;color_ind++){
+        for(color_ind2=0;color_ind2<ROWS;color_ind2++){
             switch(color_ind){
-                case 0 : color_carte(&(map[color_ind2][color_ind]),Blue);
-                case 1 : color_carte(&(map[color_ind2][color_ind]),Pink);
-                case 2 : color_carte(&(map[color_ind2][color_ind]),Green);
+                case 0 : color_carte(map[color_ind2][color_ind],Blue);
+                case 1 : color_carte(map[color_ind2][color_ind],Pink);
+                case 2 : color_carte(map[color_ind2][color_ind],Green);
                 default : break;
             }
         }
-    }*/
+    }
+    
 
 
     //variable FPS
@@ -128,7 +128,6 @@ int main(){
 
     SDL_Rect Ecran = {0,0,*LEcran,*lEcran};
 
-
     //boucle du programme
     while (run) {
         //zone d'evenement
@@ -142,9 +141,9 @@ int main(){
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
                 pAlex->e=0;
             }
-            /*if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
                 p_map=p_map->est;
-            }*/
+            }
             
             pinput(pAlex,event);
             col_p(&obj1,pAlex);
@@ -164,7 +163,7 @@ int main(){
             }
         }
         //efface le rendu
-        //SDL_SetRenderDrawColor(renderer,p_map->bgColor.r,p_map->bgColor.g,p_map->bgColor.b,p_map->bgColor.a);
+        SDL_SetRenderDrawColor(renderer,p_map->bgColor.r,p_map->bgColor.g,p_map->bgColor.b,p_map->bgColor.a);
         SDL_RenderClear(renderer);
 
         //affiche le bg
@@ -190,7 +189,7 @@ int main(){
     }
 
     // Libérer les ressources
-    //destroy_map(map);
+    destroy_map(map);
     free(nfps);
     free(t0);
     free(t1);
