@@ -36,7 +36,7 @@ case_t * creation_case(){
 
 //fonction de creation de carte
 carte_t * creation_carte(){
-    carte_t *c=malloc(sizeof(carte_t));
+    carte_t *c=malloc(sizeof(carte_t*));
     c->etat_brouillard=1;
     c->nord=NULL;
     c->sud=NULL;
