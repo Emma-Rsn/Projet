@@ -94,17 +94,16 @@ int main(){
     pnj_t Alex2;
     Alex2 = init_pnj("Alex2",500, 200,"sprite/alexdial.png", "sprite/alexface2.png");
     pnj_t * pAlex2 = &Alex2;
-    insertion(Alex2.dial, "Test d'une longue phrase histoire de voir ce que sa peut donner une tres longue phrase avec des trucs de dans genre un anti slash n : \n est ce que sa fait bien un saut a la ligne ?");
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
-    insertion(Alex2.dial, "The last Nightmare");
     //variable indique l'etat du prog
 	int run = 1;
 
     SDL_Event event;
 
     //zone declaration objet
-    SDL_Rect obj1 = {100, 200, 288, 288};
+
+    SDL_Rect bord = {pAlex2->r.x - 1, pAlex2->r.y - 1,pAlex2->r.w + 2, pAlex2->r.h + 2};
 
     SDL_Rect Ecran = {0,0,*hEcran,*wEcran};
 
@@ -127,9 +126,9 @@ int main(){
             }*/
             
             pinput(pAlex,event);
-            col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
-            debut_dialogue(event,Alex2.dial);
+            col_p(&pAlex2->r,pAlex);
+            debut_dialogue(event,pAlex2->dial,&bord,pAlex);
             
             
         }
@@ -148,10 +147,6 @@ int main(){
         SDL_SetRenderDrawColor(renderer,200,50,55,255);
         SDL_RenderClear(renderer);
 
-        // Dessiner un cadre(obj1)
-        SDL_SetRenderDrawColor(renderer, 0, 50, 200, 255);
-        SDL_RenderDrawRect(renderer, &obj1);
-
 		//Affiche un personnage
         affp(pAlex,renderer);
 
@@ -159,14 +154,10 @@ int main(){
         aff_pnj(Alex2,renderer);
 
         //afficher dialogue
-        //aff_boite_dia(renderer,Alex2.dial,Alex2.po,*wEcran,*hEcran);
+        pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
-
-        //filtre
-        //SDL_SetRenderDrawColor(renderer,0,0,0,100);
-        //SDL_RenderFillRect(renderer, &Ecran);
 
         // Mettre à jour le rendu
         SDL_RenderPresent(renderer);

@@ -146,7 +146,6 @@ int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int we,int 
     }
     SDL_Texture * text_texture = SDL_CreateTextureFromSurface(rendu,texte);
     SDL_Rect textRect = {r_text.x+5, r_text.y+5, texte->w, texte->h};
-    SDL_FreeSurface(texte); 
     if(!text_texture){
         printf("Impossible de creeer la texture\n");
         TTF_CloseFont(police);
@@ -157,6 +156,8 @@ int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int we,int 
     SDL_RenderCopy(rendu, text_texture, NULL, &textRect);
     free(w);
     free(h);
+    TTF_CloseFont(police);
+    SDL_FreeSurface(texte); 
     SDL_DestroyTexture(text_texture);
     return 0;
 }
@@ -192,7 +193,7 @@ void dialogue (SDL_Event event,Liste * liste){
                         }
                         //suite des elments de la structure
                         else if (liste->etat == 1){
-                            liste_suivant(liste);              
+                            liste_suivant(liste);        
                         }
                     }
             	break;	
@@ -273,7 +274,7 @@ void insertion(Liste *liste, char * nvMess)
         exit(EXIT_FAILURE);
     }
     
-    nouveau->message = malloc(strlen(nvMess));
+    nouveau->message = malloc(strlen(nvMess)+1);
     strcpy(nouveau->message,nvMess);
 
     /* Insertion de l'élément au début de la liste */
@@ -286,6 +287,7 @@ void insertion(Liste *liste, char * nvMess)
     }
     liste->premier = nouveau;
     nouveau = NULL;
+    liste_premier(liste);
 }
 
 
