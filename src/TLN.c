@@ -142,9 +142,6 @@ int main(){
     while (*run) {
         //zone d'evenement
         while (SDL_PollEvent(&event) != 0) {
-            if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT)) {
-                *run = 0;
-            }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
                 pAlex->e=-1;
             }
@@ -162,7 +159,6 @@ int main(){
 
             //menu
             menu(LEcran,lEcran,event,renderer,run);
-           printf("%d\n",*run);
             
             
         }
