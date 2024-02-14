@@ -26,7 +26,7 @@
 
 #include "../libs/Pmov.h"
 #include "../libs/texte.h"
-#include "../libs/map.h"
+#include "../libs/map2.h"
 #include "../libs/printImg.h"
 #include "../libs/save.h"
 
@@ -84,26 +84,48 @@ int main(){
     //IMG de fond
     //SDL_Texture* backgroundTexture = NULL;
     SDL_Color Blue={0, 204, 203, 255};
+    Uint8 br=0;
+    Uint8 bg=204;
+    Uint8 bb=203;
+    Uint8 ba=255;
     SDL_Color Pink={254, 231, 240, 255};
+    Uint8 pr=254;
+    Uint8 pg=231;
+    Uint8 pb=240;
+    Uint8 pa=255;
     SDL_Color Green={130, 196, 108, 255};
-    //création map
-    carte_t * p_map;
-    carte_t ***map=creation_map();
+    Uint8 gr=130;
+    Uint8 gg=196;
+    Uint8 gb=108;
+    Uint8 ga=255;
     
-    p_map=map[0][0];
-    lien_carte(map);
+    
+    // Initialiser la map
+    map_t map=creation_map();
+    int ind_map=0;
+
+    /*
     int color_ind,color_ind2;
     for(color_ind=0;color_ind<COLUMNS;color_ind++){
         for(color_ind2=0;color_ind2<ROWS;color_ind2++){
             switch(color_ind){
-                case 0 : color_carte(map[color_ind2][color_ind],Blue);
-                case 1 : color_carte(map[color_ind2][color_ind],Pink);
-                case 2 : color_carte(map[color_ind2][color_ind],Green);
+                case 0 : map.tabMap[color_ind2][color_ind]=color_carte(map.tabMap[color_ind2][color_ind],br,bg,bb,ba);
+                case 1 : map.tabMap[color_ind2][color_ind]=color_carte(map.tabMap[color_ind2][color_ind],pr,pg,pb,pa);
+                case 2 : map.tabMap[color_ind2][color_ind]=color_carte(map.tabMap[color_ind2][color_ind],gr,gg,gb,ga);
                 default : break;
             }
         }
-    }
-    
+    }  
+    */  
+   map.tabMap[0][0].r=br;
+   map.tabMap[0][0].g=bg;
+   map.tabMap[0][0].b=bb;
+   map.tabMap[0][0].a=ba;
+
+   map.tabMap[0][1].r=pr;
+   map.tabMap[0][1].g=pg;
+   map.tabMap[0][1].b=pb;
+   map.tabMap[0][1].a=pa;
 
 
     //variable FPS
@@ -141,8 +163,22 @@ int main(){
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
                 pAlex->e=0;
             }
-            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_k)){
-                p_map=p_map->est;
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_x)){
+                printf("eee\n");
+                
+                if(ind_map==0){
+                    ind_map=1;
+                }
+                /*if(ind_map==1){
+                    ind_map=2;
+                }
+                if(ind_map==2){
+                    ind_map=3;
+                }
+                if(ind_map==3){
+                    ind_map=0;
+                }*/
+                printf("i = %d\n",ind_map);
             }
             
             pinput(pAlex,event);
@@ -163,7 +199,8 @@ int main(){
             }
         }
         //efface le rendu
-        SDL_SetRenderDrawColor(renderer,p_map->bgColor.r,p_map->bgColor.g,p_map->bgColor.b,p_map->bgColor.a);
+        SDL_SetRenderDrawColor(renderer,map.tabMap[0][ind_map].r,map.tabMap[0][ind_map].g,map.tabMap[0][ind_map].b,map.tabMap[0][ind_map].a);
+        printf("red = %d\n",map.tabMap[ind_map][0].r);
         SDL_RenderClear(renderer);
 
         //affiche le bg
@@ -189,7 +226,6 @@ int main(){
     }
 
     // Libérer les ressources
-    destroy_map(map);
     free(nfps);
     free(t0);
     free(t1);

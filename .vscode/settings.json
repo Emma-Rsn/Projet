@@ -3,6 +3,7 @@
         "stdio.h": "c",
         "sdl_image.h": "c",
         "sdl.h": "c",
-        "sdl_ttf.h": "c"
+        "sdl_ttf.h": "c",
+        "ios": "c"
     }
 }
