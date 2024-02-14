@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define LONG 16
-#define LARG 9
+#define LONG 32
+#define LARG 18
 
 #define ROWS 3
 #define COLUMNS 3
@@ -20,6 +20,7 @@
 
 typedef struct case_s case_t;
 struct case_s{
+    SDL_Rect Rectangle;
     int etat;// si 0 alors pas d'obstacles dans la case
 };
 
@@ -35,7 +36,7 @@ struct carte_s{
     Uint8 g; 
     Uint8 b;
     Uint8 a;
-    //grille_t grille; //quadrillage des cases dans une seule carte
+    grille_t grille; //quadrillage des cases dans une seule carte
     //carte_t * nord; // si NULL alors pas de lien avec la carte se trouvant au nord ou bordure de carte
     //carte_t * sud; // si NULL alors pas de lien avec la carte se trouvant au sud ou bordure de carte
     //carte_t * est; // si NULL alors pas de lien avec la carte se trouvant à l'est ou bordure de carte
@@ -47,8 +48,8 @@ struct map_s{
     carte_t tabMap[LONG][LARG];
 };
 
-case_t creation_case(void);
-grille_t creation_grille(void);
-carte_t creation_carte(void);
-carte_t color_carte(carte_t c, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
-map_t creation_map (void);
+case_t creation_case(int w, int h);
+grille_t creation_grille(int w, int h);
+carte_t creation_carte(int w, int h);
+map_t creation_map (int w, int h);
+int afficher_grille(grille_t grille, SDL_Renderer *renderer);

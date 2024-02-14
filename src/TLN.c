@@ -66,7 +66,7 @@ int main(){
         return -1;
     }
     // Création de la fenêtre
-    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN);
+    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (window == NULL) {
         fprintf(stderr, "Erreur de création de la fenêtre : %s\n", SDL_GetError());
         SDL_Quit();
@@ -101,7 +101,10 @@ int main(){
     
     
     // Initialiser la map
-    map_t map=creation_map();
+    printf("non\n");
+    printf("%d %d\n",(*LEcran),(*lEcran));
+    map_t map=creation_map((*LEcran),(*lEcran));
+    printf("oui\n");
     int ind_map=0;
 
     /*
@@ -203,12 +206,13 @@ int main(){
         printf("red = %d\n",map.tabMap[ind_map][0].r);
         SDL_RenderClear(renderer);
 
-        //affiche le bg
-        //print_bg(backgroundTexture,renderer,L_Ecran,l_Ecran);
+        //affiche la grille
+        afficher_grille(map.tabMap[0][ind_map].grille,renderer);
 
         // Dessiner un cadre(obj1)
         SDL_SetRenderDrawColor(renderer, 0, 50, 200, 255);
         SDL_RenderDrawRect(renderer, &obj1);
+
 
 		//Affiche un personnage
         affp(pAlex,renderer);
