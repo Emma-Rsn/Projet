@@ -5,18 +5,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define LONG 16
-#define LARG 9
+#define LONG 30
+#define LARG 16
 
 #define ROWS 3
 #define COLUMNS 3
-
-/*structure d'une carte
-    toute les textured de fond (sous quelle forme ?)
-    les zones de sortie (en rect sdl)
-    pointeur sur carte adjc 1 a 4
-    
-*/
 
 typedef struct case_s case_t;
 struct case_s{
@@ -45,7 +38,7 @@ struct carte_s{
 
 typedef struct map_s map_t;
 struct map_s{
-    carte_t tabMap[LONG][LARG];
+    carte_t tabMap[ROWS][COLUMNS];
 };
 
 case_t creation_case(int w, int h);

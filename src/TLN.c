@@ -66,7 +66,7 @@ int main(){
         return -1;
     }
     // Création de la fenêtre
-    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN);
     if (window == NULL) {
         fprintf(stderr, "Erreur de création de la fenêtre : %s\n", SDL_GetError());
         SDL_Quit();
@@ -101,10 +101,8 @@ int main(){
     
     
     // Initialiser la map
-    printf("non\n");
-    printf("%d %d\n",(*LEcran),(*lEcran));
     map_t map=creation_map((*LEcran),(*lEcran));
-    printf("oui\n");
+    printf("test1\n");
     int ind_map=0;
 
     /*
@@ -150,7 +148,7 @@ int main(){
 
     //zone declaration objet
     SDL_Rect obj1 = {100, 200, 288, 288};
-
+    SDL_Rect HUD  = {0,0,*LEcran,56};
     SDL_Rect Ecran = {0,0,*LEcran,*lEcran};
 
     //boucle du programme
@@ -203,8 +201,10 @@ int main(){
         }
         //efface le rendu
         SDL_SetRenderDrawColor(renderer,map.tabMap[0][ind_map].r,map.tabMap[0][ind_map].g,map.tabMap[0][ind_map].b,map.tabMap[0][ind_map].a);
-        printf("red = %d\n",map.tabMap[ind_map][0].r);
         SDL_RenderClear(renderer);
+
+        SDL_SetRenderDrawColor(renderer, 255, 255, 245, 255);
+        SDL_RenderFillRect(renderer, &HUD);
 
         //affiche la grille
         afficher_grille(map.tabMap[0][ind_map].grille,renderer);

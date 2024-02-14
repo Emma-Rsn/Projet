@@ -20,22 +20,21 @@ case_t creation_case(int we, int he){
     c.etat=0;
     c.Rectangle.x=0;
     c.Rectangle.y=0;
-    c.Rectangle.w=we/LONG;
-    c.Rectangle.h=he/LARG;
+    c.Rectangle.w=64;
+    c.Rectangle.h=64;
     return c;
 }
 
 grille_t creation_grille(int w, int h){
     grille_t g;
     int i,j;
-    int wCase=w/LONG;
-    int hCase=h/LARG;
-
+    int taille=64;
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
+            printf("oui3 %d %d\n",i,j);
             g.tabGrille[i][j]=creation_case(w,h);
-            g.tabGrille[i][j].Rectangle.x=wCase*i;
-            g.tabGrille[i][j].Rectangle.y=hCase*j;
+            g.tabGrille[i][j].Rectangle.x=taille*i;
+            g.tabGrille[i][j].Rectangle.y=taille*j+56;
         }
     }
     return g;
@@ -43,8 +42,10 @@ grille_t creation_grille(int w, int h){
 }
 
 carte_t creation_carte(int w, int h){
+    printf("oui2\n");
     carte_t carte;
     carte.grille=creation_grille(w,h);
+    printf("oui6\n");
     carte.etat_brouillard=1;
     carte.r=255;
     carte.g=255;
@@ -54,13 +55,11 @@ carte_t creation_carte(int w, int h){
 }
 
 map_t creation_map (int w, int h){
-    printf("ouimaisnon\n");
     map_t m;
-    printf("ouimais\n");
     int i,j;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
-            printf("oui %d\n",j);
+            printf("oui %d %d\n",i,j);
             m.tabMap[i][j]=creation_carte(w,h);
         }
     }
