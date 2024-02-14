@@ -55,29 +55,41 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
             return -1;
         }
 
+        SDL_Texture* textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
+        SDL_FreeSurface(textSurfaceQ);
+
         SDL_Surface* textSurfaceC = TTF_RenderText_Solid(font,Cont, textColor);
         if (!textSurfaceC) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
             return -1;
         }
+
+        SDL_Texture* textTextureC = SDL_CreateTextureFromSurface(renderer, textSurfaceC);
+        SDL_FreeSurface(textSurfaceC);
 
         SDL_Surface* textSurfaceT = TTF_RenderText_Solid(font,Titre, textColor);
         if (!textSurfaceT) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            SDL_FreeSurface(textSurfaceC);
             return -1;
         }
+        
+        SDL_Texture* textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
+        SDL_FreeSurface(textSurfaceT);
 
         TTF_CloseFont(font);
         font=NULL;
 
-        SDL_Texture* textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
-        SDL_Texture* textTextureC = SDL_CreateTextureFromSurface(renderer, textSurfaceC);
-        SDL_Texture* textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
-        SDL_FreeSurface(textSurfaceQ);
-        SDL_FreeSurface(textSurfaceC);
-        SDL_FreeSurface(textSurfaceT);
+        
+        
+        
+        
+        
+        
 
         SDL_Rect  r_text_C= {((*we)/2)-(textSurfaceC->w)/2,(*he)/2,textSurfaceC->w,textSurfaceC->h};
         SDL_Rect  r_text_Q= {((*we)/2)-(textSurfaceQ->w)/2,(*he)/2+200,textSurfaceQ->w,textSurfaceQ->h};
@@ -85,21 +97,16 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
 
         if(SDL_QueryTexture(textTextureQ,NULL,NULL,&r_text_Q.w,&r_text_Q.h)!=0){
                 printf("Impossible de charger le texte\n");
-                TTF_Quit();
-                return -1;
-            
+                return -1;          
         }
 
         if(SDL_QueryTexture(textTextureC,NULL,NULL,&r_text_C.w,&r_text_C.h)!=0){
                 printf("Impossible de charger le texte\n");
-                TTF_Quit();
                 return -1;
-            
         }
 
          if(SDL_QueryTexture(textTextureT,NULL,NULL,&r_text_T.w,&r_text_T.h)!=0){
                 printf("Impossible de charger le texte\n");
-                TTF_Quit();
                 return -1;
             
         }
@@ -133,11 +140,9 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
             SDL_RenderCopy(renderer, textTextureC, NULL, &r_text_C);
             SDL_RenderCopy(renderer, textTextureT, NULL, &r_text_T);
 
-
             SDL_SetRenderDrawColor(renderer,0,0,255,255);
 
             SDL_RenderPresent(renderer);
-            SDL_Delay(100);
 
             
        
@@ -146,6 +151,7 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
 
         SDL_DestroyTexture(textTextureQ);
         SDL_DestroyTexture(textTextureC);
+        SDL_DestroyTexture(textTextureT);
 
         SDL_RenderClear(renderer);
         SDL_RenderPresent(renderer);
