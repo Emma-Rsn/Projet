@@ -29,6 +29,7 @@
 #include "../libs/map.h"
 #include "../libs/printImg.h"
 #include "../libs/save.h"
+#include "../libs/menu.h"
 
 //nombre de frame par secondes voulu
 #define FPS 30
@@ -44,8 +45,13 @@ int main(){
 
     maListe->ec=maListe->premier;
     int * etat = malloc(sizeof(int));
+    SDL_Rect r_text={10,10,0,0};
 
+    //initialisation variable menu
 
+    int * etat_menu=malloc(sizeof(int));
+    int * run=malloc(sizeof(int));
+    *run=1;
 
      
     //resolution de l'ecran
@@ -66,7 +72,7 @@ int main(){
         return -1;
     }
     // Création de la fenêtre
-    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN);
+    SDL_Window *window = SDL_CreateWindow("The Last Nightmare", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, *LEcran, *lEcran, SDL_WINDOW_FULLSCREEN_DESKTOP);
     if (window == NULL) {
         fprintf(stderr, "Erreur de création de la fenêtre : %s\n", SDL_GetError());
         SDL_Quit();
@@ -119,7 +125,6 @@ int main(){
 	Alex = initp(200,200);
 	p_mv * pAlex = &Alex;
     //variable indique l'etat du prog
-	int run = 1;
 
     SDL_Event event;
 
@@ -128,13 +133,17 @@ int main(){
 
     SDL_Rect Ecran = {0,0,*LEcran,*lEcran};
 
+   
+
+   
+
 
     //boucle du programme
-    while (run) {
+    while (*run) {
         //zone d'evenement
         while (SDL_PollEvent(&event) != 0) {
             if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_ESCAPE || event.type == SDL_QUIT)) {
-                run = 0;
+                *run = 0;
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
                 pAlex->e=-1;
@@ -150,6 +159,10 @@ int main(){
             col_p(&obj1,pAlex);
             col_p(&Ecran,pAlex);
             dialogue(event,etat,maListe);
+
+            //menu
+            menu(LEcran,lEcran,event,renderer,run);
+           printf("%d\n",*run);
             
             
         }
@@ -179,10 +192,12 @@ int main(){
 
         //afficher dialogue
 
-        affiche_texte(renderer,maListe,900,etat);
+        affiche_texte(renderer,maListe,900,900,etat,r_text);
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
+
+        
 
         // Mettre à jour le rendu
         SDL_RenderPresent(renderer);
@@ -196,6 +211,9 @@ int main(){
     free(t1);
     liste_destruction(maListe);
     free(etat);
+    free(etat_menu);
+    free(run);
+    
 
     free(lEcran);
     free(LEcran);

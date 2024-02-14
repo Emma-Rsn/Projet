@@ -24,9 +24,9 @@
 
 /**
 *
-*\fn int affiche_texte(SDL_Renderer * rendu,Liste* liste,int dim,int * etat)
+*\fn int affiche_texte(SDL_Renderer * rendu,Liste* liste,int he,int * etat)
 *\param liste structure du message a afficher
-*\param dim dimension de la fenetre 
+*\param he heension de la fenetre 
 *\param rendu rendu de la fenetre
 *\param etat etat du texte afficher
 *\brief fonction qui affiche du texte 
@@ -38,14 +38,14 @@
 
 
 //fonction qui affiche du texte 
-int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
+int affiche_texte(SDL_Renderer * rendu,Liste *liste,int he,int we,int * etat,SDL_Rect r_text){
 
     if(*etat==1){
         //initialisation des variables
         SDL_Surface * texte=NULL;
         SDL_Texture * texture=NULL;
         
-        SDL_Rect r_text={10,10,0,0};
+        
 
         TTF_Font  * police = TTF_OpenFont("fonts/alagard.ttf", 20); 
 
@@ -92,8 +92,10 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
             }
             
             //changer la position du texte 
-            r_text.y=(dim-r_text.w)/2;
-            r_text.x=(dim-r_text.w)/2;
+
+            //r_text.y=(he-r_text.w)/2;
+            //r_text.x=(we-r_text.w)/2;
+
             SDL_RenderCopy(rendu,texture,NULL,&r_text);
             /*if(test!=0){
                 printf("Impossible d'afficher le texte");
@@ -122,6 +124,7 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int dim,int * etat){
 
 //fonction pour afficher le texte ou non par rapport a son etat
 void dialogue (SDL_Event event,int * etat,Liste * liste){
+
 
 	//si une touche est presser
     if(event.type == SDL_KEYDOWN ){
