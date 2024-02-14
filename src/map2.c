@@ -20,16 +20,16 @@ case_t creation_case(int we, int he){
     c.etat=0;
     c.Rectangle.x=0;
     c.Rectangle.y=0;
-    c.Rectangle.w=we/32;
-    c.Rectangle.h=he/18;
+    c.Rectangle.w=we/LONG;
+    c.Rectangle.h=he/LARG;
     return c;
 }
 
 grille_t creation_grille(int w, int h){
     grille_t g;
     int i,j;
-    int wCase=w/32;
-    int hCase=h/18;
+    int wCase=w/LONG;
+    int hCase=h/LARG;
 
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){

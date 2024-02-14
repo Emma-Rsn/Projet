@@ -5,8 +5,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define LONG 32
-#define LARG 18
+#define LONG 16
+#define LARG 9
 
 #define ROWS 3
 #define COLUMNS 3
