@@ -20,7 +20,7 @@ struct Liste
 
 extern SDL_Event event;
 
-int affiche_texte(SDL_Renderer * rendu,Liste *mess,int dim,int * etat);
+int affiche_texte(SDL_Renderer * rendu,Liste *mess,int he,int we,int * etat,SDL_Rect r_texte);
 void dialogue (SDL_Event event,int * etat,Liste * liste);
 int liste_vide(Liste * liste);
 void liste_premier(Liste * liste);
