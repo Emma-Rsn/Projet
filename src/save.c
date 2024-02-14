@@ -49,13 +49,13 @@ int save_settings(void){
 *
 */
 
-int load_settings(int * lEcran,int * LEcran){
+int load_settings(int * wEcran,int * hEcran){
     FILE* fichier = NULL;
     fichier = fopen("save/settings.txt","r+");
     if(fichier == NULL){
         printf("Erreur a l'ouerture du fichier\n");
     }
-    fscanf(fichier, "%d %d",lEcran,LEcran);
+    fscanf(fichier, "%d %d",wEcran,hEcran);
     fclose(fichier);
     return 0;
 }

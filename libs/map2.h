@@ -1,3 +1,7 @@
+#ifndef __MAP2_H__
+#define __MAP2_H__
+
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
@@ -46,3 +50,5 @@ grille_t creation_grille(int w, int h);
 carte_t creation_carte(int w, int h);
 map_t creation_map (int w, int h);
 int afficher_grille(grille_t grille, SDL_Renderer *renderer);
+
+#endif

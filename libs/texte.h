@@ -15,13 +15,14 @@ struct Liste
 {
     mess_s * premier;
     mess_s * ec;
-    int  test;
+    int etat; //0 = pas d'affichage debut liste 1 == affichage premier 2 == affichage element 3 == affichage dernier
 };
 
 extern SDL_Event event;
 
-int affiche_texte(SDL_Renderer * rendu,Liste *mess,int dim,int * etat);
-void dialogue (SDL_Event event,int * etat,Liste * liste);
+int affiche_texte(SDL_Renderer * rendu,Liste *mess,int dim);
+int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int le,int LE);
+void dialogue (SDL_Event event,Liste * liste);
 int liste_vide(Liste * liste);
 void liste_premier(Liste * liste);
 void liste_suivant(Liste * liste);
