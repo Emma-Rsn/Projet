@@ -37,6 +37,7 @@ struct personnage{
     int d; //direction orienté{N,E,S,O}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
+    int pv;
 };
 
 /**
@@ -347,5 +348,6 @@ p_mv initp(int x,int y){
     p.d=0;
     p.e=0;
     p.nom="alex";
+    p.pv=100;
     return p;
 }

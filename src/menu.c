@@ -44,11 +44,8 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
         }
 
         SDL_Color textColor = {255, 255, 255};
-        char *Quit = "Quitter";
-        char *Cont ="Continuer";
-        char *Titre ="The Last Nightmare";
         
-        SDL_Surface* textSurfaceQ = TTF_RenderText_Solid(font,Quit, textColor);
+        SDL_Surface* textSurfaceQ = TTF_RenderText_Solid(font,"Quitter", textColor);
         if (!textSurfaceQ) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
@@ -58,7 +55,7 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
         SDL_Texture* textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
         
 
-        SDL_Surface* textSurfaceC = TTF_RenderText_Solid(font,Cont, textColor);
+        SDL_Surface* textSurfaceC = TTF_RenderText_Solid(font,"Continuer", textColor);
         if (!textSurfaceC) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
@@ -69,7 +66,7 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
         SDL_Texture* textTextureC = SDL_CreateTextureFromSurface(renderer, textSurfaceC);
         
 
-        SDL_Surface* textSurfaceT = TTF_RenderText_Solid(font,Titre, textColor);
+        SDL_Surface* textSurfaceT = TTF_RenderText_Solid(font,"The Last Nightmare", textColor);
         if (!textSurfaceT) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
@@ -85,7 +82,7 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
         font=NULL;
 
 
-
+        //creation rectangle pour les textes
         SDL_Rect  r_text_C= {((*we)/2)-((textSurfaceC->w)/2),((*he)/2),textSurfaceC->w,textSurfaceC->h};
         SDL_Rect  r_text_T= {((*we)/2)-((textSurfaceT->w)/2),10,textSurfaceT->w,textSurfaceT->h};
         SDL_Rect  r_text_Q= {((*we)/2)-((textSurfaceQ->w)/2),((*he)/2)+200,textSurfaceQ->w,textSurfaceQ->h};
@@ -145,10 +142,7 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
 
             SDL_RenderPresent(renderer);
             SDL_Delay(100);
-
-            
-       
-                        
+      
             }
 
         SDL_DestroyTexture(textTextureQ);

@@ -11,6 +11,7 @@ struct personnage{
     int d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
+    int pv;
 };
 
 void pinput(p_mv * pmv,SDL_Event event);

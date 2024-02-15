@@ -23,6 +23,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+#include <time.h>
 
 #include "../libs/save.h"
 #include "../libs/printImg.h"
@@ -40,7 +42,7 @@
 #define FPS 30
 
 int main(){
-
+    srand(time(NULL));
 
     //initialisation variable menu
 
@@ -247,7 +249,7 @@ int main(){
         aff_Fps(cmpfps,renderer);
 
         //Commence une combat
-        combat(wEcran,hEcran,event,renderer,pAlex3);
+        combat(wEcran,hEcran,event,renderer,pAlex3,pAlex);
 
     
         // Mettre à jour le rendu
