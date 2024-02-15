@@ -86,8 +86,8 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
         SDL_RenderDrawPoint(renderer,pmv->r.x+(pmv->r.w/2),pmv->r.y+(pmv->r.h/2));
     }
     else{
-        SDL_Surface* perso;
-        SDL_Texture * tperso;
+        SDL_Surface* perso=NULL;
+        SDL_Texture * tperso=NULL;
         char * empSprit1 = malloc(sizeof(char)*30);
         char * empSprit2 = malloc(sizeof(char)*30);
         if(pmv->e == 0){

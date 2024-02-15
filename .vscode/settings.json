@@ -3,6 +3,12 @@
         "stdio.h": "c",
         "sdl_image.h": "c",
         "sdl.h": "c",
-        "sdl_ttf.h": "c"
+        "sdl_ttf.h": "c",
+<<<<<<< HEAD
+        "ios": "c"
+=======
+        "pnj.h": "c",
+        "printimg.h": "c"
+>>>>>>> dial
     }
 }
