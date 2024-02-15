@@ -68,10 +68,10 @@ int affiche_texte(SDL_Renderer * rendu,Liste *liste,int he,int we,int * etat,SDL
                 SDL_FreeSurface(texte);
                 TTF_CloseFont(police);
                 police = NULL;
-                TTF_Quit();
                 printf("probleme de texte\n");
                 return -1;
             }
+            
             TTF_CloseFont(police);
             police = NULL;
 

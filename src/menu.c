@@ -56,7 +56,7 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
         }
 
         SDL_Texture* textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
-        SDL_FreeSurface(textSurfaceQ);
+        
 
         SDL_Surface* textSurfaceC = TTF_RenderText_Solid(font,Cont, textColor);
         if (!textSurfaceC) {
@@ -67,7 +67,7 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
         }
 
         SDL_Texture* textTextureC = SDL_CreateTextureFromSurface(renderer, textSurfaceC);
-        SDL_FreeSurface(textSurfaceC);
+        
 
         SDL_Surface* textSurfaceT = TTF_RenderText_Solid(font,Titre, textColor);
         if (!textSurfaceT) {
@@ -79,21 +79,21 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
         }
         
         SDL_Texture* textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
-        SDL_FreeSurface(textSurfaceT);
+        
 
         TTF_CloseFont(font);
         font=NULL;
 
-        
-        
-        
-        
-        
-        
 
-        SDL_Rect  r_text_C= {((*we)/2)-(textSurfaceC->w)/2,(*he)/2,textSurfaceC->w,textSurfaceC->h};
-        SDL_Rect  r_text_Q= {((*we)/2)-(textSurfaceQ->w)/2,(*he)/2+200,textSurfaceQ->w,textSurfaceQ->h};
-        SDL_Rect  r_text_T= {((*we)/2)-(textSurfaceT->w)/2,10,textSurfaceT->w,textSurfaceT->h};
+
+        SDL_Rect  r_text_C= {((*we)/2)-((textSurfaceC->w)/2),((*he)/2),textSurfaceC->w,textSurfaceC->h};
+        SDL_Rect  r_text_T= {((*we)/2)-((textSurfaceT->w)/2),10,textSurfaceT->w,textSurfaceT->h};
+        SDL_Rect  r_text_Q= {((*we)/2)-((textSurfaceQ->w)/2),((*he)/2)+200,textSurfaceQ->w,textSurfaceQ->h};
+        
+        SDL_FreeSurface(textSurfaceT);
+        SDL_FreeSurface(textSurfaceC);
+        SDL_FreeSurface(textSurfaceQ);
+
 
         if(SDL_QueryTexture(textTextureQ,NULL,NULL,&r_text_Q.w,&r_text_Q.h)!=0){
                 printf("Impossible de charger le texte\n");
@@ -121,11 +121,11 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
                     if(event.type == SDL_MOUSEBUTTONDOWN ){
 
                         //pour continuer le jeu
-                        if((r_text_C.x<=event.button.x) && ((r_text_C.x+100)>=event.button.x) && ((r_text_C.y+100)>=event.button.y) && (r_text_C.y<=event.button.y)){
+                        if((r_text_C.x<=event.button.x) && ((r_text_C.x+r_text_C.w)>=event.button.x) && ((r_text_C.y+r_text_C.h)>=event.button.y) && (r_text_C.y<=event.button.y)){
                             etat=0;
                         }
                         //pour quitter le jeu
-                        else if((r_text_Q.x<=event.button.x) && ((r_text_Q.x+100)>=event.button.x) && ((r_text_Q.y+100)>=event.button.y) && (r_text_Q.y<=event.button.y)){
+                        else if((r_text_Q.x<=event.button.x) && ((r_text_Q.x+r_text_Q.w)>=event.button.x) && ((r_text_Q.y+r_text_Q.h)>=event.button.y) && (r_text_Q.y<=event.button.y)){
                             etat=0;
                             *run=0;
                         }  
@@ -134,15 +134,17 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
                 }
         
             SDL_SetRenderDrawColor(renderer,0,0,0,255);
+            
             SDL_RenderClear(renderer);
 
+            
             SDL_RenderCopy(renderer, textTextureQ, NULL, &r_text_Q);
             SDL_RenderCopy(renderer, textTextureC, NULL, &r_text_C);
             SDL_RenderCopy(renderer, textTextureT, NULL, &r_text_T);
 
-            SDL_SetRenderDrawColor(renderer,0,0,255,255);
 
             SDL_RenderPresent(renderer);
+            SDL_Delay(100);
 
             
        

@@ -158,6 +158,7 @@ int main(){
             dialogue(event,etat,maListe);
 
             //menu
+            
             menu(LEcran,lEcran,event,renderer,run);
             
             
