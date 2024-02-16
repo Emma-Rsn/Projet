@@ -117,16 +117,49 @@ int afficher_zone (map_t map){
 
 }
 
+float min(float a, float b) {
+    return (a < b) ? a : b;
+}
+
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map){
     int i, j;
     //printf("we=%d he=%d",(*we),(*he));
-    int firstX=(*we)/4;
-    int firstY=((*he)-56)/(32/15);
+    /*int firstX=(*we)/4;
+    int firstY=(*he)/(53/23);
     SDL_Rect Rectangle;
     Rectangle.x=firstX;
     Rectangle.y=firstY;
     Rectangle.w=Rectangle.x/3;
     Rectangle.h=Rectangle.y/3;
+
+    int firstX=510;
+    int firstY=60;
+    SDL_Rect Rectangle;
+    Rectangle.x=firstX;
+    Rectangle.y=firstY;
+    Rectangle.w=160;
+    Rectangle.h=160;*/
+
+    SDL_Rect Rectangle;
+
+    // Marges
+    float margeX = (*we) * 0.1;
+    float margeY = (*he) * 0.1;
+
+    // Largeur et hauteur utilisables
+    float largeurUtilisable = (*we) - 2 * margeX;
+    float hauteurUtilisable = (*he) - 2 * margeY;
+
+    // Taille de chaque carré
+    float taille_carre = min(largeurUtilisable, hauteurUtilisable) / 6;
+
+    // Coordonnées du premier carré
+    float firstX = margeX + ((*we) - 2 * margeX - taille_carre * 6) / 2;
+    float firstY = margeY + ((*he) - 2 * margeY - taille_carre * 6) / 2;
+    Rectangle.x = (int)firstX;
+    Rectangle.y = (int)firstY;
+    Rectangle.w = (int)taille_carre;
+    Rectangle.h = (int)taille_carre;
 
     if((*etat_map) == 1){
 
@@ -149,18 +182,18 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
             SDL_RenderCopy(renderer, targetTexture, NULL, NULL);
             SDL_SetRenderDrawColor(renderer,0,0,0,100);
             SDL_RenderFillRect(renderer, &tecran);
-            for(i=1;i<ROWS;i++){
-                Rectangle.y=firstY+i*Rectangle.h;
+            for(i=0;i<ROWS;i++){
+                Rectangle.y = (int)(firstY + i * taille_carre);
                 for(j=0;j<COLUMNS;j++){
                     switch(map.tabMap[i][j].nZone){
-                        case 1: SDL_SetRenderDrawColor(renderer, 206,206,206,255);
-                        case 2: SDL_SetRenderDrawColor(renderer, 86,115,154,255);
-                        case 3: SDL_SetRenderDrawColor(renderer, 153,81,43,255);
-                        case 4: SDL_SetRenderDrawColor(renderer, 104,157,113,255);
-                        case 5: SDL_SetRenderDrawColor(renderer, 115,8,0,255);
+                        case 1: SDL_SetRenderDrawColor(renderer, 206,206,206,255);break;
+                        case 2: SDL_SetRenderDrawColor(renderer, 86,115,154,255);break;
+                        case 3: SDL_SetRenderDrawColor(renderer, 153,81,43,255);break;
+                        case 4: SDL_SetRenderDrawColor(renderer, 104,157,113,255);break;
+                        case 5: SDL_SetRenderDrawColor(renderer, 115,8,0,255);break;
                         default: break;
                     }
-                    Rectangle.x=firstX+j*Rectangle.w;
+                    Rectangle.x = (int)(firstX + j * taille_carre);
                     printf("x=%d y=%d\n",Rectangle.x,Rectangle.y);
                     SDL_RenderFillRect(renderer, &Rectangle);
                 }
