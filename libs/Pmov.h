@@ -4,6 +4,19 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
+typedef struct personnage_equipe p_eq;
+struct personnage_equipe{
+    //coordonées du personnage et taille dans un rect
+    SDL_Rect r;//{x,y,w,h}
+    char * nom;
+    int pv;
+    char * nomATQ1;
+    char * nomATQ2;
+    char * nomATQ3;
+    
+    
+};
+
 typedef struct personnage p_mv;
 struct personnage{
     //coordonées du personnage et taille dans un rect
@@ -12,6 +25,8 @@ struct personnage{
     int e; //etat du personnage
     char * nom;
     int pv;
+    p_eq *equipe[3];
+
 };
 
 void pinput(p_mv * pmv,SDL_Event event);

@@ -146,7 +146,14 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(200,200);
+    Alex.equipe[0]=malloc(sizeof(p_eq));
+    Alex.equipe[0]->nom="Lou";
+    Alex.equipe[0]->pv=100;
+    Alex.equipe[0]->nomATQ1="ATQ1";
+    Alex.equipe[0]->nomATQ2="AT2";
+    Alex.equipe[0]->nomATQ3="AT3";
 	p_mv * pAlex = &Alex;
+
     //creation d'un pnj
     pnj_t Alex2;
     Alex2 = init_pnj("Alex2",500, 200,"sprite/alexdial.png", "sprite/alexface2.png",map.tabMap[0][0].grille.tabGrille[14][9]);
@@ -263,10 +270,12 @@ int main(){
     free(t1);
     free(etat_menu);
     free(run);
+    free(Alex.equipe[0]);
     
 
     //SDL_DestroyTexture(backgroundTexture);
     dest_pnj(pAlex2);
+    dest_pnj(pAlex3);
     free(wEcran);
     free(hEcran);
     TTF_Quit();

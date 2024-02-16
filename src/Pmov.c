@@ -20,6 +20,7 @@
 #include <string.h>
 
 
+
 /**
 *
 *\struct personnage
@@ -30,14 +31,29 @@
 *\brief structure de personnage
 */
 
+typedef struct personnage_equipe p_eq;
+struct personnage_equipe{
+    //coordonées du personnage et taille dans un rect
+    SDL_Rect r;//{x,y,w,h}
+    char * nom;
+    int pv;
+    char * nomATQ1;
+    char * nomATQ2;
+    char * nomATQ3;
+    
+    
+};
+
 typedef struct personnage p_mv;
 struct personnage{
     //coordonées du personnage et taille dans un rect
     SDL_Rect r;//{x,y,w,h}
-    int d; //direction orienté{N,E,S,O}{0,1,2,3}
+    int d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
     int pv;
+    p_eq *equipe[3];
+
 };
 
 /**
@@ -349,5 +365,11 @@ p_mv initp(int x,int y){
     p.e=0;
     p.nom="alex";
     p.pv=100;
+    int i ;
+    for (i=0;i<3;i++){
+        p.equipe[i]=NULL;
+    }
+    
+
     return p;
 }
