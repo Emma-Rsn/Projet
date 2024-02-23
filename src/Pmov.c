@@ -370,6 +370,5 @@ p_mv initp(int x,int y){
         p.equipe[i]=NULL;
     }
     
-
     return p;
 }
