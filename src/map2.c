@@ -15,13 +15,14 @@
 
 #include "../libs/map2.h"
 
-case_t creation_case(int we, int he){
+case_t creation_case(char * path_textur){
     case_t c;
-    c.etat=0;
+    c.etat=1;
     c.Rectangle.x=0;
     c.Rectangle.y=0;
     c.Rectangle.w=64;
     c.Rectangle.h=64;
+    c.textu = IMG_Load(path_textur);
     return c;
 }
 
@@ -31,7 +32,7 @@ grille_t creation_grille(int w, int h){
     int taille=64;
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
-            g.tabGrille[i][j]=creation_case(w,h);
+            g.tabGrille[i][j]=creation_case("texture/terre.png");
             g.tabGrille[i][j].Rectangle.x=taille*i;
             g.tabGrille[i][j].Rectangle.y=taille*j+56;
             g.tabGrille[i][j].x=i;
@@ -65,6 +66,17 @@ map_t creation_map (int w, int h){
 }
 
 int afficher_grille(grille_t grille, SDL_Renderer *renderer){
+    int i,j;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    for(i=0;i<LONG;i++){
+        for(j=0;j<LARG;j++){
+            SDL_RenderDrawRect(renderer, &(grille.tabGrille[i][j].Rectangle));
+        }
+    }
+    return 0;
+}
+
+int afficher_texture(grille_t grille, SDL_Renderer *renderer){
     int i,j;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     for(i=0;i<LONG;i++){

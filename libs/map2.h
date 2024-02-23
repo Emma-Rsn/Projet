@@ -21,6 +21,7 @@ struct case_s{
     int x;
     int y;
     int etat;// si 0 alors obstacles dans la case
+    SDL_Surface textu;
 };
 
 typedef struct grille_s grille_t;
@@ -49,7 +50,7 @@ struct map_s{
     carte_t tabMap[ROWS][COLUMNS];
 };
 
-case_t creation_case(int w, int h);
+case_t creation_case(char * path_textur);
 grille_t creation_grille(int w, int h);
 carte_t creation_carte(int w, int h);
 map_t creation_map (int w, int h);

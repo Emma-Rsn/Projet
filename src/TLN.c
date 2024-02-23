@@ -122,7 +122,7 @@ int main(){
 
     //creation d'un pnj
     pnj_t Alex2;
-    Alex2 = init_pnj("Alex2",500, 200,"sprite/alexdial.png", "sprite/alexface2.png",map.tabMap[0][0].grille.tabGrille[14][9]);
+    Alex2 = init_pnj("Alex2","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[14][9]));
     pnj_t * pAlex2 = &Alex2;
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
@@ -131,7 +131,7 @@ int main(){
     //creation ennemi 
 
     pnj_t Alex3;
-    Alex3 = init_pnj("Alex3",500, 200,"sprite/alexdial.png", "sprite/alexface2.png",map.tabMap[0][0].grille.tabGrille[1][2]);
+    Alex3 = init_pnj("Alex3","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[1][2]));
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
@@ -140,10 +140,6 @@ int main(){
 
     //zone declaration objet
     SDL_Rect HUD  = {0,0,*wEcran,56};
-    
-    SDL_Rect bord = {pAlex2->r.x - 1, pAlex2->r.y - 1,pAlex2->r.w + 2, pAlex2->r.h + 2};
-
-    SDL_Rect bord2 = {pAlex3->r.x - 1, pAlex3->r.y - 1,pAlex3->r.w + 2, pAlex3->r.h + 2};
 
     SDL_Rect Ecran = {0,0,*hEcran,*wEcran};
 
@@ -176,10 +172,8 @@ int main(){
             //menu
             
             menu(wEcran,hEcran,event,renderer,run);
-            col_p(&pAlex2->r,pAlex);
-            debut_dialogue(event,pAlex2->dial,&bord,pAlex);
-            debut_combat(event,pAlex3,&bord2,pAlex);
-            col_p(&pAlex3->r,pAlex);
+            debut_dialogue(event,pAlex2,pAlex);
+            debut_combat(event,pAlex3,pAlex);
             
         }
         //zone d'affichage
