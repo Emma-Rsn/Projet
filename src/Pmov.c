@@ -57,19 +57,25 @@ void pinput(p_mv * pmv,SDL_Event event,grille_t grille){
             }
             break;
             case SDLK_s: 
-            pmv->c=grille.tabGrille[pmv->c.x][pmv->c.y+1];
-            pmv->r=pmv->c.Rectangle;
-            pmv->d=2;
+            if(grille.tabGrille[pmv->c.x][pmv->c.y+1].etat){
+                pmv->c=grille.tabGrille[pmv->c.x][pmv->c.y+1];
+                pmv->r=pmv->c.Rectangle;
+                pmv->d=2;
+            }
             break;
             case SDLK_q: 
-            pmv->c=grille.tabGrille[pmv->c.x-1][pmv->c.y];
-            pmv->r=pmv->c.Rectangle;
-            pmv->d=3;
+            if(grille.tabGrille[pmv->c.x-1][pmv->c.y].etat){
+                pmv->c=grille.tabGrille[pmv->c.x-1][pmv->c.y];
+                pmv->r=pmv->c.Rectangle;
+                pmv->d=3;
+            }
             break;
             case SDLK_d: 
-            pmv->c=grille.tabGrille[pmv->c.x+1][pmv->c.y];
-            pmv->r=pmv->c.Rectangle;
-            pmv->d=1;
+            if(grille.tabGrille[pmv->c.x+1][pmv->c.y].etat){
+                pmv->c=grille.tabGrille[pmv->c.x+1][pmv->c.y];
+                pmv->r=pmv->c.Rectangle;
+                pmv->d=1;
+            }
             break;
             default: break;
         }

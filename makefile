@@ -51,6 +51,10 @@ clean:
 	@rm -f -R $(OBJDIR)
 	@rm -f -R $(SAVEDIR)
 
+restart:
+	@rm -f -R $(BINDIR)
+	@rm -f -R $(OBJDIR)
+
 
 
 
