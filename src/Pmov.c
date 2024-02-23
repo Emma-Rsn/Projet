@@ -18,6 +18,8 @@
 #include <SDL2/SDL_image.h>
 #include <stdlib.h>
 #include <string.h>
+#include <string.h>
+#include "../libs/Pmov.h"
 
 
 
@@ -31,30 +33,6 @@
 *\brief structure de personnage
 */
 
-typedef struct personnage_equipe p_eq;
-struct personnage_equipe{
-    //coordonées du personnage et taille dans un rect
-    SDL_Rect r;//{x,y,w,h}
-    char * nom;
-    int pv;
-    char * nomATQ1;
-    char * nomATQ2;
-    char * nomATQ3;
-    
-    
-};
-
-typedef struct personnage p_mv;
-struct personnage{
-    //coordonées du personnage et taille dans un rect
-    SDL_Rect r;//{x,y,w,h}
-    int d; //direction orienté{N,E,S,W}{0,1,2,3}
-    int e; //etat du personnage
-    char * nom;
-    int pv;
-    p_eq *equipe[3];
-
-};
 
 /**
 *
@@ -66,22 +44,35 @@ struct personnage{
 
 
 //detection de touche presser et modification des coordonées
-void pinput(p_mv * pmv,SDL_Event event){
+void pinput(p_mv * pmv,SDL_Event event,grille_t grille){
     //si une touche est presser
     if(event.type == SDL_KEYDOWN){
         //quelle touche est presser
         switch(event.key.keysym.sym){
-            case SDLK_z: pmv->r.y -= 1,pmv->d = 0,pmv->e++; break;
-            case SDLK_s: pmv->r.y += 1,pmv->d = 2,pmv->e++; break;
-            case SDLK_q: pmv->r.x -= 1,pmv->d = 3,pmv->e++; break;
-            case SDLK_d: pmv->r.x += 1,pmv->d = 1,pmv->e++; break;
+            case SDLK_z: 
+            if(grille.tabGrille[pmv->c.x][pmv->c.y-1].etat){
+                pmv->c=grille.tabGrille[pmv->c.x][pmv->c.y-1];
+                pmv->r=pmv->c.Rectangle;
+                pmv->d=0;
+            }
+            break;
+            case SDLK_s: 
+            pmv->c=grille.tabGrille[pmv->c.x][pmv->c.y+1];
+            pmv->r=pmv->c.Rectangle;
+            pmv->d=2;
+            break;
+            case SDLK_q: 
+            pmv->c=grille.tabGrille[pmv->c.x-1][pmv->c.y];
+            pmv->r=pmv->c.Rectangle;
+            pmv->d=3;
+            break;
+            case SDLK_d: 
+            pmv->c=grille.tabGrille[pmv->c.x+1][pmv->c.y];
+            pmv->r=pmv->c.Rectangle;
+            pmv->d=1;
+            break;
             default: break;
         }
-        if(pmv->e == 3){
-            pmv->e=1;
-        }
-    }else if(event.type == SDL_KEYUP && pmv->e != -1){
-        pmv->e=0;
     }
 }
 
@@ -355,12 +346,10 @@ void col_p(SDL_Rect * obj_r,p_mv * pp){
 
 
 //construit un point
-p_mv initp(int x,int y){
+p_mv initp(case_t c){
     p_mv p;
-    p.r.x=x;
-    p.r.y=y;
-    p.r.w=64;
-    p.r.h=64;
+    p.c = c;
+    p.r = p.c.Rectangle;
     p.d=0;
     p.e=0;
     p.nom="alex";

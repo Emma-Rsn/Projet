@@ -34,6 +34,8 @@ grille_t creation_grille(int w, int h){
             g.tabGrille[i][j]=creation_case(w,h);
             g.tabGrille[i][j].Rectangle.x=taille*i;
             g.tabGrille[i][j].Rectangle.y=taille*j+56;
+            g.tabGrille[i][j].x=i;
+            g.tabGrille[i][j].y=j;
         }
     }
     return g;
@@ -194,7 +196,6 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
                         default: break;
                     }
                     Rectangle.x = (int)(firstX + j * taille_carre);
-                    printf("x=%d y=%d\n",Rectangle.x,Rectangle.y);
                     SDL_RenderFillRect(renderer, &Rectangle);
                 }
             }

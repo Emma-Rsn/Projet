@@ -111,7 +111,7 @@ int main(){
 
     //creation personnage
 	p_mv Alex;
-	Alex = initp(200,200);
+	Alex = initp(map.tabMap[0][0].grille.tabGrille[10][1]);
     Alex.equipe[0]=malloc(sizeof(p_eq));
     Alex.equipe[0]->nom="Lou";
     Alex.equipe[0]->pv=100;
@@ -170,7 +170,7 @@ int main(){
                 }*/
             }
             
-            pinput(pAlex,event);
+            pinput(pAlex,event,map.tabMap[0][0].grille);
             col_p(&Ecran,pAlex);
 
             //menu
@@ -202,24 +202,22 @@ int main(){
         //affiche la grille
         afficher_grille(map.tabMap[0][ind_map].grille,renderer);
 
-
-		//Affiche un personnage
-        affp(pAlex,renderer);
-
         //Affichage pnj
         aff_pnj(Alex2,renderer);
         aff_pnj(Alex3,renderer);
+
+        //affiche les fps
+        aff_Fps(cmpfps,renderer);
+
+        //Affiche un personnage
+        affp(pAlex,renderer);
 
         //afficher dialogue
         pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
 
         //afficher map
-
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map);
-
-        //affiche les fps
-        aff_Fps(cmpfps,renderer);
-
+        
         //Commence une combat
         combat(wEcran,hEcran,event,renderer,pAlex3,pAlex);
 

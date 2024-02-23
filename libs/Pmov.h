@@ -3,6 +3,7 @@
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "../libs/map2.h"
 
 typedef struct personnage_equipe p_eq;
 struct personnage_equipe{
@@ -20,6 +21,7 @@ struct personnage_equipe{
 typedef struct personnage p_mv;
 struct personnage{
     //coordonées du personnage et taille dans un rect
+    case_t c;
     SDL_Rect r;//{x,y,w,h}
     int d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
@@ -29,12 +31,12 @@ struct personnage{
 
 };
 
-void pinput(p_mv * pmv,SDL_Event event);
+void pinput(p_mv * pmv,SDL_Event event,grille_t grille);
 
-void affp(p_mv * pmv,SDL_Renderer *renderer);
+int affp(p_mv * pmv,SDL_Renderer *renderer);
 
 void col_p(SDL_Rect * obj_r,p_mv * pp);
 
-p_mv initp(int x,int y);
+p_mv initp(case_t c);
 
 #endif

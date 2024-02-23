@@ -18,7 +18,9 @@
 typedef struct case_s case_t;
 struct case_s{
     SDL_Rect Rectangle;
-    int etat;// si 0 alors pas d'obstacles dans la case
+    int x;
+    int y;
+    int etat;// si 0 alors obstacles dans la case
 };
 
 typedef struct grille_s grille_t;
