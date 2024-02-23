@@ -18,43 +18,12 @@
 #include <SDL2/SDL_image.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../libs/Pmov.h"
 
 
 
-/**
-*
-*\struct personnage
-*\param r taille du personnage
-*\param d direction orienté{N,E,S,O}{0,1,2,3}
-*\param e etat du personnage
-*\param nom prenom du personnage
-*\brief structure de personnage
-*/
 
-typedef struct personnage_equipe p_eq;
-struct personnage_equipe{
-    //coordonées du personnage et taille dans un rect
-    SDL_Rect r;//{x,y,w,h}
-    char * nom;
-    int pv;
-    char * nomATQ1;
-    char * nomATQ2;
-    char * nomATQ3;
-    
-    
-};
 
-typedef struct personnage p_mv;
-struct personnage{
-    //coordonées du personnage et taille dans un rect
-    SDL_Rect r;//{x,y,w,h}
-    int d; //direction orienté{N,E,S,W}{0,1,2,3}
-    int e; //etat du personnage
-    char * nom;
-    int pv;
-    p_eq *equipe[3];
-
-};
 
 /**
 *
@@ -63,7 +32,6 @@ struct personnage{
 *\param pmv structure du personnage
 *\brief fonction qui detecte si unetouche est presser et modifie ses coordonées
 */
-
 
 //detection de touche presser et modification des coordonées
 void pinput(p_mv * pmv,SDL_Event event){
@@ -354,6 +322,47 @@ void col_p(SDL_Rect * obj_r,p_mv * pp){
 }
 
 
+/**
+*
+*\fn p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQ2,char * nomATQspe)
+*\param nom prenom du personnage
+*\param pv les pv du personnage
+*\param nomATQ1 nom de l'attaque de base du personnage
+*\param nomATQ2 nom de l'attaque particuliere de personnage
+*\param nomATQspe nom de l'attaque special du personnage dans le cauchemar
+*\brief fonction qui creer le personnage de l'equipe avec les parametres
+*/
+p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQ2,char * nomATQspe){
+    p_eq * pe=malloc(sizeof(p_eq));
+    pe->nom=nom;
+    pe->pv=pv;
+    pe->nomATQ1=nomATQ1;
+    pe->nomATQ2=nomATQ2;
+    pe->nomATQspe=nomATQspe;
+    return pe;
+}
+
+/**
+*
+*\fn void desctruction_p_eq(p_mv * p)
+*\param p strcuture du personnage 
+*\brief fonction qui detruit les personnages de l'equipe
+*/
+void desctruction_p_eq(p_mv * p){
+    int i;
+    int nb_allie=0;
+        for (i=0;i<4;i++){
+            if(p->equipe[i]!=NULL){
+                nb_allie++;
+            }
+        }
+
+    for(i=0;i<nb_allie;i++){
+        free(p->equipe[i]);
+    }
+    
+}
+
 //construit un point
 p_mv initp(int x,int y){
     p_mv p;
@@ -364,11 +373,11 @@ p_mv initp(int x,int y){
     p.d=0;
     p.e=0;
     p.nom="alex";
-    p.pv=100;
     int i ;
-    for (i=0;i<3;i++){
+    for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    
+    p.equipe[0]=initp_eq("alex",100,"Attaque 1","Attaque 2","Attaque spe");
     return p;
 }
+

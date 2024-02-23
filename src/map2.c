@@ -194,7 +194,6 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
                         default: break;
                     }
                     Rectangle.x = (int)(firstX + j * taille_carre);
-                    printf("x=%d y=%d\n",Rectangle.x,Rectangle.y);
                     SDL_RenderFillRect(renderer, &Rectangle);
                 }
             }

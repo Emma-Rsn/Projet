@@ -8,13 +8,9 @@
 *\brief programme principale
 *\author Moreau Enzo Rasson Emma Pasquier Lina 
 *\date  janvier 2024
-*\version 1.0
+*\version 0.0
 *
 */
-
-
-
-
 
 
 #include <SDL2/SDL.h>
@@ -112,12 +108,7 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(200,200);
-    Alex.equipe[0]=malloc(sizeof(p_eq));
-    Alex.equipe[0]->nom="Lou";
-    Alex.equipe[0]->pv=100;
-    Alex.equipe[0]->nomATQ1="ATQ1";
-    Alex.equipe[0]->nomATQ2="AT2";
-    Alex.equipe[0]->nomATQ3="AT3";
+    Alex.equipe[1]=initp_eq("Lou",100,"ATQ1","AT2","ATspe");
 	p_mv * pAlex = &Alex;
 
     //creation d'un pnj
@@ -129,7 +120,6 @@ int main(){
 
 
     //creation ennemi 
-
     pnj_t Alex3;
     Alex3 = init_pnj("Alex3",500, 200,"sprite/alexdial.png", "sprite/alexface2.png",map.tabMap[0][0].grille.tabGrille[1][2]);
     pnj_t * pAlex3 = &Alex3;
@@ -230,13 +220,14 @@ int main(){
     }
 
     // Libérer les ressources
+    desctruction_p_eq(pAlex);
     free(etat_map);
     free(nfps);
     free(t0);
     free(t1);
     free(etat_menu);
     free(run);
-    free(Alex.equipe[0]);
+
     
 
     //SDL_DestroyTexture(backgroundTexture);
