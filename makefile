@@ -27,6 +27,7 @@ $(SAVEDIR):
 	mkdir -p $(SAVEDIR)
 	touch save/settings.txt
 	chmod a+w save/settings.txt
+	cp map.txt save
 	
 #recupere les fichiers .c et .h du repertoires sources dans 2 variables
 SOURCES  := $(wildcard $(SRCDIR)/*.c)
