@@ -8,20 +8,15 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-
-#define LONG 30
-#define LARG 16
-
-#define ROWS 6
-#define COLUMNS 6
+#include "../libs/commun.h"
 
 typedef struct case_s case_t;
 struct case_s{
     SDL_Rect Rectangle;
     int x;
     int y;
-    int etat;// si 0 alors obstacles dans la case
-    SDL_Surface textu;
+    int etat;// si 0 alors obstacles dans la case 1 case libre 2 case libre mais en bordure 3 case libre mais en bordure finale
+    SDL_Surface * textu;
 };
 
 typedef struct grille_s grille_t;
@@ -32,6 +27,8 @@ struct grille_s{
 
 typedef struct carte_s carte_t;
 struct carte_s{
+    int xcarte;
+    int ycarte;
     int etat_brouillard; // si 1 alors la carte est couverte de brouillard(pas encore explorée), si 0 alors la carte a été explorée
     Uint8 r;// couleurs du background de chaque carte
     Uint8 g; 
@@ -51,8 +48,8 @@ struct map_s{
 };
 
 case_t creation_case(char * path_textur);
-grille_t creation_grille(int w, int h);
-carte_t creation_carte(int w, int h);
+grille_t creation_grille(int w, int h, int bord);
+carte_t creation_carte(int w, int h,int x,int y);
 map_t creation_map (int w, int h);
 int afficher_grille(grille_t grille, SDL_Renderer *renderer);
 int remplir_map(map_t *map);

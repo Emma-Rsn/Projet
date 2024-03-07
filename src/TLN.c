@@ -96,6 +96,7 @@ int main(){
     int *etat_map=malloc(sizeof(int));
     (*etat_map)=0;
     int ind_map=0;
+    carte_t * cartec = &(map.tabMap[0][0]);
 
     remplir_map(&map);
     afficher_zone(map);
@@ -111,7 +112,7 @@ int main(){
 
     //creation personnage
 	p_mv Alex;
-	Alex = initp(map.tabMap[0][0].grille.tabGrille[10][1]);
+	Alex = initp(cartec,&(cartec->grille.tabGrille[10][1]));
     Alex.equipe[0]=malloc(sizeof(p_eq));
     Alex.equipe[0]->nom="Lou";
     Alex.equipe[0]->pv=100;
@@ -166,8 +167,8 @@ int main(){
                 }*/
             }
             
-            pinput(pAlex,event,map.tabMap[0][0].grille);
-            col_p(&Ecran,pAlex);
+            pinput(pAlex,event,&cartec,map);
+            printf("%d %d %d\n",cartec->xcarte,cartec->ycarte,cartec->nZone);
 
             //menu
             
@@ -187,14 +188,21 @@ int main(){
             }
         }
         //efface le rendu
-        SDL_SetRenderDrawColor(renderer,map.tabMap[0][ind_map].r,map.tabMap[0][ind_map].g,map.tabMap[0][ind_map].b,map.tabMap[0][ind_map].a);
+        switch(cartec->nZone){
+            case 1: SDL_SetRenderDrawColor(renderer, 206,206,206,255);break;
+            case 2: SDL_SetRenderDrawColor(renderer, 86,115,154,255);break;
+            case 3: SDL_SetRenderDrawColor(renderer, 153,81,43,255);break;
+            case 4: SDL_SetRenderDrawColor(renderer, 104,157,113,255);break;
+            case 5: SDL_SetRenderDrawColor(renderer, 115,8,0,255);break;
+            default: SDL_SetRenderDrawColor(renderer, 0,0,0,255);break;
+        }
         SDL_RenderClear(renderer);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 245, 255);
         SDL_RenderFillRect(renderer, &HUD);
 
         //affiche la grille
-        afficher_grille(map.tabMap[0][ind_map].grille,renderer);
+        afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
         aff_pnj(Alex2,renderer);

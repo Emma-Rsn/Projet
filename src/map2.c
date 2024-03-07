@@ -26,13 +26,41 @@ case_t creation_case(char * path_textur){
     return c;
 }
 
-grille_t creation_grille(int w, int h){
+grille_t creation_grille(int w, int h, int bord){
     grille_t g;
     int i,j;
     int taille=64;
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
             g.tabGrille[i][j]=creation_case("texture/terre.png");
+            switch (bord){
+                case 0 : if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;break;
+                case 1 : if(j == 0 )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //N
+                case 2 : if(i == (LONG-1) )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //E
+                case 3 : if(j == (LARG-1) )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //S
+                case 4 : if(i == 0 )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //O
+                case 5 : if(j == 0 || i == (LONG-1) )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //NE
+                case 6 : if(j == (LARG-1) || i == (LONG-1) )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //SE
+                case 7 : if(j == (LARG-1) || i == 0 )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //SO
+                case 8 : if(j == 0 || i == 0 )g.tabGrille[i][j].etat = 3; 
+                else if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;
+                break; //NO
+                default: break;
+            }
             g.tabGrille[i][j].Rectangle.x=taille*i;
             g.tabGrille[i][j].Rectangle.y=taille*j+56;
             g.tabGrille[i][j].x=i;
@@ -43,9 +71,23 @@ grille_t creation_grille(int w, int h){
 
 }
 
-carte_t creation_carte(int w, int h){
+carte_t creation_carte(int w, int h,int x,int y){
     carte_t carte;
-    carte.grille=creation_grille(w,h);
+    int bord = 0; //variable pour savoir si on est en bordure de map
+    carte.xcarte=x;
+    carte.ycarte=y;
+    if(x == 0) bord = 1;
+    if(x == (ROWS-1)) bord = 3;
+    if(y == 0) bord = 4;
+    if(y == (COLUMNS-1)) bord = 2;
+    if(x == 0 && y == 0) bord = 8;
+    if(x == 0 && y == (COLUMNS-1)) bord = 5;
+    if(x == (ROWS-1) && y == 0) bord = 7;
+    if(x == (ROWS-1) && y == (COLUMNS-1)) bord = 6;
+    if(bord == 2 || bord == 5)printf("%d \n",bord);
+    else if(bord == 6)printf("%d \nfin bord\n",bord);
+    else printf("%d ",bord);
+    carte.grille=creation_grille(w,h,bord);
     carte.etat_brouillard=1;
     carte.r=255;
     carte.g=255;
@@ -59,7 +101,7 @@ map_t creation_map (int w, int h){
     int i,j;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
-            m.tabMap[i][j]=creation_carte(w,h);
+            m.tabMap[i][j]=creation_carte(w,h,i,j);
         }
     }
     return m;
@@ -67,10 +109,14 @@ map_t creation_map (int w, int h){
 
 int afficher_grille(grille_t grille, SDL_Renderer *renderer){
     int i,j;
+    SDL_Texture * texture;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
             SDL_RenderDrawRect(renderer, &(grille.tabGrille[i][j].Rectangle));
+            if(grille.tabGrille[i][j].etat == 3)SDL_RenderFillRect(renderer, &(grille.tabGrille[i][j].Rectangle));
+            texture = SDL_CreateTextureFromSurface(renderer, grille.tabGrille[i][j].textu);
+            SDL_RenderCopy(renderer, texture, NULL, &(grille.tabGrille[i][j].Rectangle));
         }
     }
     return 0;

@@ -28,13 +28,13 @@ void aff_pnj(pnj_t pnj, SDL_Renderer *renderer){
 
 
 int boolcol (case_t * obj_c,p_mv * pp){
-    if(pp->c.x+1 == obj_c->x){ //verifie case droite
+    if(pp->c->x+1 == obj_c->x){ //verifie case droite
         return 1;
-    }else if(pp->c.x-1 == obj_c->x){ //verifie case gauche
+    }else if(pp->c->x-1 == obj_c->x){ //verifie case gauche
         return 1;
-    }else if(pp->c.y+1 == obj_c->x){ //verifie case bas
+    }else if(pp->c->y+1 == obj_c->y){ //verifie case bas
         return 1;
-    }else if(pp->c.y-1 == obj_c->x){ //verifie case haut
+    }else if(pp->c->y-1 == obj_c->y){ //verifie case haut
         return 1;
     }
     return 0;
