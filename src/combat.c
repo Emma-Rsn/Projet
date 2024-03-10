@@ -204,14 +204,20 @@ int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,p_eq * pp)
 *\brief fonction d'attaque de l'ennemi 
 */
 //fonction d'attaque de l'ennemi 
-int attaque_ennemi(pnj_t * ennemi,p_mv * p,int nb_allie){
+int attaque_ennemi(pnj_t * ennemi,p_mv * p,int nb_allie,int allie){
 
     //personnage de l'equipe qui va etre a ttaquer
-    int perso=(int)1+rand()%(nb_allie+1-1);
+    int perso;
+    do{
+        perso=(int)1+rand()%(nb_allie+1-1);
+        printf("%d\n",perso-1);
+    }while(p->equipe[perso-1]->pv<=0 && allie>0);
+    
 
     //enleve des pv au personnages par rapport a ses pv 
     if(ennemi->pv<=100 && ennemi->pv>60){
-        p->equipe[perso-1]->pv-=(int)10+rand()%(15+1-10);
+        p->equipe[perso-1]->pv-=200;
+        //(int)10+rand()%(15+1-10);
     }
     if(ennemi->pv<=60 && ennemi->pv>30){
         p->equipe[perso-1]->pv-=(int)5+rand()%(10+1-5);
@@ -235,154 +241,161 @@ int attaque_ennemi(pnj_t * ennemi,p_mv * p,int nb_allie){
 *\brief fonction d'attaque des allie 
 */
 //fonction d'attaque des allie 
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,p_mv * pp,int nb_allie,int *nb_point){
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,p_mv * pp,int nb_allie,int *nb_point,int allie){
             
 
-    int j;
-    for(j=0;(j<nb_allie) && (ennemi->pv>0) && pp->equipe[j]->pv>0;j++){
-        int jouer=1;
-        int nb_point_deb=*nb_point;
-        float mult=1;
-
-
-        //chargement de la police d'écriture
-        TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 50);
-        if (!font) {
-            erreur_sdl("Erreur lors du chargement de la police",NULL,renderer,NULL,NULL);
-            return -1;
-        }
-
-
-        SDL_Rect r_basEcran={0,(*he)-(*he)/2,(*we),(*he)/2};
-        SDL_Color textColor = {255, 255, 255};
+    int j=0;
+    printf("j:%d\n",j);
+    for(j=0;(j<nb_allie) && (ennemi->pv>0) && allie>0;j++){
+        printf("j2:%d\n",j);
+        if(pp->equipe[j]!=NULL){
+            printf("pv %d :%d\n",j,pp->equipe[j]->pv);
         
-        //creation du premier texte (Attaque 1)
-        SDL_Surface* textSurfaceATQ1 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQ1, textColor);
-        if (!textSurfaceATQ1) {
-            erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,NULL,NULL);
-            TTF_CloseFont(font);
-            return -1;
-        }
-
-        SDL_Texture* textTextureATQ1 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ1);
-        SDL_Rect  r_ATQ1= {r_basEcran.w/2+200,(r_basEcran.h/2)+r_basEcran.h-100,textSurfaceATQ1->w,textSurfaceATQ1->h};
-        SDL_FreeSurface(textSurfaceATQ1);
-
-            if(SDL_QueryTexture(textTextureATQ1,NULL,NULL,&r_ATQ1.w,&r_ATQ1.h)!=0){
-                erreur_sdl("Impossible de charger le texte",NULL,renderer,textTextureATQ1,NULL);
-                return -1;          
-        }
+            int jouer=1;
+            int nb_point_deb=*nb_point;
+            float mult=1;
 
 
-        //creation du deuxieme texte (Attaque 2)
-        SDL_Surface* textSurfaceATQ2 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQ2, textColor);
-        if (!textSurfaceATQ2) {
-            erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,textTextureATQ1,NULL);
-            TTF_CloseFont(font);
-            return -1;
-        }
-        SDL_Texture* textTextureATQ2 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ2);
-        SDL_Rect  r_ATQ2= {r_basEcran.w/2-200,(r_basEcran.h/2)+r_basEcran.h-100,textSurfaceATQ2->w,textSurfaceATQ2->h};
-        SDL_FreeSurface(textSurfaceATQ2);
-
-                if(SDL_QueryTexture(textTextureATQ2,NULL,NULL,&r_ATQ2.w,&r_ATQ2.h)!=0){
-                erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,textTextureATQ2,NULL);
-            
+            //chargement de la police d'écriture
+            TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 50);
+            if (!font) {
+                erreur_sdl("Erreur lors du chargement de la police",NULL,renderer,NULL,NULL);
                 return -1;
-        }
-
-        //creation du troisieme texte (Attaque speciale)
-        SDL_Surface* textSurfaceATQ3 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQspe, textColor);
-        if (!textSurfaceATQ3) {
-            erreur_sdl("Erreur lors de la création de la surface de texte",NULL,renderer,textTextureATQ1,textTextureATQ2);
-            TTF_CloseFont(font);
-            return -1;
-        }
-        
-        SDL_Texture* textTextureATQ3 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ3);
-        SDL_Rect  r_ATQ3= {r_basEcran.w/2+200,(r_basEcran.h/2)+r_basEcran.h+100,textSurfaceATQ3->w,textSurfaceATQ3->h};
-        SDL_FreeSurface(textSurfaceATQ3);
-        if(SDL_QueryTexture(textTextureATQ3,NULL,NULL,&r_ATQ3.w,&r_ATQ3.h)!=0){
-                erreur_sdl("Impossible de charger le texte",NULL,renderer,textTextureATQ3,NULL);
-                return -1;
-        }
-
-
-        //creation texture de l'ennemi
-        SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, ennemi->po);
-        
-        //fermeture de le police d'ecriture
-        TTF_CloseFont(font);
-        font=NULL;
-
-        //creation des rectangles pour l'affichage
-        SDL_Rect  r_point= {r_basEcran.w/2-200,(r_basEcran.h/2)+r_basEcran.h+100,textSurfaceATQ3->w,textSurfaceATQ3->h};
-        SDL_Rect  r_ennemi= {200,200,200,200};
-
-
-        while(jouer){
-            while (SDL_PollEvent(&event) != 0 ) {
-                //enleve des pv au monstre avec les attaques
-                if(event.type == SDL_MOUSEBUTTONDOWN ){
-
-                    if((r_ATQ1.x<=event.button.x) && ((r_ATQ1.x+r_ATQ1.w)>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
-                        ennemi->pv-=10*mult;
-                        jouer=0;
-                    }
-                    else if((r_ATQ2.x<=event.button.x) && ((r_ATQ2.x+r_ATQ2.w)>=event.button.x) && ((r_ATQ2.y+r_ATQ2.h)>=event.button.y) && (r_ATQ2.y<=event.button.y)){
-                        ennemi->pv-=20*mult;
-                        jouer=0;
-                    }  
-                    else if((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)){
-                        ennemi->pv-=30*mult;
-                        jouer=0;
-                    }
-                    else if((r_point.x<=event.button.x) && ((r_point.x+r_ATQ3.w)>=event.button.x) && ((r_point.y+r_ATQ3.h)>=event.button.y) && (r_point.y<=event.button.y)){
-                        if (mult<2.5 && *nb_point>0){
-                            mult+=0.5;
-                            (*nb_point)--;
-                            
-                        }
-                        else{
-                            *nb_point=nb_point_deb;
-                            mult=1;
-                        }
-                        
-                    }
-                    
-                }
-                        
             }
 
-            //affichage du combat
-            SDL_SetRenderDrawColor(renderer,0,0,0,255);
+
+            SDL_Rect r_basEcran={0,(*he)-(*he)/2,(*we),(*he)/2};
+            SDL_Color textColor = {255, 255, 255};
+            
+            //creation du premier texte (Attaque 1)
+            SDL_Surface* textSurfaceATQ1 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQ1, textColor);
+            if (!textSurfaceATQ1) {
+                erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,NULL,NULL);
+                TTF_CloseFont(font);
+                return -1;
+            }
+
+            SDL_Texture* textTextureATQ1 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ1);
+            SDL_Rect  r_ATQ1= {r_basEcran.w/2+200,(r_basEcran.h/2)+r_basEcran.h-100,textSurfaceATQ1->w,textSurfaceATQ1->h};
+            SDL_FreeSurface(textSurfaceATQ1);
+
+                if(SDL_QueryTexture(textTextureATQ1,NULL,NULL,&r_ATQ1.w,&r_ATQ1.h)!=0){
+                    erreur_sdl("Impossible de charger le texte",NULL,renderer,textTextureATQ1,NULL);
+                    return -1;          
+            }
+
+
+            //creation du deuxieme texte (Attaque 2)
+            SDL_Surface* textSurfaceATQ2 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQ2, textColor);
+            if (!textSurfaceATQ2) {
+                erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,textTextureATQ1,NULL);
+                TTF_CloseFont(font);
+                return -1;
+            }
+            SDL_Texture* textTextureATQ2 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ2);
+            SDL_Rect  r_ATQ2= {r_basEcran.w/2-200,(r_basEcran.h/2)+r_basEcran.h-100,textSurfaceATQ2->w,textSurfaceATQ2->h};
+            SDL_FreeSurface(textSurfaceATQ2);
+
+                    if(SDL_QueryTexture(textTextureATQ2,NULL,NULL,&r_ATQ2.w,&r_ATQ2.h)!=0){
+                    erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,textTextureATQ2,NULL);
+                
+                    return -1;
+            }
+
+            //creation du troisieme texte (Attaque speciale)
+            SDL_Surface* textSurfaceATQ3 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQspe, textColor);
+            if (!textSurfaceATQ3) {
+                erreur_sdl("Erreur lors de la création de la surface de texte",NULL,renderer,textTextureATQ1,textTextureATQ2);
+                TTF_CloseFont(font);
+                return -1;
+            }
+            
+            SDL_Texture* textTextureATQ3 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ3);
+            SDL_Rect  r_ATQ3= {r_basEcran.w/2+200,(r_basEcran.h/2)+r_basEcran.h+100,textSurfaceATQ3->w,textSurfaceATQ3->h};
+            SDL_FreeSurface(textSurfaceATQ3);
+            if(SDL_QueryTexture(textTextureATQ3,NULL,NULL,&r_ATQ3.w,&r_ATQ3.h)!=0){
+                    erreur_sdl("Impossible de charger le texte",NULL,renderer,textTextureATQ3,NULL);
+                    return -1;
+            }
+
+
+            //creation texture de l'ennemi
+            SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, ennemi->po);
+            
+            //fermeture de le police d'ecriture
+            TTF_CloseFont(font);
+            font=NULL;
+
+            //creation des rectangles pour l'affichage
+            SDL_Rect  r_point= {r_basEcran.w/2-200,(r_basEcran.h/2)+r_basEcran.h+100,textSurfaceATQ3->w,textSurfaceATQ3->h};
+            SDL_Rect  r_ennemi= {200,200,200,200};
+
+
+            while(jouer){
+                while (SDL_PollEvent(&event) != 0 ) {
+                    //enleve des pv au monstre avec les attaques
+                    if(event.type == SDL_MOUSEBUTTONDOWN ){
+
+                        if((r_ATQ1.x<=event.button.x) && ((r_ATQ1.x+r_ATQ1.w)>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
+                            ennemi->pv-=10*mult;
+                            jouer=0;
+                        }
+                        else if((r_ATQ2.x<=event.button.x) && ((r_ATQ2.x+r_ATQ2.w)>=event.button.x) && ((r_ATQ2.y+r_ATQ2.h)>=event.button.y) && (r_ATQ2.y<=event.button.y)){
+                            ennemi->pv-=20*mult;
+                            jouer=0;
+                        }  
+                        else if((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)){
+                            ennemi->pv-=30*mult;
+                            jouer=0;
+                        }
+                        else if((r_point.x<=event.button.x) && ((r_point.x+r_ATQ3.w)>=event.button.x) && ((r_point.y+r_ATQ3.h)>=event.button.y) && (r_point.y<=event.button.y)){
+                            if (mult<2.5 && *nb_point>0){
+                                mult+=0.5;
+                                (*nb_point)--;
+                                
+                            }
+                            else{
+                                *nb_point=nb_point_deb;
+                                mult=1;
+                            }
+                            
+                        }
+                        
+                    }
+                            
+                }
+
+                //affichage du combat
+                SDL_SetRenderDrawColor(renderer,0,0,0,255);
+                SDL_RenderClear(renderer);
+
+                SDL_SetRenderDrawColor(renderer,100,100,100,255);
+                SDL_RenderFillRect(renderer, &r_basEcran);
+
+                SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
+                SDL_RenderCopy(renderer, textTextureATQ2, NULL, &r_ATQ2);
+                SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
+
+                affiche_point(mult,we,he,renderer,r_basEcran,nb_point);
+                affiche_pv(ennemi,we,he,renderer,pp->equipe[j]);
+
+                SDL_RenderCopy(renderer, tperso, NULL, &r_ennemi);
+                SDL_RenderPresent(renderer);
+                SDL_Delay(100);
+
+            }
+
+            //destruction des textures
+            SDL_DestroyTexture(textTextureATQ1);
+            SDL_DestroyTexture(textTextureATQ2);
+            SDL_DestroyTexture(textTextureATQ3);
+
+            SDL_DestroyTexture(tperso);
+
+            SDL_RenderPresent(renderer);
             SDL_RenderClear(renderer);
 
-            SDL_SetRenderDrawColor(renderer,100,100,100,255);
-            SDL_RenderFillRect(renderer, &r_basEcran);
-
-            SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
-            SDL_RenderCopy(renderer, textTextureATQ2, NULL, &r_ATQ2);
-            SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
-
-            affiche_point(mult,we,he,renderer,r_basEcran,nb_point);
-            affiche_pv(ennemi,we,he,renderer,pp->equipe[j]);
-
-            SDL_RenderCopy(renderer, tperso, NULL, &r_ennemi);
-            SDL_RenderPresent(renderer);
-            SDL_Delay(100);
-
         }
-
-        //destruction des textures
-        SDL_DestroyTexture(textTextureATQ1);
-        SDL_DestroyTexture(textTextureATQ2);
-        SDL_DestroyTexture(textTextureATQ3);
-
-        SDL_DestroyTexture(tperso);
-
-        SDL_RenderPresent(renderer);
-        SDL_RenderClear(renderer);
 
     }
                 
@@ -425,23 +438,39 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennem
 
     if(ennemi->combat){
 
-        int nb_allie=0,i,point=2;
+        int i,point=2,allie=0;
         int *nb_point=&point;
+        int nb_allie=0;
 
         //compte le nombre d'allie dans l'equipe
         for (i=0;i<3;i++){
             if(pp->equipe[i]!=NULL){
                 nb_allie++;
+                allie++;
             }
         }
 
-        while(ennemi->pv>0){
-            attaque_allie(we,he,event,renderer,ennemi,pp,nb_allie,nb_point);
-            attaque_ennemi(ennemi,pp,nb_allie);
+        while(ennemi->pv>0 && allie>0){
+            attaque_allie(we,he,event,renderer,ennemi,pp,nb_allie,nb_point,allie);
+            printf("test\n");
+            attaque_ennemi(ennemi,pp,nb_allie,allie);
             SDL_Delay(100);
             if(*nb_point<=6){
                 (*nb_point)++;
             }
+            //compte le nombre d'allie dans l'equipe
+            printf("allie av:%d\n",allie);
+            for (i=0;i<nb_allie;i++){
+                if( pp->equipe[i]!=NULL ){
+                    if(pp->equipe[i]->pv<=0){
+                            pp->equipe[i]=NULL;
+                        allie--;
+                    }
+                    
+                }
+            }
+            printf("allie ap:%d\n",allie);
+
         }
 
         SDL_RenderPresent(renderer);
