@@ -6,24 +6,28 @@
 #include "../libs/Pmov.h"
 #include "../libs/map2.h"
 
-pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c){
+pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte){
     pnj_t pnj;
     pnj.nom = malloc(strlen(nom)+1);
     strcpy(pnj.nom,nom);
     pnj.c = c;
     pnj.c->etat=0;
+    pnj.xcarte=carte->xcarte;
+    pnj.ycarte=carte->ycarte;
     pnj.dial = initialisation();
-    pnj.po = IMG_Load(emp_po);
+    if(emp_po != NULL)pnj.po = IMG_Load(emp_po);
     pnj.perso = IMG_Load(emp_perso);
     pnj.combat=0;
     pnj.pv=100;
     return pnj;
 }
 
-void aff_pnj(pnj_t pnj, SDL_Renderer *renderer){
-    SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, pnj.perso);
-    SDL_RenderCopy(renderer, tperso, NULL, &(pnj.c->Rectangle));
-    SDL_DestroyTexture(tperso);
+void aff_pnj(pnj_t pnj, SDL_Renderer *renderer,carte_t * carte){
+    if(pnj.xcarte == carte->xcarte && pnj.ycarte == carte->ycarte){
+        SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, pnj.perso);
+        SDL_RenderCopy(renderer, tperso, NULL, &(pnj.c->Rectangle));
+        SDL_DestroyTexture(tperso);
+    }
 }
 
 

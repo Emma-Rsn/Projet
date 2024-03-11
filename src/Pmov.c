@@ -45,16 +45,18 @@
 
 
 //detection de touche presser et modification des coordonées
-void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t map){
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer){
+    int temp = (*carte)->nZone;
     //si une touche est presser
     if(event.type == SDL_KEYDOWN){
         //quelle touche est presser
         switch(event.key.keysym.sym){
             case SDLK_z: 
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == 0){
+                //cas des bords de grille valide
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == 0){
-                    *carte= &(map.tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
+                    *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=0;
@@ -71,7 +73,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t map){
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == (LARG-1)){
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == (LARG-1)){
-                    *carte= &map.tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
+                    *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=2;
@@ -88,7 +90,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t map){
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == 0){
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
-                    *carte= &map.tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
                     pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=3;
@@ -102,12 +104,10 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t map){
             }
             break;
             case SDLK_d: 
-            printf("etat = %d\n",(*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat);
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == (LONG-1)){
-                printf("test\n");
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == (LONG-1)){
-                    *carte= &map.tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
                     pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=1;
@@ -119,6 +119,10 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t map){
             }
             break;
             default: break;
+        }
+        if((*carte)->etat_brouillard == 1)(*carte)->etat_brouillard = 0;
+        if(temp != (*carte)->nZone){
+            chargement_Zone(map,renderer,(*carte)->nZone);
         }
     }
 }

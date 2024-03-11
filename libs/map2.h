@@ -16,13 +16,12 @@ struct case_s{
     int x;
     int y;
     int etat;// si 0 alors obstacles dans la case 1 case libre 2 case libre mais en bordure 3 case libre mais en bordure finale
-    SDL_Surface * textu;
+    int ntexture;
 };
 
 typedef struct grille_s grille_t;
 struct grille_s{
     case_t tabGrille[LONG][LARG];
-    //pos perso
 };
 
 typedef struct carte_s carte_t;
@@ -45,15 +44,19 @@ struct carte_s{
 typedef struct map_s map_t;
 struct map_s{
     carte_t tabMap[ROWS][COLUMNS];
+    int nbtextur;
+    SDL_Texture ** tabTexture;
 };
 
-case_t creation_case(char * path_textur);
+case_t creation_case();
 grille_t creation_grille(int w, int h, int bord);
 carte_t creation_carte(int w, int h,int x,int y);
 map_t creation_map (int w, int h);
 int afficher_grille(grille_t grille, SDL_Renderer *renderer);
+int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec);
 int remplir_map(map_t *map);
 int afficher_zone (map_t m);
 float min(float a, float b);
-int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map);
+int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec);
+int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone);
 #endif

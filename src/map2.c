@@ -15,14 +15,14 @@
 
 #include "../libs/map2.h"
 
-case_t creation_case(char * path_textur){
+case_t creation_case(){
     case_t c;
     c.etat=1;
     c.Rectangle.x=0;
     c.Rectangle.y=0;
     c.Rectangle.w=64;
     c.Rectangle.h=64;
-    c.textu = IMG_Load(path_textur);
+    c.ntexture = 0;
     return c;
 }
 
@@ -32,7 +32,7 @@ grille_t creation_grille(int w, int h, int bord){
     int taille=64;
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
-            g.tabGrille[i][j]=creation_case("texture/terre.png");
+            g.tabGrille[i][j]=creation_case();
             switch (bord){
                 case 0 : if(i == 0 || i == (LONG-1) || j == 0 || j == (LARG-1))g.tabGrille[i][j].etat = 2;break;
                 case 1 : if(j == 0 )g.tabGrille[i][j].etat = 3; 
@@ -99,6 +99,8 @@ carte_t creation_carte(int w, int h,int x,int y){
 map_t creation_map (int w, int h){
     map_t m;
     int i,j;
+    m.nbtextur = 0;
+    m.tabTexture = NULL;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);
@@ -107,16 +109,28 @@ map_t creation_map (int w, int h){
     return m;
 }
 
+//map pour test
 int afficher_grille(grille_t grille, SDL_Renderer *renderer){
     int i,j;
-    SDL_Texture * texture;
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
             SDL_RenderDrawRect(renderer, &(grille.tabGrille[i][j].Rectangle));
+            //zone de test
             if(grille.tabGrille[i][j].etat == 3)SDL_RenderFillRect(renderer, &(grille.tabGrille[i][j].Rectangle));
-            texture = SDL_CreateTextureFromSurface(renderer, grille.tabGrille[i][j].textu);
-            SDL_RenderCopy(renderer, texture, NULL, &(grille.tabGrille[i][j].Rectangle));
+
+        }
+    }
+    return 0;
+}
+
+int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
+    int i,j;
+    for(i=0;i<LONG;i++){
+        for(j=0;j<LARG;j++){
+            if(cartec->grille.tabGrille[i][j].ntexture == 1){
+                SDL_RenderCopy(renderer, map->tabTexture[0], NULL,&(cartec->grille.tabGrille[i][j].Rectangle));
+            }
         }
     }
     return 0;
@@ -138,6 +152,7 @@ int remplir_map(map_t *map){
 
     int x=0;
     int y=0;
+    int i,j;
     char numZone;
 
     file=fopen("save/map.txt","r");
@@ -151,6 +166,15 @@ int remplir_map(map_t *map){
             }
             else if(numZone>='1'&&numZone<='5'){
                 map->tabMap[x][y].nZone=numZone - '0';
+                //test
+                if(map->tabMap[x][y].nZone==1){
+                    for(i=0;i<LONG;i++){
+                        for(j=0;j<LARG;j++){
+                            map->tabMap[x][y].grille.tabGrille[i][j].ntexture = 1;//plus tard info dans un fichier
+                        }
+                    }
+                }
+
                 y++;
             }
             fscanf(file,"%c",&numZone);
@@ -181,7 +205,7 @@ float min(float a, float b) {
     return (a < b) ? a : b;
 }
 
-int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map){
+int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec){
     int i, j;
     //printf("we=%d he=%d",(*we),(*he));
     /*int firstX=(*we)/4;
@@ -245,14 +269,19 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
             for(i=0;i<ROWS;i++){
                 Rectangle.y = (int)(firstY + i * taille_carre);
                 for(j=0;j<COLUMNS;j++){
-                    switch(map.tabMap[i][j].nZone){
-                        case 1: SDL_SetRenderDrawColor(renderer, 206,206,206,255);break;
-                        case 2: SDL_SetRenderDrawColor(renderer, 86,115,154,255);break;
-                        case 3: SDL_SetRenderDrawColor(renderer, 153,81,43,255);break;
-                        case 4: SDL_SetRenderDrawColor(renderer, 104,157,113,255);break;
-                        case 5: SDL_SetRenderDrawColor(renderer, 115,8,0,255);break;
-                        default: break;
+                    if(map.tabMap[i][j].etat_brouillard != 1){
+                        switch(map.tabMap[i][j].nZone){
+                            case 1: SDL_SetRenderDrawColor(renderer, 206,206,206,255);break;
+                            case 2: SDL_SetRenderDrawColor(renderer, 86,115,154,255);break;
+                            case 3: SDL_SetRenderDrawColor(renderer, 153,81,43,255);break;
+                            case 4: SDL_SetRenderDrawColor(renderer, 104,157,113,255);break;
+                            case 5: SDL_SetRenderDrawColor(renderer, 115,8,0,255);break;
+                            default: break;
+                        }
+                    }else{
+                       SDL_SetRenderDrawColor(renderer, 0,0,0,255); 
                     }
+                    if(cartec->ycarte == j && cartec->xcarte == i)SDL_SetRenderDrawColor(renderer, 255,255,0,255); 
                     Rectangle.x = (int)(firstX + j * taille_carre);
                     SDL_RenderFillRect(renderer, &Rectangle);
                 }
@@ -266,5 +295,38 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
         SDL_RenderPresent(renderer);
         SDL_DestroyTexture(targetTexture);
     }
+    return 0;
+}
+
+int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
+    int i;
+    SDL_Surface * surf;
+
+    if(map->nbtextur != 0){
+        for(i=0;i<map->nbtextur;i++){
+            SDL_DestroyTexture(map->tabTexture[i]);
+            map->tabTexture[i] = NULL;
+        }
+        free(map->tabTexture);
+        map->tabTexture = NULL;
+    }
+
+        switch (nZone)
+        {
+        case 1:
+            map->nbtextur = 1;
+            map->tabTexture = malloc(sizeof(SDL_Texture *)*map->nbtextur);
+            for(i=0;i<map->nbtextur;i++){
+                surf = IMG_Load("texture/terre.png");//plus tard chercher le path dans un fichier
+                map->tabTexture[i] = SDL_CreateTextureFromSurface(renderer,surf);
+                SDL_FreeSurface(surf);
+            }
+            break;
+        
+        default:
+            map->nbtextur = 0;
+            map->tabTexture = NULL;
+            break;
+        }
     return 0;
 }

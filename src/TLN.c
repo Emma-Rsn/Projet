@@ -95,11 +95,11 @@ int main(){
     map_t map=creation_map((*wEcran),(*hEcran));
     int *etat_map=malloc(sizeof(int));
     (*etat_map)=0;
-    int ind_map=0;
-    carte_t * cartec = &(map.tabMap[0][0]);
 
     remplir_map(&map);
     afficher_zone(map);
+    carte_t * cartec = &(map.tabMap[0][0]);
+    cartec->etat_brouillard = 0;
 
 
     //variable FPS
@@ -123,7 +123,7 @@ int main(){
 
     //creation d'un pnj
     pnj_t Alex2;
-    Alex2 = init_pnj("Alex2","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[14][9]));
+    Alex2 = init_pnj("Alex2","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[14][9]),&map.tabMap[0][0]);
     pnj_t * pAlex2 = &Alex2;
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
@@ -132,7 +132,7 @@ int main(){
     //creation ennemi 
 
     pnj_t Alex3;
-    Alex3 = init_pnj("Alex3","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[1][2]));
+    Alex3 = init_pnj("Alex3","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
@@ -167,8 +167,7 @@ int main(){
                 }*/
             }
             
-            pinput(pAlex,event,&cartec,map);
-            printf("%d %d %d\n",cartec->xcarte,cartec->ycarte,cartec->nZone);
+            pinput(pAlex,event,&cartec,&map,renderer);
 
             //menu
             
@@ -202,11 +201,12 @@ int main(){
         SDL_RenderFillRect(renderer, &HUD);
 
         //affiche la grille
+        betaAfficherMap(renderer,&map,cartec);
         afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
-        aff_pnj(Alex2,renderer);
-        aff_pnj(Alex3,renderer);
+        aff_pnj(Alex2,renderer,cartec);
+        aff_pnj(Alex3,renderer,cartec);
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
@@ -218,7 +218,7 @@ int main(){
         pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
 
         //afficher map
-        afficher_map(event,map,renderer,wEcran,hEcran,etat_map);
+        afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
         
         //Commence une combat
         combat(wEcran,hEcran,event,renderer,pAlex3,pAlex);
