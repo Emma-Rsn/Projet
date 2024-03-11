@@ -6,66 +6,46 @@
 #include "../libs/Pmov.h"
 #include "../libs/map2.h"
 
-pnj_t init_pnj(char * nom,int x, int y,char * emp_po, char * emp_perso,case_t c){
+pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte){
     pnj_t pnj;
     pnj.nom = malloc(strlen(nom)+1);
     strcpy(pnj.nom,nom);
-    pnj.r = c.Rectangle;
+    pnj.c = c;
+    pnj.c->etat=0;
+    pnj.xcarte=carte->xcarte;
+    pnj.ycarte=carte->ycarte;
     pnj.dial = initialisation();
-    pnj.po = IMG_Load(emp_po);
+    if(emp_po != NULL)pnj.po = IMG_Load(emp_po);
     pnj.perso = IMG_Load(emp_perso);
     pnj.combat=0;
     pnj.pv=100;
     return pnj;
 }
 
-void aff_pnj(pnj_t pnj, SDL_Renderer *renderer){
-    SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, pnj.perso);
-    SDL_RenderCopy(renderer, tperso, NULL, &(pnj.r));
-    SDL_DestroyTexture(tperso);
+void aff_pnj(pnj_t pnj, SDL_Renderer *renderer,carte_t * carte){
+    if(pnj.xcarte == carte->xcarte && pnj.ycarte == carte->ycarte){
+        SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, pnj.perso);
+        SDL_RenderCopy(renderer, tperso, NULL, &(pnj.c->Rectangle));
+        SDL_DestroyTexture(tperso);
+    }
 }
 
 
-int boolcolbeta (SDL_Rect * obj_r,p_mv * pp){
-        //Collision entre la partie haute du personnage et la partie haute de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && pp->r.y == obj_r->y) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && pp->r.y == obj_r->y)){
-            return 1;
-        }
-        //Collision entre la partie haute du personnage et la partie basse de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && pp->r.y == (obj_r->y+obj_r->h)) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && pp->r.y == (obj_r->y+obj_r->h))){
-            return 1;
-        }
-
-        //Collision entre la partie droite du personnage et la partie droite de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == (obj_r->x+obj_r->w)) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == (obj_r->x+obj_r->w))){
-            return 1;
-        }
-        //Collision entre la partie droite du personnage et la partie gauche de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == obj_r->x) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == obj_r->x)){
-            return 1;
-        }
-        //Collision entre la partie basse du personnage et la partie basse de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == (obj_r->y+obj_r->h)) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == (obj_r->y+obj_r->h))){
-            return 1;
-        }
-        //Collision entre la partie basse du personnage et la partie haute de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == obj_r->y) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == obj_r->y)){
-            return 1;
-        }
-
-        //Collision entre la partie gauche du personnage et la partie droite de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && pp->r.x == (obj_r->x+obj_r->w)) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && pp->r.x == (obj_r->x+obj_r->w))){
-            return 1;
-        }
-        //Collision entre la partie gauche du personnage et la partie gauche de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && pp->r.x == obj_r->x) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && pp->r.x == obj_r->x)){
-            return 1;
-        }
-        return 0;
+int boolcol (case_t * obj_c,p_mv * pp){
+    if(pp->c->x+1 == obj_c->x){ //verifie case droite
+        return 1;
+    }else if(pp->c->x-1 == obj_c->x){ //verifie case gauche
+        return 1;
+    }else if(pp->c->y+1 == obj_c->y){ //verifie case bas
+        return 1;
+    }else if(pp->c->y-1 == obj_c->y){ //verifie case haut
+        return 1;
+    }
+    return 0;
 }
 
-void debut_dialogue(SDL_Event event,Liste * liste,SDL_Rect * obj_r,p_mv * pp){
-    if(boolcolbeta(obj_r,pp)) dialogue (event,liste);
+void debut_dialogue(SDL_Event event,pnj_t * pnj,p_mv * pp){
+    if(boolcol(pnj->c,pp)) dialogue (event,pnj->dial);
 }
 
 void pnj_dialogue (SDL_Event event,pnj_t * pnj,SDL_Renderer * renderer,int * he,int * we){

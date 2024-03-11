@@ -91,10 +91,11 @@ int main(){
     map_t map=creation_map((*wEcran),(*hEcran));
     int *etat_map=malloc(sizeof(int));
     (*etat_map)=0;
-    int ind_map=0;
 
     remplir_map(&map);
     afficher_zone(map);
+    carte_t * cartec = &(map.tabMap[0][0]);
+    cartec->etat_brouillard = 0;
 
 
     //variable FPS
@@ -107,13 +108,13 @@ int main(){
 
     //creation personnage
 	p_mv Alex;
-	Alex = initp(200,200);
+	Alex = initp(cartec,&(cartec->grille.tabGrille[10][1]));
     Alex.equipe[1]=initp_eq("Lou",100,"ATQ1","AT2","ATspe");
 	p_mv * pAlex = &Alex;
 
     //creation d'un pnj
     pnj_t Alex2;
-    Alex2 = init_pnj("Alex2",500, 200,"sprite/alexdial.png", "sprite/alexface2.png",map.tabMap[0][0].grille.tabGrille[14][9]);
+    Alex2 = init_pnj("Alex2","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[14][9]),&map.tabMap[0][0]);
     pnj_t * pAlex2 = &Alex2;
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
@@ -121,7 +122,7 @@ int main(){
 
     //creation ennemi 
     pnj_t Alex3;
-    Alex3 = init_pnj("Alex3",500, 200,"sprite/alexdial.png", "sprite/alexface2.png",map.tabMap[0][0].grille.tabGrille[1][2]);
+    Alex3 = init_pnj("Alex3","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
@@ -130,10 +131,6 @@ int main(){
 
     //zone declaration objet
     SDL_Rect HUD  = {0,0,*wEcran,56};
-    
-    SDL_Rect bord = {pAlex2->r.x - 1, pAlex2->r.y - 1,pAlex2->r.w + 2, pAlex2->r.h + 2};
-
-    SDL_Rect bord2 = {pAlex3->r.x - 1, pAlex3->r.y - 1,pAlex3->r.w + 2, pAlex3->r.h + 2};
 
     SDL_Rect Ecran = {0,0,*hEcran,*wEcran};
 
@@ -160,16 +157,13 @@ int main(){
                 }*/
             }
             
-            pinput(pAlex,event);
-            col_p(&Ecran,pAlex);
+            pinput(pAlex,event,&cartec,&map,renderer);
 
             //menu
             
             menu(wEcran,hEcran,event,renderer,run);
-            col_p(&pAlex2->r,pAlex);
-            debut_dialogue(event,pAlex2->dial,&bord,pAlex);
-            debut_combat(event,pAlex3,&bord2,pAlex);
-            col_p(&pAlex3->r,pAlex);
+            debut_dialogue(event,pAlex2,pAlex);
+            debut_combat(event,pAlex3,pAlex);
             
         }
         //zone d'affichage
@@ -183,33 +177,39 @@ int main(){
             }
         }
         //efface le rendu
-        SDL_SetRenderDrawColor(renderer,map.tabMap[0][ind_map].r,map.tabMap[0][ind_map].g,map.tabMap[0][ind_map].b,map.tabMap[0][ind_map].a);
+        switch(cartec->nZone){
+            case 1: SDL_SetRenderDrawColor(renderer, 206,206,206,255);break;
+            case 2: SDL_SetRenderDrawColor(renderer, 86,115,154,255);break;
+            case 3: SDL_SetRenderDrawColor(renderer, 153,81,43,255);break;
+            case 4: SDL_SetRenderDrawColor(renderer, 104,157,113,255);break;
+            case 5: SDL_SetRenderDrawColor(renderer, 115,8,0,255);break;
+            default: SDL_SetRenderDrawColor(renderer, 0,0,0,255);break;
+        }
         SDL_RenderClear(renderer);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 245, 255);
         SDL_RenderFillRect(renderer, &HUD);
 
         //affiche la grille
-        afficher_grille(map.tabMap[0][ind_map].grille,renderer);
-
-
-		//Affiche un personnage
-        affp(pAlex,renderer);
+        betaAfficherMap(renderer,&map,cartec);
+        afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
-        aff_pnj(Alex2,renderer);
-        aff_pnj(Alex3,renderer);
+        aff_pnj(Alex2,renderer,cartec);
+        aff_pnj(Alex3,renderer,cartec);
+
+        //affiche les fps
+        aff_Fps(cmpfps,renderer);
+
+        //Affiche un personnage
+        affp(pAlex,renderer);
 
         //afficher dialogue
         pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
 
         //afficher map
-
-        afficher_map(event,map,renderer,wEcran,hEcran,etat_map);
-
-        //affiche les fps
-        aff_Fps(cmpfps,renderer);
-
+        afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
+        
         //Commence une combat
         combat(wEcran,hEcran,event,renderer,pAlex3,pAlex);
 

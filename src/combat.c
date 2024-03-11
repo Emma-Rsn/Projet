@@ -414,8 +414,9 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
 */
 
 //fonction qui regarde si on peut lancer un combat
-int debut_combat(SDL_Event event,pnj_t * ennemi,SDL_Rect * obj_r,p_mv * pp){
-    if( boolcolbeta(obj_r,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && ennemi->pv>0){
+int debut_combat(SDL_Event event,pnj_t * ennemi,p_mv * pp){
+    
+    if( boolcol(ennemi->c,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && ennemi->pv>0){
         ennemi->combat=1;
     } 
     return 0;

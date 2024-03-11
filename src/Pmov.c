@@ -19,10 +19,19 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../libs/Pmov.h"
+#include "../libs/commun.h"
 
 
 
-
+/**
+*
+*\struct personnage
+*\param r taille du personnage
+*\param d direction orienté{N,E,S,O}{0,1,2,3}
+*\param e etat du personnage
+*\param nom prenom du personnage
+*\brief structure de personnage
+*/
 
 
 /**
@@ -34,22 +43,85 @@
 */
 
 //detection de touche presser et modification des coordonées
-void pinput(p_mv * pmv,SDL_Event event){
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer){
+    int temp = (*carte)->nZone;
     //si une touche est presser
     if(event.type == SDL_KEYDOWN){
         //quelle touche est presser
         switch(event.key.keysym.sym){
-            case SDLK_z: pmv->r.y -= 1,pmv->d = 0,pmv->e++; break;
-            case SDLK_s: pmv->r.y += 1,pmv->d = 2,pmv->e++; break;
-            case SDLK_q: pmv->r.x -= 1,pmv->d = 3,pmv->e++; break;
-            case SDLK_d: pmv->r.x += 1,pmv->d = 1,pmv->e++; break;
+            case SDLK_z: 
+            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == 0){
+                //cas des bords de grille valide
+            }else{
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == 0){
+                    *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
+                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=0;
+                }else{
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat){
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=0;
+                    }
+                }
+            }
+            break;
+            case SDLK_s: 
+            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == (LARG-1)){
+            }else{
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == (LARG-1)){
+                    *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
+                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=2;
+                }else{
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat){
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=2;
+                    }
+                }
+            }
+            break;
+            case SDLK_q: 
+            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == 0){
+            }else{
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
+                    pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=3;
+                }else{
+                    if((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat){
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=3;
+                    }
+                }
+            }
+            break;
+            case SDLK_d: 
+            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == (LONG-1)){
+            }else{
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == (LONG-1)){
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
+                    pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=1;
+                }else if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat){
+                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=1;
+                }
+            }
+            break;
             default: break;
         }
-        if(pmv->e == 3){
-            pmv->e=1;
+        if((*carte)->etat_brouillard == 1)(*carte)->etat_brouillard = 0;
+        if(temp != (*carte)->nZone){
+            chargement_Zone(map,renderer,(*carte)->nZone);
         }
-    }else if(event.type == SDL_KEYUP && pmv->e != -1){
-        pmv->e=0;
     }
 }
 
@@ -364,12 +436,11 @@ void desctruction_p_eq(p_mv * p){
 }
 
 //construit un point
-p_mv initp(int x,int y){
+p_mv initp(carte_t * carte,case_t * c){
     p_mv p;
-    p.r.x=x;
-    p.r.y=y;
-    p.r.w=64;
-    p.r.h=64;
+    p.carte = carte;
+    p.c = c;
+    p.r = p.c->Rectangle;
     p.d=0;
     p.e=0;
     p.nom="alex";
