@@ -330,3 +330,23 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
         }
     return 0;
 }
+
+void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c){
+    int i,j;
+    for(i=0;i<LONG;i++){
+        for(j=0;j<LARG;j++){
+            SDL_SetRenderDrawColor(renderer, 0,0,0,255); 
+            if(cartec->grille.tabGrille[i][j].x == c->x && cartec->grille.tabGrille[i][j].y == c->y){
+               SDL_SetRenderDrawColor(renderer, 0,0,0,0);  
+            }
+            else if((cartec->grille.tabGrille[i][j].x == c->x+1 || cartec->grille.tabGrille[i][j].x == c->x-1 || cartec->grille.tabGrille[i][j].x == c->x) && (cartec->grille.tabGrille[i][j].y == c->y+1 || cartec->grille.tabGrille[i][j].y == c->y-1 || cartec->grille.tabGrille[i][j].y == c->y)){
+                SDL_SetRenderDrawColor(renderer, 0,0,0,100); 
+            }else if((cartec->grille.tabGrille[i][j].x == c->x+2 || cartec->grille.tabGrille[i][j].x == c->x-2 || cartec->grille.tabGrille[i][j].y == c->y+2 || cartec->grille.tabGrille[i][j].y == c->y-2) && ((cartec->grille.tabGrille[i][j].y > c->y-2 && cartec->grille.tabGrille[i][j].y < c->y+2) || (cartec->grille.tabGrille[i][j].x > c->x-2 && cartec->grille.tabGrille[i][j].x < c->x+2))){
+                SDL_SetRenderDrawColor(renderer, 0,0,0,170); 
+            }else if((cartec->grille.tabGrille[i][j].x == c->x+3 || cartec->grille.tabGrille[i][j].x == c->x-3 || cartec->grille.tabGrille[i][j].y == c->y+3 || cartec->grille.tabGrille[i][j].y == c->y-3) && (cartec->grille.tabGrille[i][j].y == c->y || cartec->grille.tabGrille[i][j].x == c->x)){
+                SDL_SetRenderDrawColor(renderer, 0,0,0,220);
+            }
+            SDL_RenderFillRect(renderer, &(cartec->grille.tabGrille[i][j].Rectangle));
+        }
+    }
+}

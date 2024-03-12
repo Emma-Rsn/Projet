@@ -59,4 +59,5 @@ int afficher_zone (map_t m);
 float min(float a, float b);
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec);
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone);
+void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c);
 #endif
