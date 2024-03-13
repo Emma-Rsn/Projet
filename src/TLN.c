@@ -96,6 +96,8 @@ int main(){
     afficher_zone(map);
     carte_t * cartec = &(map.tabMap[0][0]);
     cartec->etat_brouillard = 0;
+    chargement_Zone(&map,renderer,cartec->nZone);
+    load_layout(&(map.tabMap[5][0]),"save/layout3_1.txt");
 
 
     //variable FPS
