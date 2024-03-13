@@ -192,7 +192,7 @@ int main(){
 
         //affiche la grille
         betaAfficherMap(renderer,&map,cartec);
-        afficher_grille(cartec->grille,renderer);
+        //afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
         aff_pnj(Alex2,renderer,cartec);

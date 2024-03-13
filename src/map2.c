@@ -317,7 +317,7 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
             map->nbtextur = 1;
             map->tabTexture = malloc(sizeof(SDL_Texture *)*map->nbtextur);
             for(i=0;i<map->nbtextur;i++){
-                surf = IMG_Load("texture/terre.png");//plus tard chercher le path dans un fichier
+                surf = IMG_Load("texture/podzol.png");//plus tard chercher le path dans un fichier
                 map->tabTexture[i] = SDL_CreateTextureFromSurface(renderer,surf);
                 SDL_FreeSurface(surf);
             }
