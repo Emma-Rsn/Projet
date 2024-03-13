@@ -204,7 +204,7 @@ int main(){
         //Affiche un personnage
         affp(pAlex,renderer);
 
-        //lumiere(renderer,cartec,pAlex->c);
+        lumiere(renderer,cartec,pAlex->c);
 
         //afficher dialogue
         pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
