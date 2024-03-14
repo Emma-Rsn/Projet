@@ -360,13 +360,14 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
             map->tabTexture[i] = SDL_CreateTextureFromSurface(renderer,surf);
             SDL_FreeSurface(surf);
             for(i=1;i<=map->nbtextur;i++){
-                surf = IMG_Load("texture/terre_nightmare.png");//plus tard chercher le path dans un fichier
+                surf = IMG_Load("texture/terre_nightmare.jpg");//plus tard chercher le path dans un fichier
                 map->tabTexture[i] = SDL_CreateTextureFromSurface(renderer,surf);
                 SDL_FreeSurface(surf);
             }
             break;
         case 3:
             //test tab path
+            ;
             char * tab[5] = {"texture/terre.png","texture/birch_planks_s.png","texture/black_stained_glass.png","texture/blue_glazed_terracotta.png","texture/budding_amethyst.png"};
             //fin test
             map->nbtextur = 4;
