@@ -1,13 +1,8 @@
 #ifndef __PNJ_H__
 #define __PNJ_H__
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include "../libs/texte.h"
-#include "../libs/Pmov.h"
-#include "../libs/map2.h"
+//#include "../libs/commun.h"
 
-typedef struct pnj_s pnj_t;
 struct pnj_s{
     char * nom;
     case_t * c;
@@ -18,6 +13,7 @@ struct pnj_s{
     SDL_Surface * perso;
     int combat;
     int pv;
+    combatant_t * combatant[4];
 };
 
 int boolcol (case_t * obj_c,p_mv * pp);

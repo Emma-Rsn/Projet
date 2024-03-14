@@ -14,24 +14,9 @@
 
 
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../libs/Pmov.h"
 #include "../libs/commun.h"
 
 
-
-/**
-*
-*\struct personnage
-*\param r taille du personnage
-*\param d direction orienté{N,E,S,O}{0,1,2,3}
-*\param e etat du personnage
-*\param nom prenom du personnage
-*\brief structure de personnage
-*/
 
 
 /**
@@ -404,13 +389,15 @@ void col_p(SDL_Rect * obj_r,p_mv * pp){
 *\param nomATQspe nom de l'attaque special du personnage dans le cauchemar
 *\brief fonction qui creer le personnage de l'equipe avec les parametres
 */
-p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQ2,char * nomATQspe){
+p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp){
     p_eq * pe=malloc(sizeof(p_eq));
     pe->nom=nom;
     pe->pv=pv;
     pe->nomATQ1=nomATQ1;
-    pe->nomATQ2=nomATQ2;
     pe->nomATQspe=nomATQspe;
+    pe->vitesse=vitesse;
+    pe->combatant=init_combatant(nom,pv,nomATQ1,nomATQspe,vitesse,camp);
+
     return pe;
 }
 
@@ -428,8 +415,8 @@ void desctruction_p_eq(p_mv * p){
                 nb_allie++;
             }
         }
-
     for(i=0;i<nb_allie;i++){
+        desctruction_combatant(p->equipe[i]->combatant,nb_allie);
         free(p->equipe[i]);
     }
     
@@ -448,7 +435,7 @@ p_mv initp(carte_t * carte,case_t * c){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=initp_eq("alex",100,"Attaque 1","Attaque 2","Attaque spe");
+    p.equipe[0]=initp_eq("alex",100,"Attaque 1","Attaque spe",50,1);
     return p;
 }
 

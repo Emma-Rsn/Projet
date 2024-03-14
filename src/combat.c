@@ -12,15 +12,7 @@
 *\version 0.3
 */
 
-#include <SDL2/SDL.h>
-#include <stdlib.h>
-#include <math.h>
-#include <time.h>
-#include <stdio.h>
-#include <SDL2/SDL_ttf.h>
-#include "../libs/PNJ.h"
-#include "../libs/Pmov.h"
-
+#include "../libs/commun.h"
 
 /**
 *
@@ -53,6 +45,36 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
     exit(EXIT_FAILURE);
 }
 
+/**
+*
+*\fn combatant_t *init_combatant(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse)
+*\param nom prenom du combatant
+*\param pv les pv du combatant
+*\param nomATQ1 nom de l'attaque de base du combatant
+*\param vitesse vitesse du combatant
+*\param nomATQspe nom de l'attaque special du combatant 
+*\brief fonction qui creer le combatant 
+*/
+combatant_t *init_combatant(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp){
+    combatant_t * combatant=malloc(sizeof(combatant_t));
+    combatant->nom=nom;
+    combatant->pv=pv;
+    combatant->nomATQ1=nomATQ1;
+    combatant->nomATQspe=nomATQspe;
+    combatant->vitesse=vitesse;
+    combatant->mort=0;
+    combatant->camp=camp;
+    return combatant;
+}
+
+/**
+*\fn void desctruction_p_eq(p_mv * p)
+*\param p strcuture du personnage 
+*\brief fonction qui detruit les personnages de l'equipe
+*/
+void desctruction_combatant(combatant_t * combatant,int nb_combatant){
+    free(combatant);
+}
 
 
 /**
@@ -144,7 +166,7 @@ int affiche_point(float mult, int *we, int *he, SDL_Renderer *renderer, SDL_Rect
 *\brief fonction qui affiche les pv des personnages et de l'ennemi
 */
 //fonction qui affiche les pv des personnages et de l'ennemi
-int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,p_eq * pp){
+int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,combatant_t * combatant){
 
     TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 50);
     if (!font) {
@@ -157,7 +179,7 @@ int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,p_eq * pp)
     snprintf(texte, 15, "PV : %d", ennemi->pv);
 
     char *texte2 = malloc(15);
-    snprintf(texte2, 15, "%s PV : %d",pp->nom ,pp->pv);
+    snprintf(texte2, 15, "%s PV : %d",combatant->nom ,combatant->pv);
 
     SDL_Surface* textSurface = TTF_RenderText_Blended(font,texte, textColor);
     if (!textSurface) {
@@ -204,7 +226,7 @@ int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,p_eq * pp)
 *\brief fonction d'attaque de l'ennemi 
 */
 //fonction d'attaque de l'ennemi 
-int attaque_ennemi(pnj_t * ennemi,p_mv * p,int nb_allie,int allie){
+int attaque_ennemi(combatant_t *combatant,p_mv * p,int nb_allie,int allie){
 
     //personnage de l'equipe qui va etre a ttaquer
     int perso;
@@ -215,14 +237,13 @@ int attaque_ennemi(pnj_t * ennemi,p_mv * p,int nb_allie,int allie){
     
 
     //enleve des pv au personnages par rapport a ses pv 
-    if(ennemi->pv<=100 && ennemi->pv>60){
-        p->equipe[perso-1]->pv-=200;
-        //(int)10+rand()%(15+1-10);
+    if(combatant->pv<=100 && combatant->pv>60){
+        p->equipe[perso-1]->pv-=(int)10+rand()%(15+1-10);
     }
-    if(ennemi->pv<=60 && ennemi->pv>30){
+    if(combatant->pv<=60 && combatant->pv>30){
         p->equipe[perso-1]->pv-=(int)5+rand()%(10+1-5);
     }
-    if(ennemi->pv<=30 && ennemi->pv>0){
+    if(combatant->pv<=30 && combatant->pv>0){
         p->equipe[perso-1]->pv-=(int)1+rand()%(5+1-1);
     }
     return 0;
@@ -241,15 +262,8 @@ int attaque_ennemi(pnj_t * ennemi,p_mv * p,int nb_allie,int allie){
 *\brief fonction d'attaque des allie 
 */
 //fonction d'attaque des allie 
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,p_mv * pp,int nb_allie,int *nb_point,int allie){
-            
-
-    int j=0;
-    printf("j:%d\n",j);
-    for(j=0;(j<nb_allie) && (ennemi->pv>0) && allie>0;j++){
-        printf("j2:%d\n",j);
-        if(pp->equipe[j]!=NULL){
-            printf("pv %d :%d\n",j,pp->equipe[j]->pv);
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,int *nb_point,combatant_t *combatant){
+        if(combatant->mort==0){
         
             int jouer=1;
             int nb_point_deb=*nb_point;
@@ -268,7 +282,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
             SDL_Color textColor = {255, 255, 255};
             
             //creation du premier texte (Attaque 1)
-            SDL_Surface* textSurfaceATQ1 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQ1, textColor);
+            SDL_Surface* textSurfaceATQ1 = TTF_RenderText_Solid(font,combatant->nomATQ1, textColor);
             if (!textSurfaceATQ1) {
                 erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,NULL,NULL);
                 TTF_CloseFont(font);
@@ -285,27 +299,12 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
             }
 
 
-            //creation du deuxieme texte (Attaque 2)
-            SDL_Surface* textSurfaceATQ2 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQ2, textColor);
-            if (!textSurfaceATQ2) {
-                erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,textTextureATQ1,NULL);
-                TTF_CloseFont(font);
-                return -1;
-            }
-            SDL_Texture* textTextureATQ2 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ2);
-            SDL_Rect  r_ATQ2= {r_basEcran.w/2-200,(r_basEcran.h/2)+r_basEcran.h-100,textSurfaceATQ2->w,textSurfaceATQ2->h};
-            SDL_FreeSurface(textSurfaceATQ2);
 
-                    if(SDL_QueryTexture(textTextureATQ2,NULL,NULL,&r_ATQ2.w,&r_ATQ2.h)!=0){
-                    erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,textTextureATQ2,NULL);
-                
-                    return -1;
-            }
 
             //creation du troisieme texte (Attaque speciale)
-            SDL_Surface* textSurfaceATQ3 = TTF_RenderText_Solid(font,pp->equipe[j]->nomATQspe, textColor);
+            SDL_Surface* textSurfaceATQ3 = TTF_RenderText_Solid(font,combatant->nomATQspe, textColor);
             if (!textSurfaceATQ3) {
-                erreur_sdl("Erreur lors de la création de la surface de texte",NULL,renderer,textTextureATQ1,textTextureATQ2);
+                erreur_sdl("Erreur lors de la création de la surface de texte",NULL,renderer,textTextureATQ1,NULL);
                 TTF_CloseFont(font);
                 return -1;
             }
@@ -340,10 +339,6 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
                             ennemi->pv-=10*mult;
                             jouer=0;
                         }
-                        else if((r_ATQ2.x<=event.button.x) && ((r_ATQ2.x+r_ATQ2.w)>=event.button.x) && ((r_ATQ2.y+r_ATQ2.h)>=event.button.y) && (r_ATQ2.y<=event.button.y)){
-                            ennemi->pv-=20*mult;
-                            jouer=0;
-                        }  
                         else if((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)){
                             ennemi->pv-=30*mult;
                             jouer=0;
@@ -373,21 +368,17 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
                 SDL_RenderFillRect(renderer, &r_basEcran);
 
                 SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
-                SDL_RenderCopy(renderer, textTextureATQ2, NULL, &r_ATQ2);
                 SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
 
                 affiche_point(mult,we,he,renderer,r_basEcran,nb_point);
-                affiche_pv(ennemi,we,he,renderer,pp->equipe[j]);
+                affiche_pv(ennemi,we,he,renderer,combatant);
 
                 SDL_RenderCopy(renderer, tperso, NULL, &r_ennemi);
                 SDL_RenderPresent(renderer);
                 SDL_Delay(100);
-
             }
-
             //destruction des textures
             SDL_DestroyTexture(textTextureATQ1);
-            SDL_DestroyTexture(textTextureATQ2);
             SDL_DestroyTexture(textTextureATQ3);
 
             SDL_DestroyTexture(tperso);
@@ -396,12 +387,12 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
             SDL_RenderClear(renderer);
 
         }
-
-    }
-                
-    return 0;
-
+     return 0;
 }
+                
+   
+
+
 
 /**
 *
@@ -422,6 +413,31 @@ int debut_combat(SDL_Event event,pnj_t * ennemi,p_mv * pp){
     return 0;
 }
 
+int compare_vitesse(const combatant_t * const combatant1,const combatant_t * const combatant2){
+
+  if( combatant1->vitesse == combatant2->vitesse ) {
+    return(0) ; 
+  }
+  if( combatant1->vitesse > combatant2->vitesse ){
+    return(1) ; 
+  }  
+  return(-1) ;   
+}
+
+int compare_vitesse_enc( const void * const combatant1 , const void * const combatant2 ) {
+  return compare_vitesse(   combatant1 ,combatant2 );
+}
+
+
+void aff(combatant_t * combatant){
+    if(combatant==NULL){
+        printf("vide\n");
+    }else{
+printf("nom:%s\n",combatant->nom);
+    }
+    
+}
+
 /**
 *
 *\fn int debut_combat(SDL_Event event,pnj_t * ennemi,SDL_Rect * obj_r,p_mv * pp)
@@ -436,27 +452,67 @@ int debut_combat(SDL_Event event,pnj_t * ennemi,p_mv * pp){
 //fonction qui gere le combat avec un ennemi
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,p_mv * pp){
     
-
     if(ennemi->combat){
 
         int i,point=2,allie=0;
         int *nb_point=&point;
         int nb_allie=0;
+        int nb_ennemi=0;
+        int nb_combatant=0;
+        
 
         //compte le nombre d'allie dans l'equipe
-        for (i=0;i<3;i++){
+        for (i=0;i<4;i++){
             if(pp->equipe[i]!=NULL){
                 nb_allie++;
                 allie++;
             }
         }
 
+        //compte le nombre d'ennemi
+        for (i=0;i<4;i++){
+            if(ennemi->combatant[i]!=NULL){
+                nb_ennemi++;
+            }
+        }
+        
+        nb_combatant=nb_allie+nb_ennemi;
+        combatant_t * combatant[nb_combatant+2];
+        for(i=0;i<nb_combatant;i++){
+            combatant[i]=NULL;
+        }
+
+        for(i=0;i<nb_allie;i++){
+            combatant[i]=pp->equipe[i]->combatant;
+        }
+        for(i=nb_allie;i<nb_combatant;i++){
+            combatant[i]=pp->equipe[i]->combatant;
+        }
+        aff(combatant[0]);
+        aff(combatant[1]);
+        aff(combatant[2]);
+        
         while(ennemi->pv>0 && allie>0){
-            attaque_allie(we,he,event,renderer,ennemi,pp,nb_allie,nb_point,allie);
-            printf("test\n");
-            attaque_ennemi(ennemi,pp,nb_allie,allie);
+            
+            //trie vitesse
+            qsort(*combatant,nb_combatant,sizeof(combatant_t),compare_vitesse_enc);
+            aff(combatant[0]);
+            aff(combatant[1]);
+            aff(combatant[2]);
+
+            for(i=0;i<nb_combatant;i++){
+                
+                if(combatant[i]->camp==0){
+                    attaque_allie(we,he,event,renderer,ennemi,nb_point,combatant[i]);
+                }
+                else if(combatant[i]->camp==1){
+                    attaque_ennemi(combatant[i],pp,nb_allie,allie);
+                }
+
+            }
+
             SDL_Delay(100);
-            if(*nb_point<=6){
+            if(*nb_point<6){
                 (*nb_point)++;
             }
             //compte le nombre d'allie dans l'equipe

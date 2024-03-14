@@ -12,27 +12,7 @@
 *
 */
 
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <time.h>
-
-#include "../libs/save.h"
-#include "../libs/printImg.h"
-#include "../libs/Pmov.h"
-#include "../libs/texte.h"
-#include "../libs/map2.h"
-#include "../libs/printImg.h"
-#include "../libs/save.h"
-#include "../libs/menu.h"
-#include "../libs/PNJ.h"
 #include "../libs/commun.h"
-#include "../libs/combat.h"
 
 //nombre de frame par secondes voulu
 #define FPS 30
@@ -111,8 +91,11 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(cartec,&(cartec->grille.tabGrille[10][1]));
-    Alex.equipe[1]=initp_eq("Lou",100,"ATQ1","AT2","ATspe");
+    Alex.equipe[1]=initp_eq("Lou",100,"ATQ1","ATspe",40,0);
+    Alex.equipe[2]=initp_eq("Max",100,"ATQ num 1","ATK spe",45,0);
 	p_mv * pAlex = &Alex;
+
+    
 
     //creation d'un pnj
     pnj_t Alex2;

@@ -13,7 +13,7 @@
 */
 
 
-#include "../libs/map2.h"
+#include "../libs/commun.h"
 
 case_t creation_case(){
     case_t c;
@@ -366,6 +366,7 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
             }
             break;
         case 3:
+            ;
             //test tab path
             char * tab[5] = {"texture/terre.png","texture/birch_planks_s.png","texture/black_stained_glass.png","texture/blue_glazed_terracotta.png","texture/budding_amethyst.png"};
             //fin test
