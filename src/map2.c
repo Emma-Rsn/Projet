@@ -209,8 +209,8 @@ int load_layout(carte_t *c, char *namefile) {
     if (file) {
         while ((res = fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
             if (input != '\n') {
-                if (i < LONG && j < LARG) { // Remplacez MAX_I et MAX_J par les dimensions réelles de tabGrille
-                    c->grille.tabGrille[i][j].ntexture = input - '0'; // Convertit directement le chiffre en entier
+                if (i < LONG && j < LARG) { 
+                    c->grille.tabGrille[i][j].ntexture = input - '0';
                     i++;
                 }
             } else {

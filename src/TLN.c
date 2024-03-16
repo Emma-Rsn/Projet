@@ -102,6 +102,7 @@ int main(){
     map.zoneChargee=cartec->nZone;
     chargement_Zone(&map,renderer,map.zoneChargee);
     load_layout(&(map.tabMap[0][5]),"save/layout3_1.txt");
+    //load_layout(&(map.tabMap[5][5]),"save/layoutbeach.txt");
 
 
     //variable FPS
