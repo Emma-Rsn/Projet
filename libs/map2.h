@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <regex.h>
 #include "../libs/commun.h"
 
 typedef struct case_s case_t;
@@ -44,8 +45,10 @@ struct carte_s{
 typedef struct map_s map_t;
 struct map_s{
     carte_t tabMap[ROWS][COLUMNS];
-    int nbtextur;
+    char *** tabPath;
+    int nbTexture[5];
     SDL_Texture ** tabTexture;
+    int zoneChargee;
 };
 
 case_t creation_case();
@@ -61,4 +64,7 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone);
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c);
 int load_layout(carte_t * c,char * namefile);
+int nb_texture_chargement(map_t *map, char* namefile);
+int creation_tab_path(map_t *map,char * namefile);
+int creation_tab_texture(map_t *map,SDL_Renderer *renderer,int nbZone,int free);
 #endif

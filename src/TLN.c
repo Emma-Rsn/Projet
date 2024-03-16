@@ -94,10 +94,13 @@ int main(){
     int ouigrille = 0;
 
     remplir_map(&map);
+    nb_texture_chargement(&map, "save/texture.txt");
+    creation_tab_path(&map, "save/texture.txt");
     afficher_zone(map);
     carte_t * cartec = &(map.tabMap[0][0]);
     cartec->etat_brouillard = 0;
-    chargement_Zone(&map,renderer,cartec->nZone);
+    map.zoneChargee=cartec->nZone;
+    chargement_Zone(&map,renderer,map.zoneChargee);
     load_layout(&(map.tabMap[0][5]),"save/layout3_1.txt");
 
 
@@ -235,6 +238,7 @@ int main(){
     
 
     //SDL_DestroyTexture(backgroundTexture);
+    creation_tab_texture(&map,renderer,1,1);
     dest_pnj(pAlex2);
     dest_pnj(pAlex3);
     free(wEcran);

@@ -8,5 +8,6 @@
 
 #define ROWS 6 //map
 #define COLUMNS 6 //map
+#define NB_ZONE 5
 
 #endif
