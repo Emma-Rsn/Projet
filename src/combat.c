@@ -176,7 +176,8 @@ int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,combatant_
     SDL_Color textColor = {255, 255, 255};
 
     char *texte = malloc(15);
-    snprintf(texte, 15, "PV : %d", ennemi->pv);
+    snprintf(texte, 15, "PV : %d", ennemi->combatant[0]->pv);
+
 
     char *texte2 = malloc(15);
     snprintf(texte2, 15, "%s PV : %d",combatant->nom ,combatant->pv);
@@ -226,25 +227,26 @@ int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,combatant_
 *\brief fonction d'attaque de l'ennemi 
 */
 //fonction d'attaque de l'ennemi 
-int attaque_ennemi(combatant_t *combatant,p_mv * p,int nb_allie,int allie){
+int attaque_ennemi(combatant_t *combatantAt,int nb_combatant,int allie,combatant_t *combatant[]){
 
-    //personnage de l'equipe qui va etre a ttaquer
+    //personnage de l'equipe qui va etre attaque
     int perso;
     do{
-        perso=(int)1+rand()%(nb_allie+1-1);
-        printf("%d\n",perso-1);
-    }while(p->equipe[perso-1]->pv<=0 && allie>0);
+        perso=(int)1+rand()%(nb_combatant);
+        printf("perso attaque : %d\n",perso-1);
+        printf("%d\n",combatant[perso-1]->camp);
+    }while(((combatant[perso-1]->camp)==1) || (combatant[perso-1]->pv<=0));  //(allie>0)
     
 
     //enleve des pv au personnages par rapport a ses pv 
-    if(combatant->pv<=100 && combatant->pv>60){
-        p->equipe[perso-1]->pv-=(int)10+rand()%(15+1-10);
+    if(combatantAt->pv<=100 && combatantAt->pv>60){
+        combatant[perso-1]->pv-=(int)10+rand()%(15+1-10);
     }
-    if(combatant->pv<=60 && combatant->pv>30){
-        p->equipe[perso-1]->pv-=(int)5+rand()%(10+1-5);
+    if(combatantAt->pv<=60 && combatantAt->pv>30){
+        combatant[perso-1]->pv-=(int)5+rand()%(10+1-5);
     }
-    if(combatant->pv<=30 && combatant->pv>0){
-        p->equipe[perso-1]->pv-=(int)1+rand()%(5+1-1);
+    if(combatantAt->pv<=30 && combatantAt->pv>0){
+        combatant[perso-1]->pv-=(int)1+rand()%(5+1-1);
     }
     return 0;
 }
@@ -262,12 +264,13 @@ int attaque_ennemi(combatant_t *combatant,p_mv * p,int nb_allie,int allie){
 *\brief fonction d'attaque des allie 
 */
 //fonction d'attaque des allie 
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,int *nb_point,combatant_t *combatant){
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,int *nb_point,combatant_t *combatant,int Nbennemi){
         if(combatant->mort==0){
         
             int jouer=1;
             int nb_point_deb=*nb_point;
             float mult=1;
+            int i=0,j=0;
 
 
             //chargement de la police d'écriture
@@ -332,15 +335,27 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
 
             while(jouer){
                 while (SDL_PollEvent(&event) != 0 ) {
+                    if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
+                        if(i>=(Nbennemi-1) && ennemi->combatant[i]->mort==0){
+                            i=0;
+                            //si mort plus 1, et nobre neemi pas decremente
+                        }
+                        else{
+                            i++;
+                        }
+
+                    }
+                    //aff(ennemi->combatant[i]);
+
                     //enleve des pv au monstre avec les attaques
                     if(event.type == SDL_MOUSEBUTTONDOWN ){
 
                         if((r_ATQ1.x<=event.button.x) && ((r_ATQ1.x+r_ATQ1.w)>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
-                            ennemi->pv-=10*mult;
+                            ennemi->combatant[i]->pv-=10*mult;
                             jouer=0;
                         }
                         else if((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)){
-                            ennemi->pv-=30*mult;
+                            ennemi->combatant[i]->pv-=30*mult;
                             jouer=0;
                         }
                         else if((r_point.x<=event.button.x) && ((r_point.x+r_ATQ3.w)>=event.button.x) && ((r_point.y+r_ATQ3.h)>=event.button.y) && (r_point.y<=event.button.y)){
@@ -419,13 +434,15 @@ int compare_vitesse(const combatant_t * const combatant1,const combatant_t * con
     return(0) ; 
   }
   if( combatant1->vitesse > combatant2->vitesse ){
-    return(1) ; 
+    return(-1) ; 
   }  
-  return(-1) ;   
+  return(1) ;   
 }
 
 int compare_vitesse_enc( const void * const combatant1 , const void * const combatant2 ) {
-  return compare_vitesse(   combatant1 ,combatant2 );
+    const combatant_t *comb1e = *(const combatant_t**)combatant1;
+  const combatant_t *comb2e = *(const combatant_t**)combatant2;
+  return compare_vitesse(   comb1e ,comb2e );
 }
 
 
@@ -434,6 +451,8 @@ void aff(combatant_t * combatant){
         printf("vide\n");
     }else{
 printf("nom:%s\n",combatant->nom);
+printf("pv:%d\n",combatant->pv);
+
     }
     
 }
@@ -459,6 +478,8 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennem
         int nb_allie=0;
         int nb_ennemi=0;
         int nb_combatant=0;
+        int j;
+        int Nennemi=0;
         
 
         //compte le nombre d'allie dans l'equipe
@@ -473,6 +494,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennem
         for (i=0;i<4;i++){
             if(ennemi->combatant[i]!=NULL){
                 nb_ennemi++;
+                Nennemi++;
             }
         }
         
@@ -485,49 +507,54 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennem
         for(i=0;i<nb_allie;i++){
             combatant[i]=pp->equipe[i]->combatant;
         }
-        for(i=nb_allie;i<nb_combatant;i++){
-            combatant[i]=pp->equipe[i]->combatant;
+        for(i=nb_allie,j=0;i<nb_combatant;i++,j++){
+            combatant[i]=ennemi->combatant[j];
         }
         aff(combatant[0]);
-        aff(combatant[1]);
-        aff(combatant[2]);
-        
-        while(ennemi->pv>0 && allie>0){
-            
-            //trie vitesse
-            qsort(*combatant,nb_combatant,sizeof(combatant_t),compare_vitesse_enc);
-            aff(combatant[0]);
             aff(combatant[1]);
             aff(combatant[2]);
-
-            for(i=0;i<nb_combatant;i++){
+            aff(combatant[3]);
+            aff(combatant[4]);
+        while(Nennemi>0 && allie>0){
+            
+            //trie vitesse
+            qsort(combatant,nb_combatant,sizeof(void *),compare_vitesse_enc);
+            /*aff(combatant[0]);
+            aff(combatant[1]);
+            aff(combatant[2]);
+            aff(combatant[3]);
+            aff(combatant[4]);*/
+            for(i=0;i<nb_combatant && Nennemi>0 ;i++){
                 
-                if(combatant[i]->camp==0){
-                    attaque_allie(we,he,event,renderer,ennemi,nb_point,combatant[i]);
+                if(combatant[i]->camp==0 && combatant[i]->mort==0){
+                    attaque_allie(we,he,event,renderer,ennemi,nb_point,combatant[i],Nennemi);
                 }
-                else if(combatant[i]->camp==1){
-                    attaque_ennemi(combatant[i],pp,nb_allie,allie);
+                else if(combatant[i]->camp==1 && combatant[i]->mort==0){
+                    attaque_ennemi(combatant[i],nb_combatant,allie,combatant);
                 }
+                //compte le nombre d'allie dans l'equipe
+                for(j=0;j<nb_combatant;j++){
+                    //printf("allie av:%d\n",allie);
+                    if(combatant[j]->pv<=0 && combatant[j]->mort==0){
+                        combatant[j]->mort=1;
+                        if(combatant[j]->camp==0){
+                            allie--;
+                        }
+                        if(combatant[j]->camp==1){
+                            Nennemi--;
+                        }
+                    }
 
+                    
+                }
+                printf("ennemi :%d\n",Nennemi);
             }
 
             SDL_Delay(100);
             if(*nb_point<6){
                 (*nb_point)++;
             }
-            //compte le nombre d'allie dans l'equipe
-            printf("allie av:%d\n",allie);
-            for (i=0;i<nb_allie;i++){
-                if( pp->equipe[i]!=NULL ){
-                    if(pp->equipe[i]->pv<=0){
-                            pp->equipe[i]=NULL;
-                        allie--;
-                    }
-                    
-                }
-            }
-            printf("allie ap:%d\n",allie);
-
+            
         }
 
         SDL_RenderPresent(renderer);

@@ -28,8 +28,8 @@ int compare_vitesse_enc( const void * const combatant1 , const void * const comb
 int compare_vitesse(const combatant_t * const combatant1,const combatant_t * const combatant2);
 int debut_combat(SDL_Event event,pnj_t * ennemi,p_mv * pp);
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,p_mv * pp);
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,int *nb_point,combatant_t *combatant);
-int attaque_ennemi(combatant_t *combatant,p_mv * p,int nb_allie,int allie);
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,int *nb_point,combatant_t *combatant,int Nbennemi);
+int attaque_ennemi(combatant_t *combatantAt,int nb_combatant,int allie,combatant_t *combatant[]);
 int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer,combatant_t * combatant);
 int affiche_point(float mult, int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, int *nb_point);
 void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer,SDL_Texture *Texture,SDL_Texture *Texture2);

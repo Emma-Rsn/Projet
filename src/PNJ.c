@@ -17,6 +17,7 @@ pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * c
     for(i=0;i<4;i++){
         pnj.combatant[i]=NULL;
     }
+    pnj.combatant[0]=init_combatant(nom,100,"test1","testspe",10,1);
     return pnj;
 }
 

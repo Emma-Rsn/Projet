@@ -435,7 +435,7 @@ p_mv initp(carte_t * carte,case_t * c){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=initp_eq("alex",100,"Attaque 1","Attaque spe",50,1);
+    p.equipe[0]=initp_eq("alex",100,"Attaque 1","Attaque spe",50,0);
     return p;
 }
 
