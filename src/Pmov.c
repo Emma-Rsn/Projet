@@ -51,7 +51,12 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
         switch(event.key.keysym.sym){
             case SDLK_z: 
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == 0){
-                //cas des bords de grille valide
+                if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
+                    *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
+                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=0;
+                }
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == 0){
                     *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
@@ -69,6 +74,12 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
             break;
             case SDLK_s: 
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == (LARG-1)){
+                if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
+                    *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
+                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=2;
+                }
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == (LARG-1)){
                     *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
@@ -86,6 +97,17 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
             break;
             case SDLK_q: 
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == 0){
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
+                    pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=3;
+                }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
+                    pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=3;
+                }
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
                     *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
@@ -103,6 +125,17 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
             break;
             case SDLK_d: 
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == (LONG-1)){
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
+                    pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=1;
+                }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
+                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
+                    pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
+                    pmv->r=pmv->c->Rectangle;
+                    pmv->d=1;
+                }
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == (LONG-1)){
                     *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];

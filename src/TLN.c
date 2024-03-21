@@ -91,11 +91,18 @@ int main(){
     map_t map=creation_map((*wEcran),(*hEcran));
     int *etat_map=malloc(sizeof(int));
     (*etat_map)=0;
+    int ouigrille = 0;
 
     remplir_map(&map);
+    nb_texture_chargement(&map, "save/texture.txt");
+    creation_tab_path(&map, "save/texture.txt");
     afficher_zone(map);
     carte_t * cartec = &(map.tabMap[0][0]);
     cartec->etat_brouillard = 0;
+    map.zoneChargee=cartec->nZone;
+    chargement_Zone(&map,renderer,map.zoneChargee);
+    //load_layout(&(map.tabMap[0][5]),"save/layout3_1.txt");
+    load_layout(&(map.tabMap[5][5]),"save/layoutbeach.txt");
 
 
     //variable FPS
@@ -132,17 +139,16 @@ int main(){
     //zone declaration objet
     SDL_Rect HUD  = {0,0,*wEcran,56};
 
-    SDL_Rect Ecran = {0,0,*hEcran,*wEcran};
-
     //boucle du programme
     while (*run) {
         //zone d'evenement
         while (SDL_PollEvent(&event) != 0) {
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
-                pAlex->e=-1;
-            }
-            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
-                pAlex->e=0;
+                if(ouigrille == 0){
+                    ouigrille = 1;
+                }else{
+                    ouigrille = 0;
+                }
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_x)){                
                 (*etat_map)=1;
@@ -192,7 +198,7 @@ int main(){
 
         //affiche la grille
         betaAfficherMap(renderer,&map,cartec);
-        //afficher_grille(cartec->grille,renderer);
+        if(ouigrille)afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
         aff_pnj(Alex2,renderer,cartec);
@@ -203,6 +209,8 @@ int main(){
 
         //Affiche un personnage
         affp(pAlex,renderer);
+
+        //lumiere(renderer,cartec,pAlex->c);
 
         //afficher dialogue
         pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
@@ -231,6 +239,8 @@ int main(){
     
 
     //SDL_DestroyTexture(backgroundTexture);
+    creation_tab_texture(&map,renderer,1,1);
+    detruire_tab_path(&map);
     dest_pnj(pAlex2);
     dest_pnj(pAlex3);
     free(wEcran);

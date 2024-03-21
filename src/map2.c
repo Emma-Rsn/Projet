@@ -99,7 +99,6 @@ carte_t creation_carte(int w, int h,int x,int y){
 map_t creation_map (int w, int h){
     map_t m;
     int i,j;
-    m.nbtextur = 0;
     m.tabTexture = NULL;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
@@ -128,9 +127,7 @@ int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
     int i,j;
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
-            if(cartec->grille.tabGrille[i][j].ntexture == 1){
-                SDL_RenderCopy(renderer, map->tabTexture[0], NULL,&(cartec->grille.tabGrille[i][j].Rectangle));
-            }
+            SDL_RenderCopy(renderer, map->tabTexture[cartec->grille.tabGrille[i][j].ntexture], NULL,&(cartec->grille.tabGrille[i][j].Rectangle));
         }
     }
     return 0;
@@ -167,10 +164,10 @@ int remplir_map(map_t *map){
             else if(numZone>='1'&&numZone<='5'){
                 map->tabMap[x][y].nZone=numZone - '0';
                 //test
-                if(map->tabMap[x][y].nZone==1){
+                if(map->tabMap[x][y].nZone==1 || map->tabMap[x][y].nZone==2 || map->tabMap[x][y].nZone==3){
                     for(i=0;i<LONG;i++){
                         for(j=0;j<LARG;j++){
-                            map->tabMap[x][y].grille.tabGrille[i][j].ntexture = 1;//plus tard info dans un fichier
+                            map->tabMap[x][y].grille.tabGrille[i][j].ntexture = 0;//plus tard info dans un fichier
                         }
                     }
                 }
@@ -188,7 +185,6 @@ int remplir_map(map_t *map){
     }
 }
 
-
 int afficher_zone (map_t map){
     int i,j;
     for(i=0;i<ROWS;i++){
@@ -201,28 +197,40 @@ int afficher_zone (map_t map){
 
 }
 
+int load_layout(carte_t *c, char *namefile) {
+    FILE *file;
+    file = fopen(namefile, "r");
+    char input;
+    int i = 0, j = 0;
+    int res; // Pour stocker le résultat de fscanf
+
+    if (file) {
+        while ((res = fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
+            if (input != '\n') {
+                if (i < LONG && j < LARG) { 
+                    c->grille.tabGrille[i][j].ntexture = input - '0';
+                    i++;
+                }
+            } else {
+                i = 0;
+                j++;
+                if (j >= LARG) break; // Sort de la boucle si on dépasse la limite de lignes
+            }
+        }
+    } else {
+        printf("Fichier inexistant\n");
+        return 1;
+    }
+    fclose(file);
+    return 0;
+}
+
 float min(float a, float b) {
     return (a < b) ? a : b;
 }
 
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec){
     int i, j;
-    //printf("we=%d he=%d",(*we),(*he));
-    /*int firstX=(*we)/4;
-    int firstY=(*he)/(53/23);
-    SDL_Rect Rectangle;
-    Rectangle.x=firstX;
-    Rectangle.y=firstY;
-    Rectangle.w=Rectangle.x/3;
-    Rectangle.h=Rectangle.y/3;
-
-    int firstX=510;
-    int firstY=60;
-    SDL_Rect Rectangle;
-    Rectangle.x=firstX;
-    Rectangle.y=firstY;
-    Rectangle.w=160;
-    Rectangle.h=160;*/
 
     SDL_Rect Rectangle;
 
@@ -299,34 +307,178 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
 }
 
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
-    int i;
-    SDL_Surface * surf;
+        switch (nZone)
+        {
+        case 1:
+            creation_tab_texture(map,renderer,1,0);
+            break;
+        case 2:
+            printf("2 %d\n",nZone);
+            creation_tab_texture(map,renderer,2,0);
+            break;
+        case 3:
+            creation_tab_texture(map,renderer,3,0);
+            break;
+        case 4:
+            creation_tab_texture(map,renderer,4,0);
+            break;
+        case 5:
+            creation_tab_texture(map,renderer,5,0);
+            break;
+        
+        default:
+            map->tabTexture = NULL;
+            break;
+        }
+    return 0;
+}
 
-    if(map->nbtextur != 0){
-        for(i=0;i<map->nbtextur;i++){
-            SDL_DestroyTexture(map->tabTexture[i]);
-            map->tabTexture[i] = NULL;
+void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c){
+    int i,j;
+    for(i=0;i<LONG;i++){
+        for(j=0;j<LARG;j++){
+            SDL_SetRenderDrawColor(renderer, 0,0,0,255); 
+            if(cartec->grille.tabGrille[i][j].x == c->x && cartec->grille.tabGrille[i][j].y == c->y){
+               SDL_SetRenderDrawColor(renderer, 0,0,0,0);  
+            }
+            else if((cartec->grille.tabGrille[i][j].x == c->x+1 || cartec->grille.tabGrille[i][j].x == c->x-1 || cartec->grille.tabGrille[i][j].x == c->x) && (cartec->grille.tabGrille[i][j].y == c->y+1 || cartec->grille.tabGrille[i][j].y == c->y-1 || cartec->grille.tabGrille[i][j].y == c->y)){
+                SDL_SetRenderDrawColor(renderer, 0,0,0,100); 
+            }else if((cartec->grille.tabGrille[i][j].x == c->x+2 || cartec->grille.tabGrille[i][j].x == c->x-2 || cartec->grille.tabGrille[i][j].y == c->y+2 || cartec->grille.tabGrille[i][j].y == c->y-2) && ((cartec->grille.tabGrille[i][j].y > c->y-2 && cartec->grille.tabGrille[i][j].y < c->y+2) || (cartec->grille.tabGrille[i][j].x > c->x-2 && cartec->grille.tabGrille[i][j].x < c->x+2))){
+                SDL_SetRenderDrawColor(renderer, 0,0,0,170); 
+            }else if((cartec->grille.tabGrille[i][j].x == c->x+3 || cartec->grille.tabGrille[i][j].x == c->x-3 || cartec->grille.tabGrille[i][j].y == c->y+3 || cartec->grille.tabGrille[i][j].y == c->y-3) && (cartec->grille.tabGrille[i][j].y == c->y || cartec->grille.tabGrille[i][j].x == c->x)){
+                SDL_SetRenderDrawColor(renderer, 0,0,0,220);
+            }
+            SDL_RenderFillRect(renderer, &(cartec->grille.tabGrille[i][j].Rectangle));
+        }
+    }
+}
+
+int nb_texture_chargement(map_t *map, char* namefile){
+    FILE * file;
+    int nb_zone[5] = {0,0,0,0,0};
+    char line[80];
+    int i=-1;
+
+    //check = regcomp(&rx,"^[:number:]N[:number:]", 0);
+
+    file=fopen(namefile,"r");
+
+    if(file){
+        while (fgets(line, 80, file)){
+            if(line[0]>='0'&&line[0]<='5') {
+                i=atoi(line)-1;
+                fgets(line, 80, file);
+                nb_zone[i]=atoi(line);
+            }     
+        }
+
+        for(i=0;i<5;i++){
+            map->nbTexture[i]=nb_zone[i];
+        }
+    }
+    else{
+        printf("Fichier inexistant\n");
+        return 1;
+    }
+    fclose(file);
+    return 0;
+}
+
+int detruire_tab_path(map_t *map){
+    int i,k;
+    if(map->tabPath!=NULL){
+        for (i=0;i<NB_ZONE;i++){
+            for(k=0;k<map->nbTexture[i];k++){
+                free(map->tabPath[i][k]);
+            }
+            free(map->tabPath[i]);
+        }
+        free(map->tabPath);
+        map->tabPath=NULL;
+    }
+    return 0;
+}
+
+int creation_tab_path(map_t *map,char * namefile){
+    FILE * file;
+    int i = 0;
+    int j,k=-1;
+    char line[40];
+
+    map->tabPath = malloc(sizeof(char ** )*NB_ZONE);
+    for (i=0;i<NB_ZONE;i++){
+        map->tabPath[i] = malloc(sizeof(char *)*map->nbTexture[i]);
+    }
+    file=fopen(namefile,"r");
+    i=-1;
+
+    if(file){
+        while (fgets(line, 40, file)){
+            if(line[0]>='0'&&line[0]<='5') {
+                i=atoi(line)-1;
+                k=-1;
+                fgets(line, 80, file);
+            }
+            else{
+                if(i >= 0 && i < NB_ZONE && k < map->nbTexture[i] - 1){
+                    k++;
+                    for(j=0; line[j]!='\n' && j < 39; j++){}
+                    line[j]='\0';
+                    map->tabPath[i][k]=malloc(sizeof(char)*strlen(line)+1);
+                    strcpy(map->tabPath[i][k],line);
+                }
+            }
+        }
+    }
+    else{
+        printf("Fichier inexistant\n");
+        return 1;
+    }
+    fclose(file);
+    return 0;
+
+
+}
+
+int creation_tab_texture(map_t *map, SDL_Renderer *renderer, int nbZone, int eop) {
+    int i = 0;
+    SDL_Surface *surf;
+
+    if(nbZone < 1 || nbZone > NB_ZONE) {
+        printf("Erreur : nbZone hors limites\n");
+        return 1;
+    }
+
+    // Libération des textures précédentes si elles existent
+    if(map->tabTexture != NULL) {
+        int nbTexturesToDestroy = eop == 1 ? NB_ZONE : map->nbTexture[map->zoneChargee-1];
+        for(i = 0; i < nbTexturesToDestroy; i++) {
+            if(map->tabTexture[i] != NULL) {
+                SDL_DestroyTexture(map->tabTexture[i]);
+                map->tabTexture[i] = NULL;
+            }
         }
         free(map->tabTexture);
         map->tabTexture = NULL;
     }
 
-        switch (nZone)
-        {
-        case 1:
-            map->nbtextur = 1;
-            map->tabTexture = malloc(sizeof(SDL_Texture *)*map->nbtextur);
-            for(i=0;i<map->nbtextur;i++){
-                surf = IMG_Load("texture/podzol.png");//plus tard chercher le path dans un fichier
-                map->tabTexture[i] = SDL_CreateTextureFromSurface(renderer,surf);
-                SDL_FreeSurface(surf);
-            }
-            break;
-        
-        default:
-            map->nbtextur = 0;
-            map->tabTexture = NULL;
-            break;
+    if(eop != 1) {
+        map->zoneChargee = nbZone;
+        map->tabTexture = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * map->nbTexture[nbZone-1]);
+
+        if(map->tabTexture == NULL) {
+            printf("Erreur d'allocation mémoire pour map->tabTexture\n");
+            return 1;
         }
+
+        for(i = 0; i < map->nbTexture[map->zoneChargee-1]; i++) {
+            surf = IMG_Load(map->tabPath[map->zoneChargee-1][i]);
+            if (surf == NULL) {
+                fprintf(stderr, "Erreur de chargement de l'image : %s\n", SDL_GetError());
+            }
+            map->tabTexture[i] = SDL_CreateTextureFromSurface(renderer, surf);
+            SDL_FreeSurface(surf);
+        }
+    }
     return 0;
 }
