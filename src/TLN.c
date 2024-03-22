@@ -92,6 +92,7 @@ int main(){
     int *etat_map=malloc(sizeof(int));
     (*etat_map)=0;
     int ouigrille = 0;
+    int ouilumiere = 0;
 
     remplir_map(&map);
     nb_texture_chargement(&map, "save/texture.txt");
@@ -135,6 +136,7 @@ int main(){
     //variable indique l'etat du prog
 
     SDL_Event event;
+    //char * command = NULL;
 
     //zone declaration objet
     SDL_Rect HUD  = {0,0,*wEcran,56};
@@ -148,6 +150,13 @@ int main(){
                     ouigrille = 1;
                 }else{
                     ouigrille = 0;
+                }
+            }
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_l)){
+                if(ouilumiere == 0){
+                    ouilumiere = 1;
+                }else{
+                    ouilumiere = 0;
                 }
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_x)){                
@@ -166,7 +175,7 @@ int main(){
             pinput(pAlex,event,&cartec,&map,renderer);
 
             //menu
-            
+            //console_command(event,command);
             menu(wEcran,hEcran,event,renderer,run);
             debut_dialogue(event,pAlex2,pAlex);
             debut_combat(event,pAlex3,pAlex);
@@ -210,7 +219,8 @@ int main(){
         //Affiche un personnage
         affp(pAlex,renderer);
 
-        //lumiere(renderer,cartec,pAlex->c);
+        if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
+        //console_aff(renderer,*hEcran,*wEcran,command);
 
         //afficher dialogue
         pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);

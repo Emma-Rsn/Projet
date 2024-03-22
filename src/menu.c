@@ -158,3 +158,47 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
 
     return 0;
 }
+
+/*int console_command(SDL_Event event,char * command){
+    if(command == NULL){
+        command = malloc(80);
+    }
+    if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
+        scanf("%s",command);
+    }
+    return 0;
+}
+
+int console_aff(SDL_Renderer * renderer,int we,int he,char * command){
+    TTF_Font  * police = TTF_OpenFont("fonts/alagard.ttf", 20); 
+    SDL_Color blanc = {255, 255, 255};
+    if (police == NULL){
+        TTF_CloseFont(police);
+        TTF_Quit();
+        fprintf(stderr,"probleme a l'ouverture de la police\n");
+        return -1;
+    }
+    SDL_Rect r = {0,we-32,he,32};
+    SDL_SetRenderDrawColor(renderer, 0,0,0,120);
+    SDL_RenderFillRect(renderer, &r);
+    SDL_Surface * texte = TTF_RenderText_Solid(police, command, blanc);
+    if (!texte){
+        SDL_FreeSurface(texte);
+        TTF_CloseFont(police);
+        police = NULL;
+        TTF_Quit();
+        printf("probleme de texte\n");
+        return -1;
+    }
+    SDL_Texture * text_texture = SDL_CreateTextureFromSurface(renderer,texte);
+    SDL_Rect textRect = {r.x+5, r.y+5, texte->w, texte->h};
+    if(!text_texture){
+        printf("Impossible de creeer la texture\n");
+        TTF_CloseFont(police);
+        police = NULL;
+        TTF_Quit();
+        return -1;
+    }
+    SDL_RenderCopy(renderer, text_texture, NULL, &textRect);
+    return 0;
+}*/
