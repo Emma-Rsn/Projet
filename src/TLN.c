@@ -102,8 +102,8 @@ int main(){
     cartec->etat_brouillard = 0;
     map.zoneChargee=cartec->nZone;
     chargement_Zone(&map,renderer,map.zoneChargee);
-    load_layout(&(map.tabMap[0][5]),"save/layout3_1.txt");
-    //load_layout(&(map.tabMap[5][5]),"save/layoutbeach.txt");
+    //load_layout(&(map.tabMap[0][5]),"save/layout3_1.txt");
+    load_layout(&(map.tabMap[5][5]),"save/layoutbeach.txt");
 
 
     //variable FPS
@@ -250,6 +250,7 @@ int main(){
 
     //SDL_DestroyTexture(backgroundTexture);
     creation_tab_texture(&map,renderer,1,1);
+    detruire_tab_path(&map);
     dest_pnj(pAlex2);
     dest_pnj(pAlex3);
     free(wEcran);

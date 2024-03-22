@@ -127,9 +127,7 @@ int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
     int i,j;
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
-            if(cartec->grille.tabGrille[i][j].ntexture != 0){
-                SDL_RenderCopy(renderer, map->tabTexture[cartec->grille.tabGrille[i][j].ntexture], NULL,&(cartec->grille.tabGrille[i][j].Rectangle));
-            }
+            SDL_RenderCopy(renderer, map->tabTexture[cartec->grille.tabGrille[i][j].ntexture], NULL,&(cartec->grille.tabGrille[i][j].Rectangle));
         }
     }
     return 0;
@@ -169,7 +167,7 @@ int remplir_map(map_t *map){
                 if(map->tabMap[x][y].nZone==1 || map->tabMap[x][y].nZone==2 || map->tabMap[x][y].nZone==3){
                     for(i=0;i<LONG;i++){
                         for(j=0;j<LARG;j++){
-                            map->tabMap[x][y].grille.tabGrille[i][j].ntexture = 1;//plus tard info dans un fichier
+                            map->tabMap[x][y].grille.tabGrille[i][j].ntexture = 0;//plus tard info dans un fichier
                         }
                     }
                 }
@@ -315,6 +313,7 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
             creation_tab_texture(map,renderer,1,0);
             break;
         case 2:
+            printf("2 %d\n",nZone);
             creation_tab_texture(map,renderer,2,0);
             break;
         case 3:
@@ -357,28 +356,20 @@ void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c){
 int nb_texture_chargement(map_t *map, char* namefile){
     FILE * file;
     int nb_zone[5] = {0,0,0,0,0};
-    int check;
     char line[80];
-    regex_t rx;
     int i=-1;
 
-    check = regcomp(&rx,"[[:digit:]]", 0);
+    //check = regcomp(&rx,"^[:number:]N[:number:]", 0);
 
     file=fopen(namefile,"r");
 
     if(file){
         while (fgets(line, 80, file)){
-            check = regexec(&rx, line, 0, NULL, 0);
-            if(check == 0){
-                if(i < 4){
-                    i++;
-                }
-            }
-            else{
-                if(i >= 0 && i < 5){
-                    nb_zone[i]++;
-                }
-            }        
+            if(line[0]>='0'&&line[0]<='5') {
+                i=atoi(line)-1;
+                fgets(line, 80, file);
+                nb_zone[i]=atoi(line);
+            }     
         }
 
         for(i=0;i<5;i++){
@@ -393,31 +384,40 @@ int nb_texture_chargement(map_t *map, char* namefile){
     return 0;
 }
 
+int detruire_tab_path(map_t *map){
+    int i,k;
+    if(map->tabPath!=NULL){
+        for (i=0;i<NB_ZONE;i++){
+            for(k=0;k<map->nbTexture[i];k++){
+                free(map->tabPath[i][k]);
+            }
+            free(map->tabPath[i]);
+        }
+        free(map->tabPath);
+        map->tabPath=NULL;
+    }
+    return 0;
+}
+
 int creation_tab_path(map_t *map,char * namefile){
     FILE * file;
     int i = 0;
     int j,k=-1;
     char line[40];
-    regex_t rx;
-    int check; 
 
     map->tabPath = malloc(sizeof(char ** )*NB_ZONE);
     for (i=0;i<NB_ZONE;i++){
         map->tabPath[i] = malloc(sizeof(char *)*map->nbTexture[i]);
     }
-    check = regcomp(&rx, "[[:digit:]]", 0);
-
     file=fopen(namefile,"r");
     i=-1;
 
     if(file){
         while (fgets(line, 40, file)){
-            check = regexec(&rx, line, 0, NULL, 0);
-            if(check==0){
-                if(i < NB_ZONE - 1){
-                    i++;
-                    k=-1;
-                }
+            if(line[0]>='0'&&line[0]<='5') {
+                i=atoi(line)-1;
+                k=-1;
+                fgets(line, 80, file);
             }
             else{
                 if(i >= 0 && i < NB_ZONE && k < map->nbTexture[i] - 1){
@@ -475,7 +475,6 @@ int creation_tab_texture(map_t *map, SDL_Renderer *renderer, int nbZone, int eop
             surf = IMG_Load(map->tabPath[map->zoneChargee-1][i]);
             if (surf == NULL) {
                 fprintf(stderr, "Erreur de chargement de l'image : %s\n", SDL_GetError());
-                //continue;
             }
             map->tabTexture[i] = SDL_CreateTextureFromSurface(renderer, surf);
             SDL_FreeSurface(surf);

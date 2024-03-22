@@ -64,6 +64,7 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone);
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c);
 int load_layout(carte_t * c,char * namefile);
+int detruire_tab_path(map_t *map);
 int nb_texture_chargement(map_t *map, char* namefile);
 int creation_tab_path(map_t *map,char * namefile);
 int creation_tab_texture(map_t *map,SDL_Renderer *renderer,int nbZone,int free);
