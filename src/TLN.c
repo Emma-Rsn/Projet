@@ -91,8 +91,8 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(cartec,&(cartec->grille.tabGrille[10][1]));
-    Alex.equipe[1]=initp_eq("Lou",100,"ATQ1","ATspe",40,0);
-    Alex.equipe[2]=initp_eq("Max",100,"ATQ num 1","ATK spe",45,0);
+    Alex.equipe[1]=init_combatant("Lou",100,"ATQ1","ATspe",60,0);
+    Alex.equipe[2]=init_combatant("Max",100,"ATQ num 1","ATK spe",45,0);
 	p_mv * pAlex = &Alex;
 
     
@@ -208,7 +208,7 @@ int main(){
     }
 
     // Libérer les ressources
-    desctruction_p_eq(pAlex);
+    //combatant(pAlex);
     free(etat_map);
     free(nfps);
     free(t0);

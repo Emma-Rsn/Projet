@@ -389,6 +389,7 @@ void col_p(SDL_Rect * obj_r,p_mv * pp){
 *\param nomATQspe nom de l'attaque special du personnage dans le cauchemar
 *\brief fonction qui creer le personnage de l'equipe avec les parametres
 */
+/*
 p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp){
     p_eq * pe=malloc(sizeof(p_eq));
     pe->nom=nom;
@@ -400,13 +401,14 @@ p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int 
 
     return pe;
 }
-
+*/
 /**
 *
 *\fn void desctruction_p_eq(p_mv * p)
 *\param p strcuture du personnage 
 *\brief fonction qui detruit les personnages de l'equipe
 */
+/*
 void desctruction_p_eq(p_mv * p){
     int i;
     int nb_allie=0;
@@ -420,7 +422,7 @@ void desctruction_p_eq(p_mv * p){
         free(p->equipe[i]);
     }
     
-}
+}*/
 
 //construit un point
 p_mv initp(carte_t * carte,case_t * c){
@@ -435,7 +437,7 @@ p_mv initp(carte_t * carte,case_t * c){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=initp_eq("alex",100,"Attaque 1","Attaque spe",50,0);
+    p.equipe[0]=init_combatant("alex",100,"Attaque 1","Attaque spe",50,0);
     return p;
 }
 

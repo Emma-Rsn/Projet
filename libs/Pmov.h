@@ -16,7 +16,7 @@
 *\brief structure de personnage de l'equipe
 */
 
-
+/*
 struct personnage_equipe{
     //coordonées du personnage et taille dans un rect
     char * nom;
@@ -26,7 +26,7 @@ struct personnage_equipe{
     int vitesse;
     combatant_t * combatant;
 };
-
+*/
 /**
 *
 *\struct personnage
@@ -46,7 +46,7 @@ struct personnage{
     int d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
-    p_eq *equipe[4];
+    combatant_t *equipe[4];
 
 };
 
@@ -58,8 +58,8 @@ void col_p(SDL_Rect * obj_r,p_mv * pp);
 
 p_mv initp(carte_t * carte,case_t * c);
 
-p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp);
+//p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp);
 
-void desctruction_p_eq(p_mv * p);
+//void desctruction_p_eq(p_mv * p);
 
 #endif
