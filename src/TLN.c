@@ -129,7 +129,7 @@ int main(){
 
     //creation ennemi 
     pnj_t Alex3;
-    Alex3 = init_pnj("Alex3","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
+    Alex3 = init_pnj("Alex3","sprite/slimebluedial.png", "sprite/slimeblue.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
