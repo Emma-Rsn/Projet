@@ -15,11 +15,6 @@
 */
 
 
-#include <SDL2/SDL.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <SDL2/SDL_ttf.h>
-#include "../libs/texte.h"
 #include "../libs/commun.h"
 
 

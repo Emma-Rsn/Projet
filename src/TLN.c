@@ -12,28 +12,7 @@
 *
 */
 
-
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <time.h>
-
-#include "../libs/save.h"
-#include "../libs/printImg.h"
-#include "../libs/Pmov.h"
-#include "../libs/texte.h"
-#include "../libs/map2.h"
-#include "../libs/printImg.h"
-#include "../libs/save.h"
-#include "../libs/menu.h"
-#include "../libs/PNJ.h"
 #include "../libs/commun.h"
-#include "../libs/combat.h"
 
 //nombre de frame par secondes voulu
 #define FPS 30
@@ -117,8 +96,11 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(cartec,&(cartec->grille.tabGrille[10][1]));
-    Alex.equipe[1]=initp_eq("Lou",100,"ATQ1","AT2","ATspe");
+    Alex.equipe[1]=init_combattant("Lou",100,"ATQ1","ATspe",60,0,"");
+    Alex.equipe[2]=init_combattant("Max",100,"ATQ num 1","ATK spe",45,0,"");
 	p_mv * pAlex = &Alex;
+
+    
 
     //creation d'un pnj
     pnj_t Alex2;
@@ -131,6 +113,7 @@ int main(){
     //creation ennemi 
     pnj_t Alex3;
     Alex3 = init_pnj("Alex3","sprite/slimebluedial.png", "sprite/slimeblue.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
+    Alex3.combattant[1]=init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png");
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
@@ -288,7 +271,7 @@ int main(){
     }
 
     // Libérer les ressources
-    desctruction_p_eq(pAlex);
+    //combattant(pAlex);
     free(etat_map);
     free(nfps);
     free(t0);
@@ -304,8 +287,10 @@ int main(){
     //SDL_DestroyTexture(backgroundTexture);
     creation_tab_texture(&map,renderer,1,1);
     detruire_tab_path(&map);
+
     dest_pnj(pAlex2);
     dest_pnj(pAlex3);
+    desctruction_p_eq(pAlex);
     free(wEcran);
     free(hEcran);
     TTF_Quit();

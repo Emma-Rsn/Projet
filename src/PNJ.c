@@ -1,10 +1,4 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include "../libs/texte.h"
-#include "../libs/printImg.h"
-#include "../libs/PNJ.h"
-#include "../libs/Pmov.h"
-#include "../libs/map2.h"
+#include "../libs/commun.h"
 
 pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte){
     pnj_t pnj;
@@ -19,6 +13,11 @@ pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * c
     pnj.perso = IMG_Load(emp_perso);
     pnj.combat=0;
     pnj.pv=100;
+    int i;
+    for(i=0;i<4;i++){
+        pnj.combattant[i]=NULL;
+    }
+    pnj.combattant[0]=init_combattant(nom,100,"test1","testspe",100,1,"sprite/alexface4.png");
     return pnj;
 }
 
@@ -81,6 +80,18 @@ void pnj_dialogue (SDL_Event event,pnj_t * pnj,SDL_Renderer * renderer,int * he,
 }
 
 void dest_pnj(pnj_t * pnj){
+    int i;
+    int nb_ennemi=0;
+    for (i=0;i<4;i++){
+        if(pnj->combattant[i]!=NULL){
+            nb_ennemi++;
+        }
+    }
+
+    for(i=0;i<nb_ennemi;i++){
+        desctruction_combattant(pnj->combattant[i]); 
+    }
+
     free(pnj->nom);
     liste_destruction(pnj->dial);
     SDL_FreeSurface(pnj->perso);

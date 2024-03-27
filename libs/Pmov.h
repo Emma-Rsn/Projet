@@ -1,9 +1,9 @@
 #ifndef __PMOV_H__
 #define __PMOV_H__
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include "../libs/map2.h"
+//#include "../libs/commun.h"
+
+
 
 /**
 *
@@ -16,16 +16,17 @@
 *\brief structure de personnage de l'equipe
 */
 
-typedef struct personnage_equipe p_eq;
+/*
 struct personnage_equipe{
     //coordonées du personnage et taille dans un rect
     char * nom;
     int pv;
     char * nomATQ1;
-    char * nomATQ2;
     char * nomATQspe;
+    int vitesse;
+    combattant_t * combattant;
 };
-
+*/
 /**
 *
 *\struct personnage
@@ -36,7 +37,7 @@ struct personnage_equipe{
 *\brief structure de personnage
 */
 
-typedef struct personnage p_mv;
+
 struct personnage{
     //coordonées du personnage et taille dans un rect
     carte_t * carte;
@@ -45,7 +46,7 @@ struct personnage{
     int d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
-    p_eq *equipe[4];
+    combattant_t *equipe[4];
 
 };
 
@@ -57,7 +58,7 @@ void col_p(SDL_Rect * obj_r,p_mv * pp);
 
 p_mv initp(carte_t * carte,case_t * c);
 
-p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQ2,char * nomATQspe);
+//p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp);
 
 void desctruction_p_eq(p_mv * p);
 

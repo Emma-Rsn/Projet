@@ -2,15 +2,9 @@
 #define __MAP2_H__
 
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
-#include <SDL2/SDL_image.h>
+//#include "../libs/commun.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "../libs/commun.h"
 
-typedef struct case_s case_t;
 struct case_s{
     SDL_Rect Rectangle;
     int x;
@@ -19,12 +13,12 @@ struct case_s{
     int ntexture;
 };
 
-typedef struct grille_s grille_t;
+
 struct grille_s{
     case_t tabGrille[LONG][LARG];
 };
 
-typedef struct carte_s carte_t;
+
 struct carte_s{
     int xcarte;
     int ycarte;
@@ -37,7 +31,7 @@ struct carte_s{
     grille_t grille; //quadrillage des cases dans une seule carte
 };
 
-typedef struct map_s map_t;
+
 struct map_s{
     carte_t tabMap[ROWS][COLUMNS];
     char *** tabPath;

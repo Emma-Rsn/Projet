@@ -1,16 +1,16 @@
 #ifndef __TEXTE_H__
 #define __TEXTE_H__
 
+//#include "../libs/commun.h"
 
 
-typedef struct mess_t mess_s;
 struct mess_t
 {
     char * message;
     mess_s *suivant;
 };
 
-typedef struct Liste Liste;
+
 struct Liste
 {
     mess_s * premier;
