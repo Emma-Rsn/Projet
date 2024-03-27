@@ -233,6 +233,7 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
     int i, j;
 
     SDL_Rect Rectangle;
+    SDL_Rect Rectanglep;
 
     // Marges
     float margeX = (*we) * 0.1;
@@ -245,6 +246,9 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
     // Taille de chaque carré
     float taille_carre = min(largeurUtilisable, hauteurUtilisable) / 6;
 
+    //Taille du petit carré de l'emplacement actuel
+    float taille_pcarre = taille_carre/3;
+
     // Coordonnées du premier carré
     float firstX = margeX + ((*we) - 2 * margeX - taille_carre * 6) / 2;
     float firstY = margeY + ((*he) - 2 * margeY - taille_carre * 6) / 2;
@@ -252,6 +256,12 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
     Rectangle.y = (int)firstY;
     Rectangle.w = (int)taille_carre;
     Rectangle.h = (int)taille_carre;
+
+    //Initialisation du petit carré de l'emplacement actuel
+    Rectanglep.x = (int)firstX + (taille_pcarre);
+    Rectanglep.y = (int)firstY + (taille_pcarre);
+    Rectanglep.w=(int)taille_pcarre;
+    Rectanglep.h=(int)taille_pcarre;
 
     if((*etat_map) == 1){
 
@@ -289,9 +299,14 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
                     }else{
                        SDL_SetRenderDrawColor(renderer, 0,0,0,255); 
                     }
-                    if(cartec->ycarte == j && cartec->xcarte == i)SDL_SetRenderDrawColor(renderer, 255,255,0,255); 
                     Rectangle.x = (int)(firstX + j * taille_carre);
                     SDL_RenderFillRect(renderer, &Rectangle);
+                    if(cartec->ycarte == j && cartec->xcarte == i){
+                        SDL_SetRenderDrawColor(renderer, 255,255,0,255);
+                        Rectanglep.x = Rectangle.x+taille_pcarre;
+                        Rectanglep.y = Rectangle.y+taille_pcarre;;
+                        SDL_RenderFillRect(renderer, &Rectanglep); 
+                    }
                 }
             }
             SDL_RenderPresent(renderer);
