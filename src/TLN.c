@@ -91,8 +91,8 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(cartec,&(cartec->grille.tabGrille[10][1]));
-    Alex.equipe[1]=init_combatant("Lou",100,"ATQ1","ATspe",60,0);
-    Alex.equipe[2]=init_combatant("Max",100,"ATQ num 1","ATK spe",45,0);
+    Alex.equipe[1]=init_combattant("Lou",100,"ATQ1","ATspe",60,0,"");
+    Alex.equipe[2]=init_combattant("Max",100,"ATQ num 1","ATK spe",45,0,"");
 	p_mv * pAlex = &Alex;
 
     
@@ -108,7 +108,7 @@ int main(){
     //creation ennemi 
     pnj_t Alex3;
     Alex3 = init_pnj("Alex3","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
-    Alex3.combatant[1]=init_combatant("Lute",100,"ATQ11","ATspe1",10,1);
+    Alex3.combattant[1]=init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png");
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
@@ -208,7 +208,7 @@ int main(){
     }
 
     // Libérer les ressources
-    //combatant(pAlex);
+    //combattant(pAlex);
     free(etat_map);
     free(nfps);
     free(t0);
@@ -219,8 +219,10 @@ int main(){
     
 
     //SDL_DestroyTexture(backgroundTexture);
+
     dest_pnj(pAlex2);
     dest_pnj(pAlex3);
+    desctruction_p_eq(pAlex);
     free(wEcran);
     free(hEcran);
     TTF_Quit();

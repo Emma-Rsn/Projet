@@ -13,7 +13,7 @@ struct pnj_s{
     SDL_Surface * perso;
     int combat;
     int pv;
-    combatant_t * combatant[4];
+    combattant_t * combattant[4];
 };
 
 int boolcol (case_t * obj_c,p_mv * pp);

@@ -397,18 +397,19 @@ p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int 
     pe->nomATQ1=nomATQ1;
     pe->nomATQspe=nomATQspe;
     pe->vitesse=vitesse;
-    pe->combatant=init_combatant(nom,pv,nomATQ1,nomATQspe,vitesse,camp);
+    pe->combattant=init_combattant(nom,pv,nomATQ1,nomATQspe,vitesse,camp);
 
     return pe;
 }
 */
+
 /**
 *
 *\fn void desctruction_p_eq(p_mv * p)
 *\param p strcuture du personnage 
 *\brief fonction qui detruit les personnages de l'equipe
 */
-/*
+
 void desctruction_p_eq(p_mv * p){
     int i;
     int nb_allie=0;
@@ -418,11 +419,10 @@ void desctruction_p_eq(p_mv * p){
             }
         }
     for(i=0;i<nb_allie;i++){
-        desctruction_combatant(p->equipe[i]->combatant,nb_allie);
-        free(p->equipe[i]);
+        desctruction_combattant(p->equipe[i]);
     }
     
-}*/
+}
 
 //construit un point
 p_mv initp(carte_t * carte,case_t * c){
@@ -437,7 +437,7 @@ p_mv initp(carte_t * carte,case_t * c){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=init_combatant("alex",100,"Attaque 1","Attaque spe",50,0);
+    p.equipe[0]=init_combattant("alex",100,"Attaque 1","Attaque spe",50,0,"");
     return p;
 }
 

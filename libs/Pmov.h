@@ -24,7 +24,7 @@ struct personnage_equipe{
     char * nomATQ1;
     char * nomATQspe;
     int vitesse;
-    combatant_t * combatant;
+    combattant_t * combattant;
 };
 */
 /**
@@ -46,7 +46,7 @@ struct personnage{
     int d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
-    combatant_t *equipe[4];
+    combattant_t *equipe[4];
 
 };
 
@@ -60,6 +60,6 @@ p_mv initp(carte_t * carte,case_t * c);
 
 //p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp);
 
-//void desctruction_p_eq(p_mv * p);
+void desctruction_p_eq(p_mv * p);
 
 #endif

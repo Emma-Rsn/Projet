@@ -15,9 +15,9 @@ pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * c
     pnj.pv=100;
     int i;
     for(i=0;i<4;i++){
-        pnj.combatant[i]=NULL;
+        pnj.combattant[i]=NULL;
     }
-    pnj.combatant[0]=init_combatant(nom,100,"test1","testspe",100,1);
+    pnj.combattant[0]=init_combattant(nom,100,"test1","testspe",100,1,"sprite/alexface4.png");
     return pnj;
 }
 
@@ -83,13 +83,13 @@ void dest_pnj(pnj_t * pnj){
     int i;
     int nb_ennemi=0;
     for (i=0;i<4;i++){
-        if(pnj->combatant[i]!=NULL){
+        if(pnj->combattant[i]!=NULL){
             nb_ennemi++;
         }
     }
 
     for(i=0;i<nb_ennemi;i++){
-        free(pnj->combatant[i]);
+        desctruction_combattant(pnj->combattant[i]); 
     }
 
     free(pnj->nom);
