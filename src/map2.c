@@ -74,6 +74,7 @@ grille_t creation_grille(int w, int h, int bord){
 carte_t creation_carte(int w, int h,int x,int y){
     carte_t carte;
     int bord = 0; //variable pour savoir si on est en bordure de map
+    carte.nZone=0;
     carte.xcarte=x;
     carte.ycarte=y;
     if(x == 0) bord = 1;
@@ -144,6 +145,335 @@ int afficher_texture(grille_t grille, SDL_Renderer *renderer){
     return 0;
 }
 
+int creer_map(map_t * map){
+    FILE * file;
+    int x,y;
+    int cpt_z2,cpt_z3,cpt_z4,cpt_z5;
+    int taille_max;
+    int choix,choix2;
+    srand( time( NULL ) );
+
+
+    int xZone1 = rand() % 2 + 2;
+    int yZone1 = rand() % 2 + 2;
+
+    printf("zone 1 x:%d y:%d\n",xZone1,yZone1);
+    map->tabMap[xZone1][yZone1].nZone=1;
+    printf("%d\n",map->tabMap[xZone1][yZone1].nZone);
+
+    //Initialisation des zones dans les coins de la map
+    map->tabMap[0][0].nZone=5;
+    map->tabMap[0][1].nZone=5;
+    map->tabMap[1][0].nZone=5;
+    map->tabMap[1][1].nZone=5;
+    cpt_z5=4;
+
+    map->tabMap[4][0].nZone=4;
+    map->tabMap[4][1].nZone=4;
+    map->tabMap[5][0].nZone=4;
+    map->tabMap[5][1].nZone=4;
+    cpt_z4=4;
+
+    map->tabMap[0][4].nZone=3;
+    map->tabMap[0][5].nZone=3;
+    map->tabMap[1][4].nZone=3;
+    map->tabMap[1][5].nZone=3;
+    cpt_z3=4;
+
+    map->tabMap[4][4].nZone=2;
+    map->tabMap[4][5].nZone=2;
+    map->tabMap[5][4].nZone=2;
+    map->tabMap[5][5].nZone=2;
+    cpt_z2=4;
+
+    map->tabMap[3][0].nZone=4;
+
+
+    //Cas particulier de la génération où la zone 3 du manoir n'est pas dans le coin en haut à droite
+    if(xZone1==3&&yZone1==2){
+        
+        //Remplissage "logique" des zones en fonction du cas particulier
+        map->tabMap[0][2].nZone=5;
+
+        map->tabMap[0][3].nZone=3;
+        map->tabMap[1][3].nZone=3;
+        map->tabMap[2][2].nZone=3;
+
+        map->tabMap[0][5].nZone=2;
+        map->tabMap[1][5].nZone=2; 
+        map->tabMap[2][4].nZone=2;
+        map->tabMap[2][5].nZone=2;
+        map->tabMap[3][3].nZone=2;
+        map->tabMap[3][4].nZone=2;
+        map->tabMap[3][5].nZone=2;
+
+        map->tabMap[3][1].nZone=4;
+
+        //Choix pour les cartes du manoir (zone 3)
+        choix=rand() % 2;
+        if(!choix){
+            map->tabMap[1][2].nZone=3;
+            map->tabMap[2][3].nZone=2;
+        }
+        else{
+            map->tabMap[1][2].nZone=5;
+            map->tabMap[2][3].nZone=3;
+        }
+        //Choix pour les cartes adjacentes de la plage ou de la foret (zone 2 et zone 4)
+        choix=rand() % 3;
+        switch(choix){
+            //Cas si on rempli 1 case de la zone plage et 3 de la zone foret
+            case 0:
+            choix2=rand() % 2;
+            //Première possibilité de remplissage
+            if(choix2==0){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=4;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Deuxième possibilité de remplissage
+            else{
+                map->tabMap[4][3].nZone=4;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            
+            break;
+            //Cas si on rempli 2 cases de la zone plage et 2 de la zone foret
+            case 1:
+            choix2=rand() % 3;
+            //Première possibilité de remplissage
+            if(choix2==0){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=4;
+                map->tabMap[4][2].nZone=2;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Deuxième possibilité de remplissage
+            else if(choix2==1){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Troisième possibilité de remplissage
+            else{
+                map->tabMap[4][3].nZone=4;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=2;
+
+            }
+            break;
+            //Cas si on rempli 3 cases de la zone plage et 1 de la zone foret
+            case 2:
+            choix2=rand() % 2;
+            //Première possibilité de remplissage
+            if(choix2==0){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=2;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Deuxième possibilité de remplissage
+            else{
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=2;
+ 
+            }
+            break;
+        }
+        //Choix pour les cartes adjacentes de la foret et de la grotte (zone 4 et zone 5)
+        choix=rand() % 2;
+        if(choix==0){
+            map->tabMap[2][1].nZone=5;
+            map->tabMap[2][0].nZone=4;
+        }
+        else{
+            map->tabMap[2][1].nZone=4;
+            map->tabMap[2][0].nZone=5;
+        }
+    }
+
+
+
+
+
+    //Cas général
+    else{
+        map->tabMap[xZone1-1][yZone1].nZone=3;
+        cpt_z3++;
+        map->tabMap[xZone1][yZone1-1].nZone=4;
+        cpt_z4++;
+        map->tabMap[xZone1][yZone1+1].nZone=2;
+        cpt_z2++;
+
+        map->tabMap[3][1].nZone=4;
+        cpt_z4++;
+        
+        choix=rand() % 2;
+        if(choix==0){
+            map->tabMap[xZone1+1][yZone1].nZone=2;
+            cpt_z2++;
+        }
+        else{
+            map->tabMap[xZone1+1][yZone1].nZone=4;
+            cpt_z4++;
+        }
+
+        if(xZone1==2&&yZone1==2){
+            map->tabMap[3][3].nZone=2;
+            cpt_z2++;
+        }
+
+
+        //Remplissage des cases adjacentes la zone manoir et grotte (zone 3 et 5)
+        if(xZone1==2&&yZone1==3){
+            map->tabMap[0][3].nZone=3;
+        }
+        else{
+            map->tabMap[1][3].nZone=3;
+        }
+        for(x=2;x>=0;x--){
+            for(y=3;y>=0;y--){
+                if(map->tabMap[x][y].nZone==0){
+                    map->tabMap[x][y].nZone=5;
+                    cpt_z5++;
+                }
+            }
+        }
+
+        //Remplissage des cases adjacentes la zone manoir et plage (zone 3 et 2)
+        for(x=2;x<=3;x++){
+            for(y=3;y<=5;y++){
+                if(map->tabMap[x][y].nZone==0){
+                    map->tabMap[x][y].nZone=2;
+                    cpt_z2++;
+                }
+            }
+        }
+
+        //Choix pour les cartes adjacentes de la plage ou de la foret (zone 2 et zone 4)
+        choix=rand() % 3;
+        switch(choix){
+            //Cas si on rempli 1 case de la zone plage et 3 de la zone foret
+            case 0:
+            choix2=rand() % 2;
+            //Première possibilité de remplissage
+            if(choix2==0){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=4;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Deuxième possibilité de remplissage
+            else{
+                map->tabMap[4][3].nZone=4;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            
+            break;
+            //Cas si on rempli 2 cases de la zone plage et 2 de la zone foret
+            case 1:
+            choix2=rand() % 3;
+            //Première possibilité de remplissage
+            if(choix2==0){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=4;
+                map->tabMap[4][2].nZone=2;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Deuxième possibilité de remplissage
+            else if(choix2==1){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Troisième possibilité de remplissage
+            else{
+                map->tabMap[4][3].nZone=4;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=2;
+
+            }
+            break;
+            //Cas si on rempli 3 cases de la zone plage et 1 de la zone foret
+            case 2:
+            choix2=rand() % 2;
+            //Première possibilité de remplissage
+            if(choix2==0){
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=2;
+                map->tabMap[5][2].nZone=4;
+
+            }
+            //Deuxième possibilité de remplissage
+            else{
+                map->tabMap[4][3].nZone=2;
+                map->tabMap[5][3].nZone=2;
+                map->tabMap[4][2].nZone=4;
+                map->tabMap[5][2].nZone=2;
+ 
+            }
+            break;
+        }
+        //Choix pour les cartes adjacentes de la foret et de la grotte (zone 4 et zone 5)
+        choix=rand() % 2;
+        if(choix==0){
+            if(map->tabMap[2][1].nZone==0);
+            map->tabMap[2][1].nZone=5;
+            map->tabMap[2][0].nZone=4;
+        }
+        else{
+            if(map->tabMap[2][1].nZone==0);
+            map->tabMap[2][1].nZone=4;
+            map->tabMap[2][0].nZone=5;
+        }
+
+        if(map->tabMap[3][2].nZone==0){
+            map->tabMap[3][2].nZone=4;
+        }
+    }
+
+/*
+
+    file=fopen("save/map.txt","w");
+    if(file){
+        for(x=0;x<ROWS;x++){
+            for()
+        }
+
+        
+
+
+        fclose(file);
+        return 0;
+    }
+    else{
+        printf("Fichier inexistant\n");
+        return 1;
+    }*/
+    return 0;
+}
+
 int remplir_map(map_t *map){
     FILE * file;
 
@@ -193,6 +523,7 @@ int afficher_zone (map_t map){
         }
         printf("\n");
     }
+    printf("\n");
     return 0;
 
 }

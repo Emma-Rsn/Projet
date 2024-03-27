@@ -8,7 +8,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <regex.h>
 #include "../libs/commun.h"
 
 typedef struct case_s case_t;
@@ -36,10 +35,6 @@ struct carte_s{
     Uint8 a;
     int nZone;
     grille_t grille; //quadrillage des cases dans une seule carte
-    //carte_t * nord; // si NULL alors pas de lien avec la carte se trouvant au nord ou bordure de carte
-    //carte_t * sud; // si NULL alors pas de lien avec la carte se trouvant au sud ou bordure de carte
-    //carte_t * est; // si NULL alors pas de lien avec la carte se trouvant à l'est ou bordure de carte
-    //carte_t * ouest; // si NULL alors pas de lien avec la carte se trouvant à l'ouest ou bordure de carte
 };
 
 typedef struct map_s map_t;
@@ -57,6 +52,7 @@ carte_t creation_carte(int w, int h,int x,int y);
 map_t creation_map (int w, int h);
 int afficher_grille(grille_t grille, SDL_Renderer *renderer);
 int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec);
+int creer_map(map_t * map);
 int remplir_map(map_t *map);
 int afficher_zone (map_t m);
 float min(float a, float b);
