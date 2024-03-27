@@ -134,6 +134,8 @@ int main(){
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
+    int i;
+    int j;
 
     SDL_Event event;
     //char * command = NULL;
@@ -157,6 +159,13 @@ int main(){
                     ouilumiere = 1;
                 }else{
                     ouilumiere = 0;
+                }
+            }
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_m)){
+                for(i = 0;i < ROWS;i++){
+                    for(j = 0; j < COLUMNS; j++){
+                        map.tabMap[i][j].etat_brouillard = 0;
+                    }
                 }
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_x)){                
