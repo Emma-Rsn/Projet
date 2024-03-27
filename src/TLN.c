@@ -16,6 +16,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_mixer.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -54,7 +55,7 @@ int main(){
     load_settings(wEcran,hEcran);
 
      // Initialisation de SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
         fprintf(stderr, "Erreur d'initialisation de SDL : %s\n", SDL_GetError());
         return -1;
     }
@@ -81,7 +82,6 @@ int main(){
     //mode de transparence
     SDL_BlendMode blend = SDL_BLENDMODE_BLEND;
     SDL_SetRenderDrawBlendMode(renderer, blend);
-
 
     //IMG de fond
     //SDL_Texture* backgroundTexture = NULL;
@@ -134,14 +134,31 @@ int main(){
     pnj_t * pAlex3 = &Alex3;
 
     //variable indique l'etat du prog
-    int i;
-    int j;
+    int i;//brouillard
+    int j;//brouillard
+
+    int * transi = malloc(sizeof(int));
+    *transi = 0;
 
     SDL_Event event;
     //char * command = NULL;
 
     //zone declaration objet
     SDL_Rect HUD  = {0,0,*wEcran,56};
+
+    Mix_Music* gMusic = NULL;
+
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+    }
+
+    gMusic = Mix_LoadMUS( "Game-Over.mp3" );
+    if( gMusic == NULL )
+    {
+        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
+    }
+    Mix_PlayMusic( gMusic, -1 );
 
     //boucle du programme
     while (*run) {
@@ -179,9 +196,31 @@ int main(){
                 if(ind_map==3){
                     ind_map=0;
                 }*/
+            }if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_9)){
+                if( Mix_PlayingMusic() == 0 )
+                {
+                    //Play the music
+                    Mix_PlayMusic( gMusic, -1 );
+                }
+                //If music is being played
+                else
+                {
+                    //If the music is paused
+                    if( Mix_PausedMusic() == 1 )
+                    {
+                        //Resume the music
+                        Mix_ResumeMusic();
+                    }
+                    //If the music is playing
+                    else
+                    {
+                        //Pause the music
+                        Mix_PauseMusic();
+                    }
+                }
             }
             
-            pinput(pAlex,event,&cartec,&map,renderer);
+            pinput(pAlex,event,&cartec,&map,renderer,transi);
 
             //menu
             //console_command(event,command);
@@ -224,12 +263,14 @@ int main(){
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
+        transition(renderer,transi,*wEcran,*hEcran);
 
         //Affiche un personnage
         affp(pAlex,renderer);
 
         if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
         //console_aff(renderer,*hEcran,*wEcran,command);
+
 
         //afficher dialogue
         pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
@@ -254,6 +295,9 @@ int main(){
     free(t1);
     free(etat_menu);
     free(run);
+    free(transi);
+
+    Mix_FreeMusic( gMusic );
 
     
 

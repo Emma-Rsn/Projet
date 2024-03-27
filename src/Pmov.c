@@ -43,10 +43,14 @@
 */
 
 //detection de touche presser et modification des coordonées
-void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer){
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi){
     int temp = (*carte)->nZone;
+    int xdep = pmv->c->x;
+    int ydep = pmv->c->y;
+    int ddep = pmv->d;
+    carte_t * dcartec = *carte;
     //si une touche est presser
-    if(event.type == SDL_KEYDOWN){
+    if(event.type == SDL_KEYDOWN && ((event.key.keysym.sym == SDLK_z) || (event.key.keysym.sym == SDLK_q) || (event.key.keysym.sym == SDLK_s) || (event.key.keysym.sym == SDLK_d))){
         //quelle touche est presser
         switch(event.key.keysym.sym){
             case SDLK_z: 
@@ -55,6 +59,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
                     pmv->r=pmv->c->Rectangle;
+                    pmv->d=0;
+                }else{
                     pmv->d=0;
                 }
             }else{
@@ -68,6 +74,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1]);
                         pmv->r=pmv->c->Rectangle;
                         pmv->d=0;
+                    }else{
+                        pmv->d=0;
                     }
                 }
             }
@@ -78,6 +86,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
                     pmv->r=pmv->c->Rectangle;
+                    pmv->d=2;
+                }else{
                     pmv->d=2;
                 }
             }else{
@@ -90,6 +100,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat){
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1]);
                         pmv->r=pmv->c->Rectangle;
+                        pmv->d=2;
+                    }else{
                         pmv->d=2;
                     }
                 }
@@ -107,6 +119,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=3;
+                }else{
+                    pmv->d=3;
                 }
             }else{
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
@@ -119,6 +133,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
                         pmv->d=3;
+                    }else{
+                        pmv->d=3;
                     }
                 }
             }
@@ -130,10 +146,14 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=1;
+                    *transi = 1;
                 }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
                     *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
                     pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
+                    pmv->d=1;
+                    *transi = 1;
+                }else{
                     pmv->d=1;
                 }
             }else{
@@ -142,14 +162,31 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=1;
+                    *transi = 1;
                 }else if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat){
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=1;
-                }
+                }else{
+                        pmv->d=1;
+                    }
             }
             break;
             default: break;
+        }
+        if(pmv->d != ddep){
+            *carte = dcartec;
+            pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
+            pmv->r = pmv->c->Rectangle;
+            pmv->e = 0;
+        }else{
+            if(pmv->e == 0){
+                pmv->e = 1;
+            }else if(pmv->e == 1){
+                pmv->e = 2;
+            }else if(pmv->e == 2){
+                pmv->e = 1;
+            }
         }
         if((*carte)->etat_brouillard == 1)(*carte)->etat_brouillard = 0;
         if(temp != (*carte)->nZone){
@@ -485,3 +522,26 @@ p_mv initp(carte_t * carte,case_t * c){
     return p;
 }
 
+void transition(SDL_Renderer * renderer,int * transi,int we,int he){
+    if(*transi){
+        SDL_Surface* surface = SDL_CreateRGBSurface(0, we, he, 32,0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+        // Copie les pixels du rendu actuel dans la surface
+        SDL_RenderReadPixels(renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
+        // Créer une texture à partir de la surface
+        SDL_Texture* targetTexture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+        SDL_Rect ecran  = {0,0,we,he};
+        int i;
+        SDL_Event event;
+        for(i=255;i>0;i--){
+            SDL_PollEvent(&event);
+            SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, targetTexture, NULL, NULL);
+            SDL_SetRenderDrawColor(renderer,0,0,0,i);
+            SDL_RenderFillRect(renderer, &ecran);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(10);
+        }
+        *transi = 0;
+    }
+}

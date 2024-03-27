@@ -49,7 +49,7 @@ struct personnage{
 
 };
 
-void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer);
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi);
 
 int affp(p_mv * pmv,SDL_Renderer *renderer);
 
@@ -60,5 +60,7 @@ p_mv initp(carte_t * carte,case_t * c);
 p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQ2,char * nomATQspe);
 
 void desctruction_p_eq(p_mv * p);
+
+void transition(SDL_Renderer * renderer,int * transi,int we,int he) ;
 
 #endif
