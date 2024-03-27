@@ -12,16 +12,15 @@
 #define COLUMNS 6 //map
 #define NB_ZONE 5
 
-#define MIN_ZONE2 9
-#define MAX_ZONE2 11
+#define MIN_ZONE2 8
+#define MAX_ZONE2 10
 
-#define MIN_ZONE3 6
-#define MAX_ZONE3 6
+#define TAILLE_ZONE3 6
 
 #define MIN_ZONE4 8
-#define MAX_ZONE4 9
+#define MAX_ZONE4 10
 
-#define MIN_ZONE5 8
-#define MAX_ZONE5 11
+#define MIN_ZONE5 6
+#define MAX_ZONE5 7
 
 #endif
