@@ -3,6 +3,7 @@
 
 
 //#include "../libs/commun.h"
+#include "../libs/OBJ.h"
 
 
 struct case_s{
@@ -28,6 +29,8 @@ struct carte_s{
     Uint8 b;
     Uint8 a;
     int nZone;
+    int nbObj;
+    obj_t tabObj[20];
     grille_t grille; //quadrillage des cases dans une seule carte
 };
 
@@ -35,7 +38,7 @@ struct carte_s{
 struct map_s{
     carte_t tabMap[ROWS][COLUMNS];
     char *** tabPath;
-    int nbTexture[5];
+    int nbTexture[10];
     SDL_Texture ** tabTexture;
     int zoneChargee;
 };

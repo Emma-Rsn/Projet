@@ -94,6 +94,7 @@ carte_t creation_carte(int w, int h,int x,int y){
     carte.g=255;
     carte.b=255;
     carte.a=255;
+    carte.nbObj = -1;
     return carte;
 }
 

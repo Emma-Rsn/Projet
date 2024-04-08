@@ -1,11 +1,14 @@
 1
-6
+9
 texture/terre.png
 texture/terre_nightmare.jpg
-texture/budding_amethyst.png
+texture/sable.png
 texture/birch_planks_s.png
 texture/black_stained_glass.png
-texture/terre.png
+texture/water.png
+texture/objet/stone1.png
+texture/objet/tree2top.png
+texture/objet/tree2bottom.png
 2
 9
 texture/sable.png

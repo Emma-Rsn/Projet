@@ -21,6 +21,7 @@
 #define MIN_ZONE5 6
 #define MAX_ZONE5 7
 
+typedef struct obj_s obj_t;
 typedef struct combat_s combat_t;
 typedef struct combattant_s combattant_t;
 typedef struct pnj_s pnj_t;
@@ -53,7 +54,7 @@ typedef struct Liste Liste;
 #include "../libs/printImg.h"
 #include "../libs/save.h"
 #include "../libs/menu.h"
-#include "../libs/PNJ.h"
+#include "../libs/OBJ.h"
 #include "../libs/combat.h"
 
 #include "../libs/Pmov.h"

@@ -27,6 +27,9 @@ $(SAVEDIR):
 	mkdir -p $(SAVEDIR)
 	touch save/settings.txt
 	chmod a+w save/settings.txt
+	touch save/save.txt
+	chmod a+w save/save.txt
+	echo "0" >> save/save.txt
 	cp map.txt save
 	cp texture.txt save
 	cp layout3_1.txt save

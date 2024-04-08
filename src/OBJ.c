@@ -1,5 +1,45 @@
 #include "../libs/commun.h"
 
+obj_t init_obj(case_t * c,int indText,int type,...){
+    obj_t newObj;
+    newObj.cas = c;
+    newObj.indTexture = indText;
+    newObj.typeObj = type;
+    va_list args;
+    va_start(args, type);
+    int n; //nombre d'éléments propre a l'objets
+    int i;
+    switch(type){
+        case 0 : //cas d'un objet de décors avec collision
+            n = -1;
+            newObj.cas->etat = 0;
+            break;
+        case 1 : //cas d'un objet de décors sans collision
+            n = -1;
+            newObj.cas->etat = 1;
+            break;
+        default://cas d'un objet inconnu
+            n = -1;
+            break;
+    }
+    for (i = 0; i < n; i++) {
+        newObj.tabObj[i] = va_arg(args, void *);
+    }
+    va_end(args);
+    return newObj;
+}
+
+void affObj(SDL_Renderer *renderer,obj_t o,map_t map){
+    SDL_RenderCopy(renderer, map.tabTexture[o.indTexture], NULL, &(o.cas->Rectangle));
+}
+
+void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
+    int i;
+    for(i = 0; i < carte->nbObj;i++){
+        SDL_RenderCopy(renderer, map.tabTexture[carte->tabObj[i].indTexture], NULL, &(carte->tabObj[i].cas->Rectangle));
+    }
+}
+
 pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte){
     pnj_t pnj;
     pnj.nom = malloc(strlen(nom)+1);

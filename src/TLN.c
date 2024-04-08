@@ -77,7 +77,22 @@ int main(){
     nb_texture_chargement(&map, "save/texture.txt");
     creation_tab_path(&map, "save/texture.txt");
     afficher_zone(map);
-    carte_t * cartec = &(map.tabMap[0][0]);
+    //def spawn
+    int q,s,xp,yp;
+    if(!load_pos(&q,&s,&xp,&yp)){
+        for(q = 0;q<ROWS;q++){
+            for(s = 0;s<COLUMNS;s++){
+                if(map.tabMap[q][s].nZone == 1){
+                    break;
+                }
+            }
+            if(map.tabMap[q][s].nZone == 1){
+                    break;
+            }
+        }
+        xp = 12,yp=5;
+    }
+    carte_t * cartec = &(map.tabMap[q][s]);
     cartec->etat_brouillard = 0;
     map.zoneChargee=cartec->nZone;
     chargement_Zone(&map,renderer,map.zoneChargee);
@@ -95,7 +110,7 @@ int main(){
 
     //creation personnage
 	p_mv Alex;
-	Alex = initp(cartec,&(cartec->grille.tabGrille[10][1]));
+	Alex = initp(cartec,&(cartec->grille.tabGrille[xp][yp]));
     Alex.equipe[1]=init_combattant("Lou",100,"ATQ1","ATspe",60,0,"");
     Alex.equipe[2]=init_combattant("Max",100,"ATQ num 1","ATK spe",45,0,"");
 	p_mv * pAlex = &Alex;
@@ -109,6 +124,15 @@ int main(){
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
 
+    //test obj
+    obj_t test = init_obj(&(cartec->grille.tabGrille[1][1]),6,0);
+    obj_t test1 = init_obj(&(cartec->grille.tabGrille[12][9]),7,1);
+    obj_t test2 = init_obj(&(cartec->grille.tabGrille[12][10]),8,0);
+
+    cartec->tabObj[0] = test;
+    cartec->tabObj[1] = test1;
+    cartec->tabObj[2] = test2;
+    cartec->nbObj = 3;
 
     //creation ennemi 
     pnj_t Alex3;
@@ -246,13 +270,14 @@ int main(){
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
-        transition(renderer,transi,*wEcran,*hEcran);
+        //transition(renderer,transi,*wEcran,*hEcran);
 
         //Affiche un personnage
         affp(pAlex,renderer);
+        affTabObj(renderer,map,cartec);
 
         if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
-        //console_aff(renderer,*hEcran,*wEcran,command);
+        //console_aff(renderer,*hqEcran,*wEcran,command);
 
 
         //afficher dialogue
@@ -272,6 +297,9 @@ int main(){
 
     // Libérer les ressources
     //combattant(pAlex);
+
+    save_pos(cartec->xcarte,cartec->ycarte,pAlex->c->x,pAlex->c->y);
+
     free(etat_map);
     free(nfps);
     free(t0);
