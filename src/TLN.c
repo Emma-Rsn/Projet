@@ -73,7 +73,7 @@ int main(){
     int ouigrille = 0;
     int ouilumiere = 0;
 
-    creer_map(&map);
+    remplir_map(&map);
     nb_texture_chargement(&map, "save/texture.txt");
     creation_tab_path(&map, "save/texture.txt");
     afficher_zone(map);
