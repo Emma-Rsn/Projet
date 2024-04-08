@@ -124,16 +124,6 @@ int main(){
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
 
-    //test obj
-    obj_t test = init_obj(&(cartec->grille.tabGrille[1][1]),6,0);
-    obj_t test1 = init_obj(&(cartec->grille.tabGrille[12][9]),7,1);
-    obj_t test2 = init_obj(&(cartec->grille.tabGrille[12][10]),8,0);
-
-    cartec->tabObj[0] = test;
-    cartec->tabObj[1] = test1;
-    cartec->tabObj[2] = test2;
-    cartec->nbObj = 3;
-
     //creation ennemi 
     pnj_t Alex3;
     Alex3 = init_pnj("Alex3","sprite/slimebluedial.png", "sprite/slimeblue.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
