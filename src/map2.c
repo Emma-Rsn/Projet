@@ -150,7 +150,6 @@ int creer_map(map_t * map){
     FILE * file;
     int x,y;
     int cpt_z2,cpt_z3,cpt_z4,cpt_z5;
-    int taille_max;
     int choix,choix2;
     srand( time( NULL ) );
 
@@ -295,6 +294,9 @@ int creer_map(map_t * map){
         }
         //Choix pour les cartes adjacentes de la foret et de la grotte (zone 4 et zone 5)
         choix=rand() % 2;
+        if(map->tabMap[2][2].nZone==1){
+            choix=1;
+        }
         if(choix==0){
             map->tabMap[2][1].nZone=5;
             map->tabMap[2][0].nZone=4;
@@ -454,12 +456,18 @@ int creer_map(map_t * map){
         }
     }
 
-/*
-
+    //Sauvegarde de la map dans un fichier
     file=fopen("save/map.txt","w");
     if(file){
         for(x=0;x<ROWS;x++){
-            for()
+            for(y=0;y<COLUMNS;y++){
+                fprintf(file,"%d",map->tabMap[x][y].nZone);
+                if(y!=COLUMNS-1){
+                    fprintf(file," ");
+                }
+                
+            }
+            fprintf(file,"\n");
         }
 
         
@@ -471,7 +479,7 @@ int creer_map(map_t * map){
     else{
         printf("Fichier inexistant\n");
         return 1;
-    }*/
+    }
     return 0;
 }
 
@@ -511,8 +519,8 @@ int remplir_map(map_t *map){
         return 0;
     }
     else{
-        printf("Fichier inexistant\n");
-        return 1;
+        creer_map(map);
+        return 0;
     }
 }
 
