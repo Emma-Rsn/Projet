@@ -39,8 +39,10 @@ void affObj(SDL_Renderer *renderer,obj_t o,map_t map){
 
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     int i;
+    int n = 0;
+    if(map.Nightmare == 1)n=map.nbN;
     for(i = 0; i < carte->nbObj;i++){
-        SDL_RenderCopy(renderer, map.tabTexture[carte->tabObj[i].indTexture], NULL, &(carte->tabObj[i].cas->Rectangle));
+        SDL_RenderCopy(renderer, map.tabTexture[(carte->tabObj[i].indTexture)+n], NULL, &(carte->tabObj[i].cas->Rectangle));
     }
 }
 

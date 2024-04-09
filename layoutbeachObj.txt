@@ -1,0 +1,2 @@
+5 5 10 2 "Slime" "Sprite/slimebluedial.png"
+10 7 9 0

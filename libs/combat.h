@@ -17,6 +17,7 @@
 struct combattant_s{
     char * nom;
     int pv;
+    int pvMax;
     int vitesse;
     char * nomATQ1;
     char * nomATQspe;

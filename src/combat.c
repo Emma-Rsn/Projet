@@ -61,6 +61,7 @@ combattant_t *init_combattant(char* nom,int pv,char * nomATQ1,char * nomATQspe,i
     combattant_t * combattant=malloc(sizeof(combattant_t));
     combattant->nom=nom;
     combattant->pv=pv;
+    combattant->pvMax=pv;
     combattant->nomATQ1=nomATQ1;
     combattant->nomATQspe=nomATQspe;
     combattant->vitesse=vitesse;

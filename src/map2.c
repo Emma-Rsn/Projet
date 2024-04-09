@@ -102,6 +102,7 @@ map_t creation_map (int w, int h){
     map_t m;
     int i,j;
     m.tabTexture = NULL;
+    m.Nightmare = 0;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);
@@ -127,9 +128,11 @@ int afficher_grille(grille_t grille, SDL_Renderer *renderer){
 
 int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
     int i,j;
+    int n = 0;
+    if(map->Nightmare)n=map->nbN;
     for(i=0;i<LONG;i++){
         for(j=0;j<LARG;j++){
-            SDL_RenderCopy(renderer, map->tabTexture[cartec->grille.tabGrille[i][j].ntexture], NULL,&(cartec->grille.tabGrille[i][j].Rectangle));
+            SDL_RenderCopy(renderer, map->tabTexture[cartec->grille.tabGrille[i][j].ntexture + n], NULL,&(cartec->grille.tabGrille[i][j].Rectangle));
         }
     }
     return 0;
@@ -557,6 +560,7 @@ int load_layout(carte_t *c, char *namefile) {
         return 1;
     }
     fclose(file);
+    
     return 0;
 }
 
@@ -656,30 +660,36 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
     return 0;
 }
 
-int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone){
+int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMusic){
+    int m = nZone;
         switch (nZone)
         {
         case 1:
             creation_tab_texture(map,renderer,1,0);
+            map->nbN = 11;
             break;
         case 2:
-            printf("2 %d\n",nZone);
             creation_tab_texture(map,renderer,2,0);
+            map->nbN = 11;
             break;
         case 3:
             creation_tab_texture(map,renderer,3,0);
+            map->nbN = 0;
             break;
         case 4:
             creation_tab_texture(map,renderer,4,0);
+            map->nbN = 0;
             break;
         case 5:
             creation_tab_texture(map,renderer,5,0);
+            map->nbN = 0;
             break;
         
         default:
             map->tabTexture = NULL;
             break;
         }
+        if(!map->Nightmare)newMusic(m,gMusic);
     return 0;
 }
 

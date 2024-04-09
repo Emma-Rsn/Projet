@@ -41,6 +41,8 @@ struct map_s{
     int nbTexture[10];
     SDL_Texture ** tabTexture;
     int zoneChargee;
+    int Nightmare;
+    int nbN;
 };
 
 case_t creation_case();
@@ -54,7 +56,7 @@ int remplir_map(map_t *map);
 int afficher_zone (map_t m);
 float min(float a, float b);
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec);
-int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone);
+int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMusic);
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c);
 int load_layout(carte_t * c,char * namefile);
 int detruire_tab_path(map_t *map);

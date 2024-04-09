@@ -57,6 +57,7 @@ typedef struct Liste Liste;
 #include "../libs/menu.h"
 #include "../libs/OBJ.h"
 #include "../libs/combat.h"
+#include "../libs/musique.h"
 
 #include "../libs/Pmov.h"
 #endif
