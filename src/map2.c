@@ -440,19 +440,14 @@ int creer_map(map_t * map){
         }
         //Choix pour les cartes adjacentes de la foret et de la grotte (zone 4 et zone 5)
         choix=rand() % 2;
+        if(map->tabMap[2][2].nZone==1)choix=1;
         if(choix==0){
-            if(map->tabMap[2][1].nZone==0);
             map->tabMap[2][1].nZone=5;
             map->tabMap[2][0].nZone=4;
         }
         else{
-            if(map->tabMap[2][1].nZone==0);
             map->tabMap[2][1].nZone=4;
             map->tabMap[2][0].nZone=5;
-        }
-
-        if(map->tabMap[3][2].nZone==0){
-            map->tabMap[3][2].nZone=4;
         }
     }
 
