@@ -27,7 +27,7 @@
 */
 
 //fonction qui affiche et gere les texte cliquable du menu 
-int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
+int menu_option(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
 
         SDL_RenderClear(renderer);
 
@@ -155,6 +155,205 @@ int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
     return 0;
 }
 
+
+int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run){
+
+        SDL_RenderClear(renderer);
+                SDL_Color textColor = {255, 255, 255};
+
+
+        //chargement de la police d'écriture
+        TTF_Font* fontT = TTF_OpenFont("fonts/alagard.ttf", 75);
+        if (!fontT) {
+            //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+            return -1;
+        }
+
+        SDL_Color textColorT = {43, 27, 85};
+
+        SDL_Surface* textSurfaceT = TTF_RenderText_Solid(fontT,"The Last Nightmare", textColorT);
+        if (!textSurfaceT) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(fontT);
+            return -1;
+        }
+
+ 
+        SDL_Texture* textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
+
+        SDL_Rect  r_text_T= {((*we)/2)-((textSurfaceT->w)/2),textSurfaceT->h,textSurfaceT->w,textSurfaceT->h};
+        SDL_FreeSurface(textSurfaceT);
+
+        if(SDL_QueryTexture(textTextureT,NULL,NULL,&r_text_T.w,&r_text_T.h)!=0){
+                printf("Impossible de charger le texte\n");
+                return -1;
+            
+        }
+        
+
+        TTF_CloseFont(fontT);
+        fontT=NULL;
+
+
+                //chargement de la police d'écriture
+        TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 50);
+        if (!font) {
+            //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+            return -1;
+        }
+
+
+        SDL_Surface* textSurfaceQ = TTF_RenderText_Solid(font,"Quitter", textColor);
+        if (!textSurfaceQ) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            return -1;
+        }
+
+        SDL_Texture* textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
+        
+
+        SDL_Surface* textSurfaceC = TTF_RenderText_Solid(font,"Continuer", textColor);
+        if (!textSurfaceC) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            return -1;
+        }
+
+        SDL_Texture* textTextureC = SDL_CreateTextureFromSurface(renderer, textSurfaceC);
+        
+
+        SDL_Surface* textSurfaceO = TTF_RenderText_Solid(font,"Options", textColor);
+        if (!textSurfaceO) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            SDL_FreeSurface(textSurfaceC);
+            return -1;
+        }
+        
+        SDL_Texture* textTextureO = SDL_CreateTextureFromSurface(renderer, textSurfaceO);
+        
+
+
+        SDL_Surface* textSurfaceN = TTF_RenderText_Solid(font,"Nouvelle partie", textColor);
+        if (!textSurfaceN) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            SDL_FreeSurface(textSurfaceC);
+            SDL_FreeSurface(textSurfaceO);
+            return -1;
+        }
+        
+        SDL_Texture* textTextureN = SDL_CreateTextureFromSurface(renderer, textSurfaceN);
+
+        TTF_CloseFont(font);
+        font=NULL;
+
+
+        //creation rectangle pour les textes
+        SDL_Rect  r_text_C= {((*we)/2)-((textSurfaceC->w)/2),((*he)/4)*1-textSurfaceC->h+100,textSurfaceC->w,textSurfaceC->h};
+        SDL_Rect  r_text_Q= {((*we)/2)-((textSurfaceQ->w)/2),(*he/4)*4-textSurfaceQ->h-100,textSurfaceQ->w,textSurfaceQ->h};
+        SDL_Rect  r_text_O= {((*we)/2)-((textSurfaceO->w)/2),((*he)/4)*3-textSurfaceO->h-50,textSurfaceO->w,textSurfaceO->h};
+        SDL_Rect  r_text_N= {((*we)/2)-((textSurfaceN->w)/2),(*he/4)*2-textSurfaceN->h+50,textSurfaceN->w,textSurfaceN->h};
+        
+
+        SDL_FreeSurface(textSurfaceC);
+        SDL_FreeSurface(textSurfaceQ);
+        SDL_FreeSurface(textSurfaceO);
+        SDL_FreeSurface(textSurfaceN);
+
+
+        if(SDL_QueryTexture(textTextureQ,NULL,NULL,&r_text_Q.w,&r_text_Q.h)!=0){
+                printf("Impossible de charger le texte\n");
+                return -1;          
+        }
+
+        if(SDL_QueryTexture(textTextureC,NULL,NULL,&r_text_C.w,&r_text_C.h)!=0){
+                printf("Impossible de charger le texte\n");
+                return -1;
+        }
+
+         if(SDL_QueryTexture(textTextureO,NULL,NULL,&r_text_O.w,&r_text_O.h)!=0){
+                printf("Impossible de charger le texte\n");
+                return -1;
+            
+        }
+
+
+        if(SDL_QueryTexture(textTextureN,NULL,NULL,&r_text_N.w,&r_text_N.h)!=0){
+                printf("Impossible de charger le texte\n");
+                return -1;
+            
+        }
+
+        
+
+            int etat=1;
+            while(etat){
+
+                while (SDL_PollEvent(&event) != 0) {
+
+                    if(event.type == SDL_MOUSEBUTTONDOWN ){
+
+                        //pour continuer le jeu
+                        if((r_text_C.x<=event.button.x) && ((r_text_C.x+r_text_C.w)>=event.button.x) && ((r_text_C.y+r_text_C.h)>=event.button.y) && (r_text_C.y<=event.button.y)){
+                            etat=0;
+                        }
+
+                        //pour quitter le jeu
+                        else if((r_text_Q.x<=event.button.x) && ((r_text_Q.x+r_text_Q.w)>=event.button.x) && ((r_text_Q.y+r_text_Q.h)>=event.button.y) && (r_text_Q.y<=event.button.y)){
+                            etat=0;
+                            *run=0;
+                        }
+                        //Pour aller au menu option
+                        else if((r_text_O.x<=event.button.x) && ((r_text_O.x+r_text_O.w)>=event.button.x) && ((r_text_O.y+r_text_O.h)>=event.button.y) && (r_text_O.y<=event.button.y)){
+                            etat=0;
+                        }  
+                        //Pour creer une nouvelle partie
+                        else if((r_text_N.x<=event.button.x) && ((r_text_N.x+r_text_N.w)>=event.button.x) && ((r_text_N.y+r_text_N.h)>=event.button.y) && (r_text_N.y<=event.button.y)){
+                            etat=0;
+                        }  
+        
+                                            
+                    }           
+                }
+        
+            SDL_SetRenderDrawColor(renderer,0,0,0,255);
+            
+            SDL_RenderClear(renderer);
+
+            
+            SDL_RenderCopy(renderer, textTextureQ, NULL, &r_text_Q);
+            SDL_RenderCopy(renderer, textTextureC, NULL, &r_text_C);
+            SDL_RenderCopy(renderer, textTextureT, NULL, &r_text_T);
+            SDL_RenderCopy(renderer, textTextureO, NULL, &r_text_O);
+            SDL_RenderCopy(renderer, textTextureN, NULL, &r_text_N);
+
+
+            SDL_RenderPresent(renderer);
+            SDL_Delay(100);
+      
+            }
+
+        SDL_DestroyTexture(textTextureQ);
+        SDL_DestroyTexture(textTextureC);
+        SDL_DestroyTexture(textTextureT);
+        SDL_DestroyTexture(textTextureO);
+        SDL_DestroyTexture(textTextureN);
+
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
+        
+        
+
+
+
+    return 0;
+}
+
 /*int console_command(SDL_Event event,char * command){
     if(command == NULL){
         command = malloc(80);
@@ -198,3 +397,4 @@ int console_aff(SDL_Renderer * renderer,int we,int he,char * command){
     SDL_RenderCopy(renderer, text_texture, NULL, &textRect);
     return 0;
 }*/
+

@@ -156,7 +156,7 @@ int main(){
         printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
     }
     Mix_PlayMusic( gMusic, -1 );
-
+    menu(wEcran,hEcran,event,renderer,run);
     //boucle du programme
     while (*run) {
         //zone d'evenement
@@ -221,7 +221,7 @@ int main(){
 
             //menu
             //console_command(event,command);
-            menu(wEcran,hEcran,event,renderer,run);
+            menu_option(wEcran,hEcran,event,renderer,run);
             debut_dialogue(event,pAlex2,pAlex);
             debut_combat(event,pAlex3,pAlex);
             

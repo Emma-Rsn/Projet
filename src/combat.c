@@ -268,15 +268,9 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
             textRect.x = (r_DEcran.x+(r_DEcran.w/50));
         }
 
-
-        
-
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
         SDL_FreeSurface(textSurface);
         SDL_DestroyTexture(textTexture);
-        
-
-        
 
     }
 
