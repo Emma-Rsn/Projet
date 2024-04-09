@@ -110,7 +110,7 @@ int main(){
 
     //temporaire
 
-    ennemi_t Slime1 = init_ennemi("Slime","Sprite/slimebluedial.png");
+    ennemi_t Slime1 = init_ennemi("Slime","Sprite/slimebluedial.png","");
     Slime1.combattant[1] = init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/slimebluedial.png","sprite/slimebluedial.png",0);
     ennemi_t * PSlime1 = &Slime1;
     obj_t ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,PSlime1);

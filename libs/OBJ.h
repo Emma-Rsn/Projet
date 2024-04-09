@@ -18,6 +18,7 @@ struct ennemi_s{
     combattant_t * combattant[4];
     case_t * c;
     int type;
+    int status;
 };
 
 struct pnj_s{
