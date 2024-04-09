@@ -104,7 +104,7 @@ int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 
     // Position du texte
-    SDL_Rect textRect = {10, 10, textSurface->w, textSurface->h};
+    SDL_Rect textRect = {300, 10, textSurface->w, textSurface->h};
 
     // Afficher la texture sur le rendu
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
@@ -114,4 +114,44 @@ int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     texte=NULL;
     TTF_CloseFont(font);
     return 0;
+}
+
+void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
+    //Variable PV
+    int x = 10;
+    int y = -5;
+    int p = (144*pmv.equipe[0]->pv)/pmv.equipe[0]->pvMax;
+
+    //Variable Night
+    int xn = 1000;
+    int yn = -5;
+    int pn = (144*pmv.NightP)/pmv.NightMax;
+
+    SDL_Rect HUD  = {0,0,*we,56};
+    SDL_Rect PV_bar= {x,y,256,64};
+    SDL_Rect PV_barVide= {x+81,y+19,144,26};
+    SDL_Rect PV_barPleine= {x+81,y+19,p,26}; //144 = pleine
+
+    SDL_Rect Night_bar= {xn,yn,256,64};
+    SDL_Rect Night_barVide = {xn+81,yn+19,144,26};
+    SDL_Rect Night_barPleine= {xn+81,yn+19,pn,26}; //144 = pleine
+
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(renderer, &HUD);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &PV_barVide);
+
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    SDL_RenderFillRect(renderer, &PV_barPleine);
+
+    SDL_RenderCopy(renderer, map.tabTexture[29], NULL, &PV_bar);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &Night_barVide);
+
+    SDL_SetRenderDrawColor(renderer, 43,27,85,255);
+    SDL_RenderFillRect(renderer, &Night_barPleine);
+
+    SDL_RenderCopy(renderer, map.tabTexture[29], NULL, &Night_bar);
 }

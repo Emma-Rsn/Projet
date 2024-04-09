@@ -28,7 +28,7 @@
 */
 
 //detection de touche presser et modification des coordonées
-void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,int * toucheDeplacement){
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement){
     int temp = (*carte)->nZone;
     int xdep = pmv->c->x;
     int ydep = pmv->c->y;
@@ -74,6 +74,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=0;
+                    *transi = 1;
                 }else{
                     pmv->d=0;
                 }
@@ -83,6 +84,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=0;
+                    *transi = 1;
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat){
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1]);
@@ -101,6 +103,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=2;
+                    *transi = 1;
                 }else{
                     pmv->d=2;
                 }
@@ -110,6 +113,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=2;
+                    *transi = 1;
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat){
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1]);
@@ -129,11 +133,13 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=3;
+                    *transi = 1;
                 }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
                     *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
                     pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=3;
+                    *transi = 1;
                 }else{
                     pmv->d=3;
                 }
@@ -143,6 +149,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                     pmv->r=pmv->c->Rectangle;
                     pmv->d=3;
+                    *transi = 1;
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat){
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y]);
@@ -204,7 +211,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
         }
         if((*carte)->etat_brouillard == 1)(*carte)->etat_brouillard = 0;
         if(temp != (*carte)->nZone){
-            chargement_Zone(map,renderer,(*carte)->nZone);
+            chargement_Zone(map,renderer,(*carte)->nZone,gMusic);
         }
     }
 }
@@ -230,14 +237,15 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
         SDL_Surface* perso=NULL;
         SDL_Texture * tperso=NULL;
         char * empSprit1 = malloc(sizeof(char)*30);
-        char * empSprit2 = malloc(sizeof(char)*30);
         if(pmv->e == 0){
             //Nord
             if(pmv->d == 0){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "dos2.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "dos2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -249,10 +257,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Est
             else if(pmv->d == 1){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "prof1_2.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "prof1_2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -264,10 +274,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Sud
             else if(pmv->d == 2){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "face2.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "face2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -279,10 +291,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Ouest
             else if(pmv->d == 3){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "prof2_2.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "prof2_2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -298,10 +312,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
         }else if(pmv->e == 1){
             //Nord
             if(pmv->d == 0){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "dos1.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "dos1");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -313,10 +329,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Est
             else if(pmv->d == 1){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "prof1_1.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "prof1_1");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -328,10 +346,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Sud
             else if(pmv->d == 2){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "face1.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "face1");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -343,10 +363,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Ouest
             else if(pmv->d == 3){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "prof2_1.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "prof2_1");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -362,10 +384,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
         }else if(pmv->e == 2){
             //Nord
             if(pmv->d == 0){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "dos3.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "dos3");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -377,10 +401,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Est
             else if(pmv->d == 1){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "prof1_3.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "prof1_3");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -392,10 +418,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Sud
             else if(pmv->d == 2){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "face3.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "face3");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -407,10 +435,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
             //Ouest
             else if(pmv->d == 3){
-                strcpy(empSprit1,"./sprite/");
-                strcpy(empSprit2, "prof2_3.png");
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
                 strcat(empSprit1,pmv->nom);
-                strcat(empSprit1, empSprit2);
+                strcat(empSprit1, "prof2_3");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
                     //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
@@ -425,7 +455,6 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
             }
         }
         free(empSprit1);
-        free(empSprit2);
         SDL_DestroyTexture(tperso);
     }
     return 0;
@@ -532,6 +561,9 @@ p_mv initp(carte_t * carte,case_t * c){
     p.d=0;
     p.e=0;
     p.nom="alex";
+    p.Nightmare = 0;
+    p.NightMax = 100;
+    p.NightP = 0;
     int i ;
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
@@ -551,7 +583,7 @@ void transition(SDL_Renderer * renderer,int * transi,int we,int he){
         SDL_Rect ecran  = {0,0,we,he};
         int i;
         SDL_Event event;
-        for(i=255;i>0;i--){
+        for(i=255;i>0;i = i-4){
             SDL_PollEvent(&event);
             SDL_RenderClear(renderer);
             SDL_RenderCopy(renderer, targetTexture, NULL, NULL);

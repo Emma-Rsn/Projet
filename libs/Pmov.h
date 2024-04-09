@@ -47,10 +47,13 @@ struct personnage{
     int e; //etat du personnage
     char * nom;
     combattant_t *equipe[4];
+    int Nightmare;
+    int NightP;
+    int NightMax;
 
 };
 
-void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,int * toucheDeplacement);
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement);
 
 int affp(p_mv * pmv,SDL_Renderer *renderer);
 

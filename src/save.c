@@ -72,7 +72,7 @@ int save_pos(int xcarte,int ycarte,int xpos,int ypos){
             rewind(fichier);
             fprintf(fichier, "%d", 1);
         }
-        fprintf(fichier, " %d %d %d %d", xcarte,ycarte,xpos,ypos);
+        fprintf(fichier, " %d %d %d %d ", xcarte,ycarte,xpos,ypos);
         /*while (fscanf(fichier, "%d", &value) != EOF) {
             count++;
             if (count >= 2 && count <= 5) {

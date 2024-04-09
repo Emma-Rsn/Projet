@@ -62,6 +62,10 @@ int main(){
         SDL_Quit();
         return -1;
     }
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+    }
     //mode de transparence
     SDL_BlendMode blend = SDL_BLENDMODE_BLEND;
     SDL_SetRenderDrawBlendMode(renderer, blend);
@@ -76,6 +80,8 @@ int main(){
     (*etat_map)=0;
     int ouigrille = 0;
     int ouilumiere = 0;
+    int ouifps = 0;
+    Mix_Music* gMusic = NULL;
 
     remplir_map(&map);
     nb_texture_chargement(&map, "save/texture.txt");
@@ -99,9 +105,25 @@ int main(){
     carte_t * cartec = &(map.tabMap[q][s]);
     cartec->etat_brouillard = 0;
     map.zoneChargee=cartec->nZone;
-    chargement_Zone(&map,renderer,map.zoneChargee);
-    //load_layout(&(map.tabMap[0][5]),"save/layout3_1.txt");
+    chargement_Zone(&map,renderer,map.zoneChargee,gMusic);
     load_layout(&(map.tabMap[5][5]),"save/layoutbeach.txt");
+
+    //temporaire
+
+    ennemi_t Slime1 = init_ennemi("Slime","Sprite/slimebluedial.png");
+    Slime1.combattant[1] = init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/slimebluedial.png","sprite/slimebluedial.png",0);
+    ennemi_t * PSlime1 = &Slime1;
+    obj_t ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,PSlime1);
+    map.tabMap[5][5].tabObj[0] = ObjSlime1;
+
+    obj_t ObjCaillou = init_obj(&map.tabMap[5][5].grille.tabGrille[15][5],9,0);
+    map.tabMap[5][5].tabObj[1] = ObjCaillou;
+
+    map.tabMap[5][5].nbObj = 2;
+
+    int tN = 0;
+
+    //fin temporaire
 
 
     //variable FPS
@@ -132,7 +154,7 @@ int main(){
     ennemi_t Slime = init_ennemi("Slime","sprite/slimebluedial.png","sprite/slimeblue.png");
     Slime.combattant[1] = init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png","sprite/ennemicfight.png",0);
     ennemi_t * PSlime = &Slime;
-    obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],9,2,PSlime);
+    obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],18,2,PSlime);
     map.tabMap[3][3].tabObj[0] = ObjSlime;
     map.tabMap[3][3].nbObj = 1;
     
@@ -147,22 +169,6 @@ int main(){
     SDL_Event event;
     //char * command = NULL;
 
-    //zone declaration objet
-    SDL_Rect HUD  = {0,0,*wEcran,56};
-
-    Mix_Music* gMusic = NULL;
-
-    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-    {
-        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
-    }
-
-    gMusic = Mix_LoadMUS( "Game-Over.mp3" );
-    if( gMusic == NULL )
-    {
-        printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
-    }
-    Mix_PlayMusic( gMusic, -1 );
 
     //menu d'ecran titre
     menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement);
@@ -185,11 +191,26 @@ int main(){
                     ouilumiere = 0;
                 }
             }
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_3)){
+                if(ouifps == 0){
+                    ouifps = 1;
+                }else{
+                    ouifps = 0;
+                }
+            }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_m)){
                 for(i = 0;i < ROWS;i++){
                     for(j = 0; j < COLUMNS; j++){
                         map.tabMap[i][j].etat_brouillard = 0;
                     }
+                }
+            }if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_1)){
+                if(pAlex->NightP == 0){
+                    pAlex->NightP = 100;
+                    tN = 1;
+                }else{
+                    pAlex->NightP = 0;
+                    tN = 1;
                 }
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_x)){                
@@ -203,31 +224,10 @@ int main(){
                 if(ind_map==3){
                     ind_map=0;
                 }*/
-            }if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_9)){
-                if( Mix_PlayingMusic() == 0 )
-                {
-                    //Play the music
-                    Mix_PlayMusic( gMusic, -1 );
-                }
-                //If music is being played
-                else
-                {
-                    //If the music is paused
-                    if( Mix_PausedMusic() == 1 )
-                    {
-                        //Resume the music
-                        Mix_ResumeMusic();
-                    }
-                    //If the music is playing
-                    else
-                    {
-                        //Pause the music
-                        Mix_PauseMusic();
-                    }
-                }
             }
-            
-            pinput(pAlex,event,&cartec,&map,renderer,transi,toucheDeplacement);
+
+            pinput(pAlex,event,&cartec,&map,renderer,transi,gMusic,toucheDeplacement);
+            pause(event,gMusic);
 
             //menu
             //console_command(event,command);
@@ -236,6 +236,17 @@ int main(){
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement);
             debut_dialogue(event,pAlex2,pAlex);
             debut_combat(event,ObjSlime.tabObj[0],pAlex,ObjSlime.cas);
+            if(pAlex->NightP == 100 && tN == 1){
+                pAlex->Nightmare = 1;
+                map.Nightmare = 1;
+                tN = 0;
+                newMusic(6,gMusic);
+            }else if(tN == 1){
+                pAlex->Nightmare = 0;
+                map.Nightmare = 0;
+                tN = 0;
+                newMusic(map.zoneChargee,gMusic);
+            }
             
         }
         //zone d'affichage
@@ -260,8 +271,8 @@ int main(){
         SDL_RenderClear(renderer);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 245, 255);
-        SDL_RenderFillRect(renderer, &HUD);
-
+        affHud(renderer,hEcran,wEcran,map,*pAlex);
+;
         //affiche la grille
         betaAfficherMap(renderer,&map,cartec);
         if(ouigrille)afficher_grille(cartec->grille,renderer);
@@ -270,15 +281,15 @@ int main(){
         aff_pnj(Alex2,renderer,cartec);
 
         //affiche les fps
-        aff_Fps(cmpfps,renderer);
-        //transition(renderer,transi,*wEcran,*hEcran);
+        if(ouifps)aff_Fps(cmpfps,renderer);
 
         //Affiche un personnage
         affp(pAlex,renderer);
         affTabObj(renderer,map,cartec);
 
         if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
-        //console_aff(renderer,*hqEcran,*wEcran,command);
+
+        transition(renderer,transi,*wEcran,*hEcran);
 
 
         //afficher dialogue
