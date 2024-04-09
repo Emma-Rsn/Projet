@@ -50,15 +50,13 @@ struct personnage{
 
 };
 
-void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi);
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,int * toucheDeplacement);
 
 int affp(p_mv * pmv,SDL_Renderer *renderer);
 
 void col_p(SDL_Rect * obj_r,p_mv * pp);
 
 p_mv initp(carte_t * carte,case_t * c);
-
-//p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp);
 
 void desctruction_p_eq(p_mv * p);
 

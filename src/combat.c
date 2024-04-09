@@ -57,16 +57,22 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
 *\param portrait acces du portrait du combattant
 *\brief fonction qui creer le combattant 
 */
-combattant_t *init_combattant(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp,char * portrait){
+combattant_t *init_combattant(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp,char * portrait,char * sprite,int type){
     combattant_t * combattant=malloc(sizeof(combattant_t));
     combattant->nom=nom;
     combattant->pv=pv;
+    combattant->pvMax=pv;
     combattant->nomATQ1=nomATQ1;
     combattant->nomATQspe=nomATQspe;
     combattant->vitesse=vitesse;
     combattant->mort=0;
     combattant->camp=camp;
-    combattant->po=IMG_Load(portrait);
+    combattant->temps_recharge=0;
+    combattant->temps_recharge_max=2;
+    if(portrait != NULL)combattant->po = IMG_Load(portrait);
+    if(sprite != NULL)combattant->sprite = IMG_Load(sprite);
+    combattant->type=type;
+    combattant->status=0;
     return combattant;
 }
 
@@ -77,6 +83,7 @@ combattant_t *init_combattant(char* nom,int pv,char * nomATQ1,char * nomATQspe,i
 */
 void desctruction_combattant(combattant_t * combattant){
     SDL_FreeSurface(combattant->po);  
+    SDL_FreeSurface(combattant->sprite);  
     free(combattant);
 }
 
@@ -233,6 +240,8 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         if(strcmp(combat->ennemi[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0){
             textRect.x = (r_GEcran.x+(100));
         }
+
+        affVie(renderer,(r_GEcran.y+i*(r_GEcran.h/4))+textRect.h,10,combat->ennemi[i]);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
         
         SDL_FreeSurface(textSurface);
@@ -267,7 +276,7 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         if(strcmp(combat->allie[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0){
             textRect.x = (r_DEcran.x+(r_DEcran.w/50));
         }
-
+        affVie(renderer,(r_DEcran.y+i*(r_GEcran.h/4))+textRect.h,r_DEcran.x,combat->allie[i]);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
         SDL_FreeSurface(textSurface);
         SDL_DestroyTexture(textTexture);
@@ -322,7 +331,7 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
 */
 //fonction d'affichage du combat
 
-int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
+int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,int etat){
     
     int j=0;
     //chargement de la police d'écriture
@@ -339,7 +348,15 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
             */
 
             SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
-            SDL_Color textColor = {255, 255, 255};
+
+                SDL_Color textColor = {255, 255, 255};
+                SDL_Color textColorGris = {50, 50, 50};
+                SDL_Color couleuractuel=textColor;
+
+            if(combat->combattant[combat->indice_combattant]->temps_recharge<combat->combattant[combat->indice_combattant]->temps_recharge_max && combat->combattant[combat->indice_combattant]->camp==0){
+                couleuractuel=textColorGris;
+            }
+            
             
             //creation du premier texte (Attaque)
             SDL_Surface* textSurfaceATQ1 = TTF_RenderText_Solid(font,"Attaque", textColor);
@@ -361,7 +378,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
 
 
             //creation du troisieme texte (Attaque speciale)
-            SDL_Surface* textSurfaceATQ3 = TTF_RenderText_Solid(font,"Attaque speciale", textColor);
+            SDL_Surface* textSurfaceATQ3 = TTF_RenderText_Solid(font,"Attaque speciale", couleuractuel);
             if (!textSurfaceATQ3) {
                 erreur_sdl("Erreur lors de la création de la surface de texte",NULL,renderer,textTextureATQ1,NULL);
                 TTF_CloseFont(font);
@@ -384,9 +401,17 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
             */
 
             SDL_Rect  r_hautEcran= {0,0,(*we),56};
+            SDL_Surface* NomSurface;
 
+            if(etat==0){
             //Nom du personnage selectionne
-            SDL_Surface* NomSurface = TTF_RenderText_Blended(font,combat->ennemi[combat->indice_ennemi]->nom, textColor);
+                NomSurface = TTF_RenderText_Blended(font,combat->ennemi[combat->indice_ennemi]->nom, textColor);
+            }
+            else{
+                NomSurface = TTF_RenderText_Blended(font,combat->allie[combat->indice_allie]->nom, textColor);
+            
+            }
+
             if (!NomSurface) {
                 erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,NULL,NULL);
                 TTF_CloseFont(font);
@@ -441,12 +466,21 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
             while(combat->allie[j]->mort==1){
                     j++;
             }
-
-            //creation texture de l'ennemi
-            SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, combat->ennemi[combat->indice_ennemi]->po);
+            SDL_Texture * tperso ;
+            if(etat==0){
+                //creation texture de l'ennemi
+                tperso = SDL_CreateTextureFromSurface(renderer, combat->ennemi[combat->indice_ennemi]->po);
+            }
+            else{
+                //creation texture de l'ennemi
+                tperso = SDL_CreateTextureFromSurface(renderer, combat->allie[combat->indice_allie]->po);
             
+            }
+
             //creation des rectangles pour l'affichage
             SDL_Rect  r_ennemi= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/2)-300,r_basEcran.y-600,600,600};
+
+           
 
            
             /*
@@ -470,17 +504,31 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
             if((nb_combattant-nbMort)%2==0){
 
                 for(i=0;i<nb_combattant-nbMort;i++){
+
+
+                    //creation texture de l'ennemi
+                    SDL_Texture * tperso2 = SDL_CreateTextureFromSurface(renderer, combat->combattant[i]->sprite);
                     SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((combat->nb_allie+combat->nb_ennemi)/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
-                    SDL_RenderDrawRect(renderer, &r1);
+                    if(i==combat->indice_combattant){
+                        SDL_RenderDrawRect(renderer,& r1);
+                    }
+                    SDL_RenderCopy(renderer, tperso2, NULL, &r1);
+                    SDL_DestroyTexture(tperso2);
                 }
 
             }else{
                 for(i=0;i<nb_combattant-nbMort;i++){
+                    SDL_Texture * tperso2 = SDL_CreateTextureFromSurface(renderer, combat->combattant[i]->sprite);
                     SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((combat->nb_allie+combat->nb_ennemi)/2)-(((r_DEcran.x-r_GEcran.w)/8)/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
-                    SDL_RenderDrawRect(renderer, &r1);
+                    if(i==combat->indice_combattant){
+                        SDL_RenderDrawRect(renderer,& r1);
+                    }
+                    SDL_RenderCopy(renderer, tperso2, NULL, &r1);
+                    SDL_DestroyTexture(tperso2);
                 }
 
             }
+
 
 
 
@@ -507,6 +555,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
      
 
                 SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
+
                 SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
                 SDL_RenderCopy(renderer, NomTexture, NULL, &NomRect);
                 SDL_RenderCopy(renderer, NumTourTexture, NULL, &NumTourRect);
@@ -550,7 +599,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
 *\brief fonction d'attaque d'un allie
 */
 //fonction d'attaque d'un allie
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat){
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat,int allie){
          while (SDL_PollEvent(&event) != 0 );
         if(combattant->mort==0){
         SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
@@ -567,7 +616,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                 while(ennemi->combattant[combat->indice_ennemi]->mort==1){
                         combat->indice_ennemi++;
                 }
-                affichage_combat(we,he,renderer,combat);
+                affichage_combat(we,he,renderer,combat,0);
                 while (SDL_PollEvent(&event) != 0 ) {
 
                         if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
@@ -585,9 +634,19 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                             ennemi->combattant[combat->indice_ennemi]->pv-=10*combat->mult;
                             jouer=0;
                         }
-                        else if((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)){
-                            ennemi->combattant[combat->indice_ennemi]->pv-=30*combat->mult;
+                        else if(((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)) && (combattant->temps_recharge>=combattant->temps_recharge_max)){
+                            if(combattant->type==0){
+                                ennemi->combattant[combat->indice_ennemi]->pv-=30*combat->mult;
+                            }
+                            else if(combattant->type==1){
+                                ennemi->combattant[combat->indice_ennemi]->status=1;
+                            }
+                            else if(combattant->type==2){
+                                soin(combat,r_basEcran,renderer,we,he,allie,event);
+                            }
+                            
                             jouer=0;
+                            combattant->temps_recharge=0;
                         }
                         else if((r_mult.x<=event.button.x) && ((r_mult.x+r_mult.w)>=event.button.x) && ((r_mult.y+r_mult.h)>=event.button.y) && (r_mult.y<=event.button.y)){
                             
@@ -602,6 +661,9 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                                 combat->mult=1;
                             }
                             
+                        }
+                        if(ennemi->combattant[combat->indice_ennemi]->pv<0){
+                            ennemi->combattant[combat->indice_ennemi]->pv=0;
                         }
                         
                     }
@@ -639,7 +701,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
 //fonction qui regarde si on peut lancer un combat
 int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
     
-    if( boolcol(c,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && ennemi->pv>0){
+    if( boolcol(c,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && ennemi->combattant[0]->pv>0){
         ennemi->combat=1;
     } 
     return 0;
@@ -760,20 +822,32 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             //trie vitesse
 
             qsort(combat->combattant,nb_combattant,sizeof(void *),compare_vitesse_enc);
+            
 
             for(i=0;i<nb_combattant && Nennemi>0 ;i++){
                 
                 combat->mult=1;
 
                 if(combat->combattant[i]->camp==0 && combat->combattant[i]->mort==0){
-                    attaque_allie(we,he,event,renderer,ennemi,combat->combattant[i],Nennemi,combat);
-                
+                    //regarde si l'allie peut jouer
+                    if(combat->combattant[i]->status==0){
+                        attaque_allie(we,he,event,renderer,ennemi,combat->combattant[i],Nennemi,combat,allie);
+                    }
+                    else{
+                        combat->combattant[i]->status=0;
+                    }
+                    combat->combattant[i]->temps_recharge++;
                 }
                 
                 else if(combat->combattant[i]->camp==1 && combat->combattant[i]->mort==0){
-                    attaque_ennemi(combat->combattant[i],nb_combattant,combat->combattant);
+                    if(combat->combattant[i]->status==0){
+                        attaque_ennemi(combat->combattant[i],nb_combattant,combat->combattant);
+                    }
+                    else{
+                        combat->combattant[i]->status=0;
+                    }
                 }
-                 affichage_combat(we,he,renderer,combat);
+                 affichage_combat(we,he,renderer,combat,0);
                  SDL_Delay(500);
 
                 //compte le nombre d'allie dans l'equipe
@@ -785,6 +859,14 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         }
                         if(combat->combattant[j]->camp==1){
                             Nennemi--;
+                        }
+                        if(Nennemi==0 || allie==0){
+                            SDL_RenderClear(renderer);
+                            SDL_Rect rect={0,0,*we,*he};
+                            SDL_SetRenderDrawColor(renderer,0,0,0,255);
+                            SDL_RenderFillRect(renderer,&rect);
+                           SDL_RenderPresent(renderer);
+
                         }
                     }
                     
@@ -810,5 +892,68 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 }
 
 
+void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant){
+ //Variable PV
+ int p = (144*combattant->pv)/combattant->pvMax;
+
+ SDL_Rect PV_bar= {we,he-5,256,64};
+ SDL_Rect PV_barVide= {we+81,he-5+19,144,26};
+ SDL_Rect PV_barPleine= {we+81,he-5+19,p,26}; //144 = pleine
+
+
+ SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+    //creation de la barre de vie
+    SDL_Surface * SurfaceVie;
+    if("texture/objet/barredevie.png" != NULL)SurfaceVie = IMG_Load("texture/objet/barredevie.png");
+
+    SDL_Texture * Vie = SDL_CreateTextureFromSurface(renderer, SurfaceVie);
+
+       
+
+ SDL_RenderFillRect(renderer, &PV_barVide);
+
+ SDL_SetRenderDrawColor(renderer, 150, 0, 0, 255);
+ SDL_RenderFillRect(renderer, &PV_barPleine);
+
+ SDL_RenderCopy(renderer, Vie, NULL, &PV_bar);
+SDL_FreeSurface(SurfaceVie);
+SDL_DestroyTexture(Vie);
+
+}
+
+void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we,int * he,int allie,SDL_Event event){
+    int jouer=1;
+    SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
+    while(jouer){
+        
+        while(combat->allie[combat->indice_allie]->mort==1){
+                combat->indice_allie++;
+        }
+        affichage_combat(we,he,renderer,combat,1);
+        while (SDL_PollEvent(&event) != 0 ) {
+
+            if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
+                if(combat->indice_allie>=(allie-1)){
+                    combat->indice_allie=0;
+                }
+                else{
+                    combat->indice_allie++;
+                }
+            }
+            if(event.type == SDL_MOUSEBUTTONDOWN ){
+
+                if((r_ATQ1.x<=event.button.x) && (r_ATQ1.x+r_ATQ1.w>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
+                    combat->allie[combat->indice_allie]->pv+=10*combat->mult;
+                    if(combat->allie[combat->indice_allie]->pv>combat->allie[combat->indice_allie]->pvMax){
+                        combat->allie[combat->indice_allie]->pv=combat->allie[combat->indice_allie]->pvMax;
+                    }
+                    jouer=0;
+                }
+            
+        }
+    }
+}
+}
 
 

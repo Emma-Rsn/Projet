@@ -28,17 +28,46 @@
 */
 
 //detection de touche presser et modification des coordonées
-void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi){
+void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,int * toucheDeplacement){
     int temp = (*carte)->nZone;
     int xdep = pmv->c->x;
     int ydep = pmv->c->y;
     int ddep = pmv->d;
     carte_t * dcartec = *carte;
+    int Haut;
+    int Bas;
+    int Gauche;
+    int Droite;
+
+    switch(*toucheDeplacement){
+        case 0:
+            Haut=SDLK_z;
+            Bas=SDLK_s;
+            Gauche=SDLK_q;
+            Droite=SDLK_d;
+            break;
+        case 1:
+            Haut=SDLK_w;
+            Bas=SDLK_s;
+            Gauche=SDLK_a;
+            Droite=SDLK_d;
+            break;
+        case 2:
+            Haut=SDLK_UP;
+            Bas=SDLK_DOWN;
+            Gauche=SDLK_LEFT;
+            Droite=SDLK_RIGHT;
+            break;
+        default:
+        break;
+
+
+    }
     //si une touche est presser
-    if(event.type == SDL_KEYDOWN && ((event.key.keysym.sym == SDLK_z) || (event.key.keysym.sym == SDLK_q) || (event.key.keysym.sym == SDLK_s) || (event.key.keysym.sym == SDLK_d))){
+    if(event.type == SDL_KEYDOWN && ((event.key.keysym.sym == Haut) || (event.key.keysym.sym == Bas) || (event.key.keysym.sym == Gauche) || (event.key.keysym.sym == Droite))){
         //quelle touche est presser
-        switch(event.key.keysym.sym){
-            case SDLK_z: 
+        if(event.key.keysym.sym==Haut){
+
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == 0){
                 if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
                     *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
@@ -64,8 +93,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     }
                 }
             }
-            break;
-            case SDLK_s: 
+        }
+        if(event.key.keysym.sym==Bas){
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == (LARG-1)){
                 if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
                     *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
@@ -91,8 +120,9 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     }
                 }
             }
-            break;
-            case SDLK_q: 
+            }
+        
+            if(event.key.keysym.sym==Gauche){
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == 0){
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
                     *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
@@ -123,8 +153,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     }
                 }
             }
-            break;
-            case SDLK_d: 
+            }
+            if(event.key.keysym.sym==Droite){
             if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == (LONG-1)){
                 if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
                     *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
@@ -156,9 +186,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         pmv->d=1;
                     }
             }
-            break;
-            default: break;
-        }
+            }
+        
         if(pmv->d != ddep){
             *carte = dcartec;
             pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
@@ -507,7 +536,7 @@ p_mv initp(carte_t * carte,case_t * c){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=init_combattant("alex",100,"Attaque 1","Attaque spe",50,0,"");
+    p.equipe[0]=init_combattant("alex",100,"Attaque 1","Attaque spe",50,0,"sprite/alexdial.png","sprite/alexface2.png",0);
     return p;
 }
 

@@ -24,7 +24,11 @@ int main(){
 
     int * etat_menu=malloc(sizeof(int));
     int * run=malloc(sizeof(int));
+    int * etatoption=malloc(sizeof(int));
+    int * toucheDeplacement=malloc(sizeof(int));
+    *toucheDeplacement=0;
     *run=1;
+    *etatoption=0;
 
      
     //resolution de l'ecran
@@ -111,8 +115,8 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(cartec,&(cartec->grille.tabGrille[xp][yp]));
-    Alex.equipe[1]=init_combattant("Lou",100,"ATQ1","ATspe",60,0,"");
-    Alex.equipe[2]=init_combattant("Max",100,"ATQ num 1","ATK spe",45,0,"");
+    Alex.equipe[1]=init_combattant("Lou",100,"ATQ1","ATspe",60,0,"","sprite/alexdos2.png",1);
+    Alex.equipe[2]=init_combattant("Finn",100,"ATQ num 1","ATK spe",45,0,"","sprite/alexprof1_1.png",2);
 	p_mv * pAlex = &Alex;
 
     
@@ -125,13 +129,8 @@ int main(){
     insertion(Alex2.dial, "Test");
 
     //creation ennemi 
-    pnj_t Alex3;
-    Alex3 = init_pnj("Alex3","sprite/slimebluedial.png", "sprite/slimeblue.png",&(map.tabMap[0][0].grille.tabGrille[1][2]),&map.tabMap[0][0]);
-    Alex3.combattant[1]=init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png");
-    pnj_t * pAlex3 = &Alex3;
-
-    ennemi_t Slime = init_ennemi("Slime","Sprite/slimebluedial.png");
-    Slime.combattant[1] = init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png");
+    ennemi_t Slime = init_ennemi("Slime","sprite/slimebluedial.png","sprite/slimeblue.png");
+    Slime.combattant[1] = init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png","sprite/ennemicfight.png",0);
     ennemi_t * PSlime = &Slime;
     obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],9,2,PSlime);
     map.tabMap[3][3].tabObj[0] = ObjSlime;
@@ -164,7 +163,10 @@ int main(){
         printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
     }
     Mix_PlayMusic( gMusic, -1 );
-    menu(wEcran,hEcran,event,renderer,run);
+
+    //menu d'ecran titre
+    menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement);
+
     //boucle du programme
     while (*run) {
         //zone d'evenement
@@ -225,11 +227,13 @@ int main(){
                 }
             }
             
-            pinput(pAlex,event,&cartec,&map,renderer,transi);
+            pinput(pAlex,event,&cartec,&map,renderer,transi,toucheDeplacement);
 
             //menu
             //console_command(event,command);
-            menu_option(wEcran,hEcran,event,renderer,run);
+            menu_option(wEcran,hEcran,event,renderer,run,etatoption);
+            //aller dans les options
+            option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement);
             debut_dialogue(event,pAlex2,pAlex);
             debut_combat(event,ObjSlime.tabObj[0],pAlex,ObjSlime.cas);
             
@@ -264,7 +268,6 @@ int main(){
 
         //Affichage pnj
         aff_pnj(Alex2,renderer,cartec);
-        aff_pnj(Alex3,renderer,cartec);
 
         //affiche les fps
         aff_Fps(cmpfps,renderer);
@@ -287,6 +290,8 @@ int main(){
         //Commence une combat
         combat(wEcran,hEcran,event,renderer,ObjSlime.tabObj[0],pAlex);
 
+
+
     
         // Mettre à jour le rendu
         SDL_RenderPresent(renderer);
@@ -305,6 +310,8 @@ int main(){
     free(etat_menu);
     free(run);
     free(transi);
+    free(etatoption);
+    free(toucheDeplacement);
 
     Mix_FreeMusic( gMusic );
 
@@ -315,7 +322,6 @@ int main(){
     detruire_tab_path(&map);
 
     dest_pnj(pAlex2);
-    dest_pnj(pAlex3);
     desctruction_p_eq(pAlex);
     free(wEcran);
     free(hEcran);
