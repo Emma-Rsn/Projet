@@ -130,6 +130,14 @@ int main(){
     Alex3.combattant[1]=init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png");
     pnj_t * pAlex3 = &Alex3;
 
+    ennemi_t Slime = init_ennemi("Slime","Sprite/slimebluedial.png");
+    Slime.combattant[1] = init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png");
+    ennemi_t * PSlime = &Slime;
+    obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],9,2,PSlime);
+    map.tabMap[3][3].tabObj[0] = ObjSlime;
+    map.tabMap[3][3].nbObj = 1;
+    
+
     //variable indique l'etat du prog
     int i;//brouillard
     int j;//brouillard
@@ -223,7 +231,7 @@ int main(){
             //console_command(event,command);
             menu(wEcran,hEcran,event,renderer,run);
             debut_dialogue(event,pAlex2,pAlex);
-            debut_combat(event,pAlex3,pAlex);
+            debut_combat(event,ObjSlime.tabObj[0],pAlex,ObjSlime.cas);
             
         }
         //zone d'affichage
@@ -277,7 +285,7 @@ int main(){
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
         
         //Commence une combat
-        combat(wEcran,hEcran,event,renderer,pAlex3,pAlex);
+        combat(wEcran,hEcran,event,renderer,ObjSlime.tabObj[0],pAlex);
 
     
         // Mettre à jour le rendu

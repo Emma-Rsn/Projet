@@ -556,7 +556,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat){
 *\brief fonction d'attaque d'un allie
 */
 //fonction d'attaque d'un allie
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat){
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat){
          while (SDL_PollEvent(&event) != 0 );
         if(combattant->mort==0){
         SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
@@ -643,9 +643,9 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t 
 */
 
 //fonction qui regarde si on peut lancer un combat
-int debut_combat(SDL_Event event,pnj_t * ennemi,p_mv * pp){
+int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
     
-    if( boolcol(ennemi->c,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && ennemi->pv>0){
+    if( boolcol(c,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && ennemi->pv>0){
         ennemi->combat=1;
     } 
     return 0;
@@ -715,7 +715,7 @@ combat_t * init_combat(){
 */
 
 //fonction qui gere le combat avec un ennemi
-int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,p_mv * pp){
+int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp){
     
     if(ennemi->combat){
 

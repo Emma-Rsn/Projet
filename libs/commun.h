@@ -24,6 +24,7 @@
 typedef struct obj_s obj_t;
 typedef struct combat_s combat_t;
 typedef struct combattant_s combattant_t;
+typedef struct ennemi_s ennemi_t;
 typedef struct pnj_s pnj_t;
 typedef struct personnage_equipe p_eq;
 typedef struct personnage p_mv;

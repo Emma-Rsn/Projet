@@ -18,6 +18,10 @@ obj_t init_obj(case_t * c,int indText,int type,...){
             n = -1;
             newObj.cas->etat = 1;
             break;
+        case 2 : //cas d'un ennemi
+            n = 1;
+            newObj.cas->etat = 0;
+            break;
         default://cas d'un objet inconnu
             n = -1;
             break;
@@ -38,6 +42,21 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     for(i = 0; i < carte->nbObj;i++){
         SDL_RenderCopy(renderer, map.tabTexture[carte->tabObj[i].indTexture], NULL, &(carte->tabObj[i].cas->Rectangle));
     }
+}
+
+ennemi_t init_ennemi(char * nom,char * en_po){
+    ennemi_t en;
+    en.nom = malloc(strlen(nom)+1);
+    strcpy(en.nom,nom);
+    if(en_po != NULL)en.po = IMG_Load(en_po);
+    en.combat=0;
+    en.pv=100;
+    int i;
+    for(i=0;i<4;i++){
+        en.combattant[i]=NULL;
+    }
+    en.combattant[0]=init_combattant(nom,100,"test1","testspe",100,1,"sprite/alexface4.png");
+    return en;
 }
 
 pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte){

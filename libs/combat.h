@@ -41,9 +41,9 @@ struct combat_s{
 
 int compare_vitesse_enc( const void * const combattant1 , const void * const combattant2 ) ;
 int compare_vitesse(const combattant_t * const combattant1,const combattant_t * const combattant2);
-int debut_combat(SDL_Event event,pnj_t * ennemi,p_mv * pp);
-int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,p_mv * pp);
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat);
+int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c);
+int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp);
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat);
 int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *combattant[]);
 int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rect r_DEcran,combat_t *combat);
 int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat);
