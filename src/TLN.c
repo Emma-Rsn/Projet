@@ -154,7 +154,7 @@ int main(){
     ennemi_t Slime = init_ennemi("Slime","sprite/slimebluedial.png","sprite/slimeblue.png");
     Slime.combattant[1] = init_combattant("Lute",100,"ATQ11","ATspe1",10,1,"sprite/alexdial.png","sprite/ennemicfight.png",0);
     ennemi_t * PSlime = &Slime;
-    obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],18,2,PSlime);
+    obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],10,2,PSlime);
     map.tabMap[3][3].tabObj[0] = ObjSlime;
     map.tabMap[3][3].nbObj = 1;
     

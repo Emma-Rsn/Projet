@@ -29,189 +29,194 @@
 
 //detection de touche presser et modification des coordonées
 void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement){
-    int temp = (*carte)->nZone;
-    int xdep = pmv->c->x;
-    int ydep = pmv->c->y;
-    int ddep = pmv->d;
-    carte_t * dcartec = *carte;
-    int Haut;
-    int Bas;
-    int Gauche;
-    int Droite;
+    if(*transi){
+        while (SDL_PollEvent(&event) != 0);
+    }else{
+        int temp = (*carte)->nZone;
+        int xdep = pmv->c->x;
+        int ydep = pmv->c->y;
+        int ddep = pmv->d;
+        carte_t * dcartec = *carte;
+        int Haut;
+        int Bas;
+        int Gauche;
+        int Droite;
 
-    switch(*toucheDeplacement){
-        case 0:
-            Haut=SDLK_z;
-            Bas=SDLK_s;
-            Gauche=SDLK_q;
-            Droite=SDLK_d;
+        switch(*toucheDeplacement){
+            case 0:
+                Haut=SDLK_z;
+                Bas=SDLK_s;
+                Gauche=SDLK_q;
+                Droite=SDLK_d;
+                break;
+            case 1:
+                Haut=SDLK_w;
+                Bas=SDLK_s;
+                Gauche=SDLK_a;
+                Droite=SDLK_d;
+                break;
+            case 2:
+                Haut=SDLK_UP;
+                Bas=SDLK_DOWN;
+                Gauche=SDLK_LEFT;
+                Droite=SDLK_RIGHT;
+                break;
+            default:
             break;
-        case 1:
-            Haut=SDLK_w;
-            Bas=SDLK_s;
-            Gauche=SDLK_a;
-            Droite=SDLK_d;
-            break;
-        case 2:
-            Haut=SDLK_UP;
-            Bas=SDLK_DOWN;
-            Gauche=SDLK_LEFT;
-            Droite=SDLK_RIGHT;
-            break;
-        default:
-        break;
 
 
-    }
-    //si une touche est presser
-    if(event.type == SDL_KEYDOWN && ((event.key.keysym.sym == Haut) || (event.key.keysym.sym == Bas) || (event.key.keysym.sym == Gauche) || (event.key.keysym.sym == Droite))){
-        //quelle touche est presser
-        if(event.key.keysym.sym==Haut){
-
-            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == 0){
-                if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
-                    *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
-                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=0;
-                    *transi = 1;
-                }else{
-                    pmv->d=0;
-                }
-            }else{
-                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == 0){
-                    *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
-                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=0;
-                    *transi = 1;
-                }else{
-                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat){
-                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1]);
-                        pmv->r=pmv->c->Rectangle;
-                        pmv->d=0;
-                    }else{
-                        pmv->d=0;
-                    }
-                }
-            }
         }
-        if(event.key.keysym.sym==Bas){
-            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == (LARG-1)){
-                if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
-                    *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
-                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=2;
-                    *transi = 1;
-                }else{
-                    pmv->d=2;
-                }
-            }else{
-                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == (LARG-1)){
-                    *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
-                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=2;
-                    *transi = 1;
-                }else{
-                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat){
-                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1]);
+        //si une touche est presser
+        if(event.type == SDL_KEYDOWN && ((event.key.keysym.sym == Haut) || (event.key.keysym.sym == Bas) || (event.key.keysym.sym == Gauche) || (event.key.keysym.sym == Droite))){
+            //quelle touche est presser
+            if(event.key.keysym.sym==Haut){
+
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == 0){
+                    if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
+                        *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=2;
+                        pmv->d=0;
+                        *transi = 1;
                     }else{
-                        pmv->d=2;
+                        pmv->d=0;
+                    }
+                }else{
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == 0){
+                        *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=0;
+                        *transi = 1;
+                    }else{
+                        if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat){
+                            pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1]);
+                            pmv->r=pmv->c->Rectangle;
+                            pmv->d=0;
+                        }else{
+                            pmv->d=0;
+                        }
                     }
                 }
             }
-            }
-        
-            if(event.key.keysym.sym==Gauche){
-            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == 0){
-                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
-                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
-                    pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=3;
-                    *transi = 1;
-                }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
-                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
-                    pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=3;
-                    *transi = 1;
+            if(event.key.keysym.sym==Bas){
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->y == (LARG-1)){
+                    if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat == 2 || (*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat == 2){
+                        *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=2;
+                        *transi = 1;
+                    }else{
+                        pmv->d=2;
+                    }
                 }else{
-                    pmv->d=3;
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == (LARG-1)){
+                        *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=2;
+                        *transi = 1;
+                    }else{
+                        if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat){
+                            pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1]);
+                            pmv->r=pmv->c->Rectangle;
+                            pmv->d=2;
+                        }else{
+                            pmv->d=2;
+                        }
+                    }
                 }
-            }else{
-                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
-                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
-                    pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=3;
-                    *transi = 1;
-                }else{
-                    if((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat){
-                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y]);
+                }
+            
+                if(event.key.keysym.sym==Gauche){
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == 0){
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
+                        *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
+                        pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
                         pmv->d=3;
+                        *transi = 1;
+                    }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
+                        *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
+                        pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=3;
+                        *transi = 1;
                     }else{
                         pmv->d=3;
                     }
-                }
-            }
-            }
-            if(event.key.keysym.sym==Droite){
-            if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == (LONG-1)){
-                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
-                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
-                    pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=1;
-                    *transi = 1;
-                }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
-                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
-                    pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=1;
-                    *transi = 1;
                 }else{
-                    pmv->d=1;
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
+                        *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
+                        pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=3;
+                        *transi = 1;
+                    }else{
+                        if((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat){
+                            pmv->c=&((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y]);
+                            pmv->r=pmv->c->Rectangle;
+                            pmv->d=3;
+                        }else{
+                            pmv->d=3;
+                        }
+                    }
                 }
-            }else{
-                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == (LONG-1)){
-                    *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
-                    pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=1;
-                    *transi = 1;
-                }else if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat){
-                    pmv->c=&((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y]);
-                    pmv->r=pmv->c->Rectangle;
-                    pmv->d=1;
-                }else{
+                }
+                if(event.key.keysym.sym==Droite){
+                if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 3 && pmv->c->x == (LONG-1)){
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat == 2 && pmv->c->y == LARG-1){
+                        *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
+                        pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=1;
+                        *transi = 1;
+                    }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
+                        *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
+                        pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=1;
+                        *transi = 1;
+                    }else{
                         pmv->d=1;
                     }
+                }else{
+                    if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == (LONG-1)){
+                        *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
+                        pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=1;
+                        *transi = 1;
+                    }else if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat){
+                        pmv->c=&((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y]);
+                        pmv->r=pmv->c->Rectangle;
+                        pmv->d=1;
+                    }else{
+                            pmv->d=1;
+                        }
+                }
+                }
+            //deplacement statique
+            if(pmv->d != ddep){
+                *carte = dcartec;
+                pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
+                pmv->r = pmv->c->Rectangle;
+                pmv->e = 0;
+                *transi = 0;
+            }else{
+                if(pmv->e == 0){
+                    pmv->e = 1;
+                }else if(pmv->e == 1){
+                    pmv->e = 2;
+                }else if(pmv->e == 2){
+                    pmv->e = 1;
+                }
             }
+            if((*carte)->etat_brouillard == 1)(*carte)->etat_brouillard = 0;
+            if(temp != (*carte)->nZone){
+                chargement_Zone(map,renderer,(*carte)->nZone,gMusic);
             }
-        
-        if(pmv->d != ddep){
-            *carte = dcartec;
-            pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
-            pmv->r = pmv->c->Rectangle;
-            pmv->e = 0;
-        }else{
-            if(pmv->e == 0){
-                pmv->e = 1;
-            }else if(pmv->e == 1){
-                pmv->e = 2;
-            }else if(pmv->e == 2){
-                pmv->e = 1;
-            }
-        }
-        if((*carte)->etat_brouillard == 1)(*carte)->etat_brouillard = 0;
-        if(temp != (*carte)->nZone){
-            chargement_Zone(map,renderer,(*carte)->nZone,gMusic);
         }
     }
 }
