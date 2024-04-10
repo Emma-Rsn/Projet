@@ -116,6 +116,18 @@ int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     return 0;
 }
 
+//ajustement du diviseur de FPS
+void ajDFPS(int * dfps,int * cmpfps,int *nfps,Uint32 * t0,Uint32 * t1){
+    if(NB_Fps(nfps,t0,t1)){
+        *cmpfps = *nfps;
+        if(*nfps < FPS){
+            (*dfps)++;
+        }else if(*nfps >= FPS){
+            (*dfps)--;
+        }
+    }
+}
+
 void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     //Variable PV
     int x = 10;

@@ -14,9 +14,6 @@
 
 #include "../libs/commun.h"
 
-//nombre de frame par secondes voulu
-#define FPS 30
-
 int main(){
     srand(time(NULL));
 
@@ -130,7 +127,7 @@ int main(){
 
     //variable FPS
     int cmpfps = 0;
-    int dfps = FPS;
+    int dfps = 1000/FPS;
     Uint32 * t0 = malloc(sizeof(Uint32));
     Uint32 * t1 = malloc(sizeof(Uint32));
     int * nfps = malloc(sizeof(int));
@@ -253,23 +250,8 @@ int main(){
         }
         //zone d'affichage
         //ajustement de dfps
-        if(NB_Fps(nfps,t0,t1)){
-            cmpfps = *nfps;
-            if(*nfps < FPS){
-                dfps++;
-            }else if(*nfps >= FPS){
-                dfps--;
-            }
-        }
+        ajDFPS(&dfps,&cmpfps, nfps, t0, t1);
         //efface le rendu
-        switch(cartec->nZone){
-            case 1: SDL_SetRenderDrawColor(renderer, 206,206,206,255);break;
-            case 2: SDL_SetRenderDrawColor(renderer, 86,115,154,255);break;
-            case 3: SDL_SetRenderDrawColor(renderer, 153,81,43,255);break;
-            case 4: SDL_SetRenderDrawColor(renderer, 104,157,113,255);break;
-            case 5: SDL_SetRenderDrawColor(renderer, 115,8,0,255);break;
-            default: SDL_SetRenderDrawColor(renderer, 0,0,0,255);break;
-        }
         SDL_RenderClear(renderer);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 245, 255);

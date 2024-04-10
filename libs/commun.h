@@ -21,6 +21,11 @@
 #define MIN_ZONE5 6
 #define MAX_ZONE5 7
 
+#define TAILLE_CASE 64
+
+//nombre de frame par secondes voulu
+#define FPS 30
+
 typedef struct obj_s obj_t;
 typedef struct combat_s combat_t;
 typedef struct combattant_s combattant_t;
