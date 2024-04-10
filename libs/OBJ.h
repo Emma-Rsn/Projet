@@ -12,12 +12,14 @@ struct obj_s{
 
 struct ennemi_s{
     char * nom;
-    SDL_Surface * po;
+    int indice_portrait;
+    int indice_sprite;
     int combat; //1 en combat 0 pas en combat
     int pv;
     combattant_t * combattant[4];
     case_t * c;
     int type;
+    int status;
 };
 
 struct pnj_s{
@@ -36,7 +38,7 @@ struct pnj_s{
 obj_t init_obj(case_t * c,int indText,int type,...);
 void affObj(SDL_Renderer *renderer,obj_t o,map_t map);
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte);
-ennemi_t init_ennemi(char * nom,char * en_po,char * sprite);
+ennemi_t init_ennemi(char * nom,int indice_portrait,int indice_sprite);
 int boolcol (case_t * obj_c,p_mv * pp);
 pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte);
 void debut_dialogue(SDL_Event event,pnj_t * pnj,p_mv * pp);

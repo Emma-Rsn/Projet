@@ -46,18 +46,19 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     }
 }
 
-ennemi_t init_ennemi(char * nom,char * en_po,char * sprite){
+ennemi_t init_ennemi(char * nom,int indice_portrait,int indice_sprite){
     ennemi_t en;
     en.nom = malloc(strlen(nom)+1);
     strcpy(en.nom,nom);
-    if(en_po != NULL)en.po = IMG_Load(en_po);
     en.combat=0;
     en.pv=100;
     int i;
     for(i=0;i<4;i++){
         en.combattant[i]=NULL;
     }
-    en.combattant[0]=init_combattant(nom,100,"","",100,1,en_po,sprite,0);
+    en.combattant[0]=init_combattant(nom,100,"","",100,1,indice_portrait,indice_sprite,0);
+    en.indice_portrait=indice_portrait;
+    en.indice_sprite=indice_sprite;
     return en;
 }
 
@@ -78,7 +79,7 @@ pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * c
     for(i=0;i<4;i++){
         pnj.combattant[i]=NULL;
     }
-    pnj.combattant[0]=init_combattant(nom,100,"test1","testspe",100,1,"sprite/alexface4.png","sprite/alexface2.png",0);
+    pnj.combattant[0]=init_combattant(nom,100,"test1","testspe",100,1,10,10,0);
     return pnj;
 }
 

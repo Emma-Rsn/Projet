@@ -573,7 +573,7 @@ p_mv initp(carte_t * carte,case_t * c){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=init_combattant("alex",100,"Attaque 1","Attaque spe",50,0,"sprite/alexdial.png","sprite/alexface2.png",0);
+    p.equipe[0]=init_combattant("alex",100,"Attaque 1","Attaque spe",50,0,13,12,0);
     return p;
 }
 

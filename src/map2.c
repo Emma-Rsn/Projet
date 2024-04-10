@@ -666,11 +666,11 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
         {
         case 1:
             creation_tab_texture(map,renderer,1,0);
-            map->nbN = 11;
+            map->nbN = 14;
             break;
         case 2:
             creation_tab_texture(map,renderer,2,0);
-            map->nbN = 11;
+            map->nbN = 14;
             break;
         case 3:
             creation_tab_texture(map,renderer,3,0);
