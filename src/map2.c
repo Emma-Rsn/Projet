@@ -481,6 +481,181 @@ int creer_map(map_t * map){
     return 0;
 }
 
+int creer_map_layout(map_t * map){
+    int x,y;
+    int choix,choix2;
+    srand( time( NULL ) );
+    char * namefile = malloc(40);
+
+    load_layout(&map->tabMap[5][5],"layout/layout2_1.txt");
+    load_layout(&map->tabMap[0][0],"layout/layout5_1.txt");
+    load_layout(&map->tabMap[0][5],"layout/layout4_1.txt");
+
+    //Zone 2
+    load_layout(&map->tabMap[5][4],"layout/layout2_2"); //Entrée boss zone 2
+
+    if(map->tabMap[5][3].nZone == 2){
+        if(map->tabMap[4][3].nZone == 2){
+            if(map->tabMap[5][2].nZone == 2){
+                choix2=rand() % 2;
+                if(choix == 1){
+                    //Paire [5][2]/[5][3]
+                    load_layout(&map->tabMap[5][2],"layout/layout2_3.txt");
+                    load_layout(&map->tabMap[5][3],"layout/layout2_4.txt");
+                    load_layout(&map->tabMap[4][3],"layout/layout2_5.txt"); //tout seul
+                    //zone 4
+                    load_layout(&map->tabMap[4][2],"layout/layout4_6.txt"); //tout seul
+                }else{
+                    //Paire [4][3]/[5][3]
+                    load_layout(&map->tabMap[5][2],"layout/layout2_6.txt"); //tout seul
+                    load_layout(&map->tabMap[5][3],"layout/layout2_7.txt");
+                    load_layout(&map->tabMap[4][3],"layout/layout2_8.txt");
+                    //zone 4
+                    load_layout(&map->tabMap[4][2],"layout/layout4_6.txt"); //tout seul
+                }
+            }else{
+                //Paire [4][3]/[5][3]
+                load_layout(&map->tabMap[5][3],"layout/layout2_7.txt");
+                load_layout(&map->tabMap[4][3],"layout/layout2_8.txt");
+                //zone 4
+                //Paire [5][2]/[4][2]
+                load_layout(&map->tabMap[5][2],"layout/layout4_7.txt");
+                load_layout(&map->tabMap[4][2],"layout/layout4_8.txt");
+            }
+        }else if(map->tabMap[5][2].nZone == 2){
+            //Paire [5][2]/[5][3]
+            load_layout(&map->tabMap[5][2],"layout/layout2_3.txt");
+            load_layout(&map->tabMap[5][3],"layout/layout2_4.txt");
+            //zone 4
+            //Paire [4][2]/[4][3]
+            load_layout(&map->tabMap[4][2],"layout/layout4_3.txt");
+            load_layout(&map->tabMap[4][3],"layout/layout4_4.txt");
+        }else{
+            load_layout(&map->tabMap[5][3],"layout/layout2_5.txt"); //tout seul
+            //zone 4
+            choix2=rand() % 2;
+            if(choix == 1){
+                //Paire [4][2]/[4][3]
+                load_layout(&map->tabMap[5][2],"layout/layout4_5.txt"); //tout seul
+                load_layout(&map->tabMap[4][3],"layout/layout4_4.txt");
+                load_layout(&map->tabMap[4][2],"layout/layout4_3.txt");
+            }else{
+                //Paire [4][2]/[5][2]
+                load_layout(&map->tabMap[4][3],"layout/layout4_6.txt"); //tout seul
+                load_layout(&map->tabMap[4][2],"layout/layout4_8.txt");
+                load_layout(&map->tabMap[5][2],"layout/layout4_7.txt");
+            }
+        }
+    }else{
+        if(map->tabMap[4][2].nZone == 2){
+            load_layout(&map->tabMap[4][2],"layout/layout2_3.txt");
+            load_layout(&map->tabMap[4][3],"layout/layout2_4.txt");
+            //zone4
+            load_layout(&map->tabMap[5][2],"layout/layout4_3.txt");
+            load_layout(&map->tabMap[5][3],"layout/layout4_4.txt");
+        }else{
+            load_layout(&map->tabMap[4][3],"layout/layout2_5.txt");
+            //zone4
+            choix=rand() % 2;
+            if(choix == 1){
+                //Paire [5][2]/[4][2]
+                load_layout(&map->tabMap[5][3],"layout/layout4_6.txt"); //tout seul
+                load_layout(&map->tabMap[5][2],"layout/layout4_7.txt");
+                load_layout(&map->tabMap[4][2],"layout/layout4_8.txt");
+            }else{
+                //Paire [5][3]/[5][2]
+                load_layout(&map->tabMap[4][2],"layout/layout4_5.txt"); //tout seul
+                load_layout(&map->tabMap[5][3],"layout/layout4_4.txt");
+                load_layout(&map->tabMap[5][2],"layout/layout4_3.txt");
+            }
+        }
+    }
+    //Choix layout entrée boss
+    choix=rand()%2;
+    if(choix==0){
+        load_layout(&map->tabMap[4][0],"layout/layout4_2.txt");
+        load_layout(&map->tabMap[5][1],"layout/layout4_10.txt");
+    }
+    else{
+        load_layout(&map->tabMap[5][1],"layout/layout4_9.txt");
+        load_layout(&map->tabMap[4][0],"layout/layout4_10.txt");
+    }
+    //Layout foret bloc
+    load_layout(&map->tabMap[3][0],"layout/layout4_10.txt");
+    load_layout(&map->tabMap[4][1],"layout/layout4_10.txt");
+
+    if(map->tabMap[3][2].nZone==1){
+        load_layout(&map->tabMap[3][1],"layout/layout4_11.txt");
+    }
+    else{
+        load_layout(&map->tabMap[3][1],"layout/layout4_10.txt");
+    }
+
+    //Choix layout entrée sous-marine
+    choix=rand()%2;
+    if(choix==0){
+        //Entrée de la zone sous-marine en [3][5]
+        load_layout(&map->tabMap[3][5],"layout/layout2_11.txt"); //Transition sous marine bordure bas droite
+        if(map->tabMap[3][3].nZone==1){
+            load_layout(&map->tabMap[3][4],"layout/layout2_13.txt"); //Transition spawn zone plage bordure bas
+        }
+        else{
+            load_layout(&map->tabMap[3][4],"layout/layout2_9.txt"); //Bordure eau bas
+        }
+        load_layout(&map->tabMap[4][5],"layout/layout2_19.txt");  //Transition plage
+        load_layout(&map->tabMap[4][4],"layout/layout2_5.txt"); //Carrefour
+    }
+    else{
+        //Entrée de la zone sous-marine en [3][4]
+        if(map->tabMap[3][3].nZone==1){
+            load_layout(&map->tabMap[3][4],"layout/layout2_14.txt"); //Transition sous marine et transition spawn zone plage
+        }
+        else{
+            load_layout(&map->tabMap[3][4],"layout/layout2_12.txt"); //Transition sous marine
+        }
+        load_layout(&map->tabMap[3][5],"layout/layout2_10.txt"); //Bordure eau bas droite
+
+        //Zone sous-marine transition
+        load_layout(&map->tabMap[4][4],"layout/layout2_19.txt"); //Transition plage   -------> Vérifier bas et gauche pour les objets si gauche et gauche bas alors bloquer bas
+        load_layout(&map->tabMap[4][5],"layout/layout2_6.txt"); //Cul de sac
+    }
+
+    //Layout zone plage 
+    load_layout(&map->tabMap[2][5],"layout/layout2_16.txt"); //Bordure eau à droite
+    if(map->tabMap[2][3].nZone==1){
+        load_layout(&map->tabMap[2][4],"layout/layout2_15.txt"); //Transition spawn zone plage
+    }
+    else{
+        load_layout(&map->tabMap[2][4],"layout/layout2_17.txt"); //Full sable
+    }
+
+    //Gestion bloc spawn et le cas particulier où le manoir n'est pas dans le coin haut droit
+    if(map->tabMap[3][2].nZone==1){
+        load_layout(&map->tabMap[2][2],"layout/layout3_3.txt"); //Chemin vers le manoir
+        load_layout(&map->tabMap[1][2],"layout/layout3_4.txt"); //Chemin et entrée vers le manoir
+        load_layout(&map->tabMap[1][3],"layout/layout3_5.txt"); //Manoir 
+        load_layout(&map->tabMap[1][4],"layout/layout3_6.txt"); //Manoir cul sac
+        load_layout(&map->tabMap[0][3],"layout/layout3_2.txt"); //Entrée du boss
+        load_layout(&map->tabMap[0][4],"layout/layout3_1.txt"); //Boss
+
+        load_layout(&map->tabMap[1][5],"layout/layout2_16.txt"); //Bordure eau à droite
+        load_layout(&map->tabMap[0][5],"layout/layout2_18.txt"); //Bordure eau haut droite
+    }
+
+    //Cas général
+    else{
+
+    }
+    
+
+
+
+
+
+    free(namefile);
+    return 0;
+}
+
 int remplir_map(map_t *map){
     FILE * file;
 
@@ -541,6 +716,8 @@ int load_layout(carte_t *c, char *namefile) {
     char input;
     int i = 0, j = 0;
     int res; // Pour stocker le résultat de fscanf
+    int len = strlen(namefile);
+    c->nrlayout = atoi(namefile[len-1]);
 
     if (file) {
         while ((res = fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
