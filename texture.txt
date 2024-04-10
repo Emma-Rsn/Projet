@@ -11,9 +11,9 @@ texture/objet/tree2top.png
 texture/objet/tree2bottom.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/slimebluedial.png
+sprite/alexface2.png
+sprite/alexdial.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -30,6 +30,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 texture/objet/barredevie.png
+texture/objet/barredevie.png
 2
 30
 texture/sable.png
@@ -43,6 +44,9 @@ texture/waterbasdroit2.png
 texture/waterdroitmilieu.png
 texture/objet/stone1.png
 sprite/slimeblue.png
+sprite/slimebluedial.png
+sprite/alexface2.png
+sprite/alexdial.png
 texture/sablecorrup.png
 texture/watercorrup.png
 texture/waterbasmilieucorrup.png
@@ -54,9 +58,6 @@ texture/waterbasdroit2corrup.png
 texture/waterdroitmilieucorrup.png
 texture/objet/stone1corrup.png
 sprite/slimebluecorrup.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -76,6 +77,9 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
+sprite/slimebluedial.png
+sprite/alexface2.png
+sprite/alexdial.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -91,9 +95,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+texture/objet/barredevie.png
 texture/objet/barredevie.png
 4
 30
@@ -108,9 +110,9 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/slimebluedial.png
+sprite/alexface2.png
+sprite/alexdial.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -127,6 +129,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 texture/objet/barredevie.png
+texture/objet/barredevie.png
 5
 30
 texture/black_stained_glass.png
@@ -140,6 +143,9 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
+sprite/slimebluedial.png
+sprite/alexface2.png
+sprite/alexdial.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -155,7 +161,5 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+texture/objet/barredevie.png
 texture/objet/barredevie.png
