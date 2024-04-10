@@ -139,8 +139,9 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(cartec,&(cartec->grille.tabGrille[xp][yp]),&map);
-    Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,map.nvEquipe,3,10);
-    Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,map.nvEquipe,4,8);
+    Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,map.nvEquipe,0,10);
+    Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,map.nvEquipe,0,8);
+    Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,map.nvEquipe,3,14);
 	p_mv * pAlex = &Alex;
 
     
