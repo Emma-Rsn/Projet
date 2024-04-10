@@ -22,56 +22,56 @@ void pause(SDL_Event event,Mix_Music* gMusic){
 }
 void newMusic(int nZone,Mix_Music* gMusic){
             if(nZone == 0){
-                gMusic = Mix_LoadMUS( "Game-Over.mp3" );
+                gMusic = Mix_LoadMUS( "musique/Game-Over.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
                 Mix_PlayMusic( gMusic, -1 );
             }else if(nZone == 1){
-                gMusic = Mix_LoadMUS( "creepy-devil-dance.mp3" );
+                gMusic = Mix_LoadMUS( "musique/creepy-devil-dance.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
                 Mix_PlayMusic( gMusic, -1 );
             }else if(nZone == 2){
-                gMusic = Mix_LoadMUS( "18-Prairie4.mp3" );
+                gMusic = Mix_LoadMUS( "musique/18-Prairie4.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
                 Mix_PlayMusic( gMusic, -1 );
             }else if(nZone == 3){
-                gMusic = Mix_LoadMUS( "16-Havoc.mp3" );
+                gMusic = Mix_LoadMUS( "musique/16-Havoc.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
                 Mix_PlayMusic( gMusic, -1 );
             }else if(nZone == 4){
-                gMusic = Mix_LoadMUS( "1-BattleField.mp3" );
+                gMusic = Mix_LoadMUS( "musique/1-BattleField.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
                 Mix_PlayMusic( gMusic, -1 );
             }else if(nZone == 5){
-                gMusic = Mix_LoadMUS( "Game-Over.mp3" );
+                gMusic = Mix_LoadMUS( "musique/Game-Over.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
                 Mix_PlayMusic( gMusic, -1 );
             }else if(nZone == 6){
-                gMusic = Mix_LoadMUS( "9-EpicBattle.mp3" );
+                gMusic = Mix_LoadMUS( "musique/9-EpicBattle.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );
                 }
                 Mix_PlayMusic( gMusic, -1 );
             }else{
-                gMusic = Mix_LoadMUS( "creepy-devil-dance.mp3" );
+                gMusic = Mix_LoadMUS( "musique/creepy-devil-dance.mp3" );
                 if( gMusic == NULL )
                 {
                     printf( "Failed to load beat music! SDL_mixer Error: %s\n", Mix_GetError() );

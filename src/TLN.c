@@ -66,6 +66,8 @@ int main(){
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
+    SDL_Surface * logo = IMG_Load("logo.png");
+    SDL_SetWindowIcon(window,logo);
     //mode de transparence
     SDL_BlendMode blend = SDL_BLENDMODE_BLEND;
     SDL_SetRenderDrawBlendMode(renderer, blend);
