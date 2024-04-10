@@ -43,6 +43,8 @@ struct map_s{
     int zoneChargee;
     int Nightmare;
     int nbN;
+    int nvZone;
+    int nvEquipe;
 };
 
 case_t creation_case();

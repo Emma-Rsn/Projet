@@ -58,7 +58,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer);
 
 void col_p(SDL_Rect * obj_r,p_mv * pp);
 
-p_mv initp(carte_t * carte,case_t * c);
+p_mv initp(carte_t * carte,case_t * c,map_t * map);
 
 void desctruction_p_eq(p_mv * p);
 
