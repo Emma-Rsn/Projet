@@ -53,6 +53,8 @@ int load_obj(carte_t *c, char *namefile){
     file=fopen(namefile,"r");
 
     if(file){
+        /*fscanf(file,"%d %d %d %d ",&x,&y,&indText,&type);
+        printf("%d %d %d %d \n",x,y,indText,type);*/
         while(fscanf(file,"%d %d %d %d ",&x,&y,&indText,&type)!= EOF){
             switch(type){
                 case 0 :
@@ -65,7 +67,7 @@ int load_obj(carte_t *c, char *namefile){
                     break;
                 case 2 :
                     fscanf(file,"%s %d %d %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme,&nbCombattant);
-                    
+                    printf("%s %d %d %d %d %d %d %d %d %d %d\n",nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme,nbCombattant);
                     ennemi_t newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     
                     for(i=1;i<=nbCombattant;i++){
@@ -74,6 +76,7 @@ int load_obj(carte_t *c, char *namefile){
                     }
                     c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,&newEnnemi);
                     c->nbObj++;
+                    printf("la misere3 %d\n",((ennemi_t *)(c->tabObj[c->nbObj-1].tabObj[0]))->combat);
                     break;
             }
             fscanf(file,"\n");

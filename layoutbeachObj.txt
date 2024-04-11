@@ -1,4 +1,2 @@
-5 5 10 2 char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme 2 char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme
-4 3 10 2 char *,int indice_portrait,int indice_sprite,int pv,int vitesse,int type,int temps_recharge_max,int puissance,int forme 0
-10 7 9 0
-10 2 5 0
+10 5 29 0
+10 3 10 2 Lute1 100 10 1 11 10 0 1 10 0 0
