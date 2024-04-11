@@ -127,7 +127,7 @@ int main(){
 
     //variable FPS
     int cmpfps = 0;
-    int dfps = 1000/FPS;
+    int dfps = FPS;
     Uint32 * t0 = malloc(sizeof(Uint32));
     Uint32 * t1 = malloc(sizeof(Uint32));
     int * nfps = malloc(sizeof(int));
@@ -255,8 +255,7 @@ int main(){
         SDL_RenderClear(renderer);
 
         SDL_SetRenderDrawColor(renderer, 255, 255, 245, 255);
-        affHud(renderer,hEcran,wEcran,map,*pAlex);
-;
+
         //affiche la grille
         betaAfficherMap(renderer,&map,cartec);
         if(ouigrille)afficher_grille(cartec->grille,renderer);
@@ -264,14 +263,16 @@ int main(){
         //Affichage pnj
         aff_pnj(Alex2,renderer,cartec);
 
-        //affiche les fps
-        if(ouifps)aff_Fps(cmpfps,renderer);
-
         //Affiche un personnage
-        affp(pAlex,renderer);
+        affp(pAlex,renderer,event);
         affTabObj(renderer,map,cartec);
 
         if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
+
+        affHud(renderer,hEcran,wEcran,map,*pAlex);
+
+         //affiche les fps
+        if(ouifps)aff_Fps(cmpfps,renderer);
 
         transition(renderer,transi,*wEcran,*hEcran);
 

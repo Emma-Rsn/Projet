@@ -55,7 +55,7 @@ struct personnage{
 
 void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement);
 
-int affp(p_mv * pmv,SDL_Renderer *renderer);
+int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event);
 
 void col_p(SDL_Rect * obj_r,p_mv * pp);
 

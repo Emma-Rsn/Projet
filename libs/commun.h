@@ -24,7 +24,7 @@
 #define TAILLE_CASE 64
 
 //nombre de frame par secondes voulu
-#define FPS 30
+#define FPS 60
 
 typedef struct obj_s obj_t;
 typedef struct combat_s combat_t;
