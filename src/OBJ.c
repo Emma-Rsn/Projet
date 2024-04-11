@@ -33,6 +33,51 @@ obj_t init_obj(case_t * c,int indText,int type,...){
     return newObj;
 }
 
+int load_obj(carte_t *c, char *namefile){
+    int x,y,indText,type;
+    FILE * file;
+    int i,j;
+    file=fopen(namefile,"r");
+
+    if(file){
+        while(fscanf(file,"%d %d %d %d ",&x,&y,&indText,&type)!= EOF){
+            switch(type){
+                case 0 :
+                    c->tabObj[c->nbObj]=init_obj(c->grille->tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 1 :
+                    c->tabObj[c->nbObj]=init_obj(c->grille->tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 2 :
+                    char nom[20];
+                    int pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme;
+                    int nbCombattant,i;
+                    
+                    fscanf("%s %d %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme,&nbCombattant);
+                    
+                    ennemi_t newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
+                    
+                    for(i=1;i<=nbCombattant;i++){
+                        fscanf("%s %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme);
+                        newEnnemi.combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
+                    }
+                    c->tabObj[c->nbObj]=init_obj(c->grille.tabGrille[x][y],indText,type,&newEnnemi);
+                    c->nbObj++;
+                    break;
+            }
+            fscanf(file,"\n");
+        }
+    }
+    else{
+        printf("Fichier inexistant\n");
+        return 1;
+    }
+
+
+}
+
 void affObj(SDL_Renderer *renderer,obj_t o,map_t map){
     SDL_RenderCopy(renderer, map.tabTexture[o.indTexture], NULL, &(o.cas->Rectangle));
 }

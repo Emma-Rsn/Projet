@@ -105,7 +105,7 @@ int main(){
     cartec->etat_brouillard = 0;
     map.zoneChargee=cartec->nZone;
     chargement_Zone(&map,renderer,map.zoneChargee,gMusic);
-    load_layout(&(map.tabMap[5][5]),"save/layoutbeach.txt");
+    creer_map_layout(&map);
 
     //temporaire
 
