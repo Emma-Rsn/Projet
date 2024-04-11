@@ -802,7 +802,7 @@ void desctruction_p_eq(p_mv * p){
 }
 
 //construit un point
-p_mv initp(carte_t * carte,case_t * c){
+p_mv initp(carte_t * carte,case_t * c,map_t * map){
     p_mv p;
     p.carte = carte;
     p.c = c;
@@ -817,9 +817,9 @@ p_mv initp(carte_t * carte,case_t * c){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=init_combattant("alex",100,"Attaque 1","Attaque spe",50,0,13,12,0);
     p.frame = malloc(sizeof(int));
     *(p.frame) = 0;
+    p.equipe[0]=init_combattant("alex",100,50,0,13,12,0,2,15,0);
     return p;
 }
 
