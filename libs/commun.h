@@ -21,6 +21,12 @@
 #define MIN_ZONE5 6
 #define MAX_ZONE5 7
 
+#define BONUS_EQUIPE_N 3
+#define BONUS_ZONE_N 1
+#define PLUS_BONUS_EQUIPE 0.5
+#define PLUS_BONUS_ZONE 1
+
+
 typedef struct obj_s obj_t;
 typedef struct combat_s combat_t;
 typedef struct combattant_s combattant_t;

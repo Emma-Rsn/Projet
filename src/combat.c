@@ -59,13 +59,13 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
 *\param type type d'attaque special (0=attaque un ennemi,1=saute le tour d'un ennemi,2=soigne un ennemi)
 *\brief fonction qui creer le combattant 
 */
-combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int niveau,int temps_recharge_max,int puissance,int forme){
+combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     combattant_t * combattant=malloc(sizeof(combattant_t));
     combattant->nom=nom;
-    combattant->pv=pv*niveau;
-    combattant->pvMax=pv*niveau;
-    combattant->vitesse=vitesse*niveau;
-    combattant->puissance=puissance*niveau;
+    combattant->pv=pv;
+    combattant->pvMax=pv;
+    combattant->vitesse=vitesse;
+    combattant->puissance=puissance;
     combattant->mort=0;
     combattant->camp=camp;
     combattant->temps_recharge=0;
@@ -316,11 +316,17 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
         //soigne un ennemi au hasard
         else if (combat->combattant[combat->indice_combattant]->type==2){
             //recupere l'indice d'un ennemi pour le soigner
-            do{
-                perso=(int)1+rand()%(nb_combattant);
+            int i=0;
+            int indice=0;
+            int min=combat->ennemi[i]->pv;
+            for(i=1;i<combat->nb_ennemi;i++){
+                if((min>combat->ennemi[i]->pv && combat->ennemi[i]->pv>0) || min==0){
+                    min=combat->ennemi[i]->pv;
+                    indice=i;
+                }
+            }
 
-            }while(((combattant[perso-1]->camp)==0) || (combattant[perso-1]->pv<=0));
-            combattant[perso-1]->pv+=combat->combattant[combat->indice_combattant]->pvMax*0.1;
+            combat->ennemi[indice]->pv+=combat->combattant[combat->indice_combattant]->pvMax*0.1;
 
         }
         //Fait passer le tour d'un allie
@@ -338,26 +344,77 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
         combat->combattant[combat->indice_combattant]->temps_recharge=0;
     //attaque de base des ennemis
     }else{
-        combattant[perso-1]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+        //ennemi de petite taille (slime) attaque l'allie qui a le moins de pv
+        if(combat->combattant[combat->indice_combattant]->forme==0){
+            //recupere l'allie qui a le moins de pv
+            int i=0;
+            int indice=0;
+            int min=combat->allie[i]->pv;
+            for(i=1;i<combat->nb_allie;i++){
+                if((min>combat->allie[i]->pv && combat->allie[i]->pv>0) || min==0){
+                    min=combat->allie[i]->pv;
+                    indice=i;
+                }
+            }
+            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+        }
+
+        //ennemi de moyenne taille (?) attaque l'allie qui a le moins de pv max
+        if(combat->combattant[combat->indice_combattant]->forme==1){
+            //recupere l'allie qui a le moins de pv max
+            int i=0;
+            int indice=0;
+            int min=combat->allie[i]->pvMax;
+            for(i=1;i<combat->nb_allie;i++){
+                if((min>combat->allie[i]->pvMax && combat->allie[i]->pv>0) || min==0){
+                    min=combat->allie[i]->pvMax;
+                    indice=i;
+                }
+            }
+            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+        }
+
+        //ennemi de grande taille (?) attaque l'allie qui a le plus de PV
+        if(combat->combattant[combat->indice_combattant]->forme==2){
+            //recupere l'allie qui a le plus de pv 
+            int i=0;
+            int indice=0;
+            int max=combat->allie[i]->pv;
+            for(i=1;i<combat->nb_allie;i++){
+                if(max<combat->allie[i]->pv && combat->allie[i]->pv>0){
+                    max=combat->allie[i]->pv;
+                    indice=i;
+                }
+            }
+            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+        }
+
+        //ennemi de moyenne taille (?) attaque l'allie qui a le plus de pv max
+        if(combat->combattant[combat->indice_combattant]->forme==3){
+            //recupere l'allie qui a le plus de pv max
+            int i=0;
+            int indice=0;
+            int max=combat->allie[i]->pvMax;
+            for(i=1;i<combat->nb_allie;i++){
+                if(max<combat->allie[i]->pvMax && combat->allie[i]->pv>0){
+                    max=combat->allie[i]->pvMax;
+                    indice=i;
+                }
+            }
+            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+        }
         combat->combattant[combat->indice_combattant]->temps_recharge++;
     }
+    //passif de ennemi Finn, soigne un peu tout les ennemis a son tour
+    if(combat->combattant[combat->indice_combattant]->type==2 && combat->combattant[combat->indice_combattant]->forme==3){
+        int k=0;
+        for(k=0;k<combat->nb_ennemi;k++){
+            if(combat->ennemi[k]->mort==0)
+                combat->ennemi[k]->pv+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
+        }
+    }
     
-
-/*
-    //enleve des pv au personnages par rapport a ses pv 
-    if(combattantAt->pv<=100 && combattantAt->pv>60){
-        
-        //(int)10+rand()%(15+1-10);
-    }
-    if(combattantAt->pv<=60 && combattantAt->pv>30){
-        combattant[perso-1]->pv-=combat->combattant[combat->indice_combattant]->puissance;
-        //(int)5+rand()%(10+1-5);
-    }
-    if(combattantAt->pv<=30 && combattantAt->pv>0){
-        combattant[perso-1]->pv-=combat->combattant[combat->indice_combattant]->puissance;
-        //(int)1+rand()%(5+1-1);
-    }
-*/
+    
     return 0;
 }
 
@@ -574,7 +631,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                     if(j==combat->indice_combattant){
                         SDL_RenderDrawRect(renderer,& r1);
                     }
-                    if(map->Nightmare){
+                    if(map->Nightmare && combat->combattant[j]->forme!=3 ){
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
 
                     }else{
@@ -597,7 +654,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                     if(j==combat->indice_combattant){
                         SDL_RenderDrawRect(renderer,& r1);
                     }
-                    if(map->Nightmare){
+                    if(map->Nightmare && combat->combattant[j]->forme!=3){
                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
                     }else{
                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
@@ -719,8 +776,6 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                 for(k=0;k<combat->nb_allie;k++){
                      if(combat->allie[k]->mort==0)
                         combat->allie[k]->pv+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
-                    /*if(combat->allie[k]->pv>combat->allie[k]->pvMax)
-                    combat->allie[k]->pv=combat->allie[k]->pvMax;*/
                 }
             }
 
@@ -729,7 +784,13 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                 
 
                 while(ennemi->combattant[combat->indice_ennemi]->mort==1){
-                        combat->indice_ennemi++;
+                    if(combat->indice_ennemi<combat->nb_ennemi){
+                         combat->indice_ennemi++;
+                    }
+                    else{
+                        combat->indice_ennemi=0;
+            }
+                       
                 }
                 affichage_combat(we,he,renderer,combat,0,personnage,map);
                 while (SDL_PollEvent(&event) != 0 ) {
@@ -778,15 +839,27 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                                 //augmentation barre de cauchemar
                                 if(combat->mult==1.5){
                                     personnage->NightP++;
+                                    if(personnage->NightP>personnage->NightMax){
+                                        personnage->NightP=personnage->NightMax;
+                                    }
                                 }
                                 else if(combat->mult==2.0){
                                     personnage->NightP+=100;
+                                    if(personnage->NightP>personnage->NightMax){
+                                        personnage->NightP=personnage->NightMax;
+                                    }
                                 }
                                 else if(combat->mult==2.5){
                                     personnage->NightP+=6;
+                                    if(personnage->NightP>personnage->NightMax){
+                                        personnage->NightP=personnage->NightMax;
+                                    }
                                 }
                                 else if(combat->mult==3.0){
                                     personnage->NightP+=10;
+                                    if(personnage->NightP>personnage->NightMax){
+                                        personnage->NightP=personnage->NightMax;
+                                    }
                                 }
                                 (combat->nb_point)--;
                                 
@@ -943,21 +1016,76 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         int Nennemi=0;
         int alexMort=0;
         int attenteAda=0;
+        int DejaNight=0;
+        int alexMortEnnemi=0;
+        int attenteAdaEnnemi=0;
 
         ennemi_t copieEnnemi;
         copieEnnemi=*ennemi;
-        
 
-    
-        while(ennemi->combattant[i]!=NULL && i<4){
-            ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*map->nvZone;
-            ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*map->nvZone;
-            i++;
+        //compte le nombre d'allie dans l'equipe
+        for (i=0;i<4;i++){
+            if(pp->equipe[i]!=NULL){
+                allie++;
+            }
+        }
+        combattant_t *tabAllie[allie];
+        combattant_t *copieAllie1;
+
+        //copie des allies pour pouvoir changer ses statistiques pendant le combat
+        for(i=0;i<allie;i++){
+            copieAllie1=init_combattant(pp->equipe[i]->nom,pp->equipe[i]->pv,pp->equipe[i]->vitesse,pp->equipe[i]->camp,pp->equipe[i]->indice_portrait,pp->equipe[i]->indice_sprite,pp->equipe[i]->type,pp->equipe[i]->temps_recharge_max,pp->equipe[i]->puissance,pp->equipe[i]->forme);
+            tabAllie[i]=copieAllie1;
         }
 
-        combat_t * combat=init_combat();
 
-       
+
+
+        //dans le mode Nightmare
+        if(map->Nightmare){
+            i=0;
+            while(ennemi->combattant[i]!=NULL && i<4){
+                if(ennemi->combattant[i]->mort==0){
+                    ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*(map->nvZone+map->bonusZoneN);
+                    ennemi->combattant[i]->puissance = ennemi->combattant[i]->puissance*(map->nvZone+map->bonusZoneN);
+                    ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*(map->nvZone+map->bonusZoneN);
+                }
+                i++;
+            }
+            i=0;
+            while(pp->equipe[i]!=NULL && i<4){
+                if(pp->equipe[i]->mort==0){
+                    pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*(map->nvEquipe+map->bonusEquipeN);
+                    pp->equipe[i]->pv =pp->equipe[i]->pv*(map->nvEquipe+map->bonusEquipeN) ;
+                    pp->equipe[i]->puissance = pp->equipe[i]->puissance*(map->nvEquipe+map->bonusEquipeN);
+
+                }
+                i++;
+            }
+            DejaNight=1;
+        }
+        //dans le mode normal
+        else{
+            i=0;
+            while(ennemi->combattant[i]!=NULL && i<4){
+                ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*map->nvZone;
+                ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*map->nvZone;
+                ennemi->combattant[i]->puissance = ennemi->combattant[i]->puissance*map->nvZone;
+                i++;
+            }
+            i=0;
+            while(pp->equipe[i]!=NULL && i<4){
+                pp->equipe[i]->pv = pp->equipe[i]->pv*map->nvEquipe;
+                pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*map->nvEquipe;
+                pp->equipe[i]->puissance = pp->equipe[i]->puissance*map->nvEquipe;
+                i++;
+            }
+
+        }
+    
+
+
+        combat_t * combat=init_combat();
 
         //compte le nombre d'allie dans l'equipe
         for (i=0;i<4;i++){
@@ -1009,6 +1137,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                     //regarde si l'allie peut jouer
                     if(combat->combattant[combat->indice_combattant]->status==0){
                         attaque_allie(we,he,event,renderer,ennemi,combat->combattant[combat->indice_combattant],Nennemi,combat,allie,pp,map);
+
                         //passif Ada en mode cauchemar, elle peut jouer 2 fois de suite (attente de 2 tour)
                         if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3 && attenteAda==0){
                             attaque_allie(we,he,event,renderer,ennemi,combat->combattant[combat->indice_combattant],Nennemi,combat,allie,pp,map);
@@ -1019,6 +1148,12 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         }
                     }
                     else{
+                        //passif de Lou ennemi,si l'allie doit passer son tour, il perd aussi des pv
+                        for(i=0;i<combat->nb_ennemi;i++){
+                            if(combat->ennemi[i]->forme==3 && combat->ennemi[i]->type==1 ){
+                                combat->combattant[combat->indice_combattant]->pv-=combat->ennemi[i]->puissance*1.5;
+                            }
+                        }
                         combat->combattant[combat->indice_combattant]->status=0;
                     }
                     combat->combattant[combat->indice_combattant]->temps_recharge++;
@@ -1027,6 +1162,15 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 else if(combat->combattant[combat->indice_combattant]->camp==1 && combat->combattant[combat->indice_combattant]->mort==0){
                     if(combat->combattant[combat->indice_combattant]->status==0){
                         attaque_ennemi(combat->combattant[combat->indice_combattant],nb_combattant,combat->combattant,combat);
+
+                        //passif Ada ennemi, elle peut jouer 2 fois de suite (attente de 2 tour)
+                        if(combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3){
+                           attaque_ennemi(combat->combattant[combat->indice_combattant],nb_combattant,combat->combattant,combat);
+                           attenteAdaEnnemi=2;
+                        }
+                        else if(combat->combattant[combat->indice_combattant]->type==3 && combat->combattant[combat->indice_combattant]->forme==3){
+                            attenteAdaEnnemi--;
+                        }
                     }
                     //passif Lou en mode cauchemar, si l'ennemi doit passer son tour, il perd aussi des pv
                     else{
@@ -1035,30 +1179,36 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                             for(k=0;k<combat->nb_allie;k++){
                                 if(combat->allie[k]->type==1 && combat->allie[k]->mort==0 ){
                                     combat->combattant[combat->indice_combattant]->pv-=combat->allie[k]->puissance*1.5;
-                                    if(combat->combattant[combat->indice_combattant]->pv<0)
-                                        combat->combattant[combat->indice_combattant]->pv=0;
                                 }
                             }
                         }
                         combat->combattant[combat->indice_combattant]->status=0;
                     }
                 }
-
+                for(j=0;j<nb_combattant;j++){
+                    //passif d'Alex en mode cauchemar, si il meurt il peut ressuciter une fois
+                    if(combat->combattant[j]->camp==0 && alexMort==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0 && combat->combattant[j]->forme==3 ){
+                        combat->combattant[j]->pv=combat->combattant[j]->pvMax;
+                        combat->combattant[j]->mort=0;
+                        alexMort=1;
+                    }
+                
+                    //passif d'Alex ennemi, si il meurt il peut ressuciter une fois
+                    if(combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0){
+                        combat->combattant[j]->pv=combat->combattant[j]->pvMax;
+                        combat->combattant[j]->mort=0;
+                        alexMortEnnemi=1;
+                    }
+                }
                 //compte le nombre d'allie dans l'equipe
                 for(j=0;j<nb_combattant;j++){
                     if(combat->combattant[j]->pv<=0 && combat->combattant[j]->mort==0){
                         combat->combattant[j]->mort=1;
-                        if((combat->combattant[j]->camp==0 && map->Nightmare==0) || (combat->combattant[j]->camp==0 && combat->combattant[j]->type!=0) || (combat->combattant[j]->camp==0 && map->Nightmare==1 && combat->combattant[j]->type==0 &&alexMort==1) ){
+                        if(combat->combattant[j]->camp==0  ){
                             allie--;
                         }
                         else if(combat->combattant[j]->camp==1){
                             Nennemi--;
-                        }
-                        //passif d'Alex en mode cauchemar, si il meurt il peut ressuciter une fois
-                        if(combat->combattant[j]->camp==0 && alexMort==0 && combat->combattant[j]->type==0){
-                            combat->combattant[j]->pv=combat->combattant[j]->pvMax;
-                            combat->combattant[j]->mort=0;
-                            alexMort=1;
                         }
 
                         if(Nennemi==0 || allie==0){
@@ -1072,6 +1222,28 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
                     }
                     
+                }
+                if(map->Nightmare && DejaNight==0){
+                    DejaNight=1;
+                    i=0;
+                    while(ennemi->combattant[i]!=NULL && i<4){
+                        if(ennemi->combattant[i]->mort==0){
+                            ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*(map->nvZone+map->bonusZoneN);
+                            ennemi->combattant[i]->puissance = ennemi->combattant[i]->puissance*(map->nvZone+map->bonusZoneN);
+                            ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*(map->nvZone+map->bonusZoneN);
+                        }
+                        i++;
+                    }
+                    i=0;
+                    while(pp->equipe[i]!=NULL && i<4){
+                        if(pp->equipe[i]->mort==0){
+                            pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*(map->nvEquipe+map->bonusEquipeN);
+                            pp->equipe[i]->pv =pp->equipe[i]->pvMax ;
+                            pp->equipe[i]->puissance = pp->equipe[i]->puissance*(map->nvEquipe+map->bonusEquipeN);
+
+                        }
+                        i++;
+                    }
                 }
 
                 affichage_combat(we,he,renderer,combat,0,pp,map);
@@ -1087,10 +1259,39 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 (combat->nb_point)++;
             }
 
-            
+
+
         }
+            //Si les alliees on tuer tous les ennemis
+            if(Nennemi==0){
+                //cherche si dans les ennemis ils y avait un boss
+                for(i=0;i<combat->nb_ennemi;i++){
+                    if(combat->ennemi[i]->forme==3){
+                        //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
+                        if(map->Nightmare){
+                            map->Nightmare=0;
+                            pp->Nightmare=0;
+                            pp->NightP=pp->NightMax/2;
+                        }
+                        //vide la barre de cauchemar
+                        else{
+                            pp->NightP=0;
+                        
+                        }
+                        map->nvEquipe+=1;
+                    }
+                }
+                //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
+                if(map->Nightmare){
+                    map->bonusEquipeN+=0.5;
+                    map->bonusZoneN+=1;
+                }
+            }
         //SDL_RenderPresent(renderer);
         *ennemi = copieEnnemi;
+        for(i=0;i<combat->nb_allie;i++){
+            *pp->equipe[i] = *tabAllie[i];
+        }
         ennemi->combat=0;
         free(combat);
         

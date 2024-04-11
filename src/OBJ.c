@@ -61,7 +61,7 @@ ennemi_t init_ennemi(char * nom,int indice_portrait,int indice_sprite,map_t * ma
     for(i=0;i<4;i++){
         en.combattant[i]=NULL;
     }
-    en.combattant[0]=init_combattant(nom,en.pv,en.vitesse,1,indice_portrait,indice_sprite,type,1,en.temps_recharge_max,puissance,forme);
+    en.combattant[0]=init_combattant(nom,en.pv,en.vitesse,1,indice_portrait,indice_sprite,type,en.temps_recharge_max,puissance,forme);
     en.indice_portrait=indice_portrait;
     en.indice_sprite=indice_sprite;
     en.forme=forme;

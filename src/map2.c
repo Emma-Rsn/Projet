@@ -104,6 +104,8 @@ map_t creation_map (int w, int h){
     m.tabTexture = NULL;
     m.Nightmare = 0;
     m.nvEquipe=2;
+    m.bonusEquipeN=BONUS_EQUIPE_N;
+    m.bonusZoneN=BONUS_ZONE_N;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);
