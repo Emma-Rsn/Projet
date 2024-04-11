@@ -14,6 +14,7 @@ sprite/slimeblue.png
 sprite/slimebluedial.png
 sprite/alexface2.png
 sprite/alexdial.png
+sprite/louface1.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -24,11 +25,10 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
+sprite/slimebluecorrup.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/alexface2corrup.png
+texture/template/combat_3.2.png
 texture/objet/barredevie.png
 texture/objet/barredevie.png
 2
@@ -47,6 +47,7 @@ sprite/slimeblue.png
 sprite/slimebluedial.png
 sprite/alexface2.png
 sprite/alexdial.png
+sprite/louface1.png
 texture/sablecorrup.png
 texture/watercorrup.png
 texture/waterbasmilieucorrup.png
@@ -59,9 +60,8 @@ texture/waterdroitmilieucorrup.png
 texture/objet/stone1corrup.png
 sprite/slimebluecorrup.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/alexface2corrup.png
+texture/template/combat_2.png
 texture/objet/barredevie.png
 texture/objet/barredevie.png
 3
@@ -80,6 +80,7 @@ sprite/slimeblue.png
 sprite/slimebluedial.png
 sprite/alexface2.png
 sprite/alexdial.png
+sprite/louface1.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -92,9 +93,8 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/alexface2corrup.png
+texture/template/combat_3.1.png
 texture/objet/barredevie.png
 texture/objet/barredevie.png
 4
@@ -113,6 +113,7 @@ sprite/slimeblue.png
 sprite/slimebluedial.png
 sprite/alexface2.png
 sprite/alexdial.png
+sprite/louface1.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -125,9 +126,8 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/alexface2corrup.png
+texture/template/combat_4.png
 texture/objet/barredevie.png
 texture/objet/barredevie.png
 5
@@ -146,6 +146,7 @@ sprite/slimeblue.png
 sprite/slimebluedial.png
 sprite/alexface2.png
 sprite/alexdial.png
+sprite/louface1.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -158,8 +159,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/alexface2corrup.png
+texture/template/combat_5.png
 texture/objet/barredevie.png
 texture/objet/barredevie.png

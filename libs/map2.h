@@ -30,6 +30,7 @@ struct carte_s{
     Uint8 a;
     int nZone;
     int nbObj;
+    int nrlayout;
     obj_t tabObj[20];
     grille_t grille; //quadrillage des cases dans une seule carte
 };
@@ -43,6 +44,11 @@ struct map_s{
     int zoneChargee;
     int Nightmare;
     int nbN;
+    int nvZone;
+    int nvEquipe;
+    float bonusEquipeN;
+    int bonusZoneN;
+    int argent;
 };
 
 case_t creation_case();
@@ -52,6 +58,9 @@ map_t creation_map (int w, int h);
 int afficher_grille(grille_t grille, SDL_Renderer *renderer);
 int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec);
 int creer_map(map_t * map);
+int sauvegarde_map(map_t * map);
+int creer_map_layout(map_t * map);
+int sauvegarde_map_layout(map_t * map);
 int remplir_map(map_t *map);
 int afficher_zone (map_t m);
 float min(float a, float b);
