@@ -205,11 +205,14 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                 pmv->e = 0;
                 *transi = 0;
             }else{
-                if(pmv->e == 0){
-                    pmv->e = 1;
-                }else if(pmv->e == 1){
-                    pmv->e = 2;
-                }else if(pmv->e == 2){
+                if(*(pmv->frame) != 0){
+                    if(pmv->e == 1){
+                        pmv->e = 2;
+                    }else{
+                        pmv->e = 1;
+                    }
+                }else{
+                    *(pmv->frame) = 1;
                     pmv->e = 1;
                 }
             }
@@ -221,10 +224,12 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
     }
 }
 
-int animation(p_mv * pmv,SDL_Renderer *renderer){
+int affp(p_mv * pmv,SDL_Renderer *renderer){
     SDL_Surface* perso=NULL;
     SDL_Texture * tperso=NULL;
     char * empSprit1 = malloc(sizeof(char)*30);
+    SDL_Rect aff = pmv->c->Rectangle;
+    int nbMaxFrame = (FPS/10)*4;
     if(*(pmv->frame) != 0){
         if(pmv->e == 1){
             //Nord
@@ -258,6 +263,7 @@ int animation(p_mv * pmv,SDL_Renderer *renderer){
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
                 SDL_FreeSurface(perso);
+                aff.x= (aff.x-TAILLE_CASE)+(TAILLE_CASE*(*(pmv->frame)/nbMaxFrame));
             }
             //Sud
             else if(pmv->d == 2){
@@ -325,6 +331,7 @@ int animation(p_mv * pmv,SDL_Renderer *renderer){
                     return -1;
                 }
                 tperso = SDL_CreateTextureFromSurface(renderer, perso);
+                aff.x= (aff.x-TAILLE_CASE)+(TAILLE_CASE*(*(pmv->frame)/nbMaxFrame));
                 SDL_FreeSurface(perso);
             }
             //Sud
@@ -363,9 +370,91 @@ int animation(p_mv * pmv,SDL_Renderer *renderer){
                 return -2;
             }
         }
-        tperso = SDL_CreateTextureFromSurface(renderer, perso);
-    }else{//pas d'animation
+        printf("%d\n",aff.x);
+        SDL_RenderCopy(renderer, tperso, NULL, &aff);
+        *(pmv->frame) = *(pmv->frame)+1;
+        if(*(pmv->frame) > nbMaxFrame){
+            *(pmv->frame) = 0;
+            pmv->e=0;
+        }
 
+    }else{//pas d'animation
+        if(pmv->e == 0){
+            //Nord
+            if(pmv->d == 0){
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
+                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1, "dos2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
+                perso = IMG_Load(empSprit1);
+                if (perso == NULL) {
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    return -1;
+                }
+                tperso = SDL_CreateTextureFromSurface(renderer, perso);
+                SDL_FreeSurface(perso);
+                SDL_RenderCopy(renderer, tperso, NULL, &(pmv->r));
+            }
+            //Est
+            else if(pmv->d == 1){
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
+                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1, "prof1_2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
+                perso = IMG_Load(empSprit1);
+                if (perso == NULL) {
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    return -1;
+                }
+                tperso = SDL_CreateTextureFromSurface(renderer, perso);
+                SDL_FreeSurface(perso);
+                SDL_RenderCopy(renderer, tperso, NULL, &(pmv->r));
+            }
+            //Sud
+            else if(pmv->d == 2){
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
+                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1, "face2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
+                perso = IMG_Load(empSprit1);
+                if (perso == NULL) {
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    return -1;
+                }
+                tperso = SDL_CreateTextureFromSurface(renderer, perso);
+                SDL_FreeSurface(perso);
+                SDL_RenderCopy(renderer, tperso, NULL, &(pmv->r));
+            }
+            //Ouest
+            else if(pmv->d == 3){
+                strcpy(empSprit1,"");
+                strcat(empSprit1, "./sprite/");
+                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1, "prof2_2");
+                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                strcat(empSprit1, ".png");
+                perso = IMG_Load(empSprit1);
+                if (perso == NULL) {
+                    //fprintf(stderr, "Erreur lors du chargement du sprite: %s\n", SDL_GetError());
+                    return -1;
+                }
+                tperso = SDL_CreateTextureFromSurface(renderer, perso);
+                SDL_FreeSurface(perso);
+                SDL_RenderCopy(renderer, tperso, NULL, &(pmv->r));
+            }else{
+                printf("Erreur : la direction n'existe pas\n");
+                return -2;
+            }
+        }else{
+            printf("Erreur d'etat\n");
+            return -3;
+        }
     }
 
 
@@ -384,6 +473,7 @@ int animation(p_mv * pmv,SDL_Renderer *renderer){
 */
 
 //affiche le personnage
+/*
 int affp(p_mv * pmv,SDL_Renderer *renderer){
     if(pmv->e == -1){
         SDL_SetRenderDrawColor(renderer, 200, 50, 0, 255);
@@ -617,7 +707,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer){
     }
     return 0;
 }
-
+*/
 /**
 *
 *\fn void col_p(SDL_Rect * obj_r,p_mv * pp)
