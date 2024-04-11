@@ -51,7 +51,7 @@ int compare_vitesse(const combattant_t * const combattant1,const combattant_t * 
 int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c);
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map);
 int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map);
-int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *combattant[],combat_t * combat);
+int attaque_ennemi(int nb_combattant,combat_t * combat);
 int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rect r_DEcran,combat_t *combat,map_t * map);
 int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat);
 void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer,SDL_Texture *Texture,SDL_Texture *Texture2);
@@ -65,4 +65,5 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
 void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map);
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp);
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map);
+int forme_attaque(int nb_combattant,combat_t * combat);
 #endif

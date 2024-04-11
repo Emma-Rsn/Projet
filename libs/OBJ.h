@@ -38,7 +38,6 @@ struct pnj_s{
     SDL_Surface * perso;
     int combat;
     int pv;
-    combattant_t * combattant[4];
 };
 
 obj_t init_obj(case_t * c,int indText,int type,...);

@@ -315,7 +315,7 @@ int main(){
 
 
         //Partie perdu
-         menu_gameOver(wEcran,hEcran,event,renderer,run,pAlex);
+         menu_gameOver(wEcran,hEcran,event,renderer,run,pAlex,&map);
 
 
 

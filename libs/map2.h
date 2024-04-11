@@ -47,6 +47,7 @@ struct map_s{
     int nvEquipe;
     float bonusEquipeN;
     int bonusZoneN;
+    int argent;
 };
 
 case_t creation_case();

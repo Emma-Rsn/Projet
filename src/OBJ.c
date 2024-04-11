@@ -164,15 +164,8 @@ void pnj_dialogue (SDL_Event event,pnj_t * pnj,SDL_Renderer * renderer,int * he,
 void dest_pnj(pnj_t * pnj){
     int i;
     int nb_ennemi=0;
-    for (i=0;i<4;i++){
-        if(pnj->combattant[i]!=NULL){
-            nb_ennemi++;
-        }
-    }
 
-    for(i=0;i<nb_ennemi;i++){
-        desctruction_combattant(pnj->combattant[i]); 
-    }
+
 
     free(pnj->nom);
     liste_destruction(pnj->dial);

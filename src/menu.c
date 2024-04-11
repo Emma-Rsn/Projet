@@ -588,7 +588,7 @@ int option(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * etatopt
 
 
 //fonction qui affiche et gere les textes cliquable de l'ecran titre
-int menu_gameOver(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage){
+int menu_gameOver(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map){
     if(personnage->equipe[0]->pv<=0){
 
         SDL_RenderClear(renderer);
@@ -727,7 +727,7 @@ int menu_gameOver(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * 
                         //Pour aller au magasin
                         else if((r_text_N.x<=event.button.x) && ((r_text_N.x+r_text_N.w)>=event.button.x) && ((r_text_N.y+r_text_N.h)>=event.button.y) && (r_text_N.y<=event.button.y)){
                             etat=0;
-                            magasin(we,he,event,renderer,run,personnage);
+                            magasin(we,he,event,renderer,run,personnage,map);
                         }  
         
                                             
@@ -765,7 +765,7 @@ int menu_gameOver(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * 
 }
 
 //fonction qui affiche et gere les textes cliquable de l'ecran titre
-int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage){
+int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map){
 
 
         SDL_RenderClear(renderer);
@@ -815,6 +815,21 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
         }
 
 
+        char *texte = malloc(20);
+        snprintf(texte, 20, "Argents : %d", map->argent);
+
+        SDL_Surface* textSurface = TTF_RenderText_Blended(font,texte, textColor);
+        if (!textSurface) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            return -1;
+        }
+
+        SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+
+
+
         SDL_Surface* textSurfaceQ = TTF_RenderText_Solid(font,"Quitter", textColor);
         if (!textSurfaceQ) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
@@ -859,11 +874,13 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
         SDL_Rect  r_text_Q= {((*we)/2)-((textSurfaceQ->w)/2),(*he/4)*4-textSurfaceQ->h-100,textSurfaceQ->w,textSurfaceQ->h};
         SDL_Rect  r_text_N= {((*we)/2)-((textSurfaceN->w)/2),(*he/4)*2-textSurfaceN->h+50,textSurfaceN->w,textSurfaceN->h};
         SDL_Rect  r_text_C= {((*we)/2)-((textSurfaceC->w)/2),(*he/4)*3-textSurfaceC->h,textSurfaceC->w,textSurfaceC->h};
+        SDL_Rect  r_text_A= {(*we)+100,*he+textSurface->h+100,textSurface->w,textSurface->h};
         
 
         SDL_FreeSurface(textSurfaceC);
         SDL_FreeSurface(textSurfaceQ);
         SDL_FreeSurface(textSurfaceN);
+        SDL_FreeSurface(textSurface);
 
 
         if(SDL_QueryTexture(textTextureQ,NULL,NULL,&r_text_Q.w,&r_text_Q.h)!=0){
@@ -879,6 +896,11 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
 
 
         if(SDL_QueryTexture(textTextureN,NULL,NULL,&r_text_N.w,&r_text_N.h)!=0){
+                printf("Impossible de charger le texte\n");
+                return -1;
+            
+        }
+        if(SDL_QueryTexture(textTexture,NULL,NULL,&r_text_A.w,&r_text_A.h)!=0){
                 printf("Impossible de charger le texte\n");
                 return -1;
             
@@ -921,6 +943,7 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
             SDL_RenderCopy(renderer, textTextureC, NULL, &r_text_C);
             SDL_RenderCopy(renderer, textTextureT, NULL, &r_text_T);
             SDL_RenderCopy(renderer, textTextureN, NULL, &r_text_N);
+            SDL_RenderCopy(renderer, textTexture, NULL, &r_text_A);
 
 
             SDL_RenderPresent(renderer);
@@ -932,8 +955,10 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
         SDL_DestroyTexture(textTextureC);
         SDL_DestroyTexture(textTextureT);
         SDL_DestroyTexture(textTextureN);
+        SDL_DestroyTexture(textTexture);
 
         SDL_RenderPresent(renderer);
+        free(texte);
         
         
 

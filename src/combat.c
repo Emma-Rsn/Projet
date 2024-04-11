@@ -297,27 +297,25 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
 *\brief fonction d'attaque de l'ennemi 
 */
 //fonction d'attaque de l'ennemi 
-int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *combattant[],combat_t * combat){
+int attaque_ennemi(int nb_combattant,combat_t * combat){
 
-    //personnage de l'equipe qui va etre attaque
-    int perso;
-    do{
-        perso=(int)1+rand()%(nb_combattant);
-
-    }while(((combattant[perso-1]->camp)==1) || (combattant[perso-1]->pv<=0));  
+  int indice=0;
+  //indice=forme_attaque(nb_combattant,combat);
+    //combat->allie[indice]->pv-=100000;
+  
 
     //attaque special des ennemis
     if(combat->combattant[combat->indice_combattant]->temps_recharge==combat->combattant[combat->indice_combattant]->temps_recharge_max){
         //Attaque puissante sur un allie
         if(combat->combattant[combat->indice_combattant]->type==0){
-            combattant[perso-1]->pv-=combat->combattant[combat->indice_combattant]->puissance*2;
+            indice=forme_attaque(nb_combattant,combat);
+            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance*2;
 
         }
         //soigne un ennemi au hasard
         else if (combat->combattant[combat->indice_combattant]->type==2){
             //recupere l'indice d'un ennemi pour le soigner
             int i=0;
-            int indice=0;
             int min=combat->ennemi[i]->pv;
             for(i=1;i<combat->nb_ennemi;i++){
                 if((min>combat->ennemi[i]->pv && combat->ennemi[i]->pv>0) || min==0){
@@ -331,20 +329,39 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
         }
         //Fait passer le tour d'un allie
         else if (combat->combattant[combat->indice_combattant]->type==1){
-            combattant[perso-1]->status=1;
+            indice=forme_attaque(nb_combattant,combat);
+            combat->allie[indice]->status=1;
         }
         //fait des degats a tous les allies
         else if(combat->combattant[combat->indice_combattant]->type==3){
             int i;
             for(i=0;i<combat->nb_allie;i++){
                 combat->allie[i]->pv-=combat->combattant[combat->indice_combattant]->puissance;
-
             }
         }
         combat->combattant[combat->indice_combattant]->temps_recharge=0;
     //attaque de base des ennemis
     }else{
-        //ennemi de petite taille (slime) attaque l'allie qui a le moins de pv
+        indice=forme_attaque(nb_combattant,combat);
+        combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+        combat->combattant[combat->indice_combattant]->temps_recharge++;
+    }
+
+    //passif de ennemi Finn, soigne un peu tout les ennemis a son tour
+    if(combat->combattant[combat->indice_combattant]->type==2 && combat->combattant[combat->indice_combattant]->forme==3){
+        int k=0;
+        for(k=0;k<combat->nb_ennemi;k++){
+            if(combat->ennemi[k]->mort==0)
+                combat->ennemi[k]->pv+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
+        }
+    }
+    
+    
+    return 0;
+}
+
+int forme_attaque(int nb_combattant,combat_t * combat){
+    //ennemi de petite taille (slime) attaque l'allie qui a le moins de pv
         if(combat->combattant[combat->indice_combattant]->forme==0){
             //recupere l'allie qui a le moins de pv
             int i=0;
@@ -356,7 +373,7 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
                     indice=i;
                 }
             }
-            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+            return indice;
         }
 
         //ennemi de moyenne taille (?) attaque l'allie qui a le moins de pv max
@@ -371,7 +388,7 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
                     indice=i;
                 }
             }
-            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+            return indice;
         }
 
         //ennemi de grande taille (?) attaque l'allie qui a le plus de PV
@@ -386,10 +403,10 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
                     indice=i;
                 }
             }
-            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+            return indice;
         }
 
-        //ennemi de moyenne taille (?) attaque l'allie qui a le plus de pv max
+        //ennemi de boss taille (?) attaque l'allie qui a le plus de pv max
         if(combat->combattant[combat->indice_combattant]->forme==3){
             //recupere l'allie qui a le plus de pv max
             int i=0;
@@ -401,21 +418,11 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
                     indice=i;
                 }
             }
-            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+            return indice;
+            
         }
-        combat->combattant[combat->indice_combattant]->temps_recharge++;
-    }
-    //passif de ennemi Finn, soigne un peu tout les ennemis a son tour
-    if(combat->combattant[combat->indice_combattant]->type==2 && combat->combattant[combat->indice_combattant]->forme==3){
-        int k=0;
-        for(k=0;k<combat->nb_ennemi;k++){
-            if(combat->ennemi[k]->mort==0)
-                combat->ennemi[k]->pv+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
-        }
-    }
-    
-    
-    return 0;
+        return 0;
+
 }
 
 /**
@@ -789,14 +796,14 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                     }
                     else{
                         combat->indice_ennemi=0;
-            }
+                    }
                        
                 }
                 affichage_combat(we,he,renderer,combat,0,personnage,map);
                 while (SDL_PollEvent(&event) != 0 ) {
 
                         if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
-                            if(combat->indice_ennemi>=(Nbennemi-1)){
+                            if(combat->indice_ennemi>=(combat->nb_ennemi-1)){
                                 combat->indice_ennemi=0;
                                 }
                                 else{
@@ -1129,7 +1136,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             qsort(combat->combattant,nb_combattant,sizeof(void *),compare_vitesse_enc);
             
 
-            for(combat->indice_combattant=0;combat->indice_combattant<nb_combattant && Nennemi>0 ;combat->indice_combattant++){
+            for(combat->indice_combattant=0;combat->indice_combattant<nb_combattant && Nennemi>0 && allie>0;combat->indice_combattant++){
                 
                 combat->mult=1;
 
@@ -1161,11 +1168,11 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 
                 else if(combat->combattant[combat->indice_combattant]->camp==1 && combat->combattant[combat->indice_combattant]->mort==0){
                     if(combat->combattant[combat->indice_combattant]->status==0){
-                        attaque_ennemi(combat->combattant[combat->indice_combattant],nb_combattant,combat->combattant,combat);
+                        attaque_ennemi(nb_combattant,combat);
 
                         //passif Ada ennemi, elle peut jouer 2 fois de suite (attente de 2 tour)
                         if(combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3){
-                           attaque_ennemi(combat->combattant[combat->indice_combattant],nb_combattant,combat->combattant,combat);
+                           attaque_ennemi(nb_combattant,combat);
                            attenteAdaEnnemi=2;
                         }
                         else if(combat->combattant[combat->indice_combattant]->type==3 && combat->combattant[combat->indice_combattant]->forme==3){
@@ -1187,16 +1194,14 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 }
                 for(j=0;j<nb_combattant;j++){
                     //passif d'Alex en mode cauchemar, si il meurt il peut ressuciter une fois
-                    if(combat->combattant[j]->camp==0 && alexMort==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0 && combat->combattant[j]->forme==3 ){
+                    if(combat->combattant[j]->camp==0 && alexMort==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0  && combat->combattant[j]->mort==0 && map->Nightmare ){
                         combat->combattant[j]->pv=combat->combattant[j]->pvMax;
-                        combat->combattant[j]->mort=0;
                         alexMort=1;
                     }
                 
                     //passif d'Alex ennemi, si il meurt il peut ressuciter une fois
-                    if(combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0){
+                    if(combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0 && combat->combattant[j]->forme==3 ){
                         combat->combattant[j]->pv=combat->combattant[j]->pvMax;
-                        combat->combattant[j]->mort=0;
                         alexMortEnnemi=1;
                     }
                 }
@@ -1254,6 +1259,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             combat->indice_combattant=0;
             combat->num_tour++;
 
+
             SDL_Delay(100);
             if(combat->nb_point<6){
                 (combat->nb_point)++;
@@ -1272,6 +1278,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                             map->Nightmare=0;
                             pp->Nightmare=0;
                             pp->NightP=pp->NightMax/2;
+                            map->argent+=10;
                         }
                         //vide la barre de cauchemar
                         else{
@@ -1290,8 +1297,15 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         //SDL_RenderPresent(renderer);
         *ennemi = copieEnnemi;
         for(i=0;i<combat->nb_allie;i++){
+            tabAllie[i]->mort=pp->equipe[i]->mort ;
+            tabAllie[i]->pv=pp->equipe[i]->pv ;
+            if(tabAllie[i]->pv>tabAllie[i]->pvMax){
+                tabAllie[i]->pv = tabAllie[i]->pvMax;
+            }
             *pp->equipe[i] = *tabAllie[i];
+
         }
+        printf("%d %d\n",pp->equipe[0]->mort,tabAllie[0]->mort);
         ennemi->combat=0;
         free(combat);
         
@@ -1391,7 +1405,6 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
     SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
     combat->indice_allie=0;
     while(jouer){
-        
         while(combat->allie[combat->indice_allie]->mort==1){
             if(combat->indice_allie<combat->nb_allie){
                 combat->indice_allie++;
@@ -1399,19 +1412,24 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
             else{
                 combat->indice_allie=0;
             }
+                       
         }
 
         affichage_combat(we,he,renderer,combat,1,personnage,map);
         while (SDL_PollEvent(&event) != 0 ) {
 
             if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
-                if(combat->indice_allie>=(allie-1)){
+                if(combat->indice_allie>=(combat->nb_allie-1)){
                     combat->indice_allie=0;
+                    }
+                    else{
+                        combat->indice_allie++;
+                    }
                 }
-                else{
-                    combat->indice_allie++;
-                }
-            }
+
+             
+                
+            
             if(event.type == SDL_MOUSEBUTTONDOWN ){
 
                 if((r_ATQ1.x<=event.button.x) && (r_ATQ1.x+r_ATQ1.w>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
@@ -1422,9 +1440,10 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
                     jouer=0;
                 }
             
+            }
         }
+
     }
-}
 }
 
 
