@@ -150,7 +150,6 @@ int afficher_texture(grille_t grille, SDL_Renderer *renderer){
 }
 
 int creer_map(map_t * map){
-    FILE * file;
     int x,y;
     int cpt_z2,cpt_z3,cpt_z4,cpt_z5;
     int choix,choix2;
@@ -453,8 +452,16 @@ int creer_map(map_t * map){
             map->tabMap[2][0].nZone=5;
         }
     }
+    
+    return (sauvegarde_map(map));
 
+}
+
+int sauvegarde_map(map_t * map){
     //Sauvegarde de la map dans un fichier
+    FILE * file;
+    int x,y;
+
     file=fopen("save/map.txt","w");
     if(file){
         for(x=0;x<ROWS;x++){
@@ -482,21 +489,19 @@ int creer_map(map_t * map){
 }
 
 int creer_map_layout(map_t * map){
-    int x,y;
-    int choix,choix2;
+    int choix;
     srand( time( NULL ) );
-    char * namefile = malloc(40);
 
     load_layout(&map->tabMap[5][5],"layout/layout2_1.txt");
-    load_layout(&map->tabMap[0][5],"layout/layout4_1.txt");
+    load_layout(&map->tabMap[5][0],"layout/layout4_1.txt");
 
     //Zone 2 sous marine
-    load_layout(&map->tabMap[5][4],"layout/layout2_2"); //Entrée boss zone 2
+    load_layout(&map->tabMap[5][4],"layout/layout2_2.txt"); //Entrée boss zone 2
 
     if(map->tabMap[5][3].nZone == 2){
         if(map->tabMap[4][3].nZone == 2){
             if(map->tabMap[5][2].nZone == 2){
-                choix2=rand() % 2;
+                choix=rand() % 2;
                 if(choix == 1){
                     //Paire [5][2]/[5][3]
                     load_layout(&map->tabMap[5][2],"layout/layout2_3.txt");
@@ -532,7 +537,7 @@ int creer_map_layout(map_t * map){
         }else{
             load_layout(&map->tabMap[5][3],"layout/layout2_5.txt"); //tout seul
             //zone 4
-            choix2=rand() % 2;
+            choix=rand() % 2;
             if(choix == 1){
                 //Paire [4][2]/[4][3]
                 load_layout(&map->tabMap[5][2],"layout/layout4_5.txt"); //tout seul
@@ -590,21 +595,41 @@ int creer_map_layout(map_t * map){
         load_layout(&map->tabMap[3][1],"layout/layout4_10.txt");
     }
 
+    //Layout transition foret grotte
     if(map->tabMap[2][2].nZone==1){
         if(map->tabMap[2][0].nZone==4){
-            load_layout(&map->tabMap[2][1],"layout/layout4_11.txt");
-            load_layout(&map->tabMap[2][1],"layout/layout4_12.txt"); //Transition zone grotte
+            load_layout(&map->tabMap[2][1],"layout/layout4_11.txt"); //Transition zone spawn
+            load_layout(&map->tabMap[2][0],"layout/layout4_12.txt"); //Transition zone grotte
+            load_layout(&map->tabMap[1][0],"layout/layout5_4.txt"); //Transition zone foret
+            load_layout(&map->tabMap[1][1],"layout/layout5_3.txt"); //Carrefour
         }
         else{
             load_layout(&map->tabMap[2][1],"layout/layout4_13.txt"); //Transition zone grotte et zone spawn
+            load_layout(&map->tabMap[2][0],"layout/layout5_6.txt"); //Cul de sac
+            load_layout(&map->tabMap[1][1],"layout/layout5_4.txt"); //Transition zone foret
+            load_layout(&map->tabMap[1][0],"layout/layout5_3.txt"); //Carrefour
+
         }
         
     }
     else if(map->tabMap[2][1].nZone==4){
-        load_layout(&map->tabMap[3][1],"layout/layout4_11.txt");
+        load_layout(&map->tabMap[2][1],"layout/layout4_12.txt"); //Transition zone grotte
+        load_layout(&map->tabMap[2][2],"layout/layout5_4.txt"); //Cul de sac
+        load_layout(&map->tabMap[1][1],"layout/layout5_4.txt"); //Transition zone foret
+        load_layout(&map->tabMap[1][0],"layout/layout5_3.txt"); //Carrefour
     }
     else{
-        load_layout(&map->tabMap[3][1],"layout/layout5_3.txt"); //Grotte simple
+        load_layout(&map->tabMap[2][0],"layout/layout4_12.txt"); //Transition zone grotte
+        load_layout(&map->tabMap[1][0],"layout/layout5_4.txt"); //Transition zone foret
+        load_layout(&map->tabMap[1][1],"layout/layout5_3.txt"); //Carrefour
+        if(map->tabMap[2][2].nZone==5){
+            load_layout(&map->tabMap[2][2],"layout/layout5_5.txt"); //Semi cul de sac
+            load_layout(&map->tabMap[2][1],"layout/layout5_5.txt"); //Semi cul de sac
+        }
+        else{
+            load_layout(&map->tabMap[2][1],"layout/layout5_6.txt"); //Cul de sac
+        }
+            
     }
 
     //Choix layout entrée sous-marine
@@ -646,6 +671,8 @@ int creer_map_layout(map_t * map){
     }
 
     //Gestion bloc spawn et le cas particulier où le manoir n'est pas dans le coin haut droit
+    load_layout(&map->tabMap[0][0],"layout/layout5_7.txt");
+
     if(map->tabMap[3][2].nZone==1){
         load_layout(&map->tabMap[2][2],"layout/layout3_3.txt"); //Chemin vers le manoir transition haute et transition basse zone 1
         load_layout(&map->tabMap[1][2],"layout/layout3_4.txt"); //Chemin transition basse et entrée vers le manoir transition droite
@@ -656,6 +683,11 @@ int creer_map_layout(map_t * map){
 
         load_layout(&map->tabMap[1][5],"layout/layout2_16.txt"); //Bordure eau à droite
         load_layout(&map->tabMap[0][5],"layout/layout2_18.txt"); //Bordure eau haut droite
+
+        load_layout(&map->tabMap[3][2],"layout/layout1_1.txt"); //Spawn avec transition dans 3 zones, fermé en bas
+        load_layout(&map->tabMap[3][3],"layout/layout2_15.txt"); //Transition zone 1 de la plage
+        load_layout(&map->tabMap[2][3],"layout/layout2_17.txt"); //Full sable
+
     }
 
     else{
@@ -668,30 +700,94 @@ int creer_map_layout(map_t * map){
 
         //Gestion layout zone chemin vers le manoir et bloc spawn pour un spawn en [2][2]
         if(map->tabMap[2][2].nZone==1){
-            load_layout(&map->tabMap[2][2],"layout/layout1_1.txt"); // Spawn avec transition dans 3 zones, fermé en bas
-
             load_layout(&map->tabMap[1][2],"layout/layout3_7.txt"); //Chemin vers le manoir transition droite et transition basse zone 1
             load_layout(&map->tabMap[1][3],"layout/layout3_8.txt"); //Chemin transition gauche et entrée vers le manoir transition droite
+
+            load_layout(&map->tabMap[2][2],"layout/layout1_1.txt"); //Spawn avec transition dans 3 zones, fermé en bas
+            load_layout(&map->tabMap[2][3],"layout/layout2_15.txt"); //Transition zone 1 de la plage
+            if(map->tabMap[3][2].nZone==2){
+                load_layout(&map->tabMap[3][2],"layout/layout2_20.txt"); //Cul de sac plage
+                load_layout(&map->tabMap[3][3],"layout/layout2_17.txt"); //Full plage
+            }
+            else{
+                load_layout(&map->tabMap[3][2],"layout/layout4_6.txt"); //Cul de sac foret
+                load_layout(&map->tabMap[3][3],"layout/layout2_20.txt"); //Cul de sac plage
+            }
         }
         //Gestion layout zone chemin vers le manoir et bloc spawn pour un spawn en [2][3]
         else if(map->tabMap[2][3].nZone==1){
             load_layout(&map->tabMap[1][3],"layout/layout3_3.txt"); //Chemin vers le manoir transition haute et transition basse zone 1
             load_layout(&map->tabMap[0][3],"layout/layout3_4.txt"); //Chemin transition basse et entrée vers le manoir transition droite
+
+            load_layout(&map->tabMap[2][3],"layout/layout1_1.txt"); //Spawn avec transition dans 3 zones, fermé en bas
+            load_layout(&map->tabMap[2][2],"layout/layout4_11.txt"); //Transition zone 1 de la foret
+            load_layout(&map->tabMap[3][2],"layout/layout4_10.txt"); //Foret quelconque
+            if(map->tabMap[3][3].nZone==2){
+                load_layout(&map->tabMap[3][3],"layout/layout2_20.txt"); //Cul de sac plage
+            }
+            else{
+                load_layout(&map->tabMap[3][3],"layout/layout4_6.txt"); //Cul de sac foret
+            }
         }
         //Gestion layout zone chemin vers le manoir et bloc spawn pour un spawn en [3][3]
-        if(map->tabMap[2][2].nZone==1){
+        else if(map->tabMap[3][3].nZone==1){
             load_layout(&map->tabMap[2][3],"layout/layout3_3.txt"); //Chemin vers le manoir transition haute et transition basse zone 1
             load_layout(&map->tabMap[1][3],"layout/layout3_4.txt"); //Chemin transition gauche et entrée vers le manoir transition droite
+
+            load_layout(&map->tabMap[3][3],"layout/layout1_1.txt"); //Spawn avec transition dans 3 zones, fermé en bas
+            load_layout(&map->tabMap[3][2],"layout/layout4_11.txt"); //Transition zone 1 de la foret
+            load_layout(&map->tabMap[2][2],"layout/layout5_6.txt"); //Cul de sac
         }
-        
     }
-    
 
+    //Gestion transition manoir grotte en fonction du point de spawn
+    if(map->tabMap[0][3].nZone==5){
+        load_layout(&map->tabMap[0][3],"layout/layout5_1.txt"); //Zone boss
+        load_layout(&map->tabMap[0][2],"layout/layout5_2.txt"); //Zone entrée boss
+        load_layout(&map->tabMap[0][1],"layout/layout5_3.txt"); //Carrefour
+    }
+    else{
+        load_layout(&map->tabMap[0][2],"layout/layout5_1.txt"); //Zone boss
+        load_layout(&map->tabMap[0][1],"layout/layout5_2.txt"); //Zone entrée boss
+    }
+    if(map->tabMap[1][2].nZone==5){
+        if(map->tabMap[2][2].nZone==5){
+            if(map->tabMap[0][3].nZone==5)
+                load_layout(&map->tabMap[1][2],"layout/layout5_3.txt"); //Carrefour
+            else{
+                load_layout(&map->tabMap[1][2],"layout/layout5_8.txt"); //Coin haut droit
+            }
+        }else{
+            load_layout(&map->tabMap[1][2],"layout/layout5_6.txt"); //Cul de sac
+        }
+    } 
+    return (sauvegarde_map_layout(map));
+}
 
+int sauvegarde_map_layout(map_t * map){
+    //Sauvegarde de la map des layouts dans un fichier
+    FILE * file;
+    int x,y;
 
-
-
-    free(namefile);
+    file=fopen("save/maplayout.txt","w");
+    if(file){
+        for(x=0;x<ROWS;x++){
+            for(y=0;y<COLUMNS;y++){
+                fprintf(file,"%d",map->tabMap[x][y].nrlayout);
+                if(y!=COLUMNS-1){
+                    fprintf(file," ");
+                }
+                
+            }
+            fprintf(file,"\n");
+        }
+        fclose(file);
+        return 0;
+    }
+    else{
+        printf("Fichier inexistant\n");
+        return 1;
+    }
     return 0;
 }
 
@@ -756,7 +852,16 @@ int load_layout(carte_t *c, char *namefile) {
     int i = 0, j = 0;
     int res; // Pour stocker le résultat de fscanf
     int len = strlen(namefile);
-    c->nrlayout = atoi(namefile[len-1]);
+    char digit[2];
+
+    if(namefile[len-6]=='_'){
+        c->nrlayout = atoi(&namefile[len-5]);
+    }
+    else{
+        digit[0]=namefile[len-6];
+        digit[1]=namefile[len-5];
+        c->nrlayout = atoi(digit);
+    }
 
     if (file) {
         while ((res = fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle

@@ -34,6 +34,7 @@ struct pnj_s{
 };
 
 obj_t init_obj(case_t * c,int indText,int type,...);
+int load_obj(carte_t *c, char *namefile);
 void affObj(SDL_Renderer *renderer,obj_t o,map_t map);
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte);
 ennemi_t init_ennemi(char * nom,char * en_po,char * sprite);
