@@ -22,6 +22,14 @@ obj_t init_obj(case_t * c,int indText,int type,...){
             n = 1;
             newObj.cas->etat = 0;
             break;
+        case 3 : //cas d'un objet avec contenu avec collision
+            n = 1;
+            newObj.cas->etat = 0;
+            break;
+        case 4 : //cas d'un objet avec contenu sans collision
+            n = 1;
+            newObj.cas->etat = 1;
+            break;
         default://cas d'un objet inconnu
             n = -1;
             break;
