@@ -40,7 +40,7 @@ struct personnage_equipe{
 
 struct personnage{
     //coordonées du personnage et taille dans un rect
-    carte_t * carte;
+    //carte_t * carte;
     case_t * c;
     SDL_Rect r;//{x,y,w,h}
     int d; //direction orienté{N,E,S,W}{0,1,2,3}
@@ -59,7 +59,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event);
 
 void col_p(SDL_Rect * obj_r,p_mv * pp);
 
-p_mv initp(carte_t * carte,case_t * c,map_t * map);
+p_mv initp(case_t * c);
 
 void desctruction_p_eq(p_mv * p);
 

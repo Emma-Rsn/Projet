@@ -30,7 +30,7 @@ struct carte_s{
     Uint8 a;
     int nZone;
     int nbObj;
-    int nrlayout;
+    int nrlayout; //numero du layout charger
     obj_t tabObj[20];
     grille_t grille; //quadrillage des cases dans une seule carte
 };

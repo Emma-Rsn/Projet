@@ -65,6 +65,7 @@ int main(){
     }
     SDL_Surface * logo = IMG_Load("logo.png");
     SDL_SetWindowIcon(window,logo);
+    SDL_FreeSurface(logo);
     //mode de transparence
     SDL_BlendMode blend = SDL_BLENDMODE_BLEND;
     SDL_SetRenderDrawBlendMode(renderer, blend);
@@ -136,9 +137,7 @@ int main(){
     map.tabMap[2][3].nbObj = 1;
 
     int tN = 0;
-
-    load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
-    printf("la misere4 %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
+    //load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
 
     //fin temporaire
 
@@ -153,7 +152,7 @@ int main(){
 
     //creation personnage
 	p_mv Alex;
-	Alex = initp(cartec,&(cartec->grille.tabGrille[xp][yp]),&map);
+	Alex = initp(&(cartec->grille.tabGrille[xp][yp]));
     Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,0,10,0);
     Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,0,8,0);
     Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
@@ -192,7 +191,6 @@ int main(){
 
     //menu d'ecran titre
     menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement);
-
     //boucle du programme
     while (*run) {
         //zone d'evenement
@@ -285,9 +283,7 @@ int main(){
 
         //Affiche un personnage
         affp(pAlex,renderer,event);
-        printf("ojrgjfggj\n");
         affTabObj(renderer,map,cartec);
-        printf("bonjour\n");
 
         if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
 
@@ -304,13 +300,10 @@ int main(){
 
         //afficher map
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
-        printf("boniour\n");
         
         //Commence un combat
-        printf("la misere666 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
         combat_carte(cartec,wEcran,hEcran,event,renderer,pAlex,&map);
 
-        printf("bonjjjjjjjjjjjjour\n");
 
 
         //Partie perdu
@@ -349,7 +342,7 @@ int main(){
 
     dest_pnj(pAlex2);
     desctruction_p_eq(pAlex);
-    //dest_ennemi(&Slime);
+    dest_ennemi(&Slime1);
     //dest_ennemi(&Slime1);
     //dest_ennemi(&Boss);
     free(wEcran);

@@ -584,18 +584,22 @@ void desctruction_p_eq(p_mv * p){
 }
 
 //construit un point
-p_mv initp(carte_t * carte,case_t * c,map_t * map){
+p_mv initp(case_t * c){
     p_mv p;
-    p.carte = carte;
+    //p.carte = carte;
+    //printf("letest0.4 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     p.c = c;
     p.r = p.c->Rectangle;
+    //printf("letest1 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     p.d=0;
     p.e=0;
     p.nom="alex";
     p.Nightmare = 0;
+    //printf("letest1.5 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     p.NightMax = 100;
     p.NightP = 0;
     int i ;
+    //printf("letest2 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }

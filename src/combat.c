@@ -928,8 +928,7 @@ int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
 
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     int i;
-    printf("la misere44 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
-    for(i=0;i<=cartec->nbObj;i++){
+    for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i].typeObj==2){
             debut_combat(event,cartec->tabObj[i].tabObj[0],pp,cartec->tabObj[i].cas);
         }
@@ -991,11 +990,8 @@ combat_t * init_combat(){
 
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map){
     int i;
-    printf("la misere444 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
-    for(i=0;i<=cartec->nbObj;i++){
+    for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i].typeObj==2 ){
-            printf("bonjouuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuur\n");
-            printf("la misere2 %d\n",((ennemi_t *)(cartec->tabObj[i].tabObj[0]))->combat);
                 combat(we,he,event,renderer,cartec->tabObj[i].tabObj[0],pp,map);
 
         
@@ -1016,9 +1012,7 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
 
 //fonction qui gere le combat avec un ennemi
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map){
-    printf("la misere %d\n",ennemi->combat);
     if(ennemi->combat){
-        printf("je ne suis pas\n");
          
 
 
@@ -1310,9 +1304,11 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             *pp->equipe[i] = *tabAllie[i];
 
         }
-        printf("%d %d\n",pp->equipe[0]->mort,tabAllie[0]->mort);
         ennemi->combat=0;
         free(combat);
+        for(i=0;i<allie;i++){
+            desctruction_combattant(tabAllie[i]);
+        }
         
     }
     return 0;
