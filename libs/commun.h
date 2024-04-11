@@ -24,14 +24,18 @@
 #define TAILLE_CASE 64
 
 //nombre de frame par secondes voulu
-#define FPS 30
+#define FPS 60
+#define BONUS_EQUIPE_N 3
+#define BONUS_ZONE_N 1
+#define PLUS_BONUS_EQUIPE 0.5
+#define PLUS_BONUS_ZONE 1
+
 
 typedef struct obj_s obj_t;
 typedef struct combat_s combat_t;
 typedef struct combattant_s combattant_t;
 typedef struct ennemi_s ennemi_t;
 typedef struct pnj_s pnj_t;
-typedef struct personnage_equipe p_eq;
 typedef struct personnage p_mv;
 
 typedef struct case_s case_t;

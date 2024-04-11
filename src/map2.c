@@ -103,6 +103,10 @@ map_t creation_map (int w, int h){
     int i,j;
     m.tabTexture = NULL;
     m.Nightmare = 0;
+    m.nvEquipe=2;
+    m.bonusEquipeN=BONUS_EQUIPE_N;
+    m.bonusZoneN=BONUS_ZONE_N;
+    m.argent=0;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);
@@ -864,7 +868,7 @@ int load_layout(carte_t *c, char *namefile) {
     }
 
     if (file) {
-        while ((res = fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
+        while ((fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
             if (input != '\n') {
                 if (i < LONG && j < LARG) { 
                     c->grille.tabGrille[i][j].ntexture = input - '0';
@@ -987,23 +991,28 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
         {
         case 1:
             creation_tab_texture(map,renderer,1,0);
-            map->nbN = 14;
+            map->nbN = 15;
+            map->nvZone=1;
             break;
         case 2:
             creation_tab_texture(map,renderer,2,0);
-            map->nbN = 14;
+            map->nbN = 15;
+            map->nvZone=2;
             break;
         case 3:
             creation_tab_texture(map,renderer,3,0);
             map->nbN = 0;
+            map->nvZone=3;
             break;
         case 4:
             creation_tab_texture(map,renderer,4,0);
             map->nbN = 0;
+            map->nvZone=4;
             break;
         case 5:
             creation_tab_texture(map,renderer,5,0);
             map->nbN = 0;
+            map->nvZone=5;
             break;
         
         default:

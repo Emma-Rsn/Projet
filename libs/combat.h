@@ -19,8 +19,6 @@ struct combattant_s{
     int pv;
     int pvMax;
     int vitesse;
-    char * nomATQ1;
-    char * nomATQspe; 
     int mort; //0 vivant, 1 mort
     int camp; //0 alliee, 1 ennemi
     int temps_recharge;
@@ -29,6 +27,8 @@ struct combattant_s{
     int indice_sprite;
     int type;
     int status; //0 aucun effet ,1 passe leur tour
+    int puissance;
+    int forme; //0=slime faible,1=ennemi moyen, 2=ennemi fort, 3=boss alliee corrompu
 };
 
 struct combat_s{
@@ -51,12 +51,12 @@ int compare_vitesse(const combattant_t * const combattant1,const combattant_t * 
 int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c);
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map);
 int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map);
-int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *combattant[]);
+int attaque_ennemi(int nb_combattant,combat_t * combat);
 int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rect r_DEcran,combat_t *combat,map_t * map);
 int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat);
 void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer,SDL_Texture *Texture,SDL_Texture *Texture2);
 void desctruction_combattant(combattant_t * combattant);
-combattant_t *init_combattant(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp,int indice_portrait,int indice_sprite,int type);
+combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme);
 void aff(combattant_t * combattant);
 int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,int etat,p_mv * personnage,map_t * map);
 combat_t * init_combat();
@@ -65,4 +65,5 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
 void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map);
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp);
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map);
+int forme_attaque(int nb_combattant,combat_t * combat);
 #endif

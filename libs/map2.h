@@ -44,6 +44,11 @@ struct map_s{
     int zoneChargee;
     int Nightmare;
     int nbN;
+    int nvZone;
+    int nvEquipe;
+    float bonusEquipeN;
+    int bonusZoneN;
+    int argent;
 };
 
 case_t creation_case();
