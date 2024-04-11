@@ -543,10 +543,9 @@ int load_layout(carte_t *c, char *namefile) {
     file = fopen(namefile, "r");
     char input;
     int i = 0, j = 0;
-    int res; // Pour stocker le résultat de fscanf
 
     if (file) {
-        while ((res = fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
+        while ((fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
             if (input != '\n') {
                 if (i < LONG && j < LARG) { 
                     c->grille.tabGrille[i][j].ntexture = input - '0';
