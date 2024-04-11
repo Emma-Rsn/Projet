@@ -111,9 +111,9 @@ int main(){
     load_layout(&(map.tabMap[5][5]),"save/layoutbeach.txt");
 
     //temporaire
-    ennemi_t Slime1 = init_ennemi("Slime1",10,11,&map,100,100,0,2,20);
+    ennemi_t Slime1 = init_ennemi("Slime1",10,11,&map,100,100,0,2,20,0);
 
-    Slime1.combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,1,10);
+    Slime1.combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,1,10,0);
     ennemi_t * PSlime1 = &Slime1;
     obj_t ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,PSlime1);
     map.tabMap[5][5].tabObj[0] = ObjSlime1;
@@ -139,9 +139,9 @@ int main(){
     //creation personnage
 	p_mv Alex;
 	Alex = initp(cartec,&(cartec->grille.tabGrille[xp][yp]),&map);
-    Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,map.nvEquipe,0,10);
-    Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,map.nvEquipe,0,8);
-    Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,map.nvEquipe,3,14);
+    Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,map.nvEquipe,0,10,0);
+    Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,map.nvEquipe,0,8,0);
+    Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,map.nvEquipe,3,14,0);
 	p_mv * pAlex = &Alex;
 
     
@@ -154,12 +154,20 @@ int main(){
     insertion(Alex2.dial, "Test");
 
     //creation ennemi 
-    ennemi_t Slime = init_ennemi("Slime1",11,10,&map,100,100,0,2,17);
-    Slime.combattant[1] = init_combattant("Lute",100,10,1,11,10,0,1,1,5);
+    ennemi_t Boss = init_ennemi("Alex",27,27,&map,100,100,0,2,17,4);
+    Boss.combattant[1] = init_combattant("Lute",100,10,1,11,10,1,1,1,5,0);
+    Boss.combattant[2] = init_combattant("Lute2",100,10,1,11,10,2,1,1,5,0);
+    Boss.combattant[3] = init_combattant("Lute3",100,10,1,11,10,4,1,1,5,0);
+    ennemi_t * PBoss = &Boss;
+    obj_t ObjBoss = init_obj(&map.tabMap[3][3].grille.tabGrille[2][4],27,2,PBoss);
+    map.tabMap[3][3].tabObj[0] = ObjBoss;
+
+    ennemi_t Slime = init_ennemi("Slime",11,10,&map,100,100,0,2,17,0);
+    Slime.combattant[1] = init_combattant("Lute",100,10,1,11,10,0,1,1,5,0);
     ennemi_t * PSlime = &Slime;
     obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],10,2,PSlime);
-    map.tabMap[3][3].tabObj[0] = ObjSlime;
-    map.tabMap[3][3].nbObj = 1;
+    map.tabMap[3][3].tabObj[1] = ObjSlime;
+    map.tabMap[3][3].nbObj = 2;
     
 
     //variable indique l'etat du prog
@@ -340,6 +348,9 @@ int main(){
 
     dest_pnj(pAlex2);
     desctruction_p_eq(pAlex);
+    dest_ennemi(&Slime);
+    dest_ennemi(&Slime1);
+    dest_ennemi(&Boss);
     free(wEcran);
     free(hEcran);
     TTF_Quit();

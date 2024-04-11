@@ -59,7 +59,7 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
 *\param type type d'attaque special (0=attaque un ennemi,1=saute le tour d'un ennemi,2=soigne un ennemi)
 *\brief fonction qui creer le combattant 
 */
-combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int niveau,int temps_recharge_max,int puissance){
+combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int niveau,int temps_recharge_max,int puissance,int forme){
     combattant_t * combattant=malloc(sizeof(combattant_t));
     combattant->nom=nom;
     combattant->pv=pv*niveau;
@@ -74,6 +74,7 @@ combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_p
     combattant->indice_sprite=indice_sprite;
     combattant->type=type;
     combattant->status=0;
+    combattant->forme=forme;
     return combattant;
 }
 
@@ -304,7 +305,43 @@ int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *co
         perso=(int)1+rand()%(nb_combattant);
 
     }while(((combattant[perso-1]->camp)==1) || (combattant[perso-1]->pv<=0));  
-    combattant[perso-1]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+
+    //attaque special des ennemis
+    if(combat->combattant[combat->indice_combattant]->temps_recharge==combat->combattant[combat->indice_combattant]->temps_recharge_max){
+        //Attaque puissante sur un allie
+        if(combat->combattant[combat->indice_combattant]->type==0){
+            combattant[perso-1]->pv-=combat->combattant[combat->indice_combattant]->puissance*2;
+
+        }
+        //soigne un ennemi au hasard
+        else if (combat->combattant[combat->indice_combattant]->type==2){
+            //recupere l'indice d'un ennemi pour le soigner
+            do{
+                perso=(int)1+rand()%(nb_combattant);
+
+            }while(((combattant[perso-1]->camp)==0) || (combattant[perso-1]->pv<=0));
+            combattant[perso-1]->pv+=combat->combattant[combat->indice_combattant]->pvMax*0.1;
+
+        }
+        //Fait passer le tour d'un allie
+        else if (combat->combattant[combat->indice_combattant]->type==1){
+            combattant[perso-1]->status=1;
+        }
+        //fait des degats a tous les allies
+        else if(combat->combattant[combat->indice_combattant]->type==3){
+            int i;
+            for(i=0;i<combat->nb_allie;i++){
+                combat->allie[i]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+
+            }
+        }
+        combat->combattant[combat->indice_combattant]->temps_recharge=0;
+    //attaque de base des ennemis
+    }else{
+        combattant[perso-1]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+        combat->combattant[combat->indice_combattant]->temps_recharge++;
+    }
+    
 
 /*
     //enleve des pv au personnages par rapport a ses pv 
@@ -682,8 +719,8 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                 for(k=0;k<combat->nb_allie;k++){
                      if(combat->allie[k]->mort==0)
                         combat->allie[k]->pv+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
-                    if(combat->allie[k]->pv>combat->allie[k]->pvMax)
-                    combat->allie[k]->pv=combat->allie[k]->pvMax;
+                    /*if(combat->allie[k]->pv>combat->allie[k]->pvMax)
+                    combat->allie[k]->pv=combat->allie[k]->pvMax;*/
                 }
             }
 
@@ -714,7 +751,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                         }
                         else if(((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)) && (combattant->temps_recharge>=combattant->temps_recharge_max)){
                             if(combattant->type==0){
-                                ennemi->combattant[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
+                                ennemi->combattant[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult*2;
                             }
                             else if(combattant->type==1){
                                 combat->ennemi[combat->indice_ennemi]->status=1;
@@ -760,9 +797,6 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                                 combat->mult=1;
                             }
                             
-                        }
-                        if(ennemi->combattant[combat->indice_ennemi]->pv<0){
-                            ennemi->combattant[combat->indice_ennemi]->pv=0;
                         }
                         
                     }
@@ -900,6 +934,7 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map){
 
     if(ennemi->combat){
+         
 
 
         int i=0,allie=0;
@@ -911,15 +946,18 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
         ennemi_t copieEnnemi;
         copieEnnemi=*ennemi;
+        
 
     
-        while(ennemi->combattant[i]!=NULL){
+        while(ennemi->combattant[i]!=NULL && i<4){
             ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*map->nvZone;
             ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*map->nvZone;
             i++;
         }
 
         combat_t * combat=init_combat();
+
+       
 
         //compte le nombre d'allie dans l'equipe
         for (i=0;i<4;i++){
@@ -1087,6 +1125,13 @@ void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){
 
 void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map_t * map){
     //Variable PV
+
+    if(combattant->pv<0){
+        combattant->pv=0;
+    }
+    else if (combattant->pv>combattant->pvMax){
+        combattant->pv=combattant->pvMax;
+    }
     int p = (144*combattant->pv)/combattant->pvMax;
 
     //chargement de la police d'écriture

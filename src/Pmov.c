@@ -573,7 +573,7 @@ p_mv initp(carte_t * carte,case_t * c,map_t * map){
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
-    p.equipe[0]=init_combattant("alex",100,50,0,13,12,0,map->nvEquipe,2,15);
+    p.equipe[0]=init_combattant("alex",100,50,0,13,12,0,map->nvEquipe,2,15,0);
     return p;
 }
 

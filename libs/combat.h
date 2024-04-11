@@ -28,6 +28,7 @@ struct combattant_s{
     int type;
     int status; //0 aucun effet ,1 passe leur tour
     int puissance;
+    int forme; //0=slime faible,1=ennemi moyen, 2=ennemi fort, 3=boss alliee corrompu
 };
 
 struct combat_s{
@@ -55,7 +56,7 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
 int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat);
 void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer,SDL_Texture *Texture,SDL_Texture *Texture2);
 void desctruction_combattant(combattant_t * combattant);
-combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int niveau,int temps_recharge_max,int puissance);
+combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int niveau,int temps_recharge_max,int puissance,int forme);
 void aff(combattant_t * combattant);
 int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,int etat,p_mv * personnage,map_t * map);
 combat_t * init_combat();

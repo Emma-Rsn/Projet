@@ -46,7 +46,7 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     }
 }
 
-ennemi_t init_ennemi(char * nom,int indice_portrait,int indice_sprite,map_t * map,int pv,int vitesse,int type,int temps_recharge_max,int puissance){
+ennemi_t init_ennemi(char * nom,int indice_portrait,int indice_sprite,map_t * map,int pv,int vitesse,int type,int temps_recharge_max,int puissance,int forme){
     ennemi_t en;
     en.nom = malloc(strlen(nom)+1);
     strcpy(en.nom,nom);
@@ -61,10 +61,28 @@ ennemi_t init_ennemi(char * nom,int indice_portrait,int indice_sprite,map_t * ma
     for(i=0;i<4;i++){
         en.combattant[i]=NULL;
     }
-    en.combattant[0]=init_combattant(nom,en.pv,en.vitesse,1,indice_portrait,indice_sprite,type,1,en.temps_recharge_max,puissance);
+    en.combattant[0]=init_combattant(nom,en.pv,en.vitesse,1,indice_portrait,indice_sprite,type,1,en.temps_recharge_max,puissance,forme);
     en.indice_portrait=indice_portrait;
     en.indice_sprite=indice_sprite;
+    en.forme=forme;
     return en;
+}
+
+
+void dest_ennemi(ennemi_t * en){
+    int i;
+    int nb_ennemi=0;
+    for (i=0;i<4;i++){
+        if(en->combattant[i]!=NULL){
+            nb_ennemi++;
+        }
+    }
+
+    for(i=0;i<nb_ennemi;i++){
+        desctruction_combattant(en->combattant[i]); 
+    }
+
+    free(en->nom);
 }
 
 
