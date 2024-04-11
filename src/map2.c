@@ -488,10 +488,9 @@ int creer_map_layout(map_t * map){
     char * namefile = malloc(40);
 
     load_layout(&map->tabMap[5][5],"layout/layout2_1.txt");
-    load_layout(&map->tabMap[0][0],"layout/layout5_1.txt");
     load_layout(&map->tabMap[0][5],"layout/layout4_1.txt");
 
-    //Zone 2
+    //Zone 2 sous marine
     load_layout(&map->tabMap[5][4],"layout/layout2_2"); //Entrée boss zone 2
 
     if(map->tabMap[5][3].nZone == 2){
@@ -591,6 +590,23 @@ int creer_map_layout(map_t * map){
         load_layout(&map->tabMap[3][1],"layout/layout4_10.txt");
     }
 
+    if(map->tabMap[2][2].nZone==1){
+        if(map->tabMap[2][0].nZone==4){
+            load_layout(&map->tabMap[2][1],"layout/layout4_11.txt");
+            load_layout(&map->tabMap[2][1],"layout/layout4_12.txt"); //Transition zone grotte
+        }
+        else{
+            load_layout(&map->tabMap[2][1],"layout/layout4_13.txt"); //Transition zone grotte et zone spawn
+        }
+        
+    }
+    else if(map->tabMap[2][1].nZone==4){
+        load_layout(&map->tabMap[3][1],"layout/layout4_11.txt");
+    }
+    else{
+        load_layout(&map->tabMap[3][1],"layout/layout5_3.txt"); //Grotte simple
+    }
+
     //Choix layout entrée sous-marine
     choix=rand()%2;
     if(choix==0){
@@ -631,8 +647,8 @@ int creer_map_layout(map_t * map){
 
     //Gestion bloc spawn et le cas particulier où le manoir n'est pas dans le coin haut droit
     if(map->tabMap[3][2].nZone==1){
-        load_layout(&map->tabMap[2][2],"layout/layout3_3.txt"); //Chemin vers le manoir
-        load_layout(&map->tabMap[1][2],"layout/layout3_4.txt"); //Chemin et entrée vers le manoir
+        load_layout(&map->tabMap[2][2],"layout/layout3_3.txt"); //Chemin vers le manoir transition haute et transition basse zone 1
+        load_layout(&map->tabMap[1][2],"layout/layout3_4.txt"); //Chemin transition basse et entrée vers le manoir transition droite
         load_layout(&map->tabMap[1][3],"layout/layout3_5.txt"); //Manoir 
         load_layout(&map->tabMap[1][4],"layout/layout3_6.txt"); //Manoir cul sac
         load_layout(&map->tabMap[0][3],"layout/layout3_2.txt"); //Entrée du boss
@@ -642,9 +658,32 @@ int creer_map_layout(map_t * map){
         load_layout(&map->tabMap[0][5],"layout/layout2_18.txt"); //Bordure eau haut droite
     }
 
-    //Cas général
     else{
 
+        //Layout manoir
+        load_layout(&map->tabMap[1][4],"layout/layout3_5.txt"); //Manoir 
+        load_layout(&map->tabMap[1][5],"layout/layout3_6.txt"); //Manoir cul sac
+        load_layout(&map->tabMap[0][4],"layout/layout3_2.txt"); //Entrée du boss
+        load_layout(&map->tabMap[0][5],"layout/layout3_1.txt"); //Boss
+
+        //Gestion layout zone chemin vers le manoir et bloc spawn pour un spawn en [2][2]
+        if(map->tabMap[2][2].nZone==1){
+            load_layout(&map->tabMap[2][2],"layout/layout1_1.txt"); // Spawn avec transition dans 3 zones, fermé en bas
+
+            load_layout(&map->tabMap[1][2],"layout/layout3_7.txt"); //Chemin vers le manoir transition droite et transition basse zone 1
+            load_layout(&map->tabMap[1][3],"layout/layout3_8.txt"); //Chemin transition gauche et entrée vers le manoir transition droite
+        }
+        //Gestion layout zone chemin vers le manoir et bloc spawn pour un spawn en [2][3]
+        else if(map->tabMap[2][3].nZone==1){
+            load_layout(&map->tabMap[1][3],"layout/layout3_3.txt"); //Chemin vers le manoir transition haute et transition basse zone 1
+            load_layout(&map->tabMap[0][3],"layout/layout3_4.txt"); //Chemin transition basse et entrée vers le manoir transition droite
+        }
+        //Gestion layout zone chemin vers le manoir et bloc spawn pour un spawn en [3][3]
+        if(map->tabMap[2][2].nZone==1){
+            load_layout(&map->tabMap[2][3],"layout/layout3_3.txt"); //Chemin vers le manoir transition haute et transition basse zone 1
+            load_layout(&map->tabMap[1][3],"layout/layout3_4.txt"); //Chemin transition gauche et entrée vers le manoir transition droite
+        }
+        
     }
     
 
