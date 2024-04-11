@@ -854,7 +854,6 @@ int load_layout(carte_t *c, char *namefile) {
     file = fopen(namefile, "r");
     char input;
     int i = 0, j = 0;
-    int res; // Pour stocker le résultat de fscanf
     int len = strlen(namefile);
     char digit[2];
 

@@ -44,34 +44,35 @@ obj_t init_obj(case_t * c,int indText,int type,...){
 int load_obj(carte_t *c, char *namefile){
     int x,y,indText,type;
     FILE * file;
-    int i,j;
+    int i;
+
+    char nom[20];
+    int pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme;
+    int nbCombattant;
+
     file=fopen(namefile,"r");
 
     if(file){
         while(fscanf(file,"%d %d %d %d ",&x,&y,&indText,&type)!= EOF){
             switch(type){
                 case 0 :
-                    c->tabObj[c->nbObj]=init_obj(c->grille->tabGrille[x][y],indText,type);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
                     c->nbObj++; 
                     break;
                 case 1 :
-                    c->tabObj[c->nbObj]=init_obj(c->grille->tabGrille[x][y],indText,type);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
                     c->nbObj++; 
                     break;
                 case 2 :
-                    char nom[20];
-                    int pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme;
-                    int nbCombattant,i;
-                    
-                    fscanf("%s %d %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme,&nbCombattant);
+                    fscanf(file,"%s %d %d %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme,&nbCombattant);
                     
                     ennemi_t newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     
                     for(i=1;i<=nbCombattant;i++){
-                        fscanf("%s %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme);
+                        fscanf(file,"%s %d %d %d %d %d %d %d %d %d",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme);
                         newEnnemi.combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     }
-                    c->tabObj[c->nbObj]=init_obj(c->grille.tabGrille[x][y],indText,type,&newEnnemi);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,&newEnnemi);
                     c->nbObj++;
                     break;
             }
@@ -82,6 +83,7 @@ int load_obj(carte_t *c, char *namefile){
         printf("Fichier inexistant\n");
         return 1;
     }
+    return 0;
 
 
 }
@@ -99,7 +101,7 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     }
 }
 
-ennemi_t init_ennemi(char * nom,int indice_portrait,int indice_sprite,map_t * map,int pv,int vitesse,int type,int temps_recharge_max,int puissance,int forme){
+ennemi_t init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     ennemi_t en;
     en.nom = malloc(strlen(nom)+1);
     strcpy(en.nom,nom);
@@ -215,11 +217,6 @@ void pnj_dialogue (SDL_Event event,pnj_t * pnj,SDL_Renderer * renderer,int * he,
 }
 
 void dest_pnj(pnj_t * pnj){
-    int i;
-    int nb_ennemi=0;
-
-
-
     free(pnj->nom);
     liste_destruction(pnj->dial);
     SDL_FreeSurface(pnj->perso);
