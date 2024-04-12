@@ -66,4 +66,5 @@ void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map);
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp);
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map);
 int forme_attaque(int nb_combattant,combat_t * combat);
+void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie);
 #endif

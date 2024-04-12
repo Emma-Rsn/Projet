@@ -61,7 +61,7 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
 */
 combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     combattant_t * combattant=malloc(sizeof(combattant_t));
-    combattant->nom=malloc(strlen(nom));
+    combattant->nom=malloc(strlen(nom)+1);
     strcpy(combattant->nom,nom);
     combattant->pv=pv;
     combattant->pvMax=pv;
@@ -990,6 +990,7 @@ combat_t * init_combat(){
 }
 
 
+
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map){
     int i;
     for(i=0;i<cartec->nbObj;i++){
@@ -1295,26 +1296,44 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             }
         //SDL_RenderPresent(renderer);
         *ennemi = copieEnnemi;
+
         for(i=0;i<combat->nb_allie;i++){
-            tabAllie[i]->mort=pp->equipe[i]->mort ;
-            tabAllie[i]->pv=pp->equipe[i]->pv ;
-            if(tabAllie[i]->pv>tabAllie[i]->pvMax){
-                tabAllie[i]->pv = tabAllie[i]->pvMax;
-            }
-            *pp->equipe[i] = *tabAllie[i];
+
+
+            copier_combattant(pp->equipe[i], tabAllie[i]);
+            strcpy(pp->equipe[i]->nom,tabAllie[i]->nom);
+
 
         }
         ennemi->combat=0;
         for(i=0;i<combat->nb_allie;i++){
             desctruction_combattant(tabAllie[i]);
         }
-        for(i=0;i<combat->nb_ennemi;i++){
-            desctruction_combattant(tabAllie[i]);
-        }
-        free(combat);
+        desctruction_combat(combat);
         
     }
     return 0;
+}
+
+void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie){
+    combattantcopie->mort=combattant->mort ;
+    combattantcopie->pv=combattant->pv ;
+    if(combattantcopie->pv>combattantcopie->pvMax){
+        combattantcopie->pv = combattantcopie->pvMax;
+    }
+    strcpy(combattant->nom,combattantcopie->nom);
+    combattant->pvMax=combattantcopie->pvMax;
+    combattant->vitesse=combattantcopie->vitesse;
+    combattant->mort=combattantcopie->mort;
+    combattant->camp=combattantcopie->camp;
+    combattant->temps_recharge=combattantcopie->temps_recharge;
+    combattant->temps_recharge_max=combattantcopie->temps_recharge_max;
+    combattant->indice_portrait=combattantcopie->indice_portrait;
+    combattant->indice_sprite=combattantcopie->indice_sprite;
+    combattant->type=combattantcopie->type;
+    combattant->status=combattantcopie->status;
+    combattant->puissance=combattantcopie->puissance;
+    combattant->forme=combattantcopie->forme;
 }
 
 void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){

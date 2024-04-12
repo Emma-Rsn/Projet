@@ -343,7 +343,9 @@ int main(){
     detruire_tab_path(&map);
 
     dest_pnj(pAlex2);
-    desctruction_p_eq(pAlex);
+    desctruction_p_eq(&Alex);
+    //desctruction_combattant(Alex.equipe[0]);
+
     dest_ennemi(Slime1);
     //dest_ennemi(&Slime1);
     //dest_ennemi(&Boss);
