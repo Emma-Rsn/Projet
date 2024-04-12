@@ -40,9 +40,9 @@ struct pnj_s{
     int pv;
 };
 
-obj_t init_obj(case_t * c,int indText,int type,...);
+obj_t * init_obj(case_t * c,int indText,int type,...);
 int load_obj(carte_t *c, char *namefile);
-void affObj(SDL_Renderer *renderer,obj_t o,map_t map);
+void affObj(SDL_Renderer *renderer,obj_t * o,map_t map);
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte);
 ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme);
 int boolcol (case_t * obj_c,p_mv * pp);

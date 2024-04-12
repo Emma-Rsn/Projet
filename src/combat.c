@@ -931,8 +931,8 @@ int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     int i;
     for(i=0;i<cartec->nbObj;i++){
-        if(cartec->tabObj[i].typeObj==2){
-            debut_combat(event,cartec->tabObj[i].tabObj[0],pp,cartec->tabObj[i].cas);
+        if(cartec->tabObj[i]->typeObj==2){
+            debut_combat(event,cartec->tabObj[i]->tabObj[0],pp,cartec->tabObj[i]->cas);
         }
     }
 }
@@ -993,10 +993,8 @@ combat_t * init_combat(){
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map){
     int i;
     for(i=0;i<cartec->nbObj;i++){
-        if(cartec->tabObj[i].typeObj==2 ){
-                combat(we,he,event,renderer,cartec->tabObj[i].tabObj[0],pp,map);
-
-        
+        if(cartec->tabObj[i]->typeObj==2 ){
+            combat(we,he,event,renderer,cartec->tabObj[i]->tabObj[0],pp,map);
         }
     }
 }

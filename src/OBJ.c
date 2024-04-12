@@ -1,10 +1,10 @@
 #include "../libs/commun.h"
 
-obj_t init_obj(case_t * c,int indText,int type,...){
-    obj_t newObj;
-    newObj.cas = c;
-    newObj.indTexture = indText;
-    newObj.typeObj = type;
+obj_t * init_obj(case_t * c,int indText,int type,...){
+    obj_t * newObj = malloc(sizeof(obj_t));
+    newObj->cas = c;
+    newObj->indTexture = indText;
+    newObj->typeObj = type;
     va_list args;
     va_start(args, type);
     int n; //nombre d'éléments propre a l'objets
@@ -12,30 +12,30 @@ obj_t init_obj(case_t * c,int indText,int type,...){
     switch(type){
         case 0 : //cas d'un objet de décors avec collision
             n = -1;
-            newObj.cas->etat = 0;
+            newObj->cas->etat = 0;
             break;
         case 1 : //cas d'un objet de décors sans collision
             n = -1;
-            newObj.cas->etat = 1;
+            newObj->cas->etat = 1;
             break;
         case 2 : //cas d'un ennemi
             n = 1;
-            newObj.cas->etat = 0;
+            newObj->cas->etat = 0;
             break;
         case 3 : //cas d'un objet avec contenu avec collision
             n = 1;
-            newObj.cas->etat = 0;
+            newObj->cas->etat = 0;
             break;
         case 4 : //cas d'un objet avec contenu sans collision
             n = 1;
-            newObj.cas->etat = 1;
+            newObj->cas->etat = 1;
             break;
         default://cas d'un objet inconnu
             n = -1;
             break;
     }
     for (i = 0; i < n; i++) {
-        newObj.tabObj[i] = va_arg(args, void *);
+        newObj->tabObj[i] = va_arg(args, void *);
     }
     va_end(args);
     return newObj;
@@ -91,8 +91,8 @@ int load_obj(carte_t *c, char *namefile){
 
 }
 
-void affObj(SDL_Renderer *renderer,obj_t o,map_t map){
-    SDL_RenderCopy(renderer, map.tabTexture[o.indTexture], NULL, &(o.cas->Rectangle));
+void affObj(SDL_Renderer *renderer,obj_t * o,map_t map){
+    SDL_RenderCopy(renderer, map.tabTexture[o->indTexture], NULL, &(o->cas->Rectangle));
 }
 
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
@@ -100,7 +100,7 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     int n = 0;
     if(map.Nightmare == 1)n=map.nbN;
     for(i = 0; i < carte->nbObj;i++){
-        SDL_RenderCopy(renderer, map.tabTexture[(carte->tabObj[i].indTexture)+n], NULL, &(carte->tabObj[i].cas->Rectangle));
+        SDL_RenderCopy(renderer, map.tabTexture[(carte->tabObj[i]->indTexture)+n], NULL, &(carte->tabObj[i]->cas->Rectangle));
     }
 }
 
@@ -124,6 +124,10 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
     en->indice_sprite=indice_sprite;
     en->forme=forme;
     return en;
+}
+
+void dest_obj(carte_t * c){
+
 }
 
 
