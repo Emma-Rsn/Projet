@@ -335,7 +335,7 @@ int main(){
     free(etatoption);
     free(toucheDeplacement);
 
-    Mix_FreeMusic( gMusic );
+    Mix_FreeMusic(gMusic);
 
     
 

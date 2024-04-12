@@ -1019,7 +1019,7 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
             map->tabTexture = NULL;
             break;
         }
-        //if(!map->Nightmare)newMusic(m,gMusic);
+        if(!map->Nightmare)newMusic(m,gMusic);
     return 0;
 }
 
