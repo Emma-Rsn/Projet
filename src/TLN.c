@@ -305,7 +305,6 @@ int main(){
         
         //Commence un combat
         combat_carte(cartec,wEcran,hEcran,event,renderer,pAlex,&map);
-        printf("apres %s\n",pAlex->equipe[1]->nom);
 
 
 

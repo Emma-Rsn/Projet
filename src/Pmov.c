@@ -566,7 +566,6 @@ void desctruction_p_eq(p_mv * p){
             }
         }
     for(i=0;i<nb_allie;i++){
-        printf("%s\n",p->equipe[i]->nom);
         desctruction_combattant(p->equipe[i]);
     }
     
