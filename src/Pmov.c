@@ -570,6 +570,7 @@ p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int 
 
 void desctruction_p_eq(p_mv * p){
     free(p->frame);
+    printf("tsest\n");
     int i;
     int nb_allie=0;
         for (i=0;i<4;i++){

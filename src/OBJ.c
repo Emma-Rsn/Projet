@@ -68,13 +68,12 @@ int load_obj(carte_t *c, char *namefile){
                 case 2 :
                     fscanf(file,"%s %d %d %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme,&nbCombattant);
                     //printf("%s %d %d %d %d %d %d %d %d %d %d\n",nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme,nbCombattant);
-                    ennemi_t newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
-                    
+                    ennemi_t * newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     for(i=1;i<=nbCombattant;i++){
                         fscanf(file,"%s %d %d %d %d %d %d %d %d %d",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme);
-                        newEnnemi.combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
+                        newEnnemi->combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     }
-                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,&newEnnemi);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,newEnnemi);
                     c->nbObj++;
                     break;
             }
@@ -105,25 +104,25 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     }
 }
 
-ennemi_t init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
-    ennemi_t en;
-    en.nom = malloc(strlen(nom)+1);
-    strcpy(en.nom,nom);
-    en.combat=0;
-    en.pv=pv;
-    en.type=type;
-    en.vitesse=vitesse;
-    en.mort=0;
-    en.temps_recharge_max=temps_recharge_max;
-    en.status=0;
+ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
+    ennemi_t * en = malloc(sizeof(ennemi_t));
+    en->nom = malloc(strlen(nom)+1);
+    strcpy(en->nom,nom);
+    en->combat=0;
+    en->pv=pv;
+    en->type=type;
+    en->vitesse=vitesse;
+    en->mort=0;
+    en->temps_recharge_max=temps_recharge_max;
+    en->status=0;
     int i;
     for(i=0;i<4;i++){
-        en.combattant[i]=NULL;
+        en->combattant[i]=NULL;
     }
-    en.combattant[0]=init_combattant(nom,en.pv,en.vitesse,1,indice_portrait,indice_sprite,type,en.temps_recharge_max,puissance,forme);
-    en.indice_portrait=indice_portrait;
-    en.indice_sprite=indice_sprite;
-    en.forme=forme;
+    en->combattant[0]=init_combattant(en->nom,en->pv,en->vitesse,1,indice_portrait,indice_sprite,type,en->temps_recharge_max,puissance,forme);
+    en->indice_portrait=indice_portrait;
+    en->indice_sprite=indice_sprite;
+    en->forme=forme;
     return en;
 }
 
@@ -142,6 +141,7 @@ void dest_ennemi(ennemi_t * en){
     }
 
     free(en->nom);
+    free(en);
 }
 
 

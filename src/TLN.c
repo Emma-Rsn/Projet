@@ -129,22 +129,24 @@ int main(){
 
     map.tabMap[5][5].nbObj = 3;*/
 
-    ennemi_t Slime1 = init_ennemi("Slime1",100,10,1,11,10,0,1,10,0);
-    Slime1.combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    ennemi_t * PSlime1 = &Slime1;
-    obj_t ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,PSlime1);
+    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,10,0,1,10,0);
+    Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
+    obj_t ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,Slime1);
     map.tabMap[2][3].tabObj[0] = ObjSlime1;
     map.tabMap[2][3].nbObj = 1;
 
     int tN = 0;
-    //load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
+    load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
+
+
+
 
     //fin temporaire
-
 
     //variable FPS
     int cmpfps = 0;
     int dfps = FPS;
+
     Uint32 * t0 = malloc(sizeof(Uint32));
     Uint32 * t1 = malloc(sizeof(Uint32));
     int * nfps = malloc(sizeof(int));
@@ -155,7 +157,7 @@ int main(){
 	Alex = initp(&(cartec->grille.tabGrille[xp][yp]));
     Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,0,10,0);
     Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,0,8,0);
-    Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
+    //Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
 	p_mv * pAlex = &Alex;
 
     
@@ -342,7 +344,7 @@ int main(){
 
     dest_pnj(pAlex2);
     desctruction_p_eq(pAlex);
-    dest_ennemi(&Slime1);
+    dest_ennemi(Slime1);
     //dest_ennemi(&Slime1);
     //dest_ennemi(&Boss);
     free(wEcran);

@@ -61,7 +61,8 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
 */
 combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     combattant_t * combattant=malloc(sizeof(combattant_t));
-    combattant->nom=nom;
+    combattant->nom=malloc(strlen(nom));
+    strcpy(combattant->nom,nom);
     combattant->pv=pv;
     combattant->pvMax=pv;
     combattant->vitesse=vitesse;
@@ -84,6 +85,7 @@ combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_p
 *\brief fonction qui detruit les personnages de l'equipe
 */
 void desctruction_combattant(combattant_t * combattant){
+    free(combattant->nom);
     free(combattant);
 }
 
@@ -1306,6 +1308,9 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         }
         ennemi->combat=0;
         for(i=0;i<combat->nb_allie;i++){
+            desctruction_combattant(tabAllie[i]);
+        }
+        for(i=0;i<combat->nb_ennemi;i++){
             desctruction_combattant(tabAllie[i]);
         }
         free(combat);
