@@ -537,29 +537,7 @@ void col_p(SDL_Rect * obj_r,p_mv * pp){
 }
 
 
-/**
-*
-*\fn p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQ2,char * nomATQspe)
-*\param nom prenom du personnage
-*\param pv les pv du personnage
-*\param nomATQ1 nom de l'attaque de base du personnage
-*\param nomATQ2 nom de l'attaque particuliere de personnage
-*\param nomATQspe nom de l'attaque special du personnage dans le cauchemar
-*\brief fonction qui creer le personnage de l'equipe avec les parametres
-*/
-/*
-p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp){
-    p_eq * pe=malloc(sizeof(p_eq));
-    pe->nom=nom;
-    pe->pv=pv;
-    pe->nomATQ1=nomATQ1;
-    pe->nomATQspe=nomATQspe;
-    pe->vitesse=vitesse;
-    pe->combattant=init_combattant(nom,pv,nomATQ1,nomATQspe,vitesse,camp);
 
-    return pe;
-}
-*/
 
 /**
 *
@@ -570,7 +548,6 @@ p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int 
 
 void desctruction_p_eq(p_mv * p){
     free(p->frame);
-    printf("tsest\n");
     int i;
     int nb_allie=0;
         for (i=0;i<4;i++){
@@ -579,6 +556,7 @@ void desctruction_p_eq(p_mv * p){
             }
         }
     for(i=0;i<nb_allie;i++){
+        printf("%s\n",p->equipe[i]->nom);
         desctruction_combattant(p->equipe[i]);
     }
     
@@ -606,7 +584,7 @@ p_mv initp(case_t * c){
     }
     p.frame = malloc(sizeof(int));
     *(p.frame) = 0;
-    p.equipe[0]=init_combattant("alex",100,50,0,13,12,0,2,15,0);
+    p.equipe[0]=init_combattant(p.nom,100,50,0,13,12,0,2,15,0);
     return p;
 }
 

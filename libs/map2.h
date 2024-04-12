@@ -49,6 +49,7 @@ struct map_s{
     float bonusEquipeN;
     int bonusZoneN;
     int argent;
+    artefact_t * listeArtefact[];
 };
 
 case_t creation_case();

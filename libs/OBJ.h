@@ -40,6 +40,13 @@ struct pnj_s{
     int pv;
 };
 
+struct artefact_s{
+    char * nom;
+    int possession; //si -1 artefact bloque,0 on l'a pas, 1 on l'a
+    int indice; //indice dans le tableau de la map
+    char * descriptif;
+};
+
 obj_t init_obj(case_t * c,int indText,int type,...);
 int load_obj(carte_t *c, char *namefile);
 void affObj(SDL_Renderer *renderer,obj_t o,map_t map);
