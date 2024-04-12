@@ -1305,10 +1305,10 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
         }
         ennemi->combat=0;
-        free(combat);
-        for(i=0;i<allie;i++){
+        for(i=0;i<combat->nb_allie;i++){
             desctruction_combattant(tabAllie[i]);
         }
+        free(combat);
         
     }
     return 0;
