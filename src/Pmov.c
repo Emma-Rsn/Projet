@@ -29,7 +29,7 @@
 
 //detection de touche presser et modification des coordonées
 void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement){
-    if(*transi && *(pmv->frame) != 0){
+    if(*transi || pmv->lock){
         while (SDL_PollEvent(&event) != 0);
     }else{
         int temp = (*carte)->nZone;
@@ -41,6 +41,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
         int Bas;
         int Gauche;
         int Droite;
+        int block = 0;
+        
 
         switch(*toucheDeplacement){
             case 0:
@@ -80,6 +82,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=0;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == 0){
@@ -95,6 +98,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                             pmv->d=0;
                         }else{
                             pmv->d=0;
+                            block = 1;
                         }
                     }
                 }
@@ -109,6 +113,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=2;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == (LARG-1)){
@@ -124,6 +129,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                             pmv->d=2;
                         }else{
                             pmv->d=2;
+                            block = 1;
                         }
                     }
                 }
@@ -145,6 +151,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=3;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
@@ -160,6 +167,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                             pmv->d=3;
                         }else{
                             pmv->d=3;
+                            block = 1;
                         }
                     }
                 }
@@ -180,6 +188,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=1;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == (LONG-1)){
@@ -194,6 +203,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         pmv->d=1;
                     }else{
                             pmv->d=1;
+                            block = 1;
                         }
                 }
                 }
@@ -211,9 +221,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     }else{
                         pmv->e = 1;
                     }
-                    *carte = dcartec;
-                    pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
-                }else{
+                }else if(!block){
                     *(pmv->frame) = 1;
                     pmv->e = 1;
                 }
@@ -236,6 +244,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     
     int nbMaxFrame = (FPS/10)*4;
     if(*(pmv->frame) != 0){
+        pmv->lock = 1;
         if(pmv->e == 1){
             //Nord
             if(pmv->d == 0){
@@ -387,6 +396,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
         if(*(pmv->frame) > nbMaxFrame){
             *(pmv->frame) = 0;
             pmv->e=0;
+            pmv->lock = 0;
         }else{
             if(*(pmv->frame) != 0){
                 if(*(pmv->frame) < (nbMaxFrame/4)){
@@ -570,7 +580,6 @@ p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int 
 
 void desctruction_p_eq(p_mv * p){
     free(p->frame);
-    printf("tsest\n");
     int i;
     int nb_allie=0;
         for (i=0;i<4;i++){
@@ -607,6 +616,7 @@ p_mv initp(case_t * c){
     p.frame = malloc(sizeof(int));
     *(p.frame) = 0;
     p.equipe[0]=init_combattant("alex",100,50,0,13,12,0,2,15,0);
+    p.lock = 0;
     return p;
 }
 
