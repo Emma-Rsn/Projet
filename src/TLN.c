@@ -138,7 +138,8 @@ int main(){
     int tN = 0;
 
     load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
-    printf("la misere4 %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
+    printf("la misere4 test %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
+
 
     //fin temporaire
 
@@ -307,6 +308,7 @@ int main(){
         printf("boniour\n");
         
         //Commence un combat
+        printf("la misere4 %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
         printf("la misere666 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
         combat_carte(cartec,wEcran,hEcran,event,renderer,pAlex,&map);
 
