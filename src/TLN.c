@@ -129,17 +129,18 @@ int main(){
 
     map.tabMap[5][5].nbObj = 3;*/
 
-    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,10,0,1,10,0);
+    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,15,0,1,10,0);
     Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    obj_t * ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,Slime1);
-    map.tabMap[2][3].tabObj[0] = ObjSlime1;
+    obj_t * ObjSlime1 = init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[4][5],15,2,Slime1);
+    map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = ObjSlime1;
+    map.tabMap[cartec->xcarte][cartec->ycarte].nbObj = 1;
 
         ennemi_t * Slime2 = init_ennemi("Boss",1,10,1,11,10,2,1,10,3);
     Slime2->combattant[1] = init_combattant("Lute2",1,10,1,11,10,3,1,10,0);
     obj_t * ObjSlime2 = init_obj(&map.tabMap[5][5].grille.tabGrille[3][2],10,2,Slime2);
     map.tabMap[2][3].tabObj[1] = ObjSlime2;
 
-    map.tabMap[2][3].nbObj = 2;
+    map.tabMap[2][3].nbObj = 1;
 
     int tN = 0;
     load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
