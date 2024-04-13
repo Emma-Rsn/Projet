@@ -65,6 +65,7 @@ int main(){
     }
     SDL_Surface * logo = IMG_Load("logo.png");
     SDL_SetWindowIcon(window,logo);
+    SDL_FreeSurface(logo);
     //mode de transparence
     SDL_BlendMode blend = SDL_BLENDMODE_BLEND;
     SDL_SetRenderDrawBlendMode(renderer, blend);
@@ -128,25 +129,30 @@ int main(){
 
     map.tabMap[5][5].nbObj = 3;*/
 
-    ennemi_t Slime1 = init_ennemi("Slime1",100,10,1,11,10,0,1,10,0);
-    Slime1.combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    ennemi_t * PSlime1 = &Slime1;
-    obj_t ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,PSlime1);
+    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,10,0,1,10,0);
+    Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
+    obj_t * ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,Slime1);
     map.tabMap[2][3].tabObj[0] = ObjSlime1;
     map.tabMap[2][3].nbObj = 1;
 
     int tN = 0;
+    load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
 
+
+
+<<<<<<< HEAD
     load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
     printf("la misere4 test %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
 
+=======
+>>>>>>> 65c78c152b2dcfb6fb1135e22b3a2978bbbfe18c
 
     //fin temporaire
-
 
     //variable FPS
     int cmpfps = 0;
     int dfps = FPS;
+
     Uint32 * t0 = malloc(sizeof(Uint32));
     Uint32 * t1 = malloc(sizeof(Uint32));
     int * nfps = malloc(sizeof(int));
@@ -154,10 +160,10 @@ int main(){
 
     //creation personnage
 	p_mv Alex;
-	Alex = initp(cartec,&(cartec->grille.tabGrille[xp][yp]),&map);
+	Alex = initp(&(cartec->grille.tabGrille[xp][yp]));
     Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,0,10,0);
     Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,0,8,0);
-    Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
+    //Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
 	p_mv * pAlex = &Alex;
 
     
@@ -193,7 +199,6 @@ int main(){
 
     //menu d'ecran titre
     menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement);
-
     //boucle du programme
     while (*run) {
         //zone d'evenement
@@ -286,9 +291,7 @@ int main(){
 
         //Affiche un personnage
         affp(pAlex,renderer,event);
-        printf("ojrgjfggj\n");
         affTabObj(renderer,map,cartec);
-        printf("bonjour\n");
 
         if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
 
@@ -305,14 +308,15 @@ int main(){
 
         //afficher map
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
-        printf("boniour\n");
         
         //Commence un combat
+<<<<<<< HEAD
         printf("la misere4 %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
         printf("la misere666 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
+=======
+>>>>>>> 65c78c152b2dcfb6fb1135e22b3a2978bbbfe18c
         combat_carte(cartec,wEcran,hEcran,event,renderer,pAlex,&map);
 
-        printf("bonjjjjjjjjjjjjour\n");
 
 
         //Partie perdu
@@ -341,7 +345,7 @@ int main(){
     free(etatoption);
     free(toucheDeplacement);
 
-    Mix_FreeMusic( gMusic );
+    Mix_FreeMusic(gMusic);
 
     
 
@@ -350,8 +354,10 @@ int main(){
     detruire_tab_path(&map);
 
     dest_pnj(pAlex2);
-    desctruction_p_eq(pAlex);
-    //dest_ennemi(&Slime);
+    desctruction_p_eq(&Alex);
+    //desctruction_combattant(Alex.equipe[0]);
+
+    dest_ennemi(Slime1);
     //dest_ennemi(&Slime1);
     //dest_ennemi(&Boss);
     free(wEcran);

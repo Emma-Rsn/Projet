@@ -29,7 +29,7 @@
 
 //detection de touche presser et modification des coordonées
 void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement){
-    if(*transi && *(pmv->frame) != 0){
+    if(*transi || pmv->lock){
         while (SDL_PollEvent(&event) != 0);
     }else{
         int temp = (*carte)->nZone;
@@ -41,6 +41,8 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
         int Bas;
         int Gauche;
         int Droite;
+        int block = 0;
+        
 
         switch(*toucheDeplacement){
             case 0:
@@ -80,6 +82,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=0;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == 0){
@@ -95,6 +98,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                             pmv->d=0;
                         }else{
                             pmv->d=0;
+                            block = 1;
                         }
                     }
                 }
@@ -109,6 +113,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=2;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->y == (LARG-1)){
@@ -124,6 +129,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                             pmv->d=2;
                         }else{
                             pmv->d=2;
+                            block = 1;
                         }
                     }
                 }
@@ -145,6 +151,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=3;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == 0){
@@ -160,6 +167,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                             pmv->d=3;
                         }else{
                             pmv->d=3;
+                            block = 1;
                         }
                     }
                 }
@@ -180,6 +188,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *transi = 1;
                     }else{
                         pmv->d=1;
+                        block = 1;
                     }
                 }else{
                     if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y].etat == 2 && pmv->c->x == (LONG-1)){
@@ -194,6 +203,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         pmv->d=1;
                     }else{
                             pmv->d=1;
+                            block = 1;
                         }
                 }
                 }
@@ -211,9 +221,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                     }else{
                         pmv->e = 1;
                     }
-                    *carte = dcartec;
-                    pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
-                }else{
+                }else if(!block){
                     *(pmv->frame) = 1;
                     pmv->e = 1;
                 }
@@ -236,6 +244,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     
     int nbMaxFrame = (FPS/10)*4;
     if(*(pmv->frame) != 0){
+        pmv->lock = 1;
         if(pmv->e == 1){
             //Nord
             if(pmv->d == 0){
@@ -387,6 +396,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
         if(*(pmv->frame) > nbMaxFrame){
             *(pmv->frame) = 0;
             pmv->e=0;
+            pmv->lock = 0;
         }else{
             if(*(pmv->frame) != 0){
                 if(*(pmv->frame) < (nbMaxFrame/4)){
@@ -537,29 +547,7 @@ void col_p(SDL_Rect * obj_r,p_mv * pp){
 }
 
 
-/**
-*
-*\fn p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQ2,char * nomATQspe)
-*\param nom prenom du personnage
-*\param pv les pv du personnage
-*\param nomATQ1 nom de l'attaque de base du personnage
-*\param nomATQ2 nom de l'attaque particuliere de personnage
-*\param nomATQspe nom de l'attaque special du personnage dans le cauchemar
-*\brief fonction qui creer le personnage de l'equipe avec les parametres
-*/
-/*
-p_eq *initp_eq(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp){
-    p_eq * pe=malloc(sizeof(p_eq));
-    pe->nom=nom;
-    pe->pv=pv;
-    pe->nomATQ1=nomATQ1;
-    pe->nomATQspe=nomATQspe;
-    pe->vitesse=vitesse;
-    pe->combattant=init_combattant(nom,pv,nomATQ1,nomATQspe,vitesse,camp);
 
-    return pe;
-}
-*/
 
 /**
 *
@@ -584,24 +572,29 @@ void desctruction_p_eq(p_mv * p){
 }
 
 //construit un point
-p_mv initp(carte_t * carte,case_t * c,map_t * map){
+p_mv initp(case_t * c){
     p_mv p;
-    p.carte = carte;
+    //p.carte = carte;
+    //printf("letest0.4 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     p.c = c;
     p.r = p.c->Rectangle;
+    //printf("letest1 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     p.d=0;
     p.e=0;
     p.nom="alex";
     p.Nightmare = 0;
+    //printf("letest1.5 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     p.NightMax = 100;
     p.NightP = 0;
     int i ;
+    //printf("letest2 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
     for (i=0;i<4;i++){
         p.equipe[i]=NULL;
     }
     p.frame = malloc(sizeof(int));
     *(p.frame) = 0;
-    p.equipe[0]=init_combattant("alex",100,50,0,13,12,0,2,15,0);
+    p.equipe[0]=init_combattant(p.nom,100,50,0,13,12,0,2,15,0);
+    p.lock = 0;
     return p;
 }
 

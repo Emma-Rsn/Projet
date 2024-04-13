@@ -38,6 +38,7 @@ typedef struct ennemi_s ennemi_t;
 typedef struct pnj_s pnj_t;
 typedef struct personnage p_mv;
 
+typedef struct artefact artefact_t;
 typedef struct case_s case_t;
 typedef struct grille_s grille_t;
 typedef struct carte_s carte_t;

@@ -1,10 +1,10 @@
 #include "../libs/commun.h"
 
-obj_t init_obj(case_t * c,int indText,int type,...){
-    obj_t newObj;
-    newObj.cas = c;
-    newObj.indTexture = indText;
-    newObj.typeObj = type;
+obj_t * init_obj(case_t * c,int indText,int type,...){
+    obj_t * newObj = malloc(sizeof(obj_t));
+    newObj->cas = c;
+    newObj->indTexture = indText;
+    newObj->typeObj = type;
     va_list args;
     va_start(args, type);
     int n; //nombre d'éléments propre a l'objets
@@ -12,30 +12,30 @@ obj_t init_obj(case_t * c,int indText,int type,...){
     switch(type){
         case 0 : //cas d'un objet de décors avec collision
             n = -1;
-            newObj.cas->etat = 0;
+            newObj->cas->etat = 0;
             break;
         case 1 : //cas d'un objet de décors sans collision
             n = -1;
-            newObj.cas->etat = 1;
+            newObj->cas->etat = 1;
             break;
         case 2 : //cas d'un ennemi
             n = 1;
-            newObj.cas->etat = 0;
+            newObj->cas->etat = 0;
             break;
         case 3 : //cas d'un objet avec contenu avec collision
             n = 1;
-            newObj.cas->etat = 0;
+            newObj->cas->etat = 0;
             break;
         case 4 : //cas d'un objet avec contenu sans collision
             n = 1;
-            newObj.cas->etat = 1;
+            newObj->cas->etat = 1;
             break;
         default://cas d'un objet inconnu
             n = -1;
             break;
     }
     for (i = 0; i < n; i++) {
-        newObj.tabObj[i] = va_arg(args, void *);
+        newObj->tabObj[i] = va_arg(args, void *);
     }
     va_end(args);
     return newObj;
@@ -67,16 +67,14 @@ int load_obj(carte_t *c, char *namefile){
                     break;
                 case 2 :
                     fscanf(file,"%s %d %d %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme,&nbCombattant);
-                    printf("%s %d %d %d %d %d %d %d %d %d %d\n",nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme,nbCombattant);
-                    ennemi_t newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
-                    
+                    //printf("%s %d %d %d %d %d %d %d %d %d %d\n",nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme,nbCombattant);
+                    ennemi_t * newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     for(i=1;i<=nbCombattant;i++){
                         fscanf(file,"%s %d %d %d %d %d %d %d %d %d",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme);
-                        newEnnemi.combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
+                        newEnnemi->combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     }
-                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,&newEnnemi);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,newEnnemi);
                     c->nbObj++;
-                    printf("la misere3 %d\n",((ennemi_t *)(c->tabObj[c->nbObj-1].tabObj[0]))->combat);
                     break;
             }
             fscanf(file,"\n");
@@ -84,15 +82,17 @@ int load_obj(carte_t *c, char *namefile){
     }
     else{
         printf("Fichier inexistant\n");
+        fclose(file);
         return 1;
     }
+    fclose(file);
     return 0;
 
 
 }
 
-void affObj(SDL_Renderer *renderer,obj_t o,map_t map){
-    SDL_RenderCopy(renderer, map.tabTexture[o.indTexture], NULL, &(o.cas->Rectangle));
+void affObj(SDL_Renderer *renderer,obj_t * o,map_t map){
+    SDL_RenderCopy(renderer, map.tabTexture[o->indTexture], NULL, &(o->cas->Rectangle));
 }
 
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
@@ -100,30 +100,34 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     int n = 0;
     if(map.Nightmare == 1)n=map.nbN;
     for(i = 0; i < carte->nbObj;i++){
-        SDL_RenderCopy(renderer, map.tabTexture[(carte->tabObj[i].indTexture)+n], NULL, &(carte->tabObj[i].cas->Rectangle));
+        SDL_RenderCopy(renderer, map.tabTexture[(carte->tabObj[i]->indTexture)+n], NULL, &(carte->tabObj[i]->cas->Rectangle));
     }
 }
 
-ennemi_t init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
-    ennemi_t en;
-    en.nom = malloc(strlen(nom)+1);
-    strcpy(en.nom,nom);
-    en.combat=0;
-    en.pv=pv;
-    en.type=type;
-    en.vitesse=vitesse;
-    en.mort=0;
-    en.temps_recharge_max=temps_recharge_max;
-    en.status=0;
+ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
+    ennemi_t * en = malloc(sizeof(ennemi_t));
+    en->nom = malloc(strlen(nom)+1);
+    strcpy(en->nom,nom);
+    en->combat=0;
+    en->pv=pv;
+    en->type=type;
+    en->vitesse=vitesse;
+    en->mort=0;
+    en->temps_recharge_max=temps_recharge_max;
+    en->status=0;
     int i;
     for(i=0;i<4;i++){
-        en.combattant[i]=NULL;
+        en->combattant[i]=NULL;
     }
-    en.combattant[0]=init_combattant(nom,en.pv,en.vitesse,1,indice_portrait,indice_sprite,type,en.temps_recharge_max,puissance,forme);
-    en.indice_portrait=indice_portrait;
-    en.indice_sprite=indice_sprite;
-    en.forme=forme;
+    en->combattant[0]=init_combattant(en->nom,en->pv,en->vitesse,1,indice_portrait,indice_sprite,type,en->temps_recharge_max,puissance,forme);
+    en->indice_portrait=indice_portrait;
+    en->indice_sprite=indice_sprite;
+    en->forme=forme;
     return en;
+}
+
+void dest_obj(carte_t * c){
+
 }
 
 
@@ -141,6 +145,7 @@ void dest_ennemi(ennemi_t * en){
     }
 
     free(en->nom);
+    free(en);
 }
 
 

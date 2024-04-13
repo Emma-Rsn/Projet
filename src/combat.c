@@ -61,7 +61,8 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
 */
 combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     combattant_t * combattant=malloc(sizeof(combattant_t));
-    combattant->nom=nom;
+    combattant->nom=malloc(strlen(nom)+1);
+    strcpy(combattant->nom,nom);
     combattant->pv=pv;
     combattant->pvMax=pv;
     combattant->vitesse=vitesse;
@@ -84,6 +85,7 @@ combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_p
 *\brief fonction qui detruit les personnages de l'equipe
 */
 void desctruction_combattant(combattant_t * combattant){
+    free(combattant->nom);
     free(combattant);
 }
 
@@ -928,10 +930,9 @@ int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
 
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     int i;
-    printf("la misere44 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
-    for(i=0;i<=cartec->nbObj;i++){
-        if(cartec->tabObj[i].typeObj==2){
-            debut_combat(event,cartec->tabObj[i].tabObj[0],pp,cartec->tabObj[i].cas);
+    for(i=0;i<cartec->nbObj;i++){
+        if(cartec->tabObj[i]->typeObj==2){
+            debut_combat(event,cartec->tabObj[i]->tabObj[0],pp,cartec->tabObj[i]->cas);
         }
     }
 }
@@ -989,16 +990,12 @@ combat_t * init_combat(){
 }
 
 
+
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map){
     int i;
-    printf("la misere444 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
-    for(i=0;i<=cartec->nbObj;i++){
-        if(cartec->tabObj[i].typeObj==2 ){
-            printf("bonjouuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuur\n");
-            printf("la misere2 %d\n",((ennemi_t *)(cartec->tabObj[i].tabObj[0]))->combat);
-                combat(we,he,event,renderer,cartec->tabObj[i].tabObj[0],pp,map);
-
-        
+    for(i=0;i<cartec->nbObj;i++){
+        if(cartec->tabObj[i]->typeObj==2 ){
+            combat(we,he,event,renderer,cartec->tabObj[i]->tabObj[0],pp,map);
         }
     }
 }
@@ -1016,9 +1013,7 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
 
 //fonction qui gere le combat avec un ennemi
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map){
-    printf("la misere %d\n",ennemi->combat);
     if(ennemi->combat){
-        printf("je ne suis pas\n");
          
 
 
@@ -1301,21 +1296,44 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             }
         //SDL_RenderPresent(renderer);
         *ennemi = copieEnnemi;
+
         for(i=0;i<combat->nb_allie;i++){
-            tabAllie[i]->mort=pp->equipe[i]->mort ;
-            tabAllie[i]->pv=pp->equipe[i]->pv ;
-            if(tabAllie[i]->pv>tabAllie[i]->pvMax){
-                tabAllie[i]->pv = tabAllie[i]->pvMax;
-            }
-            *pp->equipe[i] = *tabAllie[i];
+
+
+            copier_combattant(pp->equipe[i], tabAllie[i]);
+            strcpy(pp->equipe[i]->nom,tabAllie[i]->nom);
+
 
         }
-        printf("%d %d\n",pp->equipe[0]->mort,tabAllie[0]->mort);
         ennemi->combat=0;
-        free(combat);
+        for(i=0;i<combat->nb_allie;i++){
+            desctruction_combattant(tabAllie[i]);
+        }
+        desctruction_combat(combat);
         
     }
     return 0;
+}
+
+void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie){
+    combattantcopie->mort=combattant->mort ;
+    combattantcopie->pv=combattant->pv ;
+    if(combattantcopie->pv>combattantcopie->pvMax){
+        combattantcopie->pv = combattantcopie->pvMax;
+    }
+    strcpy(combattant->nom,combattantcopie->nom);
+    combattant->pvMax=combattantcopie->pvMax;
+    combattant->vitesse=combattantcopie->vitesse;
+    combattant->mort=combattantcopie->mort;
+    combattant->camp=combattantcopie->camp;
+    combattant->temps_recharge=combattantcopie->temps_recharge;
+    combattant->temps_recharge_max=combattantcopie->temps_recharge_max;
+    combattant->indice_portrait=combattantcopie->indice_portrait;
+    combattant->indice_sprite=combattantcopie->indice_sprite;
+    combattant->type=combattantcopie->type;
+    combattant->status=combattantcopie->status;
+    combattant->puissance=combattantcopie->puissance;
+    combattant->forme=combattantcopie->forme;
 }
 
 void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){
