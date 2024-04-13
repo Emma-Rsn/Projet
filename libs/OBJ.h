@@ -45,6 +45,8 @@ struct artefact_s{
     int possession; //si -1 artefact bloque,0 on l'a pas, 1 on l'a
     int indice; //indice dans le tableau de la map
     char * descriptif;
+    int prix;
+    int indice_texture;
 };
 
 obj_t * init_obj(case_t * c,int indText,int type,...);
@@ -59,5 +61,7 @@ void pnj_dialogue (SDL_Event event,pnj_t * pnj,SDL_Renderer * renderer,int * he,
 void dest_pnj(pnj_t * pnj);
 void aff_pnj(pnj_t pnj, SDL_Renderer *renderer,carte_t * carte);
 void dest_ennemi(ennemi_t * en);
+artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture);
+void destruction_artefact(artefact_t * artefact);
 
 #endif

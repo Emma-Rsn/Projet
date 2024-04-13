@@ -230,3 +230,23 @@ void dest_pnj(pnj_t * pnj){
     SDL_FreeSurface(pnj->perso);
     SDL_FreeSurface(pnj->po);
 }
+
+artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture){
+    artefact_t * artefact = malloc(sizeof(artefact_t));
+    artefact->nom = malloc(strlen(nom)+1);
+    strcpy(artefact->nom,nom);
+    artefact->descriptif = malloc(strlen(descriptif)+1);
+    strcpy(artefact->descriptif,descriptif);
+    artefact->possession=possession;
+    artefact->indice=indice;
+    artefact->prix=prix;
+    artefact->indice_texture=indice_texture;
+    return artefact;
+}
+
+void destruction_artefact(artefact_t * artefact){
+    free(artefact->nom);
+    free(artefact->descriptif);
+    free(artefact);
+
+}

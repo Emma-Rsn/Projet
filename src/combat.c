@@ -6,10 +6,10 @@
 
 /**
 *\file combat.c
-*\brief Programme qui s'occupe du combats
+*\brief Programme qui s'occupe du combat
 *\author Pasquier Lina 
 *\date 15 Fevrier 2024
-*\version 0.3
+*\version 1.0
 */
 
 #include "../libs/commun.h"
@@ -50,13 +50,14 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
 *\fn combattant_t *init_combattant(char* nom,int pv,char * nomATQ1,char * nomATQspe,int vitesse,int camp,char * portrait,char * sprite,int type)
 *\param nom prenom du combattant
 *\param pv les pv du combattant
-*\param nomATQ1 nom de l'attaque de base du combattant
 *\param vitesse vitesse du combattant
-*\param nomATQspe nom de l'attaque special du combattant 
 *\param camp camp du personnage (1=ennemi,0=allie)
-*\param portrait acces du portrait du combattant
-*\param sprite sprite du personnage
+*\param indice_portrait l'indice du portrait pour le lire dans le fichier
+*\param indice_sprite l'indice du sprite pour le lire dans le fichier
 *\param type type d'attaque special (0=attaque un ennemi,1=saute le tour d'un ennemi,2=soigne un ennemi)
+*\param temps_recharge_max temps de recharge pour que le combattant est son attaque speciale
+*\param puissance La force des attaques du combattant
+*\param forme la forme des ennemis (0=slime,1=?,2=?,3=boss)
 *\brief fonction qui creer le combattant 
 */
 combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
@@ -80,9 +81,9 @@ combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_p
 }
 
 /**
-*\fn void desctruction_p_eq(p_mv * p)
+*\fn void desctruction_combattant(combattant_t * combattant)
 *\param combattant strcuture du combattant 
-*\brief fonction qui detruit les personnages de l'equipe
+*\brief fonction qui detruit un combattant
 */
 void desctruction_combattant(combattant_t * combattant){
     free(combattant->nom);
@@ -90,9 +91,9 @@ void desctruction_combattant(combattant_t * combattant){
 }
 
 /**
-*\fn void desctruction_p_eq(p_mv * p)
-*\param combattant strcuture du combattant 
-*\brief fonction qui detruit les personnages de l'equipe
+*\fn void desctruction_combat(combat_t * combat)
+*\param combattant strcuture du combat 
+*\brief fonction qui detruit le combat
 */
 void desctruction_combat(combat_t * combat){
 
@@ -121,9 +122,9 @@ void desctruction_combat(combat_t * combat){
 *\param renderer rendu de la fenetre
 *\param r_basEcran rectangle du bas de l'ecran
 *\param combat structure combat
-*\brief fonction qui affiche les point de la personnes et le multiplicateur de degat
+*\brief fonction qui affiche les points de la personne et le multiplicateur de degat
 */
-//fonction qui affiche les point de la personnes et le multiplicateur de degat
+//fonction qui affiche les points de la personne et le multiplicateur de degat
 int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat)
 {
 	TTF_Font *font = TTF_OpenFont("fonts/alagard.ttf", 50);
@@ -150,7 +151,6 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 	SDL_Texture *textTexturemult = SDL_CreateTextureFromSurface(renderer, textSurfacemult);
 
     //creation du texte du nombre de point
-
 	char *point = malloc(20);
 	sprintf(point, "nombre de point : %d", combat->nb_point);
 	SDL_Surface *textSurfacePoint = TTF_RenderText_Solid(font, point, textColor);
@@ -164,11 +164,8 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 	SDL_Texture *textTexturePoint = SDL_CreateTextureFromSurface(renderer, textSurfacePoint);
 
 	// Position du texte
-	SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2+50, textSurfacemult->w, textSurfacemult->h
-	};
-
-	SDL_Rect r_point = {25, (r_basEcran.h*3)+r_basEcran.h/2-50, textSurfacePoint->w, textSurfacePoint->h
-	};
+	SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2+50, textSurfacemult->w, textSurfacemult->h};
+	SDL_Rect r_point = {25, (r_basEcran.h*3)+r_basEcran.h/2-50, textSurfacePoint->w, textSurfacePoint->h};
     
 
 	// Afficher la texture sur le rendu
@@ -193,16 +190,17 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 
 /**
 *
-*\fn int affiche_pv(pnj_t * ennemi,int *we,int *he,SDL_Renderer * renderer)
+*\fn int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rect r_DEcran,combat_t *combat,map_t * map)
 *\param we Largeur de l'ecran
 *\param he Hauteur de l'ecran
 *\param renderer rendu de la fenetre
 *\param r_GEcran renctangle gauche de l'ecran
 *\param r_DEcran renctangle droit de l'ecran
 *\param combat structure combat
-*\brief fonction qui affiche les allies et les ennemis sue les cotes
+*\param map structure map
+*\brief fonction qui affiche les allies et les ennemis sur les cotes
 */
-//fonction qui affiche les allies et les ennemis sue les cotes
+//fonction qui affiche les allies et les ennemis sur les cotes
 int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rect r_DEcran,combat_t *combat,map_t * map){
     int i=0;
 
@@ -292,18 +290,17 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
 
 /**
 *
-*\fn int attaque_ennemi(combattant_t *combattantAt,int nb_combattant,combattant_t *combattant[])
-*\param combattantAt structure combattant du personnage qui attaque
+*\fn attaque_ennemi(int nb_combattant,combat_t * combat)
 *\param nb_combattant nombre de combattant 
-*\param combattant tableau de structure de combattant pour avoir les allies
+*\param combat structure combat
 *\brief fonction d'attaque de l'ennemi 
 */
 //fonction d'attaque de l'ennemi 
 int attaque_ennemi(int nb_combattant,combat_t * combat){
 
   int indice=0;
-  //indice=forme_attaque(nb_combattant,combat);
-    //combat->allie[indice]->pv-=100000;
+  indice=forme_attaque(nb_combattant,combat);
+    combat->allie[indice]->pv-=100000;
   
 
     //attaque special des ennemis
@@ -311,6 +308,7 @@ int attaque_ennemi(int nb_combattant,combat_t * combat){
         //Attaque puissante sur un allie
         if(combat->combattant[combat->indice_combattant]->type==0){
             indice=forme_attaque(nb_combattant,combat);
+            
             combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance*2;
 
         }
@@ -362,6 +360,14 @@ int attaque_ennemi(int nb_combattant,combat_t * combat){
     return 0;
 }
 
+/**
+*
+*\fn int forme_attaque(int nb_combattant,combat_t * combat)
+*\param nb_combattant nombre de combattant 
+*\param combat structure combat
+*\brief fonction qui donne l'indice de la personne attaque par rapport a la forme de l'ennemi
+*/
+//fonction qui donne l'indice de la personne attaque par rapport a la forme de l'ennemi
 int forme_attaque(int nb_combattant,combat_t * combat){
     //ennemi de petite taille (slime) attaque l'allie qui a le moins de pv
         if(combat->combattant[combat->indice_combattant]->forme==0){
@@ -429,15 +435,16 @@ int forme_attaque(int nb_combattant,combat_t * combat){
 
 /**
 *
-*\fn int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat)
+*\fn int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,int etat,p_mv * personnage,map_t * map)
 *\param we Largeur de l'ecran
 *\param he Hauteur de l'ecran
 *\param renderer rendu de l'ecran
 *\param combat structure de combat
+*\param map structure de la map
 *\brief fonction d'affichage du combat
 */
-//fonction d'affichage du combat
 
+//fonction d'affichage du combat
 int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,int etat,p_mv * personnage,map_t * map){
     
     int j=0;
@@ -756,21 +763,22 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
 /**
 *
-*\fn int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,pnj_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat)
+*\fn int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map)
 *\param we Largeur de l'ecran
 *\param he Hauteur de l'ecran
 *\param event evenement
 *\param renderer rendu de la fenetre
-*\param ennemi structure d'un pnj ennemi
-*\param combattant structure du combattant
 *\param Nbennemi nombre d'ennemie vivant
 *\param combat struture de combat
+*\param allie nombre d'allie encore en vie
+*\param personnage struture du personnage jouer
+*\param map struture de la map
 *\brief fonction d'attaque d'un allie
 */
 //fonction d'attaque d'un allie
-int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map){
-         while (SDL_PollEvent(&event) != 0 );
-        if(combattant->mort==0){
+int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map){
+        while (SDL_PollEvent(&event) != 0 );
+        if(combat->combattant[combat->indice_combattant]->mort==0){
         SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
         SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
         SDL_Rect  r_ATQ3= {(r_basEcran.w*40/100)+(r_basEcran.w*30/100),(r_basEcran.h*3)+r_basEcran.h/2,373,48};
@@ -791,8 +799,8 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
 
             while(jouer){
                 
-
-                while(ennemi->combattant[combat->indice_ennemi]->mort==1){
+                //boucle pour affichier ne pas afficher les personnages mort
+                while(combat->ennemi[combat->indice_ennemi]->mort==1){
                     if(combat->indice_ennemi<combat->nb_ennemi){
                          combat->indice_ennemi++;
                     }
@@ -803,7 +811,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                 }
                 affichage_combat(we,he,renderer,combat,0,personnage,map);
                 while (SDL_PollEvent(&event) != 0 ) {
-
+                        //touche pour changer de personnage a attaquer
                         if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
                             if(combat->indice_ennemi>=(combat->nb_ennemi-1)){
                                 combat->indice_ennemi=0;
@@ -812,35 +820,36 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                                     combat->indice_ennemi++;
                                 }
                             }
-                    //enleve des pv au monstre avec les attaques
+                    //utilisation des attaques special et de l'attaque normal
                     if(event.type == SDL_MOUSEBUTTONDOWN ){
 
                         if((r_ATQ1.x<=event.button.x) && (r_ATQ1.x+r_ATQ1.w>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
-                            ennemi->combattant[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
+                            combat->ennemi[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
                             jouer=0;
                         }
-                        else if(((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)) && (combattant->temps_recharge>=combattant->temps_recharge_max)){
-                            if(combattant->type==0){
-                                ennemi->combattant[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult*2;
+                        else if(((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)) && (combat->combattant[combat->indice_combattant]->temps_recharge>=combat->combattant[combat->indice_combattant]->temps_recharge_max)){
+                            if(combat->combattant[combat->indice_combattant]->type==0){
+                                combat->ennemi[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult*2;
                             }
-                            else if(combattant->type==1){
+                            else if(combat->combattant[combat->indice_combattant]->type==1){
                                 combat->ennemi[combat->indice_ennemi]->status=1;
 
                             }
-                            else if(combattant->type==2){
+                            else if(combat->combattant[combat->indice_combattant]->type==2){
                                 
                                 soin(combat,r_basEcran,renderer,we,he,allie,event,personnage,map);
                             }
-                            else if(combattant->type==3){
+                            else if(combat->combattant[combat->indice_combattant]->type==3){
                                 int k=0;
                                 for(k=0;k<combat->nb_ennemi;k++){
-                                    ennemi->combattant[k]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
+                                    combat->ennemi[k]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
                                 }
                             }
                             
                             jouer=0;
-                            combattant->temps_recharge=0;
+                            combat->combattant[combat->indice_combattant]->temps_recharge=0;
                         }
+                        //utilisation des points et de l'augmentation du multiplicateur
                         else if((r_mult.x<=event.button.x) && ((r_mult.x+r_mult.w)>=event.button.x) && ((r_mult.y+r_mult.h)>=event.button.y) && (r_mult.y<=event.button.y)){
                             
                             if (combat->mult<2.5 && combat->nb_point>0){
@@ -889,7 +898,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
 
 
             }
-            //met le monde et alex en cauchemar
+            //met le monde et le personnage jouer en cauchemar
             if(personnage->NightP>=personnage->NightMax){
                 map->Nightmare=1;
                 personnage->Nightmare=1;
@@ -912,14 +921,15 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
 
 /**
 *
-*\fn int debut_combat(SDL_Event event,pnj_t * ennemi,SDL_Rect * obj_r,p_mv * pp)
+*\fn int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c)
 *\param ennemi structure d'un pnj ennemi
 *\param event evenement 
-*\param pp structure du pnj jouer
-*\brief fonction qui regarde si on peut lancer un combat
+*\param pp structure du personnage jouer
+*\param c structure de la case
+*\brief fonction qui regarde si on a lancer un combat
 */
 
-//fonction qui regarde si on peut lancer un combat
+//fonction qui regarde si on a lancer un combat
 int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
     
     if( boolcol(c,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && ennemi->combattant[0]->pv>0){
@@ -928,6 +938,15 @@ int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
     return 0;
 }
 
+/**
+*
+*\fn void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp)
+*\param event evenement 
+*\param pp structure du personnage jouer
+*\param cartec structure de la carte ou le personnage se trouve
+*\brief fonction qui appelle debut_combat avec tout les ennemis sur la map
+*/
+//fonction qui appelle debut_combat avec tout les ennemis sur la map
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     int i;
     for(i=0;i<cartec->nbObj;i++){
@@ -957,6 +976,15 @@ int compare_vitesse(const combattant_t * const combattant1,const combattant_t * 
   return(1) ;   
 }
 
+
+/**
+*
+*\fn int compare_vitesse(const combattant_t * const combattant1,const combattant_t * const combattant2)
+*\param combattant2 structure d'un combattant 
+*\param combattant1 structure du pnj jouer
+*\brief fonction d'encapsulation de la fonction compare_vitesse
+*/
+
 //encapsulation de la fonction compare_vitesse
 int compare_vitesse_enc( const void * const combattant1 , const void * const combattant2 ) {
     const combattant_t *comb1e = *(const combattant_t**)combattant1;
@@ -965,17 +993,13 @@ int compare_vitesse_enc( const void * const combattant1 , const void * const com
 }
 
 
-void aff(combattant_t * combattant){
-    if(combattant==NULL){
-        printf("vide\n");
-    }else{
-printf("nom:%s\n",combattant->nom);
-printf("pv:%d\n",combattant->pv);
+/**
+*
+*\fn combat_t * init_combat()
+*\brief fonction d'initialisation de la structure combat
+*/
 
-    }
-    
-}
-
+//fonction d'initialisation de la structure combat
 combat_t * init_combat(){
     combat_t * combat=malloc(sizeof(combat_t));
     combat->nb_allie=0;
@@ -990,7 +1014,19 @@ combat_t * init_combat(){
 }
 
 
-
+/**
+*
+*\fn void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map)
+*\param cartec structure de la carte ou le personnage se trouve
+*\param we Largeur de la fenetre 
+*\param he hauteur de la fenetre
+*\param event evenement 
+*\param renderer rendu de la fenetre
+*\param pp structure du personnage jouer
+*\param map structure de la map
+*\brief fonction qui appelle combat avec tout les ennemis sur la map
+*/
+//fonction qui appelle combat avec tout les ennemis sur la map
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map){
     int i;
     for(i=0;i<cartec->nbObj;i++){
@@ -1002,16 +1038,18 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
 
 /**
 *
-*\fn int debut_combat(SDL_Event event,pnj_t * ennemi,SDL_Rect * obj_r,p_mv * pp)
-*\param ennemi structure d'un pnj ennemi
-*\param event evenement 
+*\fn int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map)
 *\param we Largeur de la fenetre 
 *\param he hauteur de la fenetre
+*\param event evenement 
 *\param renderer rendu de la fenetre
-*\brief fonction qui gere le combat avec un ennemi
+*\param ennemi structure d'un ennemi
+*\param pp structure du personnage jouer
+*\param map structure de la map
+*\brief fonction qui s'occupe du combat avec un ennemi
 */
 
-//fonction qui gere le combat avec un ennemi
+//fonction qui s'occupe du combat avec un ennemi
 int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map){
     if(ennemi->combat){
          
@@ -1098,7 +1136,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         for (i=0;i<4;i++){
             if(pp->equipe[i]!=NULL){
                 combat->nb_allie++;
-                allie++;
+
                 combat->allie[i]=pp->equipe[i];
             }
         }
@@ -1143,11 +1181,11 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 if(combat->combattant[combat->indice_combattant]->camp==0 && combat->combattant[combat->indice_combattant]->mort==0){
                     //regarde si l'allie peut jouer
                     if(combat->combattant[combat->indice_combattant]->status==0){
-                        attaque_allie(we,he,event,renderer,ennemi,combat->combattant[combat->indice_combattant],Nennemi,combat,allie,pp,map);
+                        attaque_allie(we,he,event,renderer,Nennemi,combat,allie,pp,map);
 
                         //passif Ada en mode cauchemar, elle peut jouer 2 fois de suite (attente de 2 tour)
                         if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3 && attenteAda==0){
-                            attaque_allie(we,he,event,renderer,ennemi,combat->combattant[combat->indice_combattant],Nennemi,combat,allie,pp,map);
+                            attaque_allie(we,he,event,renderer,Nennemi,combat,allie,pp,map);
                             attenteAda=2;
                         }
                         else if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3){
@@ -1205,6 +1243,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         alexMortEnnemi=1;
                     }
                 }
+                
                 //compte le nombre d'allie dans l'equipe
                 for(j=0;j<nb_combattant;j++){
                     if(combat->combattant[j]->pv<=0 && combat->combattant[j]->mort==0){
@@ -1250,8 +1289,12 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         i++;
                     }
                 }
+                if(allie!=0){
+                    affichage_combat(we,he,renderer,combat,0,pp,map);
+                }
 
-                affichage_combat(we,he,renderer,combat,0,pp,map);
+                
+                
                 SDL_Delay(500);
 
                 
@@ -1278,13 +1321,15 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                             map->Nightmare=0;
                             pp->Nightmare=0;
                             pp->NightP=pp->NightMax/2;
-                            map->argent+=10;
+                            
+                            
                         }
                         //vide la barre de cauchemar
                         else{
                             pp->NightP=0;
                         
                         }
+                        map->argent+=10;
                         map->nvEquipe+=1;
                     }
                 }
@@ -1309,12 +1354,22 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         for(i=0;i<combat->nb_allie;i++){
             desctruction_combattant(tabAllie[i]);
         }
+        
         desctruction_combat(combat);
         
     }
     return 0;
 }
 
+/**
+*
+*\fn void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie)
+*\param combattant structure combattant 
+*\param combattantcopie structure combattant copier
+*\brief fonction qui copie un combattant dans un autre
+*/
+
+//fonction qui copie un combattant dans un autre
 void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie){
     combattantcopie->mort=combattant->mort ;
     combattantcopie->pv=combattant->pv ;
@@ -1336,6 +1391,17 @@ void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie)
     combattant->forme=combattantcopie->forme;
 }
 
+
+/**
+*
+*\fn void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map)
+*\param pmv structure du personnage jouer
+*\param renderer rendu de la fenetre
+*\param map structure de la map
+*\brief fonction qui affiche la barre de cauchemar
+*/
+
+//fonction qui affiche la barre de cauchemar
 void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){
         //Variable Night
     int xn = 10;
@@ -1360,7 +1426,18 @@ void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){
 
 }
 
+/**
+*
+*\fn void  affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map_t * map)
+*\param we Largeur de la fenetre 
+*\param he hauteur de la fenetre
+*\param combattant structure du combattant
+*\param renderer rendu de la fenetre
+*\param map structure de la map
+*\brief fonction qui affiche la barre de vie
+*/
 
+//fonction qui affiche la barre de vie
 void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map_t * map){
     //Variable PV
 
@@ -1423,6 +1500,23 @@ void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map
 
 }
 
+
+/**
+*
+*\fn void  soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we,int * he,int allie,SDL_Event event,p_mv * personnage,map_t * map)
+*\param combat structure combat
+*\param r_basEcran renctangle bas de l'ecran
+*\param renderer rendu de la fenetre
+*\param we Largeur de la fenetre 
+*\param he hauteur de la fenetre
+*\param allie nombre d'allie encore en vie 
+*\param envent evenement
+*\param personnage structure du personnage jouer
+*\param map structure de la map
+*\brief fonction qui s'accupe des soins des allies
+*/
+
+//fonction qui s'accupe des soins des allies
 void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we,int * he,int allie,SDL_Event event,p_mv * personnage,map_t * map){
     int jouer=1;
     SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};

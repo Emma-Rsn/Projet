@@ -133,19 +133,29 @@ int main(){
     Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
     obj_t * ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,Slime1);
     map.tabMap[2][3].tabObj[0] = ObjSlime1;
-    map.tabMap[2][3].nbObj = 1;
+
+        ennemi_t * Slime2 = init_ennemi("Boss",1,10,1,11,10,2,1,10,3);
+    Slime2->combattant[1] = init_combattant("Lute2",1,10,1,11,10,3,1,10,0);
+    obj_t * ObjSlime2 = init_obj(&map.tabMap[5][5].grille.tabGrille[3][2],10,2,Slime2);
+    map.tabMap[2][3].tabObj[1] = ObjSlime2;
+
+    map.tabMap[2][3].nbObj = 2;
 
     int tN = 0;
     load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
+    int k;
+
+    map.listeArtefact[0]=init_artefact("artefact1",0,"artefact qui augmente la force",0,10,10);
+    for(k=1;k<10;k++){
+        map.listeArtefact[k]=init_artefact("artefact2",0,"artefact qui augmente la vitesse",k,10,10);
+    }
+
+  
 
 
-
-<<<<<<< HEAD
     load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
-    printf("la misere4 test %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
 
-=======
->>>>>>> 65c78c152b2dcfb6fb1135e22b3a2978bbbfe18c
+
 
     //fin temporaire
 
@@ -310,11 +320,6 @@ int main(){
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
         
         //Commence un combat
-<<<<<<< HEAD
-        printf("la misere4 %d\n",((ennemi_t *)(map.tabMap[2][3].tabObj[2].tabObj[0]))->combat);
-        printf("la misere666 %d\n",((ennemi_t *)(cartec->tabObj[2].tabObj[0]))->combat);
-=======
->>>>>>> 65c78c152b2dcfb6fb1135e22b3a2978bbbfe18c
         combat_carte(cartec,wEcran,hEcran,event,renderer,pAlex,&map);
 
 
@@ -346,6 +351,10 @@ int main(){
     free(toucheDeplacement);
 
     Mix_FreeMusic(gMusic);
+
+    for(i=0;i<10;i++){
+        destruction_artefact(map.listeArtefact[i]);
+    }
 
     
 

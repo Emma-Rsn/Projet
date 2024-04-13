@@ -770,9 +770,19 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
 
         SDL_RenderClear(renderer);
         SDL_Color textColor = {255, 255, 255};
+        SDL_Color textColorGris = {50, 50, 50};
+        SDL_Color couleuractuel=textColor;
+        
+
+        /*
+        *
+        *HAUT DE L'ECRAN
+        *
+        */
 
 
 
+        SDL_Rect  r_HEcran= {0,0,*we,(*he)/8};
 
         //chargement de la police d'écriture
         TTF_Font* fontT = TTF_OpenFont("fonts/alagard.ttf", 75);
@@ -793,7 +803,7 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
  
         SDL_Texture* textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
 
-        SDL_Rect  r_text_T= {((*we)/2)-((textSurfaceT->w)/2),textSurfaceT->h,textSurfaceT->w,textSurfaceT->h};
+        SDL_Rect  r_text_T= {((*we)/2)-((textSurfaceT->w)/2),(r_HEcran.h/2)-(textSurfaceT->h/2),textSurfaceT->w,textSurfaceT->h};
         SDL_FreeSurface(textSurfaceT);
 
         if(SDL_QueryTexture(textTextureT,NULL,NULL,&r_text_T.w,&r_text_T.h)!=0){
@@ -807,30 +817,26 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
         fontT=NULL;
 
 
-                //chargement de la police d'écriture
-        TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 50);
+
+
+        
+
+
+    /*
+    *
+    *BAS ECRAN
+    * 
+    */
+
+
+        //chargement de la police d'écriture
+         TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 50);
         if (!font) {
             //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
             return -1;
         }
 
-
-        char *texte = malloc(20);
-        snprintf(texte, 20, "Argents : %d", map->argent);
-
-        SDL_Surface* textSurface = TTF_RenderText_Blended(font,texte, textColor);
-        if (!textSurface) {
-            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
-            TTF_CloseFont(font);
-            return -1;
-        }
-
-        SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-
-
-
-
-        SDL_Surface* textSurfaceQ = TTF_RenderText_Solid(font,"Quitter", textColor);
+        SDL_Surface* textSurfaceQ = TTF_RenderText_Solid(font,"Retour", textColor);
         if (!textSurfaceQ) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
@@ -838,49 +844,14 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
         }
 
         SDL_Texture* textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
-        
-
-        SDL_Surface* textSurfaceC = TTF_RenderText_Solid(font,"Rejouer", textColor);
-        if (!textSurfaceC) {
-            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
-            TTF_CloseFont(font);
-            SDL_FreeSurface(textSurfaceQ);
-            return -1;
-        }
-
-        SDL_Texture* textTextureC = SDL_CreateTextureFromSurface(renderer, textSurfaceC);
-        
-
-        
-
-
-        SDL_Surface* textSurfaceN = TTF_RenderText_Solid(font,"Magasin", textColor);
-        if (!textSurfaceN) {
-            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
-            TTF_CloseFont(font);
-            SDL_FreeSurface(textSurfaceQ);
-            SDL_FreeSurface(textSurfaceC);
-            return -1;
-        }
-        
-        SDL_Texture* textTextureN = SDL_CreateTextureFromSurface(renderer, textSurfaceN);
-
-        TTF_CloseFont(font);
-        font=NULL;
-
 
         //creation rectangle pour les textes
 
         SDL_Rect  r_text_Q= {((*we)/2)-((textSurfaceQ->w)/2),(*he/4)*4-textSurfaceQ->h-100,textSurfaceQ->w,textSurfaceQ->h};
-        SDL_Rect  r_text_N= {((*we)/2)-((textSurfaceN->w)/2),(*he/4)*2-textSurfaceN->h+50,textSurfaceN->w,textSurfaceN->h};
-        SDL_Rect  r_text_C= {((*we)/2)-((textSurfaceC->w)/2),(*he/4)*3-textSurfaceC->h,textSurfaceC->w,textSurfaceC->h};
-        SDL_Rect  r_text_A= {(*we)+100,*he+textSurface->h+100,textSurface->w,textSurface->h};
         
-
-        SDL_FreeSurface(textSurfaceC);
+        
         SDL_FreeSurface(textSurfaceQ);
-        SDL_FreeSurface(textSurfaceN);
-        SDL_FreeSurface(textSurface);
+        
 
 
         if(SDL_QueryTexture(textTextureQ,NULL,NULL,&r_text_Q.w,&r_text_Q.h)!=0){
@@ -888,77 +859,331 @@ int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_
                 return -1;          
         }
 
-        if(SDL_QueryTexture(textTextureC,NULL,NULL,&r_text_C.w,&r_text_C.h)!=0){
-                printf("Impossible de charger le texte\n");
-                return -1;
-        }
+        TTF_CloseFont(font);
+        font=NULL;
 
-
-
-        if(SDL_QueryTexture(textTextureN,NULL,NULL,&r_text_N.w,&r_text_N.h)!=0){
-                printf("Impossible de charger le texte\n");
-                return -1;
-            
-        }
-        if(SDL_QueryTexture(textTexture,NULL,NULL,&r_text_A.w,&r_text_A.h)!=0){
-                printf("Impossible de charger le texte\n");
-                return -1;
-            
-        }
 
         
 
-            int etat=1;
-            while(etat){
+        
 
-                while (SDL_PollEvent(&event) != 0 ) {
+        int etat=1;
+        while(etat){
+
+            /*
+            *
+            *ARGENT
+            * 
+            */
+            //chargement de la police d'écriture
+            font = TTF_OpenFont("fonts/alagard.ttf", 30);
+            if (!font) {
+                //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+                return -1;
+            }
+
+
+            char *texte = malloc(20);
+            snprintf(texte, 20, "Argents : %d", map->argent);
+
+            SDL_Surface* textSurface = TTF_RenderText_Blended(font,texte, textColor);
+            if (!textSurface) {
+                fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                TTF_CloseFont(font);
+                return -1;
+            }
+
+            SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+            SDL_Rect  r_text_A= {10,r_HEcran.h/2-textSurface->h/2,textSurface->w,textSurface->h};
+            SDL_FreeSurface(textSurface);
+
+            if(SDL_QueryTexture(textTexture,NULL,NULL,&r_text_A.w,&r_text_A.h)!=0){
+                    printf("Impossible de charger le texte\n");
+                    return -1;
+                
+            }
+        
+            
+            
+            SDL_RenderClear(renderer);
+            SDL_SetRenderDrawColor(renderer,0,150,0,255);
+
+            SDL_RenderFillRect(renderer, &r_HEcran);
+
+            SDL_Rect  r_BEcran={0,r_text_Q.y,*we,r_text_Q.h};
+            SDL_RenderFillRect(renderer, &r_BEcran);
+            
+
+                    int i,j,k;
+            SDL_SetRenderDrawColor(renderer,150,150,150,255);
+
+            for(i=1;i<=4;i++){
+                    //boucle pour afficher les 4 emplacements d'artefact en haut a gauche
+                SDL_Rect  r_emplacement= {((*we)-((r_HEcran.h-(r_HEcran.h/4))*i))-(10*i),(r_HEcran.h/4)-(r_HEcran.h/4)/2,r_HEcran.h-(r_HEcran.h/4),r_HEcran.h-(r_HEcran.h/4)};
+                SDL_RenderFillRect(renderer, &r_emplacement);
+
+            }
+            
+            
+
+
+                //afficher les carres des artefacts adegauche
+                SDL_Rect  r_artefactGauche1={(*we)/8,r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*0+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactGauche2={(*we)/8,r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*1+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactGauche3={(*we)/8,r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*2+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactGauche4={(*we)/8,r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*3+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactGauche5={(*we)/8,r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*4+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                
+               
+               
+               
+                //SDL_RenderFillRect(renderer, &r_artefactGauche);
+                SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[0]->indice_texture], NULL, &r_artefactGauche1);
+                SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[1]->indice_texture], NULL, &r_artefactGauche2);
+                SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[2]->indice_texture], NULL, &r_artefactGauche3);
+                SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[3]->indice_texture], NULL, &r_artefactGauche4);
+                SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[4]->indice_texture], NULL, &r_artefactGauche5);
+                
+
+                //afficher les carres des artefacts de droite
+                SDL_Rect  r_artefactDroit1={(*we)-((*we)/8*3),r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*0+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactDroit2={(*we)-((*we)/8*3),r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*1+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactDroit3={(*we)-((*we)/8*3),r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*2+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactDroit4={(*we)-((*we)/8*3),r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*3+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+                SDL_Rect  r_artefactDroit5={(*we)-((*we)/8*3),r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*4+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100,((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100};
+              
+               SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[5]->indice_texture], NULL, &r_artefactDroit1);
+               SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[6]->indice_texture], NULL, &r_artefactDroit2);
+               SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[7]->indice_texture], NULL, &r_artefactDroit3);
+               SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[8]->indice_texture], NULL, &r_artefactDroit4);
+               SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[9]->indice_texture], NULL, &r_artefactDroit5);
+               
+               //((*we)-(((*we)-(r_artefactGauche.w+r_artefactGauche.x))/2))-(((r_text_Q.y-r_HEcran.h)/5)-((r_text_Q.y-r_HEcran.h)/5)*10/100)/2  Le X
+               
+                //SDL_RenderFillRect(renderer, &r_artefactDroit);
+                SDL_RenderCopy(renderer,  map->tabTexture[map->listeArtefact[i]->indice_texture], NULL, &r_artefactDroit1);
+
+
+                for(j=0,k=5;j<5 && k<10;j++,k++){
+                    if(map->listeArtefact[j]->possession==1){
+                        couleuractuel=textColorGris;
+                    }
+                    else{
+                        couleuractuel=textColor;
+                    }
+                /*
+                *
+                *NOM DES ARTEFACTS
+                *
+                */
+
+                //afficher le nom des artefacts de gauche
+                SDL_Surface* textSurfaceArtG = TTF_RenderText_Solid(font,map->listeArtefact[j]->nom, couleuractuel);
+                if (!textSurfaceArtG) {
+                    fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                    TTF_CloseFont(font);
+                    return -1;
+                }
+
+                SDL_Texture* textTextureArtG = SDL_CreateTextureFromSurface(renderer, textSurfaceArtG);
+
+                SDL_Rect  r_text_ArtG= {((r_artefactDroit1.x)-((r_artefactDroit1.x)-(r_artefactGauche1.x+r_artefactGauche1.w))/2)-textSurfaceArtG->w/2,r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*j+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,textSurfaceArtG->w,textSurfaceArtG->h};
+                    
+                SDL_FreeSurface(textSurfaceArtG);
+                if(SDL_QueryTexture(textTextureArtG,NULL,NULL,&r_text_ArtG.w,&r_text_ArtG.h)!=0){
+                        printf("Impossible de charger le texte\n");
+                        return -1;
+                }
+                SDL_RenderCopy(renderer, textTextureArtG, NULL, &r_text_ArtG);
+                SDL_DestroyTexture(textTextureArtG);
+
+                if(map->listeArtefact[k]->possession==1){
+                        couleuractuel=textColorGris;
+                    }
+                    else{
+                        couleuractuel=textColor;
+                    }
+
+
+                //afficher le nom des artefacts de droite
+                SDL_Surface* textSurfaceArtD = TTF_RenderText_Solid(font,map->listeArtefact[k]->nom, couleuractuel);
+                if (!textSurfaceArtD) {
+                    fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                    TTF_CloseFont(font);
+                    return -1;
+                }
+
+                SDL_Texture* textTextureArtD = SDL_CreateTextureFromSurface(renderer, textSurfaceArtD);
+
+                SDL_Rect  r_text_ArtD= {((*we)-((*we)-(r_artefactDroit1.x+r_artefactDroit1.w))/2)-textSurfaceArtD->w/2,r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*j+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2,textSurfaceArtD->w,textSurfaceArtD->h};
+                    
+                SDL_FreeSurface(textSurfaceArtD);
+                if(SDL_QueryTexture(textTextureArtD,NULL,NULL,&r_text_ArtD.w,&r_text_ArtD.h)!=0){
+                        printf("Impossible de charger le texte\n");
+                        return -1;
+                }
+                SDL_RenderCopy(renderer, textTextureArtD, NULL, &r_text_ArtD);
+                SDL_DestroyTexture(textTextureArtD);
+
+                /*
+                *
+                *DESCRPTIF DES ARTEFACTS
+                *
+                */
+               if(map->listeArtefact[j]->possession==1){
+                        couleuractuel=textColorGris;
+                    }
+                    else{
+                        couleuractuel=textColor;
+                    }
+                //afficher le descrptif des artefacts de gauche
+                textSurfaceArtG = TTF_RenderText_Solid(font,map->listeArtefact[j]->descriptif, couleuractuel);
+                if (!textSurfaceArtG) {
+                    fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                    TTF_CloseFont(font);
+                    return -1;
+                }
+
+                textTextureArtG = SDL_CreateTextureFromSurface(renderer, textSurfaceArtG);
+
+                SDL_Rect  r_text_ArtGD= {((r_artefactDroit1.x)-((r_artefactDroit1.x)-(r_artefactGauche1.x+r_artefactGauche1.w))/2)-textSurfaceArtG->w/2,(r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*j+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2)+r_text_ArtG.h,textSurfaceArtG->w,textSurfaceArtG->h};
+                    
+                SDL_FreeSurface(textSurfaceArtG);
+                if(SDL_QueryTexture(textTextureArtG,NULL,NULL,&r_text_ArtGD.w,&r_text_ArtGD.h)!=0){
+                        printf("Impossible de charger le texte\n");
+                        return -1;
+                }
+                SDL_RenderCopy(renderer, textTextureArtG, NULL, &r_text_ArtGD);
+                SDL_DestroyTexture(textTextureArtG);
+
+                if(map->listeArtefact[k]->possession==1){
+                        couleuractuel=textColorGris;
+                    }
+                    else{
+                        couleuractuel=textColor;
+                    }
+
+                //afficher le descriptif des artefacts de droite
+                textSurfaceArtD = TTF_RenderText_Solid(font,map->listeArtefact[k]->descriptif, couleuractuel);
+                if (!textSurfaceArtD) {
+                    fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                    TTF_CloseFont(font);
+                    return -1;
+                }
+
+                textTextureArtD = SDL_CreateTextureFromSurface(renderer, textSurfaceArtD);
+
+                SDL_Rect  r_text_ArtDD= {((*we)-((*we)-(r_artefactDroit1.x+r_artefactDroit1.w))/2)-textSurfaceArtD->w/2,(r_HEcran.h+((r_text_Q.y-r_HEcran.h)/5)*j+(((r_text_Q.y-r_HEcran.h)/5)*10/100)-(((r_text_Q.y-r_HEcran.h)/5)*10/100)/2)+r_text_ArtD.h,textSurfaceArtD->w,textSurfaceArtD->h};
+                    
+                SDL_FreeSurface(textSurfaceArtD);
+                if(SDL_QueryTexture(textTextureArtD,NULL,NULL,&r_text_ArtDD.w,&r_text_ArtDD.h)!=0){
+                        printf("Impossible de charger le texte\n");
+                        return -1;
+                }
+                SDL_RenderCopy(renderer, textTextureArtD, NULL, &r_text_ArtDD);
+                SDL_DestroyTexture(textTextureArtD);
+   
+
+            }
+            while (SDL_PollEvent(&event) != 0 ) {
 
                     if(event.type == SDL_MOUSEBUTTONDOWN ){
 
-                        //pour continuer le jeu
-                        if((r_text_C.x<=event.button.x) && ((r_text_C.x+r_text_C.w)>=event.button.x) && ((r_text_C.y+r_text_C.h)>=event.button.y) && (r_text_C.y<=event.button.y)){
+                        //pour quitter le jeu
+                        if((r_text_Q.x<=event.button.x) && ((r_text_Q.x+r_text_Q.w)>=event.button.x) && ((r_text_Q.y+r_text_Q.h)>=event.button.y) && (r_text_Q.y<=event.button.y)){
                             etat=0;
+
+                        } 
+                        if((r_artefactGauche1.x<=event.button.x) && ((r_artefactGauche1.x+r_artefactGauche1.w)>=event.button.x) && ((r_artefactGauche1.y+r_artefactGauche1.h)>=event.button.y) && (r_artefactGauche1.y<=event.button.y) && map->argent>=map->listeArtefact[0]->prix&& map->listeArtefact[0]->possession==0){
+                            map->listeArtefact[0]->possession=1;
+                            map->argent-=map->listeArtefact[0]->prix;
+                            printf("%d\n",map->listeArtefact[0]->possession);
+
+                        }
+                        if((r_artefactGauche2.x<=event.button.x) && ((r_artefactGauche2.x+r_artefactGauche2.w)>=event.button.x) && ((r_artefactGauche2.y+r_artefactGauche2.h)>=event.button.y) && (r_artefactGauche2.y<=event.button.y) && map->argent>=map->listeArtefact[1]->prix && map->listeArtefact[1]->possession==0){
+                            map->listeArtefact[1]->possession=1;
+                            map->argent-=map->listeArtefact[1]->prix;
+                            printf("%d\n",map->listeArtefact[1]->possession);
+
+                        }
+                        if((r_artefactGauche3.x<=event.button.x) && ((r_artefactGauche3.x+r_artefactGauche3.w)>=event.button.x) && ((r_artefactGauche3.y+r_artefactGauche3.h)>=event.button.y) && (r_artefactGauche3.y<=event.button.y) && map->argent>=map->listeArtefact[2]->prix && map->listeArtefact[2]->possession==0){
+                            map->listeArtefact[2]->possession=1;
+                            map->argent-=map->listeArtefact[2]->prix;
+                            printf("%d\n",map->listeArtefact[2]->possession);
+
+                        }
+                        if((r_artefactGauche4.x<=event.button.x) && ((r_artefactGauche4.x+r_artefactGauche4.w)>=event.button.x) && ((r_artefactGauche4.y+r_artefactGauche4.h)>=event.button.y) && (r_artefactGauche4.y<=event.button.y) && map->argent>=map->listeArtefact[3]->prix && map->listeArtefact[3]->possession==0){
+                            map->listeArtefact[3]->possession=1;
+                            map->argent-=map->listeArtefact[3]->prix;
+                            printf("%d\n",map->listeArtefact[3]->possession);
+
+                        }
+                        if((r_artefactGauche5.x<=event.button.x) && ((r_artefactGauche5.x+r_artefactGauche5.w)>=event.button.x) && ((r_artefactGauche5.y+r_artefactGauche5.h)>=event.button.y) && (r_artefactGauche5.y<=event.button.y) && map->argent>=map->listeArtefact[4]->prix && map->listeArtefact[4]->possession==0 ){
+                            map->listeArtefact[4]->possession=1;
+                            map->argent-=map->listeArtefact[4]->prix;
+                            printf("%d\n",map->listeArtefact[4]->possession);
+
+                        }
+                        if((r_artefactDroit1.x<=event.button.x) && ((r_artefactDroit1.x+r_artefactDroit1.w)>=event.button.x) && ((r_artefactDroit1.y+r_artefactDroit1.h)>=event.button.y) && (r_artefactDroit1.y<=event.button.y) && map->argent>=map->listeArtefact[5]->prix&& map->listeArtefact[5]->possession==0){
+                            map->listeArtefact[5]->possession=1;
+                            map->argent-=map->listeArtefact[5]->prix;
+                            printf("%d\n",map->listeArtefact[6]->possession);
+
+                        }
+                        if((r_artefactDroit2.x<=event.button.x) && ((r_artefactDroit2.x+r_artefactDroit2.w)>=event.button.x) && ((r_artefactDroit2.y+r_artefactDroit2.h)>=event.button.y) && (r_artefactDroit2.y<=event.button.y) && map->argent>=map->listeArtefact[6]->prix && map->listeArtefact[6]->possession==0){
+                            map->listeArtefact[6]->possession=1;
+                            map->argent-=map->listeArtefact[6]->prix;
+                            printf("%d\n",map->listeArtefact[6]->possession);
+
+                        }
+                        if((r_artefactDroit3.x<=event.button.x) && ((r_artefactDroit3.x+r_artefactDroit3.w)>=event.button.x) && ((r_artefactDroit3.y+r_artefactDroit3.h)>=event.button.y) && (r_artefactDroit3.y<=event.button.y) && map->argent>=map->listeArtefact[7]->prix && map->listeArtefact[7]->possession==0){
+                            map->listeArtefact[7]->possession=1;
+                            map->argent-=map->listeArtefact[7]->prix;
+                            printf("%d\n",map->listeArtefact[7]->possession);
+
+                        }
+                        if((r_artefactDroit4.x<=event.button.x) && ((r_artefactDroit4.x+r_artefactDroit4.w)>=event.button.x) && ((r_artefactDroit4.y+r_artefactDroit4.h)>=event.button.y) && (r_artefactDroit4.y<=event.button.y) && map->argent>=map->listeArtefact[8]->prix && map->listeArtefact[8]->possession==0){
+                            map->listeArtefact[8]->possession=1;
+                            map->argent-=map->listeArtefact[8]->prix;
+                            printf("%d\n",map->listeArtefact[8]->possession);
+
+                        }
+                        if((r_artefactDroit5.x<=event.button.x) && ((r_artefactDroit5.x+r_artefactDroit5.w)>=event.button.x) && ((r_artefactDroit5.y+r_artefactDroit5.h)>=event.button.y) && (r_artefactDroit5.y<=event.button.y) && map->argent>=map->listeArtefact[9]->prix && map->listeArtefact[9]->possession==0 ){
+                            map->listeArtefact[9]->possession=1;
+                            map->argent-=map->listeArtefact[9]->prix;
+                            printf("%d\n",map->listeArtefact[9]->possession);
+
                         }
 
-                        //pour quitter le jeu
-                        else if((r_text_Q.x<=event.button.x) && ((r_text_Q.x+r_text_Q.w)>=event.button.x) && ((r_text_Q.y+r_text_Q.h)>=event.button.y) && (r_text_Q.y<=event.button.y)){
-                            etat=0;
-                            *run=0;
-                        }
-                        //Pour aller au magasin
-                        else if((r_text_N.x<=event.button.x) && ((r_text_N.x+r_text_N.w)>=event.button.x) && ((r_text_N.y+r_text_N.h)>=event.button.y) && (r_text_N.y<=event.button.y)){
-                            etat=0;
-                        }  
+                        
+                        
         
                                             
                     }           
                 }
-        
+            
+
             SDL_SetRenderDrawColor(renderer,0,0,0,255);
-            
-            SDL_RenderClear(renderer);
-
-            
             SDL_RenderCopy(renderer, textTextureQ, NULL, &r_text_Q);
-            SDL_RenderCopy(renderer, textTextureC, NULL, &r_text_C);
             SDL_RenderCopy(renderer, textTextureT, NULL, &r_text_T);
-            SDL_RenderCopy(renderer, textTextureN, NULL, &r_text_N);
             SDL_RenderCopy(renderer, textTexture, NULL, &r_text_A);
-
+            SDL_DestroyTexture(textTexture);
+            free(texte);
 
             SDL_RenderPresent(renderer);
             SDL_Delay(100);
       
             }
-
+            TTF_CloseFont(font);
+            font=NULL;
+        //destruction des texture
         SDL_DestroyTexture(textTextureQ);
-        SDL_DestroyTexture(textTextureC);
         SDL_DestroyTexture(textTextureT);
-        SDL_DestroyTexture(textTextureN);
-        SDL_DestroyTexture(textTexture);
+        
 
         SDL_RenderPresent(renderer);
-        free(texte);
+        
         
         
 
