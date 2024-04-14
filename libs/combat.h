@@ -14,7 +14,7 @@
 *\param temps_recharge le temps de recharge du combattant
 *\param temps_recharge_max le temps de recharge qu'il faut atteindre pour avoir son attaque special
 *\param indice_portrait l'indice du portrait qu'on lit dans un fichier
-*\param indice_sprite vitesse du combattant
+*\param indice_sprite l'indice du sprite qu'on lit dans un fichier
 *\param type les differente attaque special (0=une attaque puissante sur une cible,1=fait passer le tour a un ennemi,2=soigne le combattant choisi,3=attaque toute les personnes pas dans son camp)
 *\param status status du combattant (0=aucun effet,1=passe son tour)
 *\param puissance force d'attaque du combattant

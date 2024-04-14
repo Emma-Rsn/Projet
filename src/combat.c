@@ -7,7 +7,7 @@
 /**
 *\file combat.c
 *\brief Programme qui s'occupe du combat
-*\author Pasquier Lina 
+*\author Pasquier Lina Moreau Enzo
 *\date 15 Fevrier 2024
 *\version 1.0
 */
@@ -296,67 +296,65 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
 *\brief fonction d'attaque de l'ennemi 
 */
 //fonction d'attaque de l'ennemi 
-int attaque_ennemi(int nb_combattant,combat_t * combat){
+int attaque_ennemi(int nb_combattant, combat_t * combat) {
 
-  int indice=0;
-  indice=forme_attaque(nb_combattant,combat);
-    combat->allie[indice]->pv-=100000;
-  
+    int indice = 0;
+    indice = forme_attaque(nb_combattant, combat);
+    combat -> allie[indice] -> pv -= 100000;
 
     //attaque special des ennemis
-    if(combat->combattant[combat->indice_combattant]->temps_recharge==combat->combattant[combat->indice_combattant]->temps_recharge_max){
+    if (combat -> combattant[combat -> indice_combattant] -> temps_recharge == combat -> combattant[combat -> indice_combattant] -> temps_recharge_max) {
         //Attaque puissante sur un allie
-        if(combat->combattant[combat->indice_combattant]->type==0){
-            indice=forme_attaque(nb_combattant,combat);
-            
-            combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance*2;
+        if (combat -> combattant[combat -> indice_combattant] -> type == 0) {
+            indice = forme_attaque(nb_combattant, combat);
+
+            combat -> allie[indice] -> pv -= combat -> combattant[combat -> indice_combattant] -> puissance * 2;
 
         }
         //soigne un ennemi au hasard
-        else if (combat->combattant[combat->indice_combattant]->type==2){
+        else if (combat -> combattant[combat -> indice_combattant] -> type == 2) {
             //recupere l'indice d'un ennemi pour le soigner
-            int i=0;
-            int min=combat->ennemi[i]->pv;
-            for(i=1;i<combat->nb_ennemi;i++){
-                if((min>combat->ennemi[i]->pv && combat->ennemi[i]->pv>0) || min==0){
-                    min=combat->ennemi[i]->pv;
-                    indice=i;
+            int i = 0;
+            int min = combat -> ennemi[i] -> pv;
+            for (i = 1; i < combat -> nb_ennemi; i++) {
+                if ((min > combat -> ennemi[i] -> pv && combat -> ennemi[i] -> pv > 0) || min == 0) {
+                    min = combat -> ennemi[i] -> pv;
+                    indice = i;
                 }
             }
 
-            combat->ennemi[indice]->pv+=combat->combattant[combat->indice_combattant]->pvMax*0.1;
+            combat -> ennemi[indice] -> pv += combat -> combattant[combat -> indice_combattant] -> pvMax * 0.1;
 
         }
         //Fait passer le tour d'un allie
-        else if (combat->combattant[combat->indice_combattant]->type==1){
-            indice=forme_attaque(nb_combattant,combat);
-            combat->allie[indice]->status=1;
+        else if (combat -> combattant[combat -> indice_combattant] -> type == 1) {
+            indice = forme_attaque(nb_combattant, combat);
+            combat -> allie[indice] -> status = 1;
         }
         //fait des degats a tous les allies
-        else if(combat->combattant[combat->indice_combattant]->type==3){
+        else if (combat -> combattant[combat -> indice_combattant] -> type == 3) {
             int i;
-            for(i=0;i<combat->nb_allie;i++){
-                combat->allie[i]->pv-=combat->combattant[combat->indice_combattant]->puissance;
+            for (i = 0; i < combat -> nb_allie; i++) {
+                combat -> allie[i] -> pv -= combat -> combattant[combat -> indice_combattant] -> puissance;
             }
         }
-        combat->combattant[combat->indice_combattant]->temps_recharge=0;
-    //attaque de base des ennemis
-    }else{
-        indice=forme_attaque(nb_combattant,combat);
-        combat->allie[indice]->pv-=combat->combattant[combat->indice_combattant]->puissance;
-        combat->combattant[combat->indice_combattant]->temps_recharge++;
+        combat -> combattant[combat -> indice_combattant] -> temps_recharge = 0;
+        //attaque de base des ennemis
+    } else {
+        indice = forme_attaque(nb_combattant, combat);
+        combat -> allie[indice] -> pv -= combat -> combattant[combat -> indice_combattant] -> puissance;
+        combat -> combattant[combat -> indice_combattant] -> temps_recharge++;
     }
 
     //passif de ennemi Finn, soigne un peu tout les ennemis a son tour
-    if(combat->combattant[combat->indice_combattant]->type==2 && combat->combattant[combat->indice_combattant]->forme==3){
-        int k=0;
-        for(k=0;k<combat->nb_ennemi;k++){
-            if(combat->ennemi[k]->mort==0)
-                combat->ennemi[k]->pv+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
+    if (combat -> combattant[combat -> indice_combattant] -> type == 2 && combat -> combattant[combat -> indice_combattant] -> forme == 3) {
+        int k = 0;
+        for (k = 0; k < combat -> nb_ennemi; k++) {
+            if (combat -> ennemi[k] -> mort == 0)
+                combat -> ennemi[k] -> pv += combat -> combattant[combat -> indice_combattant] -> pvMax * 5 / 100;
         }
     }
-    
-    
+
     return 0;
 }
 
@@ -368,68 +366,68 @@ int attaque_ennemi(int nb_combattant,combat_t * combat){
 *\brief fonction qui donne l'indice de la personne attaque par rapport a la forme de l'ennemi
 */
 //fonction qui donne l'indice de la personne attaque par rapport a la forme de l'ennemi
-int forme_attaque(int nb_combattant,combat_t * combat){
+int forme_attaque(int nb_combattant, combat_t * combat) {
     //ennemi de petite taille (slime) attaque l'allie qui a le moins de pv
-        if(combat->combattant[combat->indice_combattant]->forme==0){
-            //recupere l'allie qui a le moins de pv
-            int i=0;
-            int indice=0;
-            int min=combat->allie[i]->pv;
-            for(i=1;i<combat->nb_allie;i++){
-                if((min>combat->allie[i]->pv && combat->allie[i]->pv>0) || min==0){
-                    min=combat->allie[i]->pv;
-                    indice=i;
-                }
+    if (combat -> combattant[combat -> indice_combattant] -> forme == 0) {
+        //recupere l'allie qui a le moins de pv
+        int i = 0;
+        int indice = 0;
+        int min = combat -> allie[i] -> pv;
+        for (i = 1; i < combat -> nb_allie; i++) {
+            if ((min > combat -> allie[i] -> pv && combat -> allie[i] -> pv > 0) || min == 0) {
+                min = combat -> allie[i] -> pv;
+                indice = i;
             }
-            return indice;
         }
+        return indice;
+    }
 
-        //ennemi de moyenne taille (?) attaque l'allie qui a le moins de pv max
-        if(combat->combattant[combat->indice_combattant]->forme==1){
-            //recupere l'allie qui a le moins de pv max
-            int i=0;
-            int indice=0;
-            int min=combat->allie[i]->pvMax;
-            for(i=1;i<combat->nb_allie;i++){
-                if((min>combat->allie[i]->pvMax && combat->allie[i]->pv>0) || min==0){
-                    min=combat->allie[i]->pvMax;
-                    indice=i;
-                }
+    //ennemi de moyenne taille (?) attaque l'allie qui a le moins de pv max
+    if (combat -> combattant[combat -> indice_combattant] -> forme == 1) {
+        //recupere l'allie qui a le moins de pv max
+        int i = 0;
+        int indice = 0;
+        int min = combat -> allie[i] -> pvMax;
+        for (i = 1; i < combat -> nb_allie; i++) {
+            if ((min > combat -> allie[i] -> pvMax && combat -> allie[i] -> pv > 0) || min == 0) {
+                min = combat -> allie[i] -> pvMax;
+                indice = i;
             }
-            return indice;
         }
+        return indice;
+    }
 
-        //ennemi de grande taille (?) attaque l'allie qui a le plus de PV
-        if(combat->combattant[combat->indice_combattant]->forme==2){
-            //recupere l'allie qui a le plus de pv 
-            int i=0;
-            int indice=0;
-            int max=combat->allie[i]->pv;
-            for(i=1;i<combat->nb_allie;i++){
-                if(max<combat->allie[i]->pv && combat->allie[i]->pv>0){
-                    max=combat->allie[i]->pv;
-                    indice=i;
-                }
+    //ennemi de grande taille (?) attaque l'allie qui a le plus de PV
+    if (combat -> combattant[combat -> indice_combattant] -> forme == 2) {
+        //recupere l'allie qui a le plus de pv 
+        int i = 0;
+        int indice = 0;
+        int max = combat -> allie[i] -> pv;
+        for (i = 1; i < combat -> nb_allie; i++) {
+            if (max < combat -> allie[i] -> pv && combat -> allie[i] -> pv > 0) {
+                max = combat -> allie[i] -> pv;
+                indice = i;
             }
-            return indice;
         }
+        return indice;
+    }
 
-        //ennemi de boss taille (?) attaque l'allie qui a le plus de pv max
-        if(combat->combattant[combat->indice_combattant]->forme==3){
-            //recupere l'allie qui a le plus de pv max
-            int i=0;
-            int indice=0;
-            int max=combat->allie[i]->pvMax;
-            for(i=1;i<combat->nb_allie;i++){
-                if(max<combat->allie[i]->pvMax && combat->allie[i]->pv>0){
-                    max=combat->allie[i]->pvMax;
-                    indice=i;
-                }
+    //ennemi de boss taille (?) attaque l'allie qui a le plus de pv max
+    if (combat -> combattant[combat -> indice_combattant] -> forme == 3) {
+        //recupere l'allie qui a le plus de pv max
+        int i = 0;
+        int indice = 0;
+        int max = combat -> allie[i] -> pvMax;
+        for (i = 1; i < combat -> nb_allie; i++) {
+            if (max < combat -> allie[i] -> pvMax && combat -> allie[i] -> pv > 0) {
+                max = combat -> allie[i] -> pvMax;
+                indice = i;
             }
-            return indice;
-            
         }
-        return 0;
+        return indice;
+
+    }
+    return 0;
 
 }
 
@@ -447,319 +445,303 @@ int forme_attaque(int nb_combattant,combat_t * combat){
 //fonction d'affichage du combat
 int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,int etat,p_mv * personnage,map_t * map){
     
-    int j=0;
-    SDL_SetRenderDrawColor(renderer,0,0,0,255);
+    int j = 0;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     //chargement de la police d'écriture
-            TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 50);
-            if (!font) {
-                erreur_sdl("Erreur lors du chargement de la police",NULL,renderer,NULL,NULL);
-                return -1;
+    TTF_Font * font = TTF_OpenFont("fonts/alagard.ttf", 50);
+    if (!font) {
+        erreur_sdl("Erreur lors du chargement de la police", NULL, renderer, NULL, NULL);
+        return -1;
+    }
+
+    /*
+     *
+     *  BAS DE L'ECRAN
+     *
+     */
+
+    SDL_Rect r_basEcran = {0,( * he) - ( * he) / 4,( * we),( * he) / 4};
+
+    SDL_Color textColor = {255,255,255};
+    SDL_Color textColorGris = {50,50,50};
+    SDL_Color couleuractuel = textColor;
+
+    if (combat -> combattant[combat -> indice_combattant] -> temps_recharge < combat -> combattant[combat -> indice_combattant] -> temps_recharge_max && combat -> combattant[combat -> indice_combattant] -> camp == 0) {
+        couleuractuel = textColorGris;
+    }
+
+    char * texte1;
+    char * texte2;
+
+    if (etat == 0) {
+        texte1 = "Attaque";
+        texte2 = "Attaque speciale";
+
+    } else {
+        texte1 = "Soigner";
+        texte2 = " ";
+    }
+
+    //creation du premier texte (Attaque)
+    SDL_Surface * textSurfaceATQ1 = TTF_RenderText_Solid(font, texte1, textColor);
+    if (!textSurfaceATQ1) {
+        erreur_sdl("Erreur lors de la création de la surface de texte\n", NULL, renderer, NULL, NULL);
+        TTF_CloseFont(font);
+        return -1;
+    }
+
+    SDL_Texture * textTextureATQ1 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ1);
+    SDL_Rect r_ATQ1 = {
+        (r_basEcran.w * 40 / 100),
+        (r_basEcran.h * 3) + r_basEcran.h / 2,
+        textSurfaceATQ1 -> w,
+        textSurfaceATQ1 -> h
+    };
+    SDL_FreeSurface(textSurfaceATQ1);
+
+    if (SDL_QueryTexture(textTextureATQ1, NULL, NULL, & r_ATQ1.w, & r_ATQ1.h) != 0) {
+        erreur_sdl("Impossible de charger le texte", NULL, renderer, textTextureATQ1, NULL);
+        return -1;
+    }
+
+    //creation du troisieme texte (Attaque speciale)
+    SDL_Surface * textSurfaceATQ3 = TTF_RenderText_Solid(font, texte2, couleuractuel);
+    if (!textSurfaceATQ3) {
+        erreur_sdl("Erreur lors de la création de la surface de texte", NULL, renderer, textTextureATQ1, NULL);
+        TTF_CloseFont(font);
+        return -1;
+    }
+
+    SDL_Texture * textTextureATQ3 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ3);
+
+    SDL_Rect r_ATQ3 = {
+        (r_basEcran.w * 40 / 100) + (r_basEcran.w * 30 / 100),
+        (r_basEcran.h * 3) + r_basEcran.h / 2,
+        textSurfaceATQ3 -> w,
+        textSurfaceATQ3 -> h
+    };
+    SDL_FreeSurface(textSurfaceATQ3);
+    if (SDL_QueryTexture(textTextureATQ3, NULL, NULL, & r_ATQ3.w, & r_ATQ3.h) != 0) {
+        erreur_sdl("Impossible de charger le texte", NULL, renderer, textTextureATQ3, NULL);
+        return -1;
+    }
+
+    /*
+     *
+     *ECRAN HAUT
+     *
+     */
+
+    SDL_Rect r_hautEcran = {0,0,( * we),56};
+    SDL_Surface * NomSurface;
+
+    if (etat == 0) {
+        //Nom du personnage selectionne
+        NomSurface = TTF_RenderText_Blended(font, combat -> ennemi[combat -> indice_ennemi] -> nom, textColor);
+    } else {
+        NomSurface = TTF_RenderText_Blended(font, combat -> allie[combat -> indice_allie] -> nom, textColor);
+
+    }
+
+    if (!NomSurface) {
+        erreur_sdl("Erreur lors de la création de la surface de texte\n", NULL, renderer, NULL, NULL);
+        TTF_CloseFont(font);
+        return -1;
+
+    }
+    SDL_Texture * NomTexture = SDL_CreateTextureFromSurface(renderer, NomSurface);
+    SDL_Rect NomRect = {
+        r_hautEcran.w / 2 - NomSurface -> w / 2,
+        r_hautEcran.y / 2 + NomSurface -> h / 4,
+        NomSurface -> w,
+        NomSurface -> h
+    };
+    SDL_FreeSurface(NomSurface);
+
+    //numero du tour 
+    char * NumTour = malloc(12);
+    snprintf(NumTour, 12, "Tour : %d", combat -> num_tour);
+
+    SDL_Surface * NumTourSurface = TTF_RenderText_Blended(font, NumTour, textColor);
+    if (!NumTourSurface) {
+        erreur_sdl("Erreur lors de la création de la surface de texte\n", NULL, renderer, NULL, NULL);
+        TTF_CloseFont(font);
+        return -1;
+
+    }
+    SDL_Texture * NumTourTexture = SDL_CreateTextureFromSurface(renderer, NumTourSurface);
+    SDL_Rect NumTourRect = {
+        (r_hautEcran.w / 4) * 3 + NumTourSurface -> w,
+        r_hautEcran.y / 2 + NumTourSurface -> h / 4,
+        NumTourSurface -> w,
+        NumTourSurface -> h
+    };
+    SDL_FreeSurface(NumTourSurface);
+
+    /*
+     *
+     *ECRAN GAUCHE
+     *
+     */
+
+    SDL_Rect r_GEcran = {0,r_hautEcran.h,( * we) / 4,r_basEcran.y};
+
+    /*
+     *
+     *ECRAN DROIT
+     *
+     */
+    SDL_Rect r_DEcran = {( * we) - ( * we) / 4,r_hautEcran.h,( * we), r_basEcran.y};
+
+    /*
+     *
+     *ECRAN FOND
+     *
+     */
+    SDL_Rect r_MEcran = {r_GEcran.w,r_hautEcran.h,r_DEcran.x - r_GEcran.w,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+
+    /*
+     *
+     *AFFICHAGE ENNEMI
+     *
+     */
+
+    while (combat -> allie[j] -> mort == 1) {
+        j++;
+    }
+
+    //creation des rectangles pour l'affichage
+    SDL_Rect r_ennemi = {r_GEcran.w + ((r_DEcran.x - r_GEcran.w) / 2) - 300,r_basEcran.y - 600,600,600};
+
+    /*
+     *
+     *AFFICHAGE TOUR
+     *
+     */
+    int i, nbMort = 0;
+    int nb_combattant = combat -> nb_allie + combat -> nb_ennemi;
+
+    for (j = 0; j < (nb_combattant); j++) {
+        if (combat -> combattant[j] -> pv <= 0) {
+            nbMort++;
+
+        }
+
+    }
+    j = 0;
+
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, map -> tabTexture[28], NULL, & r_MEcran);
+
+    SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
+
+    if ((nb_combattant - nbMort) % 2 == 0) {
+        //affichage des combattant en haut pour savoir qui joue dans le cas paire
+        for (i = 0, j = 0; i < nb_combattant - nbMort; i++, j++) {
+
+            //passe au combattant suivant si il est mort
+            while (combat -> combattant[j] -> mort == 1) {
+                j++;
             }
 
-            /*
-            *
-            *  BAS DE L'ECRAN
-            *
-            */
-
-            SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
-
-                SDL_Color textColor = {255, 255, 255};
-                SDL_Color textColorGris = {50, 50, 50};
-                SDL_Color couleuractuel=textColor;
-
-            if(combat->combattant[combat->indice_combattant]->temps_recharge<combat->combattant[combat->indice_combattant]->temps_recharge_max && combat->combattant[combat->indice_combattant]->camp==0){
-                couleuractuel=textColorGris;
+            SDL_Rect r1 = {
+                r_GEcran.w + ((r_DEcran.x - r_GEcran.w) / 8) * i + (((r_DEcran.x - r_GEcran.w) / 8)) * ((8 - (nb_combattant - nbMort)) / 2),
+                r_hautEcran.h,
+                (r_DEcran.x - r_GEcran.w) / 8,
+                100
+            };
+            if (j == combat -> indice_combattant) {
+                SDL_RenderDrawRect(renderer, & r1);
             }
-            
-            char * texte1;
-            char * texte2;
+            if (map -> Nightmare && combat -> combattant[j] -> forme != 3) {
+                SDL_RenderCopy(renderer, map -> tabTexture[combat -> combattant[j] -> indice_sprite + map -> nbN], NULL, & r1);
 
-            if(etat==0){
-                texte1="Attaque";
-                texte2="Attaque speciale";
-            
-
-            }
-            else {
-                texte1="Soigner";
-                texte2=" ";
-            }
-
-                //creation du premier texte (Attaque)
-                SDL_Surface * textSurfaceATQ1 = TTF_RenderText_Solid(font,texte1, textColor);
-                if (!textSurfaceATQ1) {
-                    erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,NULL,NULL);
-                    TTF_CloseFont(font);
-                    return -1;
-                }
-
-                SDL_Texture *  textTextureATQ1= SDL_CreateTextureFromSurface(renderer, textSurfaceATQ1);
-                SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,textSurfaceATQ1->w,textSurfaceATQ1->h};
-                SDL_FreeSurface(textSurfaceATQ1);
-
-                    if(SDL_QueryTexture(textTextureATQ1,NULL,NULL,&r_ATQ1.w,&r_ATQ1.h)!=0){
-                        erreur_sdl("Impossible de charger le texte",NULL,renderer,textTextureATQ1,NULL);
-                        return -1;          
-                }
-
-
-
-                //creation du troisieme texte (Attaque speciale)
-                SDL_Surface * textSurfaceATQ3 = TTF_RenderText_Solid(font,texte2, couleuractuel);
-                if (!textSurfaceATQ3) {
-                    erreur_sdl("Erreur lors de la création de la surface de texte",NULL,renderer,textTextureATQ1,NULL);
-                    TTF_CloseFont(font);
-                    return -1;
-                }
-                
-                SDL_Texture * textTextureATQ3 = SDL_CreateTextureFromSurface(renderer, textSurfaceATQ3);
-
-                SDL_Rect r_ATQ3={(r_basEcran.w*40/100)+(r_basEcran.w*30/100),(r_basEcran.h*3)+r_basEcran.h/2,textSurfaceATQ3->w,textSurfaceATQ3->h};
-                SDL_FreeSurface(textSurfaceATQ3);
-                if(SDL_QueryTexture(textTextureATQ3,NULL,NULL,&r_ATQ3.w,&r_ATQ3.h)!=0){
-                        erreur_sdl("Impossible de charger le texte",NULL,renderer,textTextureATQ3,NULL);
-                        return -1;
-                }
-
-
-            /*
-            *
-            *ECRAN HAUT
-            *
-            */
-
-            SDL_Rect  r_hautEcran= {0,0,(*we),56};
-            SDL_Surface* NomSurface;
-
-            if(etat==0){
-            //Nom du personnage selectionne
-                NomSurface = TTF_RenderText_Blended(font,combat->ennemi[combat->indice_ennemi]->nom, textColor);
-            }
-            else{
-                NomSurface = TTF_RenderText_Blended(font,combat->allie[combat->indice_allie]->nom, textColor);
-            
-            }
-
-            if (!NomSurface) {
-                erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,NULL,NULL);
-                TTF_CloseFont(font);
-            return -1;
-
-            
-            }
-            SDL_Texture* NomTexture = SDL_CreateTextureFromSurface(renderer, NomSurface);
-            SDL_Rect NomRect = {r_hautEcran.w/2-NomSurface->w/2, r_hautEcran.y/2+NomSurface->h/4, NomSurface->w, NomSurface->h};
-            SDL_FreeSurface(NomSurface);
-
-            //numero du tour 
-            char *NumTour = malloc(12);
-            snprintf(NumTour, 12, "Tour : %d", combat->num_tour);
-
-            SDL_Surface* NumTourSurface = TTF_RenderText_Blended(font,NumTour, textColor);
-            if (!NumTourSurface) {
-                erreur_sdl("Erreur lors de la création de la surface de texte\n",NULL,renderer,NULL,NULL);
-                TTF_CloseFont(font);
-            return -1;
-
-            
-            }
-            SDL_Texture* NumTourTexture = SDL_CreateTextureFromSurface(renderer, NumTourSurface);
-            SDL_Rect NumTourRect = {(r_hautEcran.w/4)*3+NumTourSurface->w, r_hautEcran.y/2+NumTourSurface->h/4, NumTourSurface->w, NumTourSurface->h};
-            SDL_FreeSurface(NumTourSurface);
-
-
-            /*
-            *
-            *ECRAN GAUCHE
-            *
-            */
-
-            SDL_Rect r_GEcran={0,r_hautEcran.h,(*we)/4,r_basEcran.y};
-
-
-           /*
-            *
-            *ECRAN DROIT
-            *
-            */
-            SDL_Rect r_DEcran={(*we)-(*we)/4,r_hautEcran.h,(*we),r_basEcran.y};
-
-            /*
-            *
-            *ECRAN FOND
-            *
-            */
-            SDL_Rect r_MEcran={r_GEcran.w,r_hautEcran.h,r_DEcran.x-r_GEcran.w,(r_basEcran.y-r_hautEcran.y)-r_hautEcran.h};
-            
-
-
-            /*
-            *
-            *AFFICHAGE ENNEMI
-            *
-            */
-
-            while(combat->allie[j]->mort==1){
-                    j++;
-            }
-
-
-            //creation des rectangles pour l'affichage
-            SDL_Rect  r_ennemi= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/2)-300,r_basEcran.y-600,600,600};
-
-           
-
-           
-            /*
-            *
-            *AFFICHAGE TOUR
-            *
-            */
-            int i,nbMort=0;
-            int nb_combattant=combat->nb_allie+combat->nb_ennemi;
-    
-            for(j=0;j<(nb_combattant);j++){
-                    if(combat->combattant[j]->pv<=0){
-                        nbMort++;
-
-                    }
-                    
-            }
-            j=0;
-
-            SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, map->tabTexture[28], NULL, &r_MEcran);
-
-            SDL_SetRenderDrawColor(renderer,50,50,50,255);
-
-            if((nb_combattant-nbMort)%2==0){
-                //affichage des combattant en haut pour savoir qui joue dans le cas paire
-                for(i=0,j=0;i<nb_combattant-nbMort;i++,j++){
-
-
-                    //passe au combattant suivant si il est mort
-                    while(combat->combattant[j]->mort==1){
-                        j++;
-                    }
-                    
-                    SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((8-(nb_combattant-nbMort))/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
-                    if(j==combat->indice_combattant){
-                        SDL_RenderDrawRect(renderer,& r1);
-                    }
-                    if(map->Nightmare && combat->combattant[j]->forme!=3 ){
-                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
-
-                    }else{
-                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
-
-                    }
-                   
-
-                }
-
-            }else{
-                //affichage des combattant en haut pour savoir qui joue dans le cas impaire
-                for(i=0,j=0;i<nb_combattant-nbMort;i++,j++){
-                    while(combat->combattant[j]->mort==1){
-                        j++;
-                    }
- 
-
-                    SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((8-(nb_combattant-nbMort))/2)+(((r_DEcran.x-r_GEcran.w)/8)/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
-                    if(j==combat->indice_combattant){
-                        SDL_RenderDrawRect(renderer,& r1);
-                    }
-                    if(map->Nightmare && combat->combattant[j]->forme!=3){
-                        SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
-                    }else{
-                        SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
-                    }
-                    
-                }
+            } else {
+                SDL_RenderCopy(renderer, map -> tabTexture[combat -> combattant[j] -> indice_sprite], NULL, & r1);
 
             }
 
+        }
 
-
-
-
-
-
-            //fermeture de le police d'ecriture
-            TTF_CloseFont(font);
-            font=NULL;
-
-                //affichage du combat
-                SDL_SetRenderDrawColor(renderer,0,0,0,255);
-                
-
-
-
-                SDL_SetRenderDrawColor(renderer,150,150,150,255);
-                SDL_RenderFillRect(renderer, &r_GEcran);
-                SDL_RenderFillRect(renderer, &r_DEcran);
-
-
-
-                SDL_SetRenderDrawColor(renderer,100,100,100,255);
-                SDL_RenderFillRect(renderer, &r_basEcran);
-                SDL_RenderFillRect(renderer, &r_hautEcran);
-
-
-     
-
-                SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
-
-                
-                    SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
-                
-
-                SDL_RenderCopy(renderer, NomTexture, NULL, &NomRect);
-                SDL_RenderCopy(renderer, NumTourTexture, NULL, &NumTourRect);
-            
-
-                affiche_point(we,he,renderer,r_basEcran,combat);
-                affiche_pv(we,he,renderer,r_GEcran,r_DEcran,combat,map);
-                barreCauchemard(personnage,renderer,map);
-
-
-
-            if(etat==0){
-                //creation texture de l'ennemi
-                SDL_RenderCopy(renderer, map->tabTexture[combat->ennemi[combat->indice_ennemi]->indice_portrait], NULL, &r_ennemi);
+    } else {
+        //affichage des combattant en haut pour savoir qui joue dans le cas impaire
+        for (i = 0, j = 0; i < nb_combattant - nbMort; i++, j++) {
+            while (combat -> combattant[j] -> mort == 1) {
+                j++;
             }
-            else{
-                //creation texture de l'ennemi
-                SDL_RenderCopy(renderer, map->tabTexture[combat->allie[combat->indice_allie]->indice_portrait], NULL, &r_ennemi);
 
-            
+            SDL_Rect r1 = {
+                r_GEcran.w + ((r_DEcran.x - r_GEcran.w) / 8) * i + (((r_DEcran.x - r_GEcran.w) / 8)) * ((8 - (nb_combattant - nbMort)) / 2) + (((r_DEcran.x - r_GEcran.w) / 8) / 2),
+                r_hautEcran.h,
+                (r_DEcran.x - r_GEcran.w) / 8,
+                100
+            };
+            if (j == combat -> indice_combattant) {
+                SDL_RenderDrawRect(renderer, & r1);
             }
-                
-                
-                SDL_RenderPresent(renderer);
+            if (map -> Nightmare && combat -> combattant[j] -> forme != 3) {
+                SDL_RenderCopy(renderer, map -> tabTexture[combat -> combattant[j] -> indice_sprite + map -> nbN], NULL, & r1);
+            } else {
+                SDL_RenderCopy(renderer, map -> tabTexture[combat -> combattant[j] -> indice_sprite], NULL, & r1);
+            }
 
-                if(combat->combattant[combat->indice_combattant]->camp==1 && combat->combattant[combat->indice_combattant]->mort==0 ){
-                    SDL_Delay(250);
-                }
-                else if(combat->combattant[combat->indice_combattant]->camp==0){
-                    SDL_Delay(100);
-                }
-                
-                                        
-                                        
-                //destruction des textures
-                SDL_DestroyTexture(textTextureATQ1);
-         
-                     SDL_DestroyTexture(textTextureATQ3);
-                
+        }
 
+    }
 
-                SDL_DestroyTexture(NomTexture);
-                SDL_DestroyTexture(NumTourTexture);
-                free(NumTour);
+    //fermeture de le police d'ecriture
+    TTF_CloseFont(font);
+    font = NULL;
+
+    //affichage du combat
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+    SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+    SDL_RenderFillRect(renderer, & r_GEcran);
+    SDL_RenderFillRect(renderer, & r_DEcran);
+
+    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+    SDL_RenderFillRect(renderer, & r_basEcran);
+    SDL_RenderFillRect(renderer, & r_hautEcran);
+
+    SDL_RenderCopy(renderer, textTextureATQ1, NULL, & r_ATQ1);
+
+    SDL_RenderCopy(renderer, textTextureATQ3, NULL, & r_ATQ3);
+
+    SDL_RenderCopy(renderer, NomTexture, NULL, & NomRect);
+    SDL_RenderCopy(renderer, NumTourTexture, NULL, & NumTourRect);
+
+    affiche_point(we, he, renderer, r_basEcran, combat);
+    affiche_pv(we, he, renderer, r_GEcran, r_DEcran, combat, map);
+    barreCauchemard(personnage, renderer, map);
+
+    if (etat == 0) {
+        //creation texture de l'ennemi
+        SDL_RenderCopy(renderer, map -> tabTexture[combat -> ennemi[combat -> indice_ennemi] -> indice_portrait], NULL, & r_ennemi);
+    } else {
+        //creation texture de l'ennemi
+        SDL_RenderCopy(renderer, map -> tabTexture[combat -> allie[combat -> indice_allie] -> indice_portrait], NULL, & r_ennemi);
+
+    }
+
+    SDL_RenderPresent(renderer);
+
+    if (combat -> combattant[combat -> indice_combattant] -> camp == 1 && combat -> combattant[combat -> indice_combattant] -> mort == 0) {
+        SDL_Delay(250);
+    } else if (combat -> combattant[combat -> indice_combattant] -> camp == 0) {
+        SDL_Delay(100);
+    }
+
+    //destruction des textures
+    SDL_DestroyTexture(textTextureATQ1);
+
+    SDL_DestroyTexture(textTextureATQ3);
+
+    SDL_DestroyTexture(NomTexture);
+    SDL_DestroyTexture(NumTourTexture);
+    free(NumTour);
     return 0;
-}
+    }
 
 /**
 *
@@ -777,143 +759,127 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 */
 //fonction d'attaque d'un allie
 int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map){
-        while (SDL_PollEvent(&event) != 0 );
-        if(combat->combattant[combat->indice_combattant]->mort==0){
-        SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
-        SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
-        SDL_Rect  r_ATQ3= {(r_basEcran.w*40/100)+(r_basEcran.w*30/100),(r_basEcran.h*3)+r_basEcran.h/2,373,48};
-        SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2+50, 206, 47};
-            int jouer=1;
-            int nb_point_deb=combat->nb_point;
-            int Nightmare_deb=personnage->NightP;
+        while (SDL_PollEvent( & event) != 0);
+        if (combat -> combattant[combat -> indice_combattant] -> mort == 0) {
+            SDL_Rect r_basEcran = {0,( * he) - ( * he) / 4,( * we),( * he) / 4};
+            SDL_Rect r_ATQ1 = {(r_basEcran.w * 40 / 100),(r_basEcran.h * 3) + r_basEcran.h / 2,175,48};
+            SDL_Rect r_ATQ3 = {(r_basEcran.w * 40 / 100) + (r_basEcran.w * 30 / 100),(r_basEcran.h * 3) + r_basEcran.h / 2,373,48};
+            SDL_Rect r_mult = {50,(r_basEcran.h * 3) + r_basEcran.h / 2 + 50,206,47};
+            int jouer = 1;
+            int nb_point_deb = combat -> nb_point;
+            int Nightmare_deb = personnage -> NightP;
 
-             //passif de Finn, soigne un peu tout les allies a son tour
-            if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==2){
-                int k=0;
-                for(k=0;k<combat->nb_allie;k++){
-                     if(combat->allie[k]->mort==0)
-                        combat->allie[k]->pv+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
+            //passif de Finn, soigne un peu tout les allies a son tour
+            if (map -> Nightmare && combat -> combattant[combat -> indice_combattant] -> type == 2) {
+                int k = 0;
+                for (k = 0; k < combat -> nb_allie; k++) {
+                    if (combat -> allie[k] -> mort == 0)
+                        combat -> allie[k] -> pv += combat -> combattant[combat -> indice_combattant] -> pvMax * 5 / 100;
                 }
             }
 
+            while (jouer) {
 
-            while(jouer){
-                
                 //boucle pour affichier ne pas afficher les personnages mort
-                while(combat->ennemi[combat->indice_ennemi]->mort==1){
-                    if(combat->indice_ennemi<combat->nb_ennemi){
-                         combat->indice_ennemi++;
+                while (combat -> ennemi[combat -> indice_ennemi] -> mort == 1) {
+                    if (combat -> indice_ennemi < combat -> nb_ennemi) {
+                        combat -> indice_ennemi++;
+                    } else {
+                        combat -> indice_ennemi = 0;
                     }
-                    else{
-                        combat->indice_ennemi=0;
-                    }
-                       
+
                 }
-                affichage_combat(we,he,renderer,combat,0,personnage,map);
-                while (SDL_PollEvent(&event) != 0 ) {
-                        //touche pour changer de personnage a attaquer
-                        if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
-                            if(combat->indice_ennemi>=(combat->nb_ennemi-1)){
-                                combat->indice_ennemi=0;
-                                }
-                                else{
-                                    combat->indice_ennemi++;
-                                }
-                            }
-                    //utilisation des attaques special et de l'attaque normal
-                    if(event.type == SDL_MOUSEBUTTONDOWN ){
-
-                        if((r_ATQ1.x<=event.button.x) && (r_ATQ1.x+r_ATQ1.w>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
-                            combat->ennemi[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
-                            jouer=0;
+                affichage_combat(we, he, renderer, combat, 0, personnage, map);
+                while (SDL_PollEvent( & event) != 0) {
+                    //touche pour changer de personnage a attaquer
+                    if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_a) {
+                        if (combat -> indice_ennemi >= (combat -> nb_ennemi - 1)) {
+                            combat -> indice_ennemi = 0;
+                        } else {
+                            combat -> indice_ennemi++;
                         }
-                        else if(((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)) && (combat->combattant[combat->indice_combattant]->temps_recharge>=combat->combattant[combat->indice_combattant]->temps_recharge_max)){
-                            if(combat->combattant[combat->indice_combattant]->type==0){
-                                combat->ennemi[combat->indice_ennemi]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult*2;
-                            }
-                            else if(combat->combattant[combat->indice_combattant]->type==1){
-                                combat->ennemi[combat->indice_ennemi]->status=1;
+                    }
+                    //utilisation des attaques special et de l'attaque normal
+                    if (event.type == SDL_MOUSEBUTTONDOWN) {
 
-                            }
-                            else if(combat->combattant[combat->indice_combattant]->type==2){
-                                
-                                soin(combat,r_basEcran,renderer,we,he,allie,event,personnage,map);
-                            }
-                            else if(combat->combattant[combat->indice_combattant]->type==3){
-                                int k=0;
-                                for(k=0;k<combat->nb_ennemi;k++){
-                                    combat->ennemi[k]->pv-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
+                        if ((r_ATQ1.x <= event.button.x) && (r_ATQ1.x + r_ATQ1.w >= event.button.x) && ((r_ATQ1.y + r_ATQ1.h) >= event.button.y) && (r_ATQ1.y <= event.button.y)) {
+                            combat -> ennemi[combat -> indice_ennemi] -> pv -= combat -> combattant[combat -> indice_combattant] -> puissance * combat -> mult;
+                            jouer = 0;
+                        } else if (((r_ATQ3.x <= event.button.x) && ((r_ATQ3.x + r_ATQ3.w) >= event.button.x) && ((r_ATQ3.y + r_ATQ3.h) >= event.button.y) && (r_ATQ3.y <= event.button.y)) && (combat -> combattant[combat -> indice_combattant] -> temps_recharge >= combat -> combattant[combat -> indice_combattant] -> temps_recharge_max)) {
+                            if (combat -> combattant[combat -> indice_combattant] -> type == 0) {
+                                combat -> ennemi[combat -> indice_ennemi] -> pv -= combat -> combattant[combat -> indice_combattant] -> puissance * combat -> mult * 2;
+                            } else if (combat -> combattant[combat -> indice_combattant] -> type == 1) {
+                                combat -> ennemi[combat -> indice_ennemi] -> status = 1;
+
+                            } else if (combat -> combattant[combat -> indice_combattant] -> type == 2) {
+
+                                soin(combat, r_basEcran, renderer, we, he, allie, event, personnage, map);
+                            } else if (combat -> combattant[combat -> indice_combattant] -> type == 3) {
+                                int k = 0;
+                                for (k = 0; k < combat -> nb_ennemi; k++) {
+                                    combat -> ennemi[k] -> pv -= combat -> combattant[combat -> indice_combattant] -> puissance * combat -> mult;
                                 }
                             }
-                            
-                            jouer=0;
-                            combat->combattant[combat->indice_combattant]->temps_recharge=0;
+
+                            jouer = 0;
+                            combat -> combattant[combat -> indice_combattant] -> temps_recharge = 0;
                         }
                         //utilisation des points et de l'augmentation du multiplicateur
-                        else if((r_mult.x<=event.button.x) && ((r_mult.x+r_mult.w)>=event.button.x) && ((r_mult.y+r_mult.h)>=event.button.y) && (r_mult.y<=event.button.y)){
-                            
-                            if (combat->mult<2.5 && combat->nb_point>0){
-                                combat->mult+=0.5;
+                        else if ((r_mult.x <= event.button.x) && ((r_mult.x + r_mult.w) >= event.button.x) && ((r_mult.y + r_mult.h) >= event.button.y) && (r_mult.y <= event.button.y)) {
+
+                            if (combat -> mult < 2.5 && combat -> nb_point > 0) {
+                                combat -> mult += 0.5;
                                 //augmentation barre de cauchemar
-                                if(combat->mult==1.5){
-                                    personnage->NightP++;
-                                    if(personnage->NightP>personnage->NightMax){
-                                        personnage->NightP=personnage->NightMax;
+                                if (combat -> mult == 1.5) {
+                                    personnage -> NightP++;
+                                    if (personnage -> NightP > personnage -> NightMax) {
+                                        personnage -> NightP = personnage -> NightMax;
+                                    }
+                                } else if (combat -> mult == 2.0) {
+                                    personnage -> NightP += 100;
+                                    if (personnage -> NightP > personnage -> NightMax) {
+                                        personnage -> NightP = personnage -> NightMax;
+                                    }
+                                } else if (combat -> mult == 2.5) {
+                                    personnage -> NightP += 6;
+                                    if (personnage -> NightP > personnage -> NightMax) {
+                                        personnage -> NightP = personnage -> NightMax;
+                                    }
+                                } else if (combat -> mult == 3.0) {
+                                    personnage -> NightP += 10;
+                                    if (personnage -> NightP > personnage -> NightMax) {
+                                        personnage -> NightP = personnage -> NightMax;
                                     }
                                 }
-                                else if(combat->mult==2.0){
-                                    personnage->NightP+=100;
-                                    if(personnage->NightP>personnage->NightMax){
-                                        personnage->NightP=personnage->NightMax;
-                                    }
-                                }
-                                else if(combat->mult==2.5){
-                                    personnage->NightP+=6;
-                                    if(personnage->NightP>personnage->NightMax){
-                                        personnage->NightP=personnage->NightMax;
-                                    }
-                                }
-                                else if(combat->mult==3.0){
-                                    personnage->NightP+=10;
-                                    if(personnage->NightP>personnage->NightMax){
-                                        personnage->NightP=personnage->NightMax;
-                                    }
-                                }
-                                (combat->nb_point)--;
-                                
+                                (combat -> nb_point) --;
+
+                            } else {
+                                personnage -> NightP = Nightmare_deb;
+                                combat -> nb_point = nb_point_deb;
+                                combat -> mult = 1;
                             }
-                            else{
-                                personnage->NightP=Nightmare_deb;
-                                combat->nb_point=nb_point_deb;
-                                combat->mult=1;
-                            }
-                            
+
                         }
-                        
+
                     }
-                    
-                            
 
                 }
-
 
             }
             //met le monde et le personnage jouer en cauchemar
-            if(personnage->NightP>=personnage->NightMax){
-                map->Nightmare=1;
-                personnage->Nightmare=1;
+            if (personnage -> NightP >= personnage -> NightMax) {
+                map -> Nightmare = 1;
+                personnage -> Nightmare = 1;
             }
-            
-
 
         }
         //passe les ennemis si ils sont mort
-        combat->indice_ennemi=0;
-        while(combat->ennemi[combat->indice_ennemi]->mort==1){
-            combat->indice_ennemi++;
+        combat -> indice_ennemi = 0;
+        while (combat -> ennemi[combat -> indice_ennemi] -> mort == 1) {
+            combat -> indice_ennemi++;
         }
-        
-     return 0;
+
+        return 0;
 }
                 
    
@@ -988,8 +954,8 @@ int compare_vitesse(const combattant_t * const combattant1,const combattant_t * 
 //encapsulation de la fonction compare_vitesse
 int compare_vitesse_enc( const void * const combattant1 , const void * const combattant2 ) {
     const combattant_t *comb1e = *(const combattant_t**)combattant1;
-  const combattant_t *comb2e = *(const combattant_t**)combattant2;
-  return compare_vitesse(   comb1e ,comb2e );
+    const combattant_t *comb2e = *(const combattant_t**)combattant2;
+    return compare_vitesse(   comb1e ,comb2e );
 }
 
 
@@ -1050,313 +1016,295 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
 */
 
 //fonction qui s'occupe du combat avec un ennemi
-int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map){
-    if(ennemi->combat){
-         
+int combat(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ennemi_t * ennemi, p_mv * pp, map_t * map) {
+    if (ennemi -> combat) {
 
-
-        int i=0,allie=0;
-        int nb_combattant=0;
+        int i = 0, allie = 0;
+        int nb_combattant = 0;
         int j;
-        int Nennemi=0;
-        int alexMort=0;
-        int attenteAda=0;
-        int DejaNight=0;
-        int alexMortEnnemi=0;
-        int attenteAdaEnnemi=0;
+        int Nennemi = 0;
+        int alexMort = 0;
+        int attenteAda = 0;
+        int DejaNight = 0;
+        int alexMortEnnemi = 0;
+        int attenteAdaEnnemi = 0;
 
         ennemi_t copieEnnemi;
-        copieEnnemi=*ennemi;
+        copieEnnemi = * ennemi;
 
         //compte le nombre d'allie dans l'equipe
-        for (i=0;i<4;i++){
-            if(pp->equipe[i]!=NULL){
+        for (i = 0; i < 4; i++) {
+            if (pp -> equipe[i] != NULL) {
                 allie++;
             }
         }
-        combattant_t *tabAllie[allie];
-        combattant_t *copieAllie1;
+        combattant_t * tabAllie[allie];
+        combattant_t * copieAllie1;
 
         //copie des allies pour pouvoir changer ses statistiques pendant le combat
-        for(i=0;i<allie;i++){
-            copieAllie1=init_combattant(pp->equipe[i]->nom,pp->equipe[i]->pv,pp->equipe[i]->vitesse,pp->equipe[i]->camp,pp->equipe[i]->indice_portrait,pp->equipe[i]->indice_sprite,pp->equipe[i]->type,pp->equipe[i]->temps_recharge_max,pp->equipe[i]->puissance,pp->equipe[i]->forme);
-            tabAllie[i]=copieAllie1;
+        for (i = 0; i < allie; i++) {
+            copieAllie1 = init_combattant(pp -> equipe[i] -> nom, pp -> equipe[i] -> pv, pp -> equipe[i] -> vitesse, pp -> equipe[i] -> camp, pp -> equipe[i] -> indice_portrait, pp -> equipe[i] -> indice_sprite, pp -> equipe[i] -> type, pp -> equipe[i] -> temps_recharge_max, pp -> equipe[i] -> puissance, pp -> equipe[i] -> forme);
+            tabAllie[i] = copieAllie1;
         }
-
-
-
 
         //dans le mode Nightmare
-        if(map->Nightmare){
-            i=0;
-            while(ennemi->combattant[i]!=NULL && i<4){
-                if(ennemi->combattant[i]->mort==0){
-                    ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*(map->nvZone+map->bonusZoneN);
-                    ennemi->combattant[i]->puissance = ennemi->combattant[i]->puissance*(map->nvZone+map->bonusZoneN);
-                    ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*(map->nvZone+map->bonusZoneN);
+        if (map -> Nightmare) {
+            i = 0;
+            while (ennemi -> combattant[i] != NULL && i < 4) {
+                if (ennemi -> combattant[i] -> mort == 0) {
+                    ennemi -> combattant[i] -> pvMax = ennemi -> combattant[i] -> pvMax * (map -> nvZone + map -> bonusZoneN);
+                    ennemi -> combattant[i] -> puissance = ennemi -> combattant[i] -> puissance * (map -> nvZone + map -> bonusZoneN);
+                    ennemi -> combattant[i] -> pv = ennemi -> combattant[i] -> pv * (map -> nvZone + map -> bonusZoneN);
                 }
                 i++;
             }
-            i=0;
-            while(pp->equipe[i]!=NULL && i<4){
-                if(pp->equipe[i]->mort==0){
-                    pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*(map->nvEquipe+map->bonusEquipeN);
-                    pp->equipe[i]->pv =pp->equipe[i]->pv*(map->nvEquipe+map->bonusEquipeN) ;
-                    pp->equipe[i]->puissance = pp->equipe[i]->puissance*(map->nvEquipe+map->bonusEquipeN);
+            i = 0;
+            while (pp -> equipe[i] != NULL && i < 4) {
+                if (pp -> equipe[i] -> mort == 0) {
+                    pp -> equipe[i] -> pvMax = pp -> equipe[i] -> pvMax * (map -> nvEquipe + map -> bonusEquipeN);
+                    pp -> equipe[i] -> pv = pp -> equipe[i] -> pv * (map -> nvEquipe + map -> bonusEquipeN);
+                    pp -> equipe[i] -> puissance = pp -> equipe[i] -> puissance * (map -> nvEquipe + map -> bonusEquipeN);
 
                 }
                 i++;
             }
-            DejaNight=1;
+            DejaNight = 1;
         }
         //dans le mode normal
-        else{
-            i=0;
-            while(ennemi->combattant[i]!=NULL && i<4){
-                ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*map->nvZone;
-                ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*map->nvZone;
-                ennemi->combattant[i]->puissance = ennemi->combattant[i]->puissance*map->nvZone;
+        else {
+            i = 0;
+            while (ennemi -> combattant[i] != NULL && i < 4) {
+                ennemi -> combattant[i] -> pv = ennemi -> combattant[i] -> pv * map -> nvZone;
+                ennemi -> combattant[i] -> pvMax = ennemi -> combattant[i] -> pvMax * map -> nvZone;
+                ennemi -> combattant[i] -> puissance = ennemi -> combattant[i] -> puissance * map -> nvZone;
                 i++;
             }
-            i=0;
-            while(pp->equipe[i]!=NULL && i<4){
-                pp->equipe[i]->pv = pp->equipe[i]->pv*map->nvEquipe;
-                pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*map->nvEquipe;
-                pp->equipe[i]->puissance = pp->equipe[i]->puissance*map->nvEquipe;
+            i = 0;
+            while (pp -> equipe[i] != NULL && i < 4) {
+                pp -> equipe[i] -> pv = pp -> equipe[i] -> pv * map -> nvEquipe;
+                pp -> equipe[i] -> pvMax = pp -> equipe[i] -> pvMax * map -> nvEquipe;
+                pp -> equipe[i] -> puissance = pp -> equipe[i] -> puissance * map -> nvEquipe;
                 i++;
             }
 
         }
-    
 
-
-        combat_t * combat=init_combat();
+        combat_t * combat = init_combat();
 
         //compte le nombre d'allie dans l'equipe
-        for (i=0;i<4;i++){
-            if(pp->equipe[i]!=NULL){
-                combat->nb_allie++;
+        for (i = 0; i < 4; i++) {
+            if (pp -> equipe[i] != NULL) {
+                combat -> nb_allie++;
 
-                combat->allie[i]=pp->equipe[i];
+                combat -> allie[i] = pp -> equipe[i];
             }
         }
-        
-        combat->indice_ennemi=0;
+
+        combat -> indice_ennemi = 0;
 
         //compte le nombre d'ennemi
-        for (i=0;i<4;i++){
-            if(ennemi->combattant[i]!=NULL){
-                combat->nb_ennemi++;
+        for (i = 0; i < 4; i++) {
+            if (ennemi -> combattant[i] != NULL) {
+                combat -> nb_ennemi++;
                 Nennemi++;
-                combat->ennemi[i]=ennemi->combattant[i];
+                combat -> ennemi[i] = ennemi -> combattant[i];
             }
         }
-        
-        nb_combattant=combat->nb_ennemi+combat->nb_allie;
-        for(i=0;i<8;i++){
-            combat->combattant[i]=NULL;
+
+        nb_combattant = combat -> nb_ennemi + combat -> nb_allie;
+        for (i = 0; i < 8; i++) {
+            combat -> combattant[i] = NULL;
         }
 
-        for(i=0;i<combat->nb_allie;i++){
-            combat->combattant[i]=pp->equipe[i];
-        }
-        
-        for(i=combat->nb_allie,j=0;i<nb_combattant;i++,j++){
-            combat->combattant[i]=ennemi->combattant[j];
+        for (i = 0; i < combat -> nb_allie; i++) {
+            combat -> combattant[i] = pp -> equipe[i];
         }
 
-       combat->nb_point=2;
-       combat->num_tour=1;
+        for (i = combat -> nb_allie, j = 0; i < nb_combattant; i++, j++) {
+            combat -> combattant[i] = ennemi -> combattant[j];
+        }
 
-        while(Nennemi>0 && allie>0){
+        combat -> nb_point = 2;
+        combat -> num_tour = 1;
+
+        while (Nennemi > 0 && allie > 0) {
             //trie vitesse
 
-            qsort(combat->combattant,nb_combattant,sizeof(void *),compare_vitesse_enc);
-            
+            qsort(combat -> combattant, nb_combattant, sizeof(void * ), compare_vitesse_enc);
 
-            for(combat->indice_combattant=0;combat->indice_combattant<nb_combattant && Nennemi>0 && allie>0;combat->indice_combattant++){
-                
-                combat->mult=1;
+            for (combat -> indice_combattant = 0; combat -> indice_combattant < nb_combattant && Nennemi > 0 && allie > 0; combat -> indice_combattant++) {
 
-                if(combat->combattant[combat->indice_combattant]->camp==0 && combat->combattant[combat->indice_combattant]->mort==0){
+                combat -> mult = 1;
+
+                if (combat -> combattant[combat -> indice_combattant] -> camp == 0 && combat -> combattant[combat -> indice_combattant] -> mort == 0) {
                     //regarde si l'allie peut jouer
-                    if(combat->combattant[combat->indice_combattant]->status==0){
-                        attaque_allie(we,he,event,renderer,Nennemi,combat,allie,pp,map);
+                    if (combat -> combattant[combat -> indice_combattant] -> status == 0) {
+                        attaque_allie(we, he, event, renderer, Nennemi, combat, allie, pp, map);
 
                         //passif Ada en mode cauchemar, elle peut jouer 2 fois de suite (attente de 2 tour)
-                        if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3 && attenteAda==0){
-                            attaque_allie(we,he,event,renderer,Nennemi,combat,allie,pp,map);
-                            attenteAda=2;
-                        }
-                        else if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3){
+                        if (map -> Nightmare && combat -> combattant[combat -> indice_combattant] -> type == 3 && attenteAda == 0) {
+                            attaque_allie(we, he, event, renderer, Nennemi, combat, allie, pp, map);
+                            attenteAda = 2;
+                        } else if (map -> Nightmare && combat -> combattant[combat -> indice_combattant] -> type == 3) {
                             attenteAda--;
                         }
-                    }
-                    else{
+                    } else {
                         //passif de Lou ennemi,si l'allie doit passer son tour, il perd aussi des pv
-                        for(i=0;i<combat->nb_ennemi;i++){
-                            if(combat->ennemi[i]->forme==3 && combat->ennemi[i]->type==1 ){
-                                combat->combattant[combat->indice_combattant]->pv-=combat->ennemi[i]->puissance*1.5;
+                        for (i = 0; i < combat -> nb_ennemi; i++) {
+                            if (combat -> ennemi[i] -> forme == 3 && combat -> ennemi[i] -> type == 1) {
+                                combat -> combattant[combat -> indice_combattant] -> pv -= combat -> ennemi[i] -> puissance * 1.5;
                             }
                         }
-                        combat->combattant[combat->indice_combattant]->status=0;
+                        combat -> combattant[combat -> indice_combattant] -> status = 0;
                     }
-                    combat->combattant[combat->indice_combattant]->temps_recharge++;
-                }
-                
-                else if(combat->combattant[combat->indice_combattant]->camp==1 && combat->combattant[combat->indice_combattant]->mort==0){
-                    if(combat->combattant[combat->indice_combattant]->status==0){
-                        attaque_ennemi(nb_combattant,combat);
+                    combat -> combattant[combat -> indice_combattant] -> temps_recharge++;
+                } else if (combat -> combattant[combat -> indice_combattant] -> camp == 1 && combat -> combattant[combat -> indice_combattant] -> mort == 0) {
+                    if (combat -> combattant[combat -> indice_combattant] -> status == 0) {
+                        attaque_ennemi(nb_combattant, combat);
 
                         //passif Ada ennemi, elle peut jouer 2 fois de suite (attente de 2 tour)
-                        if(combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3){
-                           attaque_ennemi(nb_combattant,combat);
-                           attenteAdaEnnemi=2;
-                        }
-                        else if(combat->combattant[combat->indice_combattant]->type==3 && combat->combattant[combat->indice_combattant]->forme==3){
+                        if (combat -> combattant[combat -> indice_combattant] -> type == 3 && attenteAdaEnnemi == 0 && combat -> combattant[combat -> indice_combattant] -> forme == 3) {
+                            attaque_ennemi(nb_combattant, combat);
+                            attenteAdaEnnemi = 2;
+                        } else if (combat -> combattant[combat -> indice_combattant] -> type == 3 && combat -> combattant[combat -> indice_combattant] -> forme == 3) {
                             attenteAdaEnnemi--;
                         }
                     }
                     //passif Lou en mode cauchemar, si l'ennemi doit passer son tour, il perd aussi des pv
-                    else{
-                        if(map->Nightmare){
-                            int k=0;
-                            for(k=0;k<combat->nb_allie;k++){
-                                if(combat->allie[k]->type==1 && combat->allie[k]->mort==0 ){
-                                    combat->combattant[combat->indice_combattant]->pv-=combat->allie[k]->puissance*1.5;
+                    else {
+                        if (map -> Nightmare) {
+                            int k = 0;
+                            for (k = 0; k < combat -> nb_allie; k++) {
+                                if (combat -> allie[k] -> type == 1 && combat -> allie[k] -> mort == 0) {
+                                    combat -> combattant[combat -> indice_combattant] -> pv -= combat -> allie[k] -> puissance * 1.5;
                                 }
                             }
                         }
-                        combat->combattant[combat->indice_combattant]->status=0;
+                        combat -> combattant[combat -> indice_combattant] -> status = 0;
                     }
                 }
-                for(j=0;j<nb_combattant;j++){
+                for (j = 0; j < nb_combattant; j++) {
                     //passif d'Alex en mode cauchemar, si il meurt il peut ressuciter une fois
-                    if(combat->combattant[j]->camp==0 && alexMort==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0  && combat->combattant[j]->mort==0 && map->Nightmare ){
-                        combat->combattant[j]->pv=combat->combattant[j]->pvMax;
-                        alexMort=1;
+                    if (combat -> combattant[j] -> camp == 0 && alexMort == 0 && combat -> combattant[j] -> type == 0 && combat -> combattant[j] -> pv <= 0 && combat -> combattant[j] -> mort == 0 && map -> Nightmare) {
+                        combat -> combattant[j] -> pv = combat -> combattant[j] -> pvMax;
+                        alexMort = 1;
                     }
-                
+
                     //passif d'Alex ennemi, si il meurt il peut ressuciter une fois
-                    if(combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && combat->combattant[j]->pv<=0 && combat->combattant[j]->forme==3 ){
-                        combat->combattant[j]->pv=combat->combattant[j]->pvMax;
-                        alexMortEnnemi=1;
+                    if (combat -> combattant[j] -> camp == 1 && alexMortEnnemi == 0 && combat -> combattant[j] -> type == 0 && combat -> combattant[j] -> pv <= 0 && combat -> combattant[j] -> forme == 3) {
+                        combat -> combattant[j] -> pv = combat -> combattant[j] -> pvMax;
+                        alexMortEnnemi = 1;
                     }
                 }
-                
+
                 //compte le nombre d'allie dans l'equipe
-                for(j=0;j<nb_combattant;j++){
-                    if(combat->combattant[j]->pv<=0 && combat->combattant[j]->mort==0){
-                        combat->combattant[j]->mort=1;
-                        if(combat->combattant[j]->camp==0  ){
+                for (j = 0; j < nb_combattant; j++) {
+                    if (combat -> combattant[j] -> pv <= 0 && combat -> combattant[j] -> mort == 0) {
+                        combat -> combattant[j] -> mort = 1;
+                        if (combat -> combattant[j] -> camp == 0) {
                             allie--;
-                        }
-                        else if(combat->combattant[j]->camp==1){
+                        } else if (combat -> combattant[j] -> camp == 1) {
                             Nennemi--;
                         }
 
-                        if(Nennemi==0 || allie==0){
-                                SDL_RenderClear(renderer);
-                                SDL_Rect rect={0,0,*we,*he};
-                                SDL_SetRenderDrawColor(renderer,0,0,0,255);
-                                SDL_RenderFillRect(renderer,&rect);
-                                SDL_RenderPresent(renderer);
+                        if (Nennemi == 0 || allie == 0) {
+                            SDL_RenderClear(renderer);
+                            SDL_Rect rect = {
+                                0,
+                                0,
+                                * we,
+                                * he
+                            };
+                            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+                            SDL_RenderFillRect(renderer, & rect);
+                            SDL_RenderPresent(renderer);
 
-                            }
+                        }
 
                     }
-                    
+
                 }
-                if(map->Nightmare && DejaNight==0){
-                    DejaNight=1;
-                    i=0;
-                    while(ennemi->combattant[i]!=NULL && i<4){
-                        if(ennemi->combattant[i]->mort==0){
-                            ennemi->combattant[i]->pvMax = ennemi->combattant[i]->pvMax*(map->nvZone+map->bonusZoneN);
-                            ennemi->combattant[i]->puissance = ennemi->combattant[i]->puissance*(map->nvZone+map->bonusZoneN);
-                            ennemi->combattant[i]->pv = ennemi->combattant[i]->pv*(map->nvZone+map->bonusZoneN);
+                if (map -> Nightmare && DejaNight == 0) {
+                    DejaNight = 1;
+                    i = 0;
+                    while (ennemi -> combattant[i] != NULL && i < 4) {
+                        if (ennemi -> combattant[i] -> mort == 0) {
+                            ennemi -> combattant[i] -> pvMax = ennemi -> combattant[i] -> pvMax * (map -> nvZone + map -> bonusZoneN);
+                            ennemi -> combattant[i] -> puissance = ennemi -> combattant[i] -> puissance * (map -> nvZone + map -> bonusZoneN);
+                            ennemi -> combattant[i] -> pv = ennemi -> combattant[i] -> pv * (map -> nvZone + map -> bonusZoneN);
                         }
                         i++;
                     }
-                    i=0;
-                    while(pp->equipe[i]!=NULL && i<4){
-                        if(pp->equipe[i]->mort==0){
-                            pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*(map->nvEquipe+map->bonusEquipeN);
-                            pp->equipe[i]->pv =pp->equipe[i]->pvMax ;
-                            pp->equipe[i]->puissance = pp->equipe[i]->puissance*(map->nvEquipe+map->bonusEquipeN);
+                    i = 0;
+                    while (pp -> equipe[i] != NULL && i < 4) {
+                        if (pp -> equipe[i] -> mort == 0) {
+                            pp -> equipe[i] -> pvMax = pp -> equipe[i] -> pvMax * (map -> nvEquipe + map -> bonusEquipeN);
+                            pp -> equipe[i] -> pv = pp -> equipe[i] -> pvMax;
+                            pp -> equipe[i] -> puissance = pp -> equipe[i] -> puissance * (map -> nvEquipe + map -> bonusEquipeN);
 
                         }
                         i++;
                     }
                 }
-                if(allie!=0){
-                    affichage_combat(we,he,renderer,combat,0,pp,map);
+                if (allie != 0) {
+                    affichage_combat(we, he, renderer, combat, 0, pp, map);
                 }
 
-                
-                
                 SDL_Delay(500);
 
-                
             }
-            combat->indice_combattant=0;
-            combat->num_tour++;
-
+            combat -> indice_combattant = 0;
+            combat -> num_tour++;
 
             SDL_Delay(100);
-            if(combat->nb_point<6){
-                (combat->nb_point)++;
+            if (combat -> nb_point < 6) {
+                (combat -> nb_point) ++;
             }
 
-
-
         }
-            //Si les alliees on tuer tous les ennemis
-            if(Nennemi==0){
-                //cherche si dans les ennemis ils y avait un boss
-                for(i=0;i<combat->nb_ennemi;i++){
-                    if(combat->ennemi[i]->forme==3){
-                        //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
-                        if(map->Nightmare){
-                            map->Nightmare=0;
-                            pp->Nightmare=0;
-                            pp->NightP=pp->NightMax/2;
-                            
-                            
-                        }
-                        //vide la barre de cauchemar
-                        else{
-                            pp->NightP=0;
-                        
-                        }
-                        map->argent+=10;
-                        map->nvEquipe+=1;
+        //Si les alliees on tuer tous les ennemis
+        if (Nennemi == 0) {
+            //cherche si dans les ennemis ils y avait un boss
+            for (i = 0; i < combat -> nb_ennemi; i++) {
+                if (combat -> ennemi[i] -> forme == 3) {
+                    //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
+                    if (map -> Nightmare) {
+                        map -> Nightmare = 0;
+                        pp -> Nightmare = 0;
+                        pp -> NightP = pp -> NightMax / 2;
+
                     }
-                }
-                //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
-                if(map->Nightmare){
-                    map->bonusEquipeN+=0.5;
-                    map->bonusZoneN+=1;
+                    //vide la barre de cauchemar
+                    else {
+                        pp -> NightP = 0;
+
+                    }
+                    map -> argent += 10;
+                    map -> nvEquipe += 1;
                 }
             }
+            //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
+            if (map -> Nightmare) {
+                map -> bonusEquipeN += 0.5;
+                map -> bonusZoneN += 1;
+            }
+        }
         //SDL_RenderPresent(renderer);
-        *ennemi = copieEnnemi;
+        * ennemi = copieEnnemi;
 
-        for(i=0;i<combat->nb_allie;i++){
+        for (i = 0; i < combat -> nb_allie; i++) {
 
-
-            copier_combattant(pp->equipe[i], tabAllie[i]);
-            strcpy(pp->equipe[i]->nom,tabAllie[i]->nom);
-
+            copier_combattant(pp -> equipe[i], tabAllie[i]);
+            strcpy(pp -> equipe[i] -> nom, tabAllie[i] -> nom);
 
         }
-        ennemi->combat=0;
-        for(i=0;i<combat->nb_allie;i++){
+        ennemi -> combat = 0;
+        for (i = 0; i < combat -> nb_allie; i++) {
             desctruction_combattant(tabAllie[i]);
         }
-        
+
         desctruction_combat(combat);
-        
+
     }
     return 0;
 }
@@ -1471,12 +1419,9 @@ void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map
 
     // Position du texte
 
-
-
     SDL_Rect PV_bar= {we,he-5,256,64};
     SDL_Rect PV_barVide= {we+81,he-5+19,144,26};
     SDL_Rect PV_barPleine= {we+81,he-5+19,p,26}; //144 = pleine
-
     SDL_Rect textRect = {(PV_barVide.x)+(PV_barVide.w/2)-(textSurface->w/2), (PV_barVide.y)+(PV_barVide.h/2)-(textSurface->h/2), textSurface->w, textSurface->h};
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -1517,46 +1462,41 @@ void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map
 */
 
 //fonction qui s'accupe des soins des allies
-void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we,int * he,int allie,SDL_Event event,p_mv * personnage,map_t * map){
-    int jouer=1;
-    SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
-    combat->indice_allie=0;
-    while(jouer){
-        while(combat->allie[combat->indice_allie]->mort==1){
-            if(combat->indice_allie<combat->nb_allie){
-                combat->indice_allie++;
+void soin(combat_t * combat, SDL_Rect r_basEcran, SDL_Renderer * renderer, int * we, int * he, int allie, SDL_Event event, p_mv * personnage, map_t * map) {
+    int jouer = 1;
+    SDL_Rect r_ATQ1 = {(r_basEcran.w * 40 / 100),(r_basEcran.h * 3) + r_basEcran.h / 2,175,48};
+    combat -> indice_allie = 0;
+    while (jouer) {
+        while (combat -> allie[combat -> indice_allie] -> mort == 1) {
+            if (combat -> indice_allie < combat -> nb_allie) {
+                combat -> indice_allie++;
+            } else {
+                combat -> indice_allie = 0;
             }
-            else{
-                combat->indice_allie=0;
-            }
-                       
+
         }
 
-        affichage_combat(we,he,renderer,combat,1,personnage,map);
-        while (SDL_PollEvent(&event) != 0 ) {
+        affichage_combat(we, he, renderer, combat, 1, personnage, map);
+        while (SDL_PollEvent( & event) != 0) {
 
-            if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_a){
-                if(combat->indice_allie>=(combat->nb_allie-1)){
-                    combat->indice_allie=0;
+            if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_a) {
+                if (combat -> indice_allie >= (combat -> nb_allie - 1)) {
+                    combat -> indice_allie = 0;
+                } else {
+                    combat -> indice_allie++;
+                }
+            }
+
+            if (event.type == SDL_MOUSEBUTTONDOWN) {
+
+                if ((r_ATQ1.x <= event.button.x) && (r_ATQ1.x + r_ATQ1.w >= event.button.x) && ((r_ATQ1.y + r_ATQ1.h) >= event.button.y) && (r_ATQ1.y <= event.button.y)) {
+                    combat -> allie[combat -> indice_allie] -> pv += 10 * combat -> mult;
+                    if (combat -> allie[combat -> indice_allie] -> pv > combat -> allie[combat -> indice_allie] -> pvMax) {
+                        combat -> allie[combat -> indice_allie] -> pv = combat -> allie[combat -> indice_allie] -> pvMax;
                     }
-                    else{
-                        combat->indice_allie++;
-                    }
+                    jouer = 0;
                 }
 
-             
-                
-            
-            if(event.type == SDL_MOUSEBUTTONDOWN ){
-
-                if((r_ATQ1.x<=event.button.x) && (r_ATQ1.x+r_ATQ1.w>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
-                    combat->allie[combat->indice_allie]->pv+=10*combat->mult;
-                    if(combat->allie[combat->indice_allie]->pv>combat->allie[combat->indice_allie]->pvMax){
-                        combat->allie[combat->indice_allie]->pv=combat->allie[combat->indice_allie]->pvMax;
-                    }
-                    jouer=0;
-                }
-            
             }
         }
 

@@ -1,5 +1,5 @@
-#ifndef __MAP2_H__
-#define __MAP2_H__
+#ifndef __MAP_H__
+#define __MAP_H__
 
 
 //#include "../libs/commun.h"
@@ -52,7 +52,6 @@ struct map_s{
     artefact_t * listeArtefact[10];
     int nb_emplacement;
     int prix_emplacement;
-    int nb_artefact_equipe;
 };
 
 case_t creation_case();

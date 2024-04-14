@@ -61,7 +61,7 @@ typedef struct Liste Liste;
 #include "../libs/printImg.h"
 
 #include "../libs/texte.h"
-#include "../libs/map2.h"
+#include "../libs/map.h"
 #include "../libs/printImg.h"
 #include "../libs/save.h"
 #include "../libs/menu.h"

@@ -110,7 +110,6 @@ map_t creation_map (int w, int h){
     m.argent=100;
     m.nb_emplacement=1;
     m.prix_emplacement=10;
-    m.nb_artefact_equipe=0;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);
