@@ -148,7 +148,7 @@ int main(){
 
     map.listeArtefact[0]=init_artefact("artefact1",0,"artefact qui augmente la force",0,10,10);
     for(k=1;k<10;k++){
-        map.listeArtefact[k]=init_artefact("artefact2",0,"artefact qui augmente la vitesse",k,10,10);
+        map.listeArtefact[k]=init_artefact("artefact2",0,"artefact qui augmente la vitesse",k,10,0);
     }
 
   
@@ -268,6 +268,7 @@ int main(){
             //menu
             //console_command(event,command);
             menu_option(wEcran,hEcran,event,renderer,run,etatoption);
+            inventaire(wEcran,hEcran,event,renderer,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement);
             debut_dialogue(event,pAlex2,pAlex);

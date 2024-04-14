@@ -50,6 +50,9 @@ struct map_s{
     int bonusZoneN;
     int argent;
     artefact_t * listeArtefact[10];
+    int nb_emplacement;
+    int prix_emplacement;
+    int nb_artefact_equipe;
 };
 
 case_t creation_case();

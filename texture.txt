@@ -10,7 +10,7 @@ texture/objet/stone1.png
 texture/objet/tree2top.png
 texture/objet/tree2bottom.png
 sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/test.png
 sprite/slimebluedial.png
 sprite/alexface2.png
 sprite/alexdial.png

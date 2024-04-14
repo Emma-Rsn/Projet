@@ -241,6 +241,7 @@ artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indic
     artefact->indice=indice;
     artefact->prix=prix;
     artefact->indice_texture=indice_texture;
+    artefact->equipe=0;
     return artefact;
 }
 

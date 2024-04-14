@@ -47,6 +47,7 @@ struct artefact_s{
     char * descriptif;
     int prix;
     int indice_texture;
+    int equipe;
 };
 
 obj_t * init_obj(case_t * c,int indText,int type,...);
