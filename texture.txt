@@ -26,7 +26,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimebluecorrup.png
-sprite/slimeblue.png
+texture/objet/point.png
 sprite/alexface2corrup.png
 texture/template/combat_3.2.png
 texture/objet/barredevie.png

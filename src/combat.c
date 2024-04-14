@@ -116,16 +116,17 @@ void desctruction_combat(combat_t * combat){
 
 /**
 *
-*\fn int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat)
+*\fn int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat,map_t * map)
 *\param we Largeur de l'ecran
 *\param he Hauteur de l'ecran
 *\param renderer rendu de la fenetre
 *\param r_basEcran rectangle du bas de l'ecran
 *\param combat structure combat
+*\param map structure de la map
 *\brief fonction qui affiche les points de la personne et le multiplicateur de degat
 */
 //fonction qui affiche les points de la personne et le multiplicateur de degat
-int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat)
+int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat,map_t * map)
 {
 	TTF_Font *font = TTF_OpenFont("fonts/alagard.ttf", 50);
 	if (!font)
@@ -150,7 +151,7 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 
 	SDL_Texture *textTexturemult = SDL_CreateTextureFromSurface(renderer, textSurfacemult);
 
-    //creation du texte du nombre de point
+    /*//creation du texte du nombre de point
 	char *point = malloc(20);
 	sprintf(point, "nombre de point : %d", combat->nb_point);
 	SDL_Surface *textSurfacePoint = TTF_RenderText_Solid(font, point, textColor);
@@ -161,11 +162,17 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 		return -1;
 	}
 
-	SDL_Texture *textTexturePoint = SDL_CreateTextureFromSurface(renderer, textSurfacePoint);
+	SDL_Texture *textTexturePoint = SDL_CreateTextureFromSurface(renderer, textSurfacePoint);*/
 
 	// Position du texte
-	SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2+50, textSurfacemult->w, textSurfacemult->h};
-	SDL_Rect r_point = {25, (r_basEcran.h*3)+r_basEcran.h/2-50, textSurfacePoint->w, textSurfacePoint->h};
+	SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2-50, textSurfacemult->w, textSurfacemult->h};
+
+    int i ;
+    for(i=0;i<combat->nb_point;i++){
+        SDL_Rect r_point = {r_mult.x+((r_basEcran.w/3)/20)*i, r_mult.h+r_mult.y, (r_basEcran.w/3)/20, (r_basEcran.w/3)/20};
+        SDL_RenderCopy(renderer, map -> tabTexture[26], NULL, & r_point);
+
+    }
     
 
 	// Afficher la texture sur le rendu
@@ -173,12 +180,12 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 	SDL_FreeSurface(textSurfacemult);
 	SDL_DestroyTexture(textTexturemult);
 
-	SDL_RenderCopy(renderer, textTexturePoint, NULL, &r_point);
-	SDL_FreeSurface(textSurfacePoint);
-	SDL_DestroyTexture(textTexturePoint);
+	//SDL_RenderCopy(renderer, textTexturePoint, NULL, &r_point);
+	//SDL_FreeSurface(textSurfacePoint);
+	//SDL_DestroyTexture(textTexturePoint);
 
-	free(point);
-	point = NULL;
+	//free(point);
+	//point = NULL;
 	free(textemult);
 	textemult = NULL;
 	TTF_CloseFont(font);
@@ -711,7 +718,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
     SDL_RenderCopy(renderer, NomTexture, NULL, & NomRect);
     SDL_RenderCopy(renderer, NumTourTexture, NULL, & NumTourRect);
 
-    affiche_point(we, he, renderer, r_basEcran, combat);
+    affiche_point(we, he, renderer, r_basEcran, combat,map);
     affiche_pv(we, he, renderer, r_GEcran, r_DEcran, combat, map);
     barreCauchemard(personnage, renderer, map);
 
@@ -764,7 +771,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int Nb
             SDL_Rect r_basEcran = {0,( * he) - ( * he) / 4,( * we),( * he) / 4};
             SDL_Rect r_ATQ1 = {(r_basEcran.w * 40 / 100),(r_basEcran.h * 3) + r_basEcran.h / 2,175,48};
             SDL_Rect r_ATQ3 = {(r_basEcran.w * 40 / 100) + (r_basEcran.w * 30 / 100),(r_basEcran.h * 3) + r_basEcran.h / 2,373,48};
-            SDL_Rect r_mult = {50,(r_basEcran.h * 3) + r_basEcran.h / 2 + 50,206,47};
+            SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2-50, 206, 47};
             int jouer = 1;
             int nb_point_deb = combat -> nb_point;
             int Nightmare_deb = personnage -> NightP;
