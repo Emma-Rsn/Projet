@@ -187,42 +187,6 @@ int boolcol (case_t * obj_c,p_mv * pp){
 
 
 
-/**
-*
-*\fn artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture)
-*\param nom nom de l'artefact
-*\param possession entier pour savoir si 'lon possede ou non l'artefact
-*\param descriptif dexcription de l'artefact
-*\param indice indice de l'artefact dans le tableau dans la structure map
-*\param prix prix de l'artefact
-*\param indice_texture l'indice de la texture de l'artefact pour le lire dans le fichier
-*\brief fonction qui initialise un artefact
-*/
-//fonction qui initialise un artefact
-artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture){
-    artefact_t * artefact = malloc(sizeof(artefact_t));
-    artefact->nom = malloc(strlen(nom)+1);
-    strcpy(artefact->nom,nom);
-    artefact->descriptif = malloc(strlen(descriptif)+1);
-    strcpy(artefact->descriptif,descriptif);
-    artefact->possession=possession;
-    artefact->indice=indice;
-    artefact->prix=prix;
-    artefact->indice_texture=indice_texture;
-    artefact->equipe=0;
-    return artefact;
-}
-/**
-*\fn void destruction_artefact(artefact_t * artefact)
-*\param artefact structure d'artefact 
-*\brief fonction qui detruit l'artefact
-*/
-void destruction_artefact(artefact_t * artefact){
-    free(artefact->nom);
-    free(artefact->descriptif);
-    free(artefact);
-
-
 
 
 

@@ -47,21 +47,6 @@ struct ennemi_s{
 
 
 
-<<<<<<< HEAD
-struct pnj_s{
-    char * nom;
-    case_t * c;
-    int xcarte;
-    int ycarte;
-    Liste * dial;
-    SDL_Surface * po;
-    SDL_Surface * perso;
-    int combat;
-    int pv;
-};
-
-=======
->>>>>>> e01c2ab00212ad177ce99ded85d7a8f00acec28a
 /**
 *
 *\struct artefact_s

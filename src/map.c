@@ -108,11 +108,7 @@ map_t creation_map (int w, int h){
     m.bonusEquipeN=BONUS_EQUIPE_N;
     m.bonusZoneN=BONUS_ZONE_N;
     m.argent=100;
-<<<<<<< HEAD
     m.nb_emplacement=4;
-=======
-    m.nb_emplacement=1;
->>>>>>> e01c2ab00212ad177ce99ded85d7a8f00acec28a
     m.prix_emplacement=10;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){

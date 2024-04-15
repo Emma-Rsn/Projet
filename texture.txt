@@ -10,7 +10,7 @@ texture/objet/stone1.png
 texture/objet/tree2top.png
 texture/objet/tree2bottom.png
 sprite/slimeblue.png
-sprite/test.png
+sprite/slimeblue.png
 sprite/slimebluedial.png
 sprite/alexface2.png
 sprite/alexdial.png
@@ -26,7 +26,6 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimebluecorrup.png
-<<<<<<< HEAD
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
@@ -58,9 +57,6 @@ texture/objet/artefact9.png
 texture/objet/artefact10.png
 texture/objet/point.png
 texture/template/combat.png
-=======
-texture/objet/point.png
->>>>>>> e01c2ab00212ad177ce99ded85d7a8f00acec28a
 sprite/alexface2corrup.png
 texture/template/combat_3.2.png
 texture/objet/barredevie.png
