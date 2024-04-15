@@ -129,22 +129,38 @@ int main(){
 
     map.tabMap[5][5].nbObj = 3;*/
 
-    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,15,0,1,10,0);
-    Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    obj_t * ObjSlime1 = init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[4][5],15,2,Slime1);
-    map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = ObjSlime1;
+    int *etat_dialogue=malloc(sizeof(int));
+    *etat_dialogue=0;
+    obj_t * dial;
+    dial=init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[2][2],10,3,8);
+    map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = dial;
     map.tabMap[cartec->xcarte][cartec->ycarte].nbObj = 1;
 
-        ennemi_t * Slime2 = init_ennemi("Boss",1,10,1,11,10,2,1,10,3);
-    Slime2->combattant[1] = init_combattant("Lute2",1,10,1,11,10,3,1,10,0);
-    obj_t * ObjSlime2 = init_obj(&map.tabMap[5][5].grille.tabGrille[3][2],10,2,Slime2);
-    map.tabMap[2][3].tabObj[1] = ObjSlime2;
+    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,15,0,1,10,0);
+    Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
+    obj_t * ObjSlime1 = init_obj(&map.tabMap[0][0].grille.tabGrille[4][5],15,2,Slime1);
+    map.tabMap[0][0].tabObj[0] = ObjSlime1;
+    map.tabMap[0][0].nbObj = 1;
 
+    ennemi_t * Slime2 = init_ennemi("Boss",1,10,1,11,10,2,1,10,3);
+    Slime2->combattant[1] = init_combattant("Lute2",1,10,1,11,10,3,1,10,0);
+    obj_t * ObjSlime2 = init_obj(&map.tabMap[2][3].grille.tabGrille[3][2],10,2,Slime2);
+    map.tabMap[2][3].tabObj[1] = ObjSlime2;
     map.tabMap[2][3].nbObj = 1;
 
     int tN = 0;
     load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
+    int k;
 
+    map.listeArtefact[0]=init_artefact("artefact1",1,"artefact qui augmente la force",0,10,10);
+    for(k=1;k<10;k++){
+        map.listeArtefact[k]=init_artefact("artefact2",0,"artefact qui augmente la vitesse",k,10,0);
+    }
+
+  
+
+
+    load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
 
     map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,45);
     map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,46);
@@ -183,14 +199,14 @@ int main(){
 	p_mv * pAlex = &Alex;
 
     
-
+/*
     //creation d'un pnj
     pnj_t Alex2;
     Alex2 = init_pnj("Alex2","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[14][9]),&map.tabMap[0][0]);
     pnj_t * pAlex2 = &Alex2;
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
-
+*/
     //creation ennemi 
 
 
@@ -276,8 +292,8 @@ int main(){
             inventaire(wEcran,hEcran,event,renderer,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement);
-            debut_dialogue(event,pAlex2,pAlex);
             debut_combat_carte(cartec,event,pAlex);
+            debut_dialogue_carte(cartec,event,pAlex,etat_dialogue);
             if(pAlex->NightP == 100 && tN == 1){
                 pAlex->Nightmare = 1;
                 map.Nightmare = 1;
@@ -304,7 +320,7 @@ int main(){
         if(ouigrille)afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
-        aff_pnj(Alex2,renderer,cartec);
+        //aff_pnj(Alex2,renderer,cartec);
 
         //Affiche un personnage
         affp(pAlex,renderer,event);
@@ -321,13 +337,14 @@ int main(){
 
 
         //afficher dialogue
-        pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
+        //pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
 
         //afficher map
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
         
         //Commence un combat
         combat_carte(cartec,wEcran,hEcran,event,renderer,pAlex,&map);
+        dialogue_carte(cartec,wEcran,hEcran,event,renderer,&map,etat_dialogue);
 
 
 
@@ -356,6 +373,7 @@ int main(){
     free(transi);
     free(etatoption);
     free(toucheDeplacement);
+    free(etat_dialogue);
 
     Mix_FreeMusic(gMusic);
 
@@ -369,7 +387,6 @@ int main(){
     creation_tab_texture(&map,renderer,1,1);
     detruire_tab_path(&map);
 
-    dest_pnj(pAlex2);
     desctruction_p_eq(&Alex);
     //desctruction_combattant(Alex.equipe[0]);
 

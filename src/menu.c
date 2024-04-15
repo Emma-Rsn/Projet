@@ -894,6 +894,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
     TTF_CloseFont(font);
     font = NULL;
 
+    SDL_Texture * textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
 
     int etat = 1;
     while (etat) {
@@ -1407,7 +1408,10 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 
             }
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> e01c2ab00212ad177ce99ded85d7a8f00acec28a
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
@@ -1975,6 +1979,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
         //destruction des texture
         SDL_DestroyTexture(textTextureQ);
         SDL_DestroyTexture(textTextureT);
+<<<<<<< HEAD
 
         SDL_RenderPresent(renderer);
 
@@ -1984,6 +1989,15 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
 
     }
 
+=======
+        SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+
+    }
+    
+
+>>>>>>> e01c2ab00212ad177ce99ded85d7a8f00acec28a
     return 0;
 }
 

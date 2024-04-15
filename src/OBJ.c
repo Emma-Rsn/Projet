@@ -22,11 +22,11 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
             n = 1;
             newObj->cas->etat = 0;
             break;
-        case 3 : //cas d'un objet avec contenu avec collision
+        case 3 : //cas d'un objet avec dialogue avec collision
             n = 1;
             newObj->cas->etat = 0;
             break;
-        case 4 : //cas d'un objet avec contenu sans collision
+        case 4 : //cas d'un objet avec dialogue sans collision
             n = 1;
             newObj->cas->etat = 1;
             break;
@@ -170,29 +170,6 @@ void dest_ennemi(ennemi_t * en){
 
 
 
-pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte){
-    pnj_t pnj;
-    pnj.nom = malloc(strlen(nom)+1);
-    strcpy(pnj.nom,nom);
-    pnj.c = c;
-    pnj.c->etat=0;
-    pnj.xcarte=carte->xcarte;
-    pnj.ycarte=carte->ycarte;
-    pnj.dial = initialisation();
-    if(emp_po != NULL)pnj.po = IMG_Load(emp_po);
-    pnj.perso = IMG_Load(emp_perso);
-    pnj.combat=0;
-    pnj.pv=100;
-    return pnj;
-}
-
-void aff_pnj(pnj_t pnj, SDL_Renderer *renderer,carte_t * carte){
-    if(pnj.xcarte == carte->xcarte && pnj.ycarte == carte->ycarte){
-        SDL_Texture * tperso = SDL_CreateTextureFromSurface(renderer, pnj.perso);
-        SDL_RenderCopy(renderer, tperso, NULL, &(pnj.c->Rectangle));
-        SDL_DestroyTexture(tperso);
-    }
-}
 
 
 int boolcol (case_t * obj_c,p_mv * pp){
@@ -208,48 +185,46 @@ int boolcol (case_t * obj_c,p_mv * pp){
     return 0;
 }
 
-void debut_dialogue(SDL_Event event,pnj_t * pnj,p_mv * pp){
-    if(boolcol(pnj->c,pp)) dialogue (event,pnj->dial);
+
+
+/**
+*
+*\fn artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture)
+*\param nom nom de l'artefact
+*\param possession entier pour savoir si 'lon possede ou non l'artefact
+*\param descriptif dexcription de l'artefact
+*\param indice indice de l'artefact dans le tableau dans la structure map
+*\param prix prix de l'artefact
+*\param indice_texture l'indice de la texture de l'artefact pour le lire dans le fichier
+*\brief fonction qui initialise un artefact
+*/
+//fonction qui initialise un artefact
+artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture){
+    artefact_t * artefact = malloc(sizeof(artefact_t));
+    artefact->nom = malloc(strlen(nom)+1);
+    strcpy(artefact->nom,nom);
+    artefact->descriptif = malloc(strlen(descriptif)+1);
+    strcpy(artefact->descriptif,descriptif);
+    artefact->possession=possession;
+    artefact->indice=indice;
+    artefact->prix=prix;
+    artefact->indice_texture=indice_texture;
+    artefact->equipe=0;
+    return artefact;
 }
+/**
+*\fn void destruction_artefact(artefact_t * artefact)
+*\param artefact structure d'artefact 
+*\brief fonction qui detruit l'artefact
+*/
+void destruction_artefact(artefact_t * artefact){
+    free(artefact->nom);
+    free(artefact->descriptif);
+    free(artefact);
 
-void pnj_dialogue (SDL_Event event,pnj_t * pnj,SDL_Renderer * renderer,int * he,int * we){
-    if(pnj->dial->etat == 1){
 
-        SDL_Surface* surface = SDL_CreateRGBSurface(0, *we, *he, 32,0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-        // Copie les pixels du rendu actuel dans la surface
-        SDL_RenderReadPixels(renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
-        // Créer une texture à partir de la surface
-        SDL_Texture* targetTexture = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
 
-        SDL_Rect tecran = {0,0,*we,*he};
 
-        while(pnj->dial->etat < 2){
-            while (SDL_PollEvent(&event) != 0) {
-                dialogue (event,pnj->dial);
-            }
-            SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, targetTexture, NULL, NULL);
-            SDL_SetRenderDrawColor(renderer,0,0,0,100);
-            SDL_RenderFillRect(renderer, &tecran);
-            aff_boite_dia(renderer,pnj->dial,pnj->po,*(we),*(he));
-            SDL_RenderPresent(renderer);
-            SDL_Delay(100);
-        }
-        pnj->dial->etat = 0;
-        SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, targetTexture, NULL, NULL);
-        SDL_RenderPresent(renderer);
-        SDL_DestroyTexture(targetTexture);
-    }
-}
-
-void dest_pnj(pnj_t * pnj){
-    free(pnj->nom);
-    liste_destruction(pnj->dial);
-    SDL_FreeSurface(pnj->perso);
-    SDL_FreeSurface(pnj->po);
-}
 
 /**
 *

@@ -20,15 +20,9 @@ struct Liste
 
 extern SDL_Event event;
 
-int affiche_texte(SDL_Renderer * rendu,Liste *mess,int dim);
-int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int le,int LE);
-void dialogue (SDL_Event event,Liste * liste);
-int liste_vide(Liste * liste);
-void liste_premier(Liste * liste);
-void liste_suivant(Liste * liste);
-Liste *initialisation();
-void insertion(Liste *liste, char * nvMess);
-void liste_suppression(Liste *liste);
-void afficherListe(Liste *liste);
-void liste_destruction(Liste * liste);
+int aff_boite_dia(SDL_Renderer * rendu,int po,int *we,int* he,char * message,map_t * map);
+void debut_dialogue(SDL_Event event,p_mv * pp,int *etat_dialogue,case_t * c);
+void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int num_dialogue);
+void debut_dialogue_carte(carte_t * cartec,SDL_Event event,p_mv * pp,int *etat_dialogue);
+void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map,int *etat_dialogue);
 #endif
