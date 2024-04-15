@@ -47,18 +47,6 @@ struct ennemi_s{
 
 
 
-struct pnj_s{
-    char * nom;
-    case_t * c;
-    int xcarte;
-    int ycarte;
-    Liste * dial;
-    SDL_Surface * po;
-    SDL_Surface * perso;
-    int combat;
-    int pv;
-};
-
 /**
 *
 *\struct artefact_s
@@ -87,11 +75,6 @@ void affObj(SDL_Renderer *renderer,obj_t * o,map_t map);
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte);
 ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme);
 int boolcol (case_t * obj_c,p_mv * pp);
-pnj_t init_pnj(char * nom,char * emp_po, char * emp_perso,case_t * c,carte_t * carte);
-void debut_dialogue(SDL_Event event,pnj_t * pnj,p_mv * pp);
-void pnj_dialogue (SDL_Event event,pnj_t * pnj,SDL_Renderer * renderer,int * he,int * we);
-void dest_pnj(pnj_t * pnj);
-void aff_pnj(pnj_t pnj, SDL_Renderer *renderer,carte_t * carte);
 void dest_ennemi(ennemi_t * en);
 artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture);
 void destruction_artefact(artefact_t * artefact);

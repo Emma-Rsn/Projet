@@ -151,19 +151,6 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 
 	SDL_Texture *textTexturemult = SDL_CreateTextureFromSurface(renderer, textSurfacemult);
 
-    /*//creation du texte du nombre de point
-	char *point = malloc(20);
-	sprintf(point, "nombre de point : %d", combat->nb_point);
-	SDL_Surface *textSurfacePoint = TTF_RenderText_Solid(font, point, textColor);
-	if (!textSurfacePoint)
-	{
-		erreur_sdl("Erreur lors de la création de la surface de texte \n",NULL,renderer,textTexturemult,NULL);
-		TTF_CloseFont(font);
-		return -1;
-	}
-
-	SDL_Texture *textTexturePoint = SDL_CreateTextureFromSurface(renderer, textSurfacePoint);*/
-
 	// Position du texte
 	SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2-50, textSurfacemult->w, textSurfacemult->h};
 
@@ -180,12 +167,6 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 	SDL_FreeSurface(textSurfacemult);
 	SDL_DestroyTexture(textTexturemult);
 
-	//SDL_RenderCopy(renderer, textTexturePoint, NULL, &r_point);
-	//SDL_FreeSurface(textSurfacePoint);
-	//SDL_DestroyTexture(textTexturePoint);
-
-	//free(point);
-	//point = NULL;
 	free(textemult);
 	textemult = NULL;
 	TTF_CloseFont(font);

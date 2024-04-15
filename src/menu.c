@@ -900,6 +900,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 
     int etat = 1;
     while (etat) {
+        SDL_RenderClear(renderer);
 
         /*
          *
@@ -1551,7 +1552,8 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
 
         int etat = 1;
         while (etat) {
-
+            
+            SDL_RenderClear(renderer);
             /*
              *
              *ARGENT
@@ -1968,14 +1970,12 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
         //destruction des texture
         SDL_DestroyTexture(textTextureQ);
         SDL_DestroyTexture(textTextureT);
-
         SDL_RenderPresent(renderer);
-
         SDL_RenderClear(renderer);
-
         SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
 
     }
+    
 
     return 0;
 }
