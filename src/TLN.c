@@ -144,15 +144,20 @@ int main(){
 
     int tN = 0;
     load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
-    int k;
 
-    map.listeArtefact[0]=init_artefact("artefact1",0,"artefact qui augmente la force",0,10,10);
-    for(k=1;k<10;k++){
-        map.listeArtefact[k]=init_artefact("artefact2",0,"artefact qui augmente la vitesse",k,10,0);
-    }
+
+    map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,45);
+    map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,46);
+    map.listeArtefact[2]=init_artefact("artefact1",1,"qui augmente les Pv max",2,10,47);
+    map.listeArtefact[3]=init_artefact("artefact1",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,48);
+    map.listeArtefact[4]=init_artefact("artefact1",0,"augmente le nombre de point au debut d'un combat",4,10,49);
+    map.listeArtefact[5]=init_artefact("artefact1",1,"l'effet de cet artefact est inconnu ",5,10,50);
+    map.listeArtefact[6]=init_artefact("artefact1",0,"diminue l'augmentation du cauchemar",6,10,51);
+    map.listeArtefact[7]=init_artefact("artefact1",0,"reduit le temps de recharde de 1 tour",7,10,52);
+    map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,53);
+    map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,54);
 
   
-
 
     load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
 

@@ -170,7 +170,7 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
     int i ;
     for(i=0;i<combat->nb_point;i++){
         SDL_Rect r_point = {r_mult.x+((r_basEcran.w/3)/20)*i, r_mult.h+r_mult.y, (r_basEcran.w/3)/20, (r_basEcran.w/3)/20};
-        SDL_RenderCopy(renderer, map -> tabTexture[26], NULL, & r_point);
+        SDL_RenderCopy(renderer, map -> tabTexture[55], NULL, & r_point);
 
     }
     
@@ -638,7 +638,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
     j = 0;
 
     SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, map -> tabTexture[28], NULL, & r_MEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[58], NULL, & r_MEcran);
 
     SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
 
@@ -708,7 +708,8 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
     SDL_RenderFillRect(renderer, & r_DEcran);
 
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
-    SDL_RenderFillRect(renderer, & r_basEcran);
+    //SDL_RenderFillRect(renderer, & r_basEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[56], NULL, & r_basEcran);
     SDL_RenderFillRect(renderer, & r_hautEcran);
 
     SDL_RenderCopy(renderer, textTextureATQ1, NULL, & r_ATQ1);
@@ -1376,7 +1377,7 @@ void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){
     SDL_SetRenderDrawColor(renderer, 43,27,85,255);
     SDL_RenderFillRect(renderer, &Night_barPleine);
 
-    SDL_RenderCopy(renderer,  map->tabTexture[29], NULL, &Night_bar);
+    SDL_RenderCopy(renderer,  map->tabTexture[59], NULL, &Night_bar);
 
 
 }
@@ -1441,7 +1442,7 @@ void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map
 
       // Afficher la texture sur le rendu
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
-    SDL_RenderCopy(renderer, map->tabTexture[29], NULL, &PV_bar);
+    SDL_RenderCopy(renderer, map->tabTexture[59], NULL, &PV_bar);
 
 
     SDL_FreeSurface(textSurface);

@@ -893,13 +893,16 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 
     TTF_CloseFont(font);
     font = NULL;
-    //affichage du rectangle du haut et du bas
-    SDL_SetRenderDrawColor(renderer, 112, 114, 110, 255);
-    SDL_RenderFillRect(renderer, & r_HEcran);
-    SDL_RenderFillRect(renderer, & r_BEcran);
+
 
     int etat = 1;
     while (etat) {
+        SDL_RenderClear(renderer);
+        //affichage du rectangle du haut et du bas
+        SDL_SetRenderDrawColor(renderer, 112, 114, 110, 255);
+        SDL_RenderFillRect(renderer, & r_HEcran);
+        SDL_RenderFillRect(renderer, & r_BEcran);
+            
 
         /*
          *
@@ -1404,6 +1407,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 
             }
         }
+        
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
@@ -1544,13 +1548,16 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
         TTF_CloseFont(font);
         font = NULL;
 
-        //affichage du rectangle du haut et du bas
-        SDL_SetRenderDrawColor(renderer, 112, 114, 110, 255);
-        SDL_RenderFillRect(renderer, & r_HEcran);
-        SDL_RenderFillRect(renderer, & r_BEcran);
+        
+        
 
         int etat = 1;
         while (etat) {
+            SDL_RenderClear(renderer);
+            //affichage du rectangle du haut et du bas
+            SDL_SetRenderDrawColor(renderer, 112, 114, 110, 255);
+            SDL_RenderFillRect(renderer, & r_HEcran);
+            SDL_RenderFillRect(renderer, & r_BEcran);
 
             /*
              *
@@ -1738,7 +1745,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
                 ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
                 ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
             };
-
+            
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[5] -> indice_texture], NULL, & r_artefactDroit1);
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[6] -> indice_texture], NULL, & r_artefactDroit2);
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[7] -> indice_texture], NULL, & r_artefactDroit3);
