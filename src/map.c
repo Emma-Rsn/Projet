@@ -107,7 +107,9 @@ map_t creation_map (int w, int h){
     m.nvEquipe=2;
     m.bonusEquipeN=BONUS_EQUIPE_N;
     m.bonusZoneN=BONUS_ZONE_N;
-    m.argent=0;
+    m.argent=100;
+    m.nb_emplacement=1;
+    m.prix_emplacement=10;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);

@@ -104,6 +104,22 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     }
 }
 
+
+/**
+*
+*\fn ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme)
+*\param nom prenom de l'ennemi
+*\param pv les pv de l'ennemi
+*\param vitesse vitesse de l'ennemi
+*\param camp camp du personnage (1=ennemi,0=allie)
+*\param indice_portrait l'indice du portrait pour le lire dans le fichier
+*\param indice_sprite l'indice du sprite pour le lire dans le fichier
+*\param type type d'attaque special (0=attaque un ennemi,1=saute le tour d'un ennemi,2=soigne un ennemi)
+*\param temps_recharge_max temps de recharge pour que l'ennemi est son attaque speciale
+*\param puissance La force des attaques de l'ennemi
+*\param forme la forme des ennemis (0=slime,1=?,2=?,3=boss)
+*\brief fonction qui initialise l'ennemi
+*/
 ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     ennemi_t * en = malloc(sizeof(ennemi_t));
     en->nom = malloc(strlen(nom)+1);
@@ -130,7 +146,11 @@ void dest_obj(carte_t * c){
 
 }
 
-
+/**
+*\fn void dest_ennemi(ennemi_t * en)
+*\param en strcuture d'un ennemi
+*\brief fonction qui detruit l'ennemi
+*/
 void dest_ennemi(ennemi_t * en){
     int i;
     int nb_ennemi=0;
@@ -229,4 +249,41 @@ void dest_pnj(pnj_t * pnj){
     liste_destruction(pnj->dial);
     SDL_FreeSurface(pnj->perso);
     SDL_FreeSurface(pnj->po);
+}
+
+/**
+*
+*\fn artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture)
+*\param nom nom de l'artefact
+*\param possession entier pour savoir si 'lon possede ou non l'artefact
+*\param descriptif dexcription de l'artefact
+*\param indice indice de l'artefact dans le tableau dans la structure map
+*\param prix prix de l'artefact
+*\param indice_texture l'indice de la texture de l'artefact pour le lire dans le fichier
+*\brief fonction qui initialise un artefact
+*/
+//fonction qui initialise un artefact
+artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture){
+    artefact_t * artefact = malloc(sizeof(artefact_t));
+    artefact->nom = malloc(strlen(nom)+1);
+    strcpy(artefact->nom,nom);
+    artefact->descriptif = malloc(strlen(descriptif)+1);
+    strcpy(artefact->descriptif,descriptif);
+    artefact->possession=possession;
+    artefact->indice=indice;
+    artefact->prix=prix;
+    artefact->indice_texture=indice_texture;
+    artefact->equipe=0;
+    return artefact;
+}
+/**
+*\fn void destruction_artefact(artefact_t * artefact)
+*\param artefact structure d'artefact 
+*\brief fonction qui detruit l'artefact
+*/
+void destruction_artefact(artefact_t * artefact){
+    free(artefact->nom);
+    free(artefact->descriptif);
+    free(artefact);
+
 }
