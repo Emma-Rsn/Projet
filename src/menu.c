@@ -233,9 +233,9 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
     }
 
     SDL_Color textColorT = {
-        43,
-        27,
-        85
+        127,
+        0,
+        255
     };
 
     SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "The Last Nightmare", textColorT);
@@ -412,33 +412,9 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
         (*he)
         };
 
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
 
-        SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-        SDL_RenderCopy(renderer, map -> tabTexture[38], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[37], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[36], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[35], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[34], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[33], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[32], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[31], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[39], NULL, & r_Bouton_C);
-        SDL_RenderCopy(renderer, map -> tabTexture[39], NULL, & r_Bouton_O);
-        SDL_RenderCopy(renderer, map -> tabTexture[39], NULL, & r_Bouton_Q);
-        SDL_RenderCopy(renderer, map -> tabTexture[40], NULL, & r_Bouton_N);
-        SDL_RenderCopy(renderer, map -> tabTexture[40], NULL, & r_Bouton_T);
 
-
-        SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
-        SDL_RenderCopy(renderer, textTextureC, NULL, & r_text_C);
-        SDL_RenderCopy(renderer, textTextureT, NULL, & r_text_T);
-        SDL_RenderCopy(renderer, textTextureO, NULL, & r_text_O);
-        SDL_RenderCopy(renderer, textTextureN, NULL, & r_text_N);
-
-        SDL_RenderPresent(renderer);
 
     int etat = 1;
     while (etat) {
@@ -460,7 +436,7 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
                 //Pour aller au menu option
                 else if ((r_text_O.x <= event.button.x) && ((r_text_O.x + r_text_O.w) >= event.button.x) && ((r_text_O.y + r_text_O.h) >= event.button.y) && (r_text_O.y <= event.button.y)) {
                     * etatoption = 3;
-                    option(we, he, event, renderer, etatoption, toucheDeplacement);
+                    option(we, he, event, renderer, etatoption, toucheDeplacement,map);
                 }
                 //Pour creer une nouvelle partie
                 else if ((r_text_N.x <= event.button.x) && ((r_text_N.x + r_text_N.w) >= event.button.x) && ((r_text_N.y + r_text_N.h) >= event.button.y) && (r_text_N.y <= event.button.y)) {
@@ -469,6 +445,30 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
 
             }
         }
+        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderCopy(renderer, map -> tabTexture[158], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[157], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[156], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[155], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[151], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_C);
+        SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_O);
+        SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_Q);
+        SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_Bouton_N);
+        SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_Bouton_T);
+
+
+        SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
+        SDL_RenderCopy(renderer, textTextureC, NULL, & r_text_C);
+        SDL_RenderCopy(renderer, textTextureT, NULL, & r_text_T);
+        SDL_RenderCopy(renderer, textTextureO, NULL, & r_text_O);
+        SDL_RenderCopy(renderer, textTextureN, NULL, & r_text_N);
+
+        SDL_RenderPresent(renderer);
 
 
         SDL_Delay(100);
@@ -498,15 +498,59 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
  */
 
 //fonction qui affiche les options
-int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * etatoption, int * toucheDeplacement) {
+int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * etatoption, int * toucheDeplacement,map_t * map) {
 
     if ( * etatoption == 1 || * etatoption == 3) {
+        SDL_RenderClear(renderer);
 
-        SDL_Color textColor = {
-            255,
-            255,
-            255
+        SDL_Color textColor = {255,255,255};
+        SDL_Color textColorGris = {100,100,100};
+        SDL_Color couleuractuel = textColor;
+
+        //chargement de la police d'écriture
+        TTF_Font * fontT = TTF_OpenFont("fonts/alagard.ttf", 55);
+        if (!fontT) {
+            //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+            return -1;
+        }
+
+        SDL_Color textColorT = {68,62,111};
+
+        SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "Option", textColorT);
+        if (!textSurfaceT) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(fontT);
+            return -1;
+        }
+
+        SDL_Texture * textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
+
+        SDL_Rect r_Bouton_T = {
+            (( * we) / 2) - ((*we)*20/100 / 2),
+            (( * he) / 6) * 1 - (((*he)*10/100)/2),
+            (*we)*20/100,
+            (*he)*10/100
         };
+
+        SDL_Rect r_text_T = {
+            (r_Bouton_T.x+(r_Bouton_T.w)/2-textSurfaceT -> w/2),
+            (r_Bouton_T.y+(r_Bouton_T.h)/2-textSurfaceT -> h /2),
+            textSurfaceT -> w,
+            textSurfaceT -> h
+        };
+
+
+        SDL_FreeSurface(textSurfaceT);
+
+        if (SDL_QueryTexture(textTextureT, NULL, NULL, & r_text_T.w, & r_text_T.h) != 0) {
+            printf("Impossible de charger le texte\n");
+            return -1;
+
+        }
+
+        TTF_CloseFont(fontT);
+        fontT = NULL;
+
 
         //chargement de la police d'écriture
         TTF_Font * font = TTF_OpenFont("fonts/alagard.ttf", 50);
@@ -515,7 +559,7 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
             return -1;
         }
 
-        SDL_Surface * textSurfaceQ = TTF_RenderText_Solid(font, "Retour", textColor);
+        SDL_Surface * textSurfaceQ = TTF_RenderText_Solid(font, "Retour", couleuractuel);
         if (!textSurfaceQ) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
@@ -523,87 +567,133 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
         }
 
         SDL_Texture * textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
+        
 
-        SDL_Surface * textSurfaceQwerty = TTF_RenderText_Solid(font, "Qwerty", textColor);
-        if (!textSurfaceQwerty) {
-            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
-            TTF_CloseFont(font);
-            return -1;
-        }
 
-        SDL_Texture * textTextureQwerty = SDL_CreateTextureFromSurface(renderer, textSurfaceQwerty);
-
-        SDL_Surface * textSurfaceAzerty = TTF_RenderText_Solid(font, "Azerty", textColor);
-        if (!textSurfaceAzerty) {
-            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
-            TTF_CloseFont(font);
-            return -1;
-        }
-
-        SDL_Texture * textTextureAzerty = SDL_CreateTextureFromSurface(renderer, textSurfaceAzerty);
-
-        SDL_Surface * textSurfacefleches = TTF_RenderText_Solid(font, "fleches", textColor);
-        if (!textSurfacefleches) {
-            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
-            TTF_CloseFont(font);
-            return -1;
-        }
-
-        SDL_Texture * textTexturefleches = SDL_CreateTextureFromSurface(renderer, textSurfacefleches);
-
-        TTF_CloseFont(font);
-        font = NULL;
-
-        //creation rectangle pour les textes
-        SDL_Rect r_text_Q = {
-            (( * we) / 2) - ((textSurfaceQ -> w) / 2),
-            ( * he / 4) * 4 - textSurfaceQ -> h - 100,
-            textSurfaceQ -> w,
-            textSurfaceQ -> h
-        };
-        SDL_Rect r_text_Qwerty = {
-            (( * we) / 4) * 1 - ((textSurfaceQwerty -> w) / 2),
-            ( * he / 2),
-            textSurfaceQwerty -> w,
-            textSurfaceQwerty -> h
-        };
-        SDL_Rect r_text_Azerty = {
-            (( * we) / 2) * 1 - ((textSurfaceAzerty -> w) / 2),
-            ( * he / 2),
-            textSurfaceAzerty -> w,
-            textSurfaceAzerty -> h
-        };
-        SDL_Rect r_text_fleches = {
-            (( * we) / 4) * 3 - ((textSurfacefleches -> w) / 2),
-            ( * he / 2),
-            textSurfacefleches -> w,
-            textSurfacefleches -> h
-        };
-
-        SDL_FreeSurface(textSurfaceQ);
-        SDL_FreeSurface(textSurfaceQwerty);
-        SDL_FreeSurface(textSurfaceAzerty);
-        SDL_FreeSurface(textSurfacefleches);
-
-        if (SDL_QueryTexture(textTextureQ, NULL, NULL, & r_text_Q.w, & r_text_Q.h) != 0) {
-            printf("Impossible de charger le texte\n");
-            return -1;
-        }
-        if (SDL_QueryTexture(textTextureQwerty, NULL, NULL, & r_text_Qwerty.w, & r_text_Qwerty.h) != 0) {
-            printf("Impossible de charger le texte\n");
-            return -1;
-        }
-        if (SDL_QueryTexture(textTextureAzerty, NULL, NULL, & r_text_Azerty.w, & r_text_Azerty.h) != 0) {
-            printf("Impossible de charger le texte\n");
-            return -1;
-        }
-        if (SDL_QueryTexture(textTexturefleches, NULL, NULL, & r_text_fleches.w, & r_text_fleches.h) != 0) {
-            printf("Impossible de charger le texte\n");
-            return -1;
-        }
 
         int etat = 1;
         while (etat) {
+            if ( * toucheDeplacement == 1) {
+                couleuractuel=textColorGris;
+            }
+            else{
+                couleuractuel=textColor;
+            }
+
+            SDL_Surface * textSurfaceQwerty = TTF_RenderText_Solid(font, "Qwerty", couleuractuel);
+            if (!textSurfaceQwerty) {
+                fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                TTF_CloseFont(font);
+                return -1;
+            }
+
+            SDL_Texture * textTextureQwerty = SDL_CreateTextureFromSurface(renderer, textSurfaceQwerty);
+            if ( * toucheDeplacement == 0) {
+                couleuractuel=textColorGris;
+            }
+            else{
+                couleuractuel=textColor;
+            }
+
+            SDL_Surface * textSurfaceAzerty = TTF_RenderText_Solid(font, "Azerty", couleuractuel);
+            if (!textSurfaceAzerty) {
+                fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                TTF_CloseFont(font);
+                return -1;
+            }
+
+            SDL_Texture * textTextureAzerty = SDL_CreateTextureFromSurface(renderer, textSurfaceAzerty);
+
+            if ( * toucheDeplacement == 2) {
+                couleuractuel=textColorGris;
+            }
+            else{
+                couleuractuel=textColor;
+            }
+
+            SDL_Surface * textSurfacefleches = TTF_RenderText_Solid(font, "fleches", couleuractuel);
+            if (!textSurfacefleches) {
+                fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+                TTF_CloseFont(font);
+                return -1;
+            }
+
+            SDL_Texture * textTexturefleches = SDL_CreateTextureFromSurface(renderer, textSurfacefleches);
+
+
+
+            //creation rectangle pour les textes
+            SDL_Rect r_text_Q = {
+                (( * we) / 2) - ((textSurfaceQ -> w) / 2),
+                ( * he / 4) * 4 - textSurfaceQ -> h - 100,
+                textSurfaceQ -> w,
+                textSurfaceQ -> h
+            };
+            SDL_Rect r_bouton_Qwerty = {
+                (( * we) / 4) * 1 - (((*we)*15/100) / 2),
+                ( * he / 2),
+                (*we)*15/100,
+                (*he)*15/100
+            };
+
+            SDL_Rect r_text_Qwerty = {
+                (r_bouton_Qwerty.x+r_bouton_Qwerty.w/2)-(textSurfaceQwerty -> w/2),
+                (r_bouton_Qwerty.y+r_bouton_Qwerty.h/2)-(textSurfaceQwerty -> h/2),
+                textSurfaceQwerty -> w,
+                textSurfaceQwerty -> h
+            };
+            SDL_Rect r_bouton_Azerty = {
+                (( * we) / 2) * 1 - (((*we)*15/100) / 2),
+                ( * he / 2),
+                (*we)*15/100,
+                (*he)*15/100
+            };
+            SDL_Rect r_text_Azerty = {
+                (r_bouton_Azerty.x+r_bouton_Azerty.w/2)-(textSurfaceAzerty -> w/2),
+                (r_bouton_Azerty.y+r_bouton_Azerty.h/2)-(textSurfaceAzerty -> h/2),
+                textSurfaceAzerty -> w,
+                textSurfaceAzerty -> h
+            };
+
+            SDL_Rect r_bouton_fleches = {
+                (( * we) / 4) * 3 - (((*we)*15/100) / 2),
+                ( * he / 2),
+                (*we)*15/100,
+                (*he)*15/100
+            };
+            SDL_Rect r_text_fleches = {
+                (r_bouton_fleches.x+r_bouton_fleches.w/2)-(textSurfacefleches -> w/2),
+                (r_bouton_fleches.y+r_bouton_fleches.h/2)-(textSurfacefleches -> h/2),
+                textSurfacefleches -> w,
+                textSurfacefleches -> h
+            };
+
+            SDL_Rect r_Ecran = {0,0,(*we),(*he)};
+            
+
+
+            
+            SDL_FreeSurface(textSurfaceQwerty);
+            SDL_FreeSurface(textSurfaceAzerty);
+            SDL_FreeSurface(textSurfacefleches);
+
+            if (SDL_QueryTexture(textTextureQ, NULL, NULL, & r_text_Q.w, & r_text_Q.h) != 0) {
+                printf("Impossible de charger le texte\n");
+                return -1;
+            }
+            if (SDL_QueryTexture(textTextureQwerty, NULL, NULL, & r_text_Qwerty.w, & r_text_Qwerty.h) != 0) {
+                printf("Impossible de charger le texte\n");
+                return -1;
+            }
+            if (SDL_QueryTexture(textTextureAzerty, NULL, NULL, & r_text_Azerty.w, & r_text_Azerty.h) != 0) {
+                printf("Impossible de charger le texte\n");
+                return -1;
+            }
+            if (SDL_QueryTexture(textTexturefleches, NULL, NULL, & r_text_fleches.w, & r_text_fleches.h) != 0) {
+                printf("Impossible de charger le texte\n");
+                return -1;
+            }
+            
 
             while (SDL_PollEvent( & event) != 0) {
 
@@ -642,39 +732,37 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
             }
 
             SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_Ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Azerty);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Qwerty);
 
             SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
-            SDL_RenderDrawRect(renderer, & r_text_Azerty);
-            SDL_RenderDrawRect(renderer, & r_text_Qwerty);
-            SDL_RenderDrawRect(renderer, & r_text_fleches);
-            if ( * toucheDeplacement == 0) {
-                SDL_RenderFillRect(renderer, & r_text_Azerty);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_fleches);
+        
 
-            }
-            if ( * toucheDeplacement == 1) {
-                SDL_RenderFillRect(renderer, & r_text_Qwerty);
-
-            }
-            if ( * toucheDeplacement == 2) {
-                SDL_RenderFillRect(renderer, & r_text_fleches);
-
-            }
 
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
+
+            SDL_RenderCopy(renderer, textTextureT, NULL, & r_Bouton_T);
 
             SDL_RenderCopy(renderer, textTextureQwerty, NULL, & r_text_Qwerty);
             SDL_RenderCopy(renderer, textTextureAzerty, NULL, & r_text_Azerty);
             SDL_RenderCopy(renderer, textTexturefleches, NULL, & r_text_fleches);
             SDL_RenderPresent(renderer);
             SDL_Delay(100);
+            
+            SDL_DestroyTexture(textTextureQwerty);
+            SDL_DestroyTexture(textTextureAzerty);
+            SDL_DestroyTexture(textTexturefleches);
 
         }
-
+        SDL_FreeSurface(textSurfaceQ);
         SDL_DestroyTexture(textTextureQ);
-        SDL_DestroyTexture(textTextureQwerty);
-        SDL_DestroyTexture(textTextureAzerty);
-        SDL_DestroyTexture(textTexturefleches);
+        TTF_CloseFont(font);
+        font = NULL;
+
+
 
     }
     return 0;
@@ -859,7 +947,7 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                 ( * we),
                 ( * he)
             };
-            SDL_RenderCopy(renderer, map -> tabTexture[44], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
 
             SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
             SDL_RenderCopy(renderer, textTextureC, NULL, & r_text_C);
@@ -1021,7 +1109,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 
     TTF_CloseFont(font);
     font = NULL;
-    SDL_RenderCopy(renderer, map -> tabTexture[44], NULL, & r_ecran);
+    SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
     SDL_RenderFillRect(renderer, & r_Mecran);
 
     int etat = 1;
@@ -1041,9 +1129,9 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
             ( * we),
             ( * he)
         };
-        SDL_RenderCopy(renderer, map -> tabTexture[44], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[56], NULL, & r_HEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[56], NULL, & r_BEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_HEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_BEcran);
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
         SDL_RenderFillRect(renderer, & r_Mecran);
 
@@ -1730,11 +1818,12 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
                 ( * we),
                 ( * he)
             };
-            SDL_RenderCopy(renderer, map -> tabTexture[44], NULL, & r_ecran);
-            SDL_RenderCopy(renderer, map -> tabTexture[56], NULL, & r_HEcran);
-            SDL_RenderCopy(renderer, map -> tabTexture[56], NULL, & r_BEcran);
+            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_HEcran);
+            SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_BEcran);
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
             SDL_RenderFillRect(renderer, & r_Mecran);
+
 
             /*
              *
@@ -2162,46 +2251,3 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
     return 0;
 }
 
-/*int console_command(SDL_Event event,char * command){
-if(command == NULL){
-command = malloc(80);
-}
-if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_j)){
-scanf("%s",command);
-}
-return 0;
-}
-
-int console_aff(SDL_Renderer * renderer,int we,int he,char * command){
-TTF_Font * police = TTF_OpenFont("fonts/alagard.ttf", 20);
-SDL_Color blanc = {255, 255, 255};
-if (police == NULL){
-TTF_CloseFont(police);
-TTF_Quit();
-fprintf(stderr,"probleme a l'ouverture de la police\n");
-return -1;
-}
-SDL_Rect r = {0,we-32,he,32};
-SDL_SetRenderDrawColor(renderer, 0,0,0,120);
-SDL_RenderFillRect(renderer, &r);
-SDL_Surface * texte = TTF_RenderText_Solid(police, command, blanc);
-if (!texte){
-SDL_FreeSurface(texte);
-TTF_CloseFont(police);
-police = NULL;
-TTF_Quit();
-printf("probleme de texte\n");
-return -1;
-}
-SDL_Texture * text_texture = SDL_CreateTextureFromSurface(renderer,texte);
-SDL_Rect textRect = {r.x+5, r.y+5, texte->w, texte->h};
-if(!text_texture){
-printf("Impossible de creeer la texture\n");
-TTF_CloseFont(police);
-police = NULL;
-TTF_Quit();
-return -1;
-}
-SDL_RenderCopy(renderer, text_texture, NULL, &textRect);
-return 0;
-}*/

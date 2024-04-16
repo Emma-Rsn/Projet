@@ -163,7 +163,7 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderFillRect(renderer, &PV_barPleine);
 
-    SDL_RenderCopy(renderer, map.tabTexture[59], NULL, &PV_bar);
+    SDL_RenderCopy(renderer, map.tabTexture[179], NULL, &PV_bar);
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderFillRect(renderer, &Night_barVide);
@@ -171,5 +171,5 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     SDL_SetRenderDrawColor(renderer, 43,27,85,255);
     SDL_RenderFillRect(renderer, &Night_barPleine);
 
-    SDL_RenderCopy(renderer, map.tabTexture[59], NULL, &Night_bar);
+    SDL_RenderCopy(renderer, map.tabTexture[150], NULL, &Night_bar);
 }
