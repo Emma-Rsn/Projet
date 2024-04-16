@@ -251,6 +251,12 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         if(strcmp(combat->ennemi[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0 && combat->combattant[combat->indice_combattant]->status==0){
             textRect.x = (r_GEcran.x+(100)+(*we*4/100));
         }
+        if(combat->ennemi[i]->status==1){
+            SDL_Rect r_effet = {(textRect.x+textRect.w)+(*we)*2/100, textRect.y, (*we)*2/100, (*we)*2/100};
+            SDL_RenderFillRect(renderer,&r_effet);
+            printf("%d h %d\n",r_effet.w,r_effet.h);
+
+        }
 
         affVie(renderer,(r_GEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),10+(*we*2/100),combat->ennemi[i],map);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
@@ -286,6 +292,11 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         SDL_Rect textRect = {r_DEcran.x+(*we*2/100), (r_DEcran.y+i*(r_GEcran.h/4))+(*he*4/100), textSurface->w, textSurface->h};
         if(strcmp(combat->allie[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0 && combat->combattant[combat->indice_combattant]->status==0){
             textRect.x = (r_DEcran.x+(r_DEcran.w/50)+(*we*4/100));
+        }
+        if(combat->allie[i]->status==1){
+            SDL_Rect r_effet = {(textRect.x+textRect.w)+(*we)*2/100, textRect.y, (*we)*2/100, (*we)*2/100};
+            SDL_RenderFillRect(renderer,&r_effet);
+
         }
         affVie(renderer,(r_DEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),r_DEcran.x+(*we*2/100),combat->allie[i],map);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
@@ -603,10 +614,6 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             *
             */
 
-
-            while(combat->allie[j]->mort==1){
-                    j++;
-            }
 
 
             //creation des rectangles pour l'affichage
@@ -1223,8 +1230,13 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             
 
             for(combat->indice_combattant=0;combat->indice_combattant<nb_combattant && Nennemi>0 && allie>0;combat->indice_combattant++){
+
                 
                 combat->mult=1;
+                if(allie != 0){
+                    affichage_combat(we,he,renderer,combat,0,pp,map);
+                }
+                SDL_Delay(500);
 
                 if(combat->combattant[combat->indice_combattant]->camp==0 && combat->combattant[combat->indice_combattant]->mort==0){
                     //regarde si l'allie peut jouer
@@ -1336,10 +1348,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         i++;
                     }
                 }
-                if(allie != 0){
-                    affichage_combat(we,he,renderer,combat,0,pp,map);
-                }
-                SDL_Delay(500);
+
 
                 
             }

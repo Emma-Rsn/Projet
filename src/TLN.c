@@ -197,7 +197,7 @@ int main(){
 
 
     //menu d'ecran titre
-    menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement);
+    menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement,&map);
     //boucle du programme
     while (*run) {
         //zone d'evenement
