@@ -140,7 +140,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
+texture/background/bois_violet.png
 texture/template/cadre_cote5.png
 texture/template/cadre5.png
 texture/template/cadre_cote4.png
@@ -323,7 +323,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
+texture/background/bois_violet.png
 texture/template/cadre_cote5.png
 texture/template/cadre5.png
 texture/template/cadre_cote4.png
@@ -506,7 +506,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
+texture/background/bois_violet.png
 texture/template/cadre_cote5.png
 texture/template/cadre5.png
 texture/template/cadre_cote4.png
@@ -688,7 +688,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
+texture/background/bois_violet.png
 texture/template/cadre_cote5.png
 texture/template/cadre5.png
 texture/template/cadre_cote4.png
@@ -870,7 +870,7 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
+texture/background/bois_violet.png
 texture/template/cadre_cote5.png
 texture/template/cadre5.png
 texture/template/cadre_cote4.png

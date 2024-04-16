@@ -734,11 +734,10 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
             }
 
             SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_Ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_Ecran);
             SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Azerty);
             SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Qwerty);
 
-            SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
             SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_fleches);
         
 
@@ -816,12 +815,20 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
 
         SDL_Texture * textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
 
+        SDL_Rect r_bouton_T = {
+                (( * we) / 2)  - (((*we)*25/100) / 2),
+                ( * he / 10)-((*he)*15/100)/2,
+                (*we)*25/100,
+                (*he)*15/100
+            };
+
         SDL_Rect r_text_T = {
-            (( * we) / 2) - ((textSurfaceT -> w) / 2),
-            (( * he) / 3),
+            (r_bouton_T.x+r_bouton_T.w/2)-(textSurfaceT -> w/2),
+            (r_bouton_T.y+r_bouton_T.h/2)-(textSurfaceT -> h/2),
             textSurfaceT -> w,
             textSurfaceT -> h
         };
+
         SDL_FreeSurface(textSurfaceT);
 
         if (SDL_QueryTexture(textTextureT, NULL, NULL, & r_text_T.w, & r_text_T.h) != 0) {
@@ -870,31 +877,76 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
 
         SDL_Texture * textTextureN = SDL_CreateTextureFromSurface(renderer, textSurfaceN);
 
+        SDL_Surface * textSurfaceI = TTF_RenderText_Solid(font, "Inventaire", textColor);
+        if (!textSurfaceI) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            SDL_FreeSurface(textSurfaceC);
+            return -1;
+        }
+
+        SDL_Texture * textTextureI = SDL_CreateTextureFromSurface(renderer, textSurfaceI);
+
         TTF_CloseFont(font);
         font = NULL;
 
         //creation rectangle pour les textes
 
+        SDL_Rect r_bouton_Q = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 5) * 5- (*he)*15/100,
+                (*we)*15/100,
+                (*he)*15/100
+            };
+
         SDL_Rect r_text_Q = {
-            (( * we) / 2) - ((textSurfaceQ -> w) / 2),
-            ( * he / 4) * 4 - textSurfaceQ -> h - 100,
+            (r_bouton_Q.x+r_bouton_Q.w/2)-(textSurfaceQ -> w/2),
+            (r_bouton_Q.y+r_bouton_Q.h/2)-(textSurfaceQ -> h/2),
             textSurfaceQ -> w,
             textSurfaceQ -> h
         };
+        SDL_Rect r_bouton_N = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 5) * 3- (*he)*15/100,
+                (*we)*15/100,
+                (*he)*15/100
+            };
         SDL_Rect r_text_N = {
-            (( * we) / 2) - ((textSurfaceN -> w) / 2),
-            ( * he / 4) * 2 - textSurfaceN -> h + 50,
+            (r_bouton_N.x+r_bouton_N.w/2)-(textSurfaceN -> w/2),
+            (r_bouton_N.y+r_bouton_N.h/2)-(textSurfaceN -> h/2),
             textSurfaceN -> w,
             textSurfaceN -> h
         };
+
+        SDL_Rect r_bouton_C = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 5) * 2- (*he)*15/100,
+                (*we)*15/100,
+                (*he)*15/100
+            };
         SDL_Rect r_text_C = {
-            (( * we) / 2) - ((textSurfaceC -> w) / 2),
-            ( * he / 4) * 3 - textSurfaceC -> h,
+            (r_bouton_C.x+r_bouton_C.w/2)-(textSurfaceC -> w/2),
+            (r_bouton_C.y+r_bouton_C.h/2)-(textSurfaceC -> h/2),
             textSurfaceC -> w,
             textSurfaceC -> h
         };
 
+        SDL_Rect r_bouton_I = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 5) * 4- (*he)*15/100,
+                (*we)*15/100,
+                (*he)*15/100
+            };
+        SDL_Rect r_text_I = {
+            (r_bouton_I.x+r_bouton_I.w/2)-(textSurfaceI -> w/2),
+            (r_bouton_I.y+r_bouton_I.h/2)-(textSurfaceI -> h/2),
+            textSurfaceI -> w,
+            textSurfaceI -> h
+        };
+
         SDL_FreeSurface(textSurfaceC);
+        SDL_FreeSurface(textSurfaceI);
         SDL_FreeSurface(textSurfaceQ);
         SDL_FreeSurface(textSurfaceN);
 
@@ -935,8 +987,11 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                     }
                     //Pour aller au magasin
                     else if ((r_text_N.x <= event.button.x) && ((r_text_N.x + r_text_N.w) >= event.button.x) && ((r_text_N.y + r_text_N.h) >= event.button.y) && (r_text_N.y <= event.button.y)) {
-                        etat = 0;
                         magasin(we, he, event, renderer, personnage, map);
+                    }
+                    else if ((r_text_I.x <= event.button.x) && ((r_text_I.x + r_text_I.w) >= event.button.x) && ((r_text_I.y + r_text_I.h) >= event.button.y) && (r_text_I.y <= event.button.y)) {
+
+                        inventaire(we, he, event, renderer, map);
                     }
 
                 }
@@ -951,12 +1006,23 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                 ( * we),
                 ( * he)
             };
-            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[140], NULL, & r_ecran);
+
+
+            SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_N);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Q);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_C);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_I);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_T);
+            
+
 
             SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
             SDL_RenderCopy(renderer, textTextureC, NULL, & r_text_C);
             SDL_RenderCopy(renderer, textTextureT, NULL, & r_text_T);
             SDL_RenderCopy(renderer, textTextureN, NULL, & r_text_N);
+            SDL_RenderCopy(renderer, textTextureI, NULL, & r_text_I);
 
             SDL_RenderPresent(renderer);
             SDL_Delay(100);
@@ -967,6 +1033,7 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
         SDL_DestroyTexture(textTextureC);
         SDL_DestroyTexture(textTextureT);
         SDL_DestroyTexture(textTextureN);
+        SDL_DestroyTexture(textTextureI);
 
         SDL_RenderPresent(renderer);
 
@@ -1681,7 +1748,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 //fonction qui affiche et gere l'inventaire
 int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map_t * map) {
 
-    if ((event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_f)) {
+   
 
         int i, j, k;
         int indice_art_emp[4];
@@ -2250,7 +2317,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
         SDL_RenderClear(renderer);
         SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
 
-    }
+    
 
     return 0;
 }

@@ -639,7 +639,12 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
 
             SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
+            if(map->Nightmare==1){
+                SDL_RenderCopy(renderer, map -> tabTexture[140], NULL, & r_ecran);
+            }else{
+                SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
+            }
+            
             SDL_RenderCopy(renderer, map -> tabTexture[178], NULL, & r_MEcran);
 
             SDL_SetRenderDrawColor(renderer,50,50,50,255);

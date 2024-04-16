@@ -262,7 +262,6 @@ int main(){
 
             //menu
             menu_option(wEcran,hEcran,event,renderer,run,etatoption);
-            inventaire(wEcran, hEcran,event,renderer,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement,&map);
             debut_dialogue_carte(cartec,event,Alex,etat_dialogue);
