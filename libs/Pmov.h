@@ -43,12 +43,12 @@ struct personnage{
     //carte_t * carte;
     case_t * c;
     SDL_Rect r;//{x,y,w,h}
-    int d; //direction orienté{N,E,S,W}{0,1,2,3}
+    int * d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
     combattant_t *equipe[4];
-    int Nightmare;
-    int NightP;
+    int * Nightmare;
+    int * NightP; //pointcauchemar
     int NightMax;
     int * frame;
     int lock;
@@ -60,7 +60,11 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event);
 
 void col_p(SDL_Rect * obj_r,p_mv * pp);
 
-p_mv initp(case_t * c);
+void lower(char *input, char *output);
+
+p_mv * initp();
+
+void remplirp(p_mv * p,case_t * c,int leader);
 
 void desctruction_p_eq(p_mv * p);
 

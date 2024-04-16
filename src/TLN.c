@@ -88,8 +88,17 @@ int main(){
     creation_tab_path(&map, "save/texture.txt");
     afficher_zone(map);
     //def spawn
-    int q,s,xp,yp;
-    if(!load_pos(&q,&s,&xp,&yp)){
+    int q,s,ii;
+    int * pv = malloc(sizeof(int));
+    int * tabparam[6];
+    for(ii = 0;ii<6;ii++){
+        tabparam[ii] = malloc(sizeof(int));
+    }
+    p_mv * Alex = initp();
+    Alex->equipe[0]=pre_init_combattant();
+
+    int xp,yp;
+    if(!load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam)){
         for(q = 0;q<ROWS;q++){
             for(s = 0;s<COLUMNS;s++){
                 if(map.tabMap[q][s].nZone == 1){
@@ -100,86 +109,31 @@ int main(){
                     break;
             }
         }
-        xp = 12,yp=5;
+        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0,*tabparam[4] = 0,*tabparam[5] = 1,*pv=100;
     }
-    carte_t * cartec = &(map.tabMap[q][s]);
+    map.Zone2 = *tabparam[0],map.Zone3 = *tabparam[1],map.Zone4 = *tabparam[2],map.Zone5 = *tabparam[3],map.argent = *tabparam[4],map.nvEquipe = *tabparam[5];
+    map.Nightmare=*Alex->Nightmare;
+    carte_t * cartec =&map.tabMap[q][s];
+    remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),0);
+    *Alex->equipe[0]->pv=*pv;
+
     cartec->etat_brouillard = 0;
-    map.zoneChargee=cartec->nZone;
+    map.zoneChargee = cartec->nZone;
+    free(pv);
+    for(ii = 0;ii<6;ii++){
+        free(tabparam[ii]);
+    }
     chargement_Zone(&map,renderer,map.zoneChargee,gMusic);
     creer_map_layout(&map);
 
-    //temporaire
-    /*ennemi_t Slime1 = init_ennemi("Slime1",10,11,&map,100,100,0,2,20,0);
-
-    Slime1.combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    ennemi_t * PSlime1 = &Slime1;
-    obj_t ObjSlime1 = init_obj(&map.tabMap[5][5].grille.tabGrille[4][5],10,2,PSlime1);
-    map.tabMap[5][5].tabObj[0] = ObjSlime1;
-
-    obj_t ObjCaillou = init_obj(&map.tabMap[5][5].grille.tabGrille[15][5],9,0);
-    map.tabMap[5][5].tabObj[1] = ObjCaillou;
-
-    ennemi_t Boss = init_ennemi("Alex",27,27,&map,100,100,0,2,17,3);
-    Boss.combattant[1] = init_combattant("Lute",100,10,1,11,10,1,1,5,0);
-    Boss.combattant[2] = init_combattant("Lute2",100,10,1,11,10,2,1,5,0);
-    Boss.combattant[3] = init_combattant("Lute3",100,10,1,11,10,4,1,5,0);
-    ennemi_t * PBoss = &Boss;
-    obj_t ObjBoss = init_obj(&map.tabMap[5][5].grille.tabGrille[10][5],27,2,PBoss);
-    map.tabMap[5][5].tabObj[2] = ObjBoss;
-
-    map.tabMap[5][5].nbObj = 3;*/
-
-    int *etat_dialogue=malloc(sizeof(int));
-    *etat_dialogue=0;
-    obj_t * dial;
-    dial=init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[2][2],10,3,8);
-    map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = dial;
-    map.tabMap[cartec->xcarte][cartec->ycarte].nbObj = 1;
-
-    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,15,0,1,10,0);
-    Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    obj_t * ObjSlime1 = init_obj(&map.tabMap[0][0].grille.tabGrille[4][5],15,2,Slime1);
-    map.tabMap[0][0].tabObj[0] = ObjSlime1;
-    map.tabMap[0][0].nbObj = 1;
-
-    ennemi_t * Slime2 = init_ennemi("Boss",1,10,1,11,10,2,1,10,3);
-    Slime2->combattant[1] = init_combattant("Lute2",1,10,1,11,10,3,1,10,0);
-    obj_t * ObjSlime2 = init_obj(&map.tabMap[2][3].grille.tabGrille[3][2],10,2,Slime2);
-    map.tabMap[2][3].tabObj[1] = ObjSlime2;
-    map.tabMap[2][3].nbObj = 1;
-
-    int tN = 0;
     load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
-    int k;
-
-    map.listeArtefact[0]=init_artefact("artefact1",1,"artefact qui augmente la force",0,10,10);
-    for(k=1;k<10;k++){
-        map.listeArtefact[k]=init_artefact("artefact2",0,"artefact qui augmente la vitesse",k,10,0);
-    }
-
-  
 
 
-    load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
+    //creation personnage
+    Alex->equipe[1]=init_combattant("Lou",100,60,0,1,14,1,0,10,0);
+    Alex->equipe[2]=init_combattant("Finn",100,45,0,1,1,2,0,8,0);
+    //Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
 
-    map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,45);
-    map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,46);
-    map.listeArtefact[2]=init_artefact("artefact1",1,"qui augmente les Pv max",2,10,47);
-    map.listeArtefact[3]=init_artefact("artefact1",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,48);
-    map.listeArtefact[4]=init_artefact("artefact1",0,"augmente le nombre de point au debut d'un combat",4,10,49);
-    map.listeArtefact[5]=init_artefact("artefact1",1,"l'effet de cet artefact est inconnu ",5,10,50);
-    map.listeArtefact[6]=init_artefact("artefact1",0,"diminue l'augmentation du cauchemar",6,10,51);
-    map.listeArtefact[7]=init_artefact("artefact1",0,"reduit le temps de recharde de 1 tour",7,10,52);
-    map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,53);
-    map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,54);
-
-  
-
-    load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
-
-
-
-    //fin temporaire
 
     //variable FPS
     int cmpfps = 0;
@@ -190,40 +144,22 @@ int main(){
     int * nfps = malloc(sizeof(int));
     *t0 = -1;
 
-    //creation personnage
-	p_mv Alex;
-	Alex = initp(&(cartec->grille.tabGrille[xp][yp]));
-    Alex.equipe[1]=init_combattant("Lou",100,60,0,1,14,1,0,10,0);
-    Alex.equipe[2]=init_combattant("Finn",100,45,0,1,1,2,0,8,0);
-    //Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
-	p_mv * pAlex = &Alex;
-
     
-/*
+
     //creation d'un pnj
     pnj_t Alex2;
     Alex2 = init_pnj("Alex2","sprite/alexdial.png", "sprite/alexface2.png",&(map.tabMap[0][0].grille.tabGrille[14][9]),&map.tabMap[0][0]);
     pnj_t * pAlex2 = &Alex2;
     insertion(Alex2.dial, "Bonjour");
     insertion(Alex2.dial, "Test");
-*/
-    //creation ennemi 
-
-
-    /*ennemi_t Slime = init_ennemi("Slime",11,10,&map,100,100,0,2,17,0);
-    Slime.combattant[1] = init_combattant("Lute",100,10,1,11,10,0,1,5,0);
-    ennemi_t * PSlime = &Slime;
-    obj_t ObjSlime = init_obj(&map.tabMap[3][3].grille.tabGrille[4][5],10,2,PSlime);
-    map.tabMap[3][3].tabObj[1] = ObjSlime;
-    map.tabMap[3][3].nbObj = 1;*/
     
-
     //variable indique l'etat du prog
-    int i;//brouillard
-    int j;//brouillard
+    int i;//brouillard debug
+    int j;//brouillard debug
 
     int * transi = malloc(sizeof(int));
     *transi = 0;
+    int tN = 1; //variable musique cauchemar
 
     SDL_Event event;
     //char * command = NULL;
@@ -247,6 +183,7 @@ int main(){
                     ouilumiere = 1;
                 }else{
                     ouilumiere = 0;
+                    *Alex->equipe[0]->pv = 1;
                 }
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_3)){
@@ -262,12 +199,16 @@ int main(){
                         map.tabMap[i][j].etat_brouillard = 0;
                     }
                 }
+                map.Zone2 = 2;
+                map.Zone3 = 2;
+                map.Zone4 = 2;
+                map.Zone5 = 2;
             }if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_1)){
-                if(pAlex->NightP == 0){
-                    pAlex->NightP = 100;
+                if(*(Alex->NightP) == 0){
+                    *(Alex->NightP) = 100;
                     tN = 1;
                 }else{
-                    pAlex->NightP = 0;
+                    *(Alex->NightP) = 0;
                     tN = 1;
                 }
             }
@@ -283,24 +224,22 @@ int main(){
                     ind_map=0;
                 }*/
             }
-            pinput(pAlex,event,&cartec,&map,renderer,transi,gMusic,toucheDeplacement);
+            pinput(Alex,event,&cartec,&map,renderer,transi,gMusic,toucheDeplacement);
             pause(event,gMusic);
 
             //menu
-            //console_command(event,command);
             menu_option(wEcran,hEcran,event,renderer,run,etatoption);
-            inventaire(wEcran,hEcran,event,renderer,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement);
-            debut_combat_carte(cartec,event,pAlex);
-            debut_dialogue_carte(cartec,event,pAlex,etat_dialogue);
-            if(pAlex->NightP == 100 && tN == 1){
-                pAlex->Nightmare = 1;
+            debut_dialogue(event,pAlex2,Alex);
+            debut_combat_carte(cartec,event,Alex);
+            if(*(Alex->NightP) == 100 && tN == 1){
+                *Alex->Nightmare = 1;
                 map.Nightmare = 1;
                 tN = 0;
                 newMusic(6,gMusic);
             }else if(tN == 1){
-                pAlex->Nightmare = 0;
+                *Alex->Nightmare = 0;
                 map.Nightmare = 0;
                 tN = 0;
                 newMusic(map.zoneChargee,gMusic);
@@ -320,15 +259,15 @@ int main(){
         if(ouigrille)afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
-        //aff_pnj(Alex2,renderer,cartec);
+        aff_pnj(Alex2,renderer,cartec);
 
         //Affiche un personnage
-        affp(pAlex,renderer,event);
+        affp(Alex,renderer,event);
         affTabObj(renderer,map,cartec);
 
-        if(ouilumiere)lumiere(renderer,cartec,pAlex->c);
+        if(ouilumiere)lumiere(renderer,cartec,Alex->c);
 
-        affHud(renderer,hEcran,wEcran,map,*pAlex);
+        affHud(renderer,hEcran,wEcran,map,*Alex);
 
          //affiche les fps
         if(ouifps)aff_Fps(cmpfps,renderer);
@@ -337,19 +276,18 @@ int main(){
 
 
         //afficher dialogue
-        //pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
+        pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
 
         //afficher map
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
         
         //Commence un combat
-        combat_carte(cartec,wEcran,hEcran,event,renderer,pAlex,&map);
-        dialogue_carte(cartec,wEcran,hEcran,event,renderer,&map,etat_dialogue);
+        combat_carte(cartec,wEcran,hEcran,event,renderer,Alex,&map);
 
 
 
         //Partie perdu
-         menu_gameOver(wEcran,hEcran,event,renderer,run,pAlex,&map);
+         menu_gameOver(wEcran,hEcran,event,renderer,run,Alex,&map);
 
 
 
@@ -362,7 +300,7 @@ int main(){
     // Libérer les ressources
     //combattant(pAlex);
 
-    save_pos(cartec->xcarte,cartec->ycarte,pAlex->c->x,pAlex->c->y);
+    save_pos(cartec->xcarte,cartec->ycarte,*Alex,map);
 
     free(etat_map);
     free(nfps);
@@ -373,26 +311,19 @@ int main(){
     free(transi);
     free(etatoption);
     free(toucheDeplacement);
-    free(etat_dialogue);
 
     Mix_FreeMusic(gMusic);
-
-    for(i=0;i<10;i++){
-        destruction_artefact(map.listeArtefact[i]);
-    }
+    Mix_CloseAudio();
 
     
-
+    dest_all_obj(map);
     //SDL_DestroyTexture(backgroundTexture);
     creation_tab_texture(&map,renderer,1,1);
     detruire_tab_path(&map);
 
-    desctruction_p_eq(&Alex);
-    //desctruction_combattant(Alex.equipe[0]);
+    dest_pnj(pAlex2);
+    desctruction_p_eq(Alex);
 
-    dest_ennemi(Slime1);
-    //dest_ennemi(&Slime1);
-    //dest_ennemi(&Boss);
     free(wEcran);
     free(hEcran);
     TTF_Quit();

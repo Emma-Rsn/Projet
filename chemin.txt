@@ -1,2 +1,0 @@
-texture/terre.png
-texture/terre_nightmare.jpg

@@ -38,7 +38,7 @@ typedef struct ennemi_s ennemi_t;
 typedef struct pnj_s pnj_t;
 typedef struct personnage p_mv;
 
-typedef struct artefact_s artefact_t;
+typedef struct artefact artefact_t;
 typedef struct case_s case_t;
 typedef struct grille_s grille_t;
 typedef struct carte_s carte_t;
@@ -61,7 +61,7 @@ typedef struct Liste Liste;
 #include "../libs/printImg.h"
 
 #include "../libs/texte.h"
-#include "../libs/map.h"
+#include "../libs/map2.h"
 #include "../libs/printImg.h"
 #include "../libs/save.h"
 #include "../libs/menu.h"

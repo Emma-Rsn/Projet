@@ -18,6 +18,14 @@
 
 
 
+void lower(char *input, char *output){
+    int i;
+    for (i = 0; input[i] != '\0'; i++) {
+        output[i] = tolower(input[i]);
+    }
+    output[i] = '\0';
+}
+
 
 /**
 *
@@ -35,7 +43,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
         int temp = (*carte)->nZone;
         int xdep = pmv->c->x;
         int ydep = pmv->c->y;
-        int ddep = pmv->d;
+        int ddep = *pmv->d;
         carte_t * dcartec = *carte;
         int Haut;
         int Bas;
@@ -78,10 +86,10 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=0;
+                        *pmv->d=0;
                         *transi = 1;
                     }else{
-                        pmv->d=0;
+                        *pmv->d=0;
                         block = 1;
                     }
                 }else{
@@ -89,15 +97,15 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &(map->tabMap[(*carte)->xcarte-1][(*carte)->ycarte]);
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][LARG-1]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=0;
+                        *pmv->d=0;
                         *transi = 1;
                     }else{
                         if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1].etat){
                             pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y-1]);
                             pmv->r=pmv->c->Rectangle;
-                            pmv->d=0;
+                            *pmv->d=0;
                         }else{
-                            pmv->d=0;
+                            *pmv->d=0;
                             block = 1;
                         }
                     }
@@ -109,10 +117,10 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=2;
+                        *pmv->d=2;
                         *transi = 1;
                     }else{
-                        pmv->d=2;
+                        *pmv->d=2;
                         block = 1;
                     }
                 }else{
@@ -120,15 +128,15 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &map->tabMap[(*carte)->xcarte+1][(*carte)->ycarte];
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][0]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=2;
+                        *pmv->d=2;
                         *transi = 1;
                     }else{
                         if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat){
                             pmv->c=&((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1]);
                             pmv->r=pmv->c->Rectangle;
-                            pmv->d=2;
+                            *pmv->d=2;
                         }else{
-                            pmv->d=2;
+                            *pmv->d=2;
                             block = 1;
                         }
                     }
@@ -141,16 +149,16 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
                         pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=3;
+                        *pmv->d=3;
                         *transi = 1;
                     }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
                         *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
                         pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=3;
+                        *pmv->d=3;
                         *transi = 1;
                     }else{
-                        pmv->d=3;
+                        *pmv->d=3;
                         block = 1;
                     }
                 }else{
@@ -158,15 +166,15 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte-1];
                         pmv->c=&((*carte)->grille.tabGrille[LONG-1][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=3;
+                        *pmv->d=3;
                         *transi = 1;
                     }else{
                         if((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y].etat){
                             pmv->c=&((*carte)->grille.tabGrille[pmv->c->x-1][pmv->c->y]);
                             pmv->r=pmv->c->Rectangle;
-                            pmv->d=3;
+                            *pmv->d=3;
                         }else{
-                            pmv->d=3;
+                            *pmv->d=3;
                             block = 1;
                         }
                     }
@@ -178,16 +186,16 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
                         pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=1;
+                        *pmv->d=1;
                         *transi = 1;
                     }else if((*carte)->grille.tabGrille[pmv->c->x][pmv->c->y+1].etat == 2 && pmv->c->y == 0){
                         *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
                         pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=1;
+                        *pmv->d=1;
                         *transi = 1;
                     }else{
-                        pmv->d=1;
+                        *pmv->d=1;
                         block = 1;
                     }
                 }else{
@@ -195,35 +203,43 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                         *carte= &map->tabMap[(*carte)->xcarte][(*carte)->ycarte+1];
                         pmv->c=&((*carte)->grille.tabGrille[0][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=1;
+                        *pmv->d=1;
                         *transi = 1;
                     }else if((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y].etat){
                         pmv->c=&((*carte)->grille.tabGrille[pmv->c->x+1][pmv->c->y]);
                         pmv->r=pmv->c->Rectangle;
-                        pmv->d=1;
+                        *pmv->d=1;
                     }else{
-                            pmv->d=1;
+                            *pmv->d=1;
                             block = 1;
                         }
                 }
                 }
             //deplacement statique
-            if(pmv->d != ddep){
+            if((temp != (*carte)->nZone) && !zone_fini(*map)){
                 *carte = dcartec;
                 pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
                 pmv->r = pmv->c->Rectangle;
                 pmv->e = 0;
                 *transi = 0;
             }else{
-                if(*(pmv->frame) != 0){
-                    if(pmv->e == 1){
-                        pmv->e = 2;
-                    }else{
+                if(*pmv->d != ddep){
+                    *carte = dcartec;
+                    pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
+                    pmv->r = pmv->c->Rectangle;
+                    pmv->e = 0;
+                    *transi = 0;
+                }else{
+                    if(*(pmv->frame) != 0){
+                        if(pmv->e == 1){
+                            pmv->e = 2;
+                        }else{
+                            pmv->e = 1;
+                        }
+                    }else if(!block){
+                        *(pmv->frame) = 1;
                         pmv->e = 1;
                     }
-                }else if(!block){
-                    *(pmv->frame) = 1;
-                    pmv->e = 1;
                 }
             }
 
@@ -241,18 +257,20 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     char * empSprit1 = malloc(sizeof(char)*30);
     int x = pmv->c->Rectangle.x;
     int y = pmv->c->Rectangle.y;
-    
+    char * name = malloc(sizeof(pmv->nom)+1);
+    lower(pmv->nom,name);
+
     int nbMaxFrame = (FPS/10)*4;
     if(*(pmv->frame) != 0){
         pmv->lock = 1;
         if(pmv->e == 1){
             //Nord
-            if(pmv->d == 0){
+            if(*pmv->d == 0){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "dos1");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -264,12 +282,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 y = (y+TAILLE_CASE)-(int)(TAILLE_CASE*((float)(*pmv->frame)/nbMaxFrame));
             }
             //Est
-            else if(pmv->d == 1){
+            else if(*pmv->d == 1){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "prof1_1");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -281,12 +299,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 x = (x-TAILLE_CASE)+(int)(TAILLE_CASE*((float)(*pmv->frame)/nbMaxFrame));
             }
             //Sud
-            else if(pmv->d == 2){
+            else if(*pmv->d == 2){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "face1");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -298,12 +316,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 y = (y-TAILLE_CASE)+(int)(TAILLE_CASE*((float)(*pmv->frame)/nbMaxFrame));
             }
             //Ouest
-            else if(pmv->d == 3){
+            else if(*pmv->d == 3){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "prof2_1");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -319,12 +337,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
             }
         }else if(pmv->e == 2){
             //Nord
-            if(pmv->d == 0){
+            if(*pmv->d == 0){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "dos3");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -336,12 +354,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 y = (y+TAILLE_CASE)-(int)(TAILLE_CASE*((float)(*pmv->frame)/nbMaxFrame));
             }
             //Est
-            else if(pmv->d == 1){
+            else if(*pmv->d == 1){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "prof1_3");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -353,12 +371,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 SDL_FreeSurface(perso);
             }
             //Sud
-            else if(pmv->d == 2){
+            else if(*pmv->d == 2){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "face3");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -370,12 +388,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 y = (y-TAILLE_CASE)+(int)(TAILLE_CASE*((float)(*pmv->frame)/nbMaxFrame));
             }
             //Ouest
-            else if(pmv->d == 3){
+            else if(*pmv->d == 3){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "prof2_3");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -418,12 +436,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     }else{//pas d'animation
         if(pmv->e == 0){
             //Nord
-            if(pmv->d == 0){
+            if(*pmv->d == 0){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "dos2");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -435,12 +453,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 SDL_RenderCopy(renderer, tperso, NULL, &(pmv->r));
             }
             //Est
-            else if(pmv->d == 1){
+            else if(*pmv->d == 1){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "prof1_2");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -452,12 +470,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 SDL_RenderCopy(renderer, tperso, NULL, &(pmv->r));
             }
             //Sud
-            else if(pmv->d == 2){
+            else if(*pmv->d == 2){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "face2");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -469,12 +487,12 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
                 SDL_RenderCopy(renderer, tperso, NULL, &(pmv->r));
             }
             //Ouest
-            else if(pmv->d == 3){
+            else if(*pmv->d == 3){
                 strcpy(empSprit1,"");
                 strcat(empSprit1, "./sprite/");
-                strcat(empSprit1,pmv->nom);
+                strcat(empSprit1,name);
                 strcat(empSprit1, "prof2_2");
-                if(pmv->Nightmare)strcat(empSprit1, "corrup");
+                if(*pmv->Nightmare)strcat(empSprit1, "corrup");
                 strcat(empSprit1, ".png");
                 perso = IMG_Load(empSprit1);
                 if (perso == NULL) {
@@ -494,7 +512,7 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
         }
     }
 
-
+    free(name);
     free(empSprit1);
     SDL_DestroyTexture(tperso);
     return 0;
@@ -558,6 +576,9 @@ void col_p(SDL_Rect * obj_r,p_mv * pp){
 
 void desctruction_p_eq(p_mv * p){
     free(p->frame);
+    free(p->d);
+    free(p->Nightmare);
+    free(p->NightP);
     int i;
     int nb_allie=0;
         for (i=0;i<4;i++){
@@ -568,34 +589,67 @@ void desctruction_p_eq(p_mv * p){
     for(i=0;i<nb_allie;i++){
         desctruction_combattant(p->equipe[i]);
     }
+    free(p);
     
 }
 
-//construit un point
-p_mv initp(case_t * c){
-    p_mv p;
-    //p.carte = carte;
-    //printf("letest0.4 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
-    p.c = c;
-    p.r = p.c->Rectangle;
-    //printf("letest1 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
-    p.d=0;
-    p.e=0;
-    p.nom="alex";
-    p.Nightmare = 0;
-    //printf("letest1.5 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
-    p.NightMax = 100;
-    p.NightP = 0;
-    int i ;
-    //printf("letest2 %d\n",((ennemi_t *)(carte->tabObj[2].tabObj[0]))->combat);
-    for (i=0;i<4;i++){
-        p.equipe[i]=NULL;
-    }
-    p.frame = malloc(sizeof(int));
-    *(p.frame) = 0;
-    p.equipe[0]=init_combattant(p.nom,100,50,0,13,12,0,2,15,0);
-    p.lock = 0;
+p_mv * initp(){
+    p_mv * p = malloc(sizeof(p_mv));
+    p->d=malloc(sizeof(int));
+    p->frame = malloc(sizeof(int));
+    p->Nightmare = malloc(sizeof(int));
+    p->NightP = malloc(sizeof(int));
+    *p->d=0;
+    p->e=0;
+    *p->Nightmare = 0;
+    p->NightMax = 100;
+    *p->NightP = 0;
+    *(p->frame) = 0;
+    p->lock = 0;
     return p;
+}
+
+//construit un point
+void remplirp(p_mv * p,case_t * c,int leader){
+    p->c = c;
+    p->r = p->c->Rectangle;
+    if(*p->NightP == p->NightMax){
+        *p->Nightmare = 1;
+    }else{
+        *p->Nightmare = 0;
+    }
+    int i ;
+    for (i=0;i<4;i++){
+        p->equipe[i]=NULL;
+    }
+    //leader
+    switch (leader)
+    {
+    case 0://Alex
+    p->nom="Alex";
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+        break;
+
+    case 1://Lou
+    p->nom="Lou";
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+        break;
+
+    case 2://Finn
+    p->nom="Finn";
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+        break;
+
+    case 3://Ada
+    p->nom="Ada";
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+        break;
+    
+    default:
+        break;
+    }
+    p->nom="alex";
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
 }
 
 void transition(SDL_Renderer * renderer,int * transi,int we,int he){

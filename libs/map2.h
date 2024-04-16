@@ -1,5 +1,5 @@
-#ifndef __MAP_H__
-#define __MAP_H__
+#ifndef __MAP2_H__
+#define __MAP2_H__
 
 
 //#include "../libs/commun.h"
@@ -50,8 +50,11 @@ struct map_s{
     int bonusZoneN;
     int argent;
     artefact_t * listeArtefact[10];
-    int nb_emplacement;
-    int prix_emplacement;
+    //0 si pas rentrer dans la zone 1 si rentrer mais que le boss est vivant et 2 si le boss est mort
+    int Zone2;
+    int Zone3;
+    int Zone4;
+    int Zone5;
 };
 
 case_t creation_case();
@@ -67,6 +70,7 @@ int sauvegarde_map_layout(map_t * map);
 int remplir_map(map_t *map);
 int afficher_zone (map_t m);
 float min(float a, float b);
+int zone_fini(map_t map);
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec);
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMusic);
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c);

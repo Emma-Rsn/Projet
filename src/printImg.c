@@ -132,12 +132,18 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     //Variable PV
     int x = 10;
     int y = -5;
-    int p = (144*pmv.equipe[0]->pv)/pmv.equipe[0]->pvMax;
+    if(*(pmv.equipe[0]->pv)<0){
+        *(pmv.equipe[0]->pv)=0;
+    }
+    else if (*(pmv.equipe[0]->pv)>pmv.equipe[0]->pvMax){
+        *(pmv.equipe[0]->pv)=pmv.equipe[0]->pvMax;
+    }
+    int p = (144*(*pmv.equipe[0]->pv))/pmv.equipe[0]->pvMax;
 
     //Variable Night
     int xn = 1000;
     int yn = -5;
-    int pn = (144*pmv.NightP)/pmv.NightMax;
+    int pn = (144*(*pmv.NightP))/pmv.NightMax;
 
     SDL_Rect HUD  = {0,0,*we,56};
     SDL_Rect PV_bar= {x,y,256,64};
@@ -157,7 +163,7 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
     SDL_RenderFillRect(renderer, &PV_barPleine);
 
-    SDL_RenderCopy(renderer, map.tabTexture[59], NULL, &PV_bar);
+    SDL_RenderCopy(renderer, map.tabTexture[29], NULL, &PV_bar);
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderFillRect(renderer, &Night_barVide);
@@ -165,5 +171,5 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     SDL_SetRenderDrawColor(renderer, 43,27,85,255);
     SDL_RenderFillRect(renderer, &Night_barPleine);
 
-    SDL_RenderCopy(renderer, map.tabTexture[59], NULL, &Night_bar);
+    SDL_RenderCopy(renderer, map.tabTexture[29], NULL, &Night_bar);
 }

@@ -107,9 +107,11 @@ map_t creation_map (int w, int h){
     m.nvEquipe=2;
     m.bonusEquipeN=BONUS_EQUIPE_N;
     m.bonusZoneN=BONUS_ZONE_N;
-    m.argent=100;
-    m.nb_emplacement=4;
-    m.prix_emplacement=10;
+    m.argent=0;
+    m.Zone2 = 0;
+    m.Zone3 = 0;
+    m.Zone4 = 0;
+    m.Zone5 = 0;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);
@@ -891,6 +893,41 @@ int load_layout(carte_t *c, char *namefile) {
     return 0;
 }
 
+/*int load_layout(carte_t *c, char *namefile) {
+    FILE *file;
+    file = fopen(namefile, "r");
+    int i = 0, j = 0;
+    int len = strlen(namefile);
+    char digit[2];
+
+    if(namefile[len-6]=='_'){
+        c->nrlayout = atoi(&namefile[len-5]);
+    }
+    else{
+        digit[0]=namefile[len-6];
+        digit[1]=namefile[len-5];
+        c->nrlayout = atoi(digit);
+    }
+
+    if (file) {
+        for (i = 0; i < LONG; i++) {
+            for (j = 0; j < LARG; j++) {
+                if (fscanf(file, "%d", &c->grille.tabGrille[i][j].ntexture) != 1) {
+                    printf("Erreur à la ligne %d, colonne %d.\n", i, j);
+                    fclose(file);
+                    return 1;
+                }
+            }
+        }
+    } else {
+        printf("Fichier inexistant\n");
+        return 1;
+    }
+
+    fclose(file);
+    return 0;
+}*/
+
 float min(float a, float b) {
     return (a < b) ? a : b;
 }
@@ -1000,21 +1037,25 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
             creation_tab_texture(map,renderer,2,0);
             map->nbN = 15;
             map->nvZone=2;
+            if(map->Zone2 == 0)map->Zone2 = 1;
             break;
         case 3:
             creation_tab_texture(map,renderer,3,0);
             map->nbN = 0;
             map->nvZone=3;
+            if(map->Zone3 == 0)map->Zone3 = 1;
             break;
         case 4:
             creation_tab_texture(map,renderer,4,0);
             map->nbN = 0;
             map->nvZone=4;
+            if(map->Zone4 == 0)map->Zone4 = 1;
             break;
         case 5:
             creation_tab_texture(map,renderer,5,0);
             map->nbN = 0;
             map->nvZone=5;
+            if(map->Zone5 == 0)map->Zone5 = 1;
             break;
         
         default:
@@ -1023,6 +1064,16 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
         }
         if(!map->Nightmare)newMusic(m,gMusic);
     return 0;
+}
+
+int zone_fini(map_t map){
+    switch(map.zoneChargee){
+        case 2 : if(map.Zone2 != 1)return 1;else return 0;break;
+        case 3 : if(map.Zone3 != 1)return 1;else return 0;break;
+        case 4 : if(map.Zone4 != 1)return 1;else return 0;break;
+        case 5 : if(map.Zone5 != 1)return 1;else return 0;break;
+        default : return 1;
+    }
 }
 
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c){
