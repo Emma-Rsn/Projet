@@ -49,6 +49,7 @@ int load_obj(carte_t *c, char *namefile){
     char nom[20];
     int pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme;
     int nbCombattant;
+    int num_dialogue;
 
     file=fopen(namefile,"r");
 
@@ -75,6 +76,16 @@ int load_obj(carte_t *c, char *namefile){
                     }
                     c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,newEnnemi);
                     c->nbObj++;
+                    break;
+                case 3 :
+                    fscanf(file,"%d",&num_dialogue);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,num_dialogue);
+                    c->nbObj++; 
+                    break;
+                case 4 :
+                    fscanf(file,"%d",&num_dialogue);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,num_dialogue);
+                    c->nbObj++; 
                     break;
             }
             fscanf(file,"\n");
@@ -127,9 +138,13 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
 }
 
 void dest_obj(carte_t * c,int ind){
+    printf("%d\n",ind);
+    printf("%d\n",c->nbObj);
+    printf("%p\n",c->tabObj[ind]);
     if(c->nbObj > 0){
         switch(c->tabObj[ind]->typeObj){
             case 2 : dest_ennemi(((ennemi_t *)(c->tabObj[ind]->tabObj[0])));break;
+
 
             default : break;
 
@@ -149,12 +164,12 @@ void dest_obj(carte_t * c,int ind){
     }
 }
 
-void dest_all_obj(map_t m){
+void dest_all_obj(map_t *m){
     int i,j;
     for(i = 0;i<ROWS;i++){
         for(j = 0;j < COLUMNS;j++){
-            while(m.tabMap[i][j].nbObj){
-                dest_obj(&m.tabMap[i][j],0);
+            while(m->tabMap[i][j].nbObj){
+                dest_obj(&m->tabMap[i][j],0);
             }
         }
     }

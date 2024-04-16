@@ -551,7 +551,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             
             }
             SDL_Texture* NomTexture = SDL_CreateTextureFromSurface(renderer, NomSurface);
-            SDL_Rect NomRect = {r_hautEcran.w/2-NomSurface->w/2, r_hautEcran.y/2+NomSurface->h/4, NomSurface->w, NomSurface->h};
+            SDL_Rect NomRect = {r_hautEcran.w/2-NomSurface->w/2, r_hautEcran.h/2-NomSurface->h/2, NomSurface->w, NomSurface->h};
             SDL_FreeSurface(NomSurface);
 
             //numero du tour 
@@ -602,9 +602,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             *AFFICHAGE ENNEMI
             *
             */
-    SDL_RenderClear(renderer);
-    SDL_RenderCopy(renderer, map -> tabTexture[44], NULL, & r_ecran);
-    SDL_RenderCopy(renderer, map -> tabTexture[58], NULL, & r_MEcran);
+
 
             while(combat->allie[j]->mort==1){
                     j++;
@@ -634,8 +632,10 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             }
             j=0;
 
+
             SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, map->tabTexture[28], NULL, &r_MEcran);
+            SDL_RenderCopy(renderer, map -> tabTexture[44], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[58], NULL, & r_MEcran);
 
             SDL_SetRenderDrawColor(renderer,50,50,50,255);
 
@@ -705,42 +705,24 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(renderer, & r_hautEcran_cadre);
 
-            //fermeture de le police d'ecriture
-            TTF_CloseFont(font);
-            font=NULL;
 
-                //affichage du combat
-                SDL_SetRenderDrawColor(renderer,0,0,0,255);
-                
-
-
-
-                SDL_SetRenderDrawColor(renderer,150,150,150,255);
-                SDL_RenderFillRect(renderer, &r_GEcran);
-                SDL_RenderFillRect(renderer, &r_DEcran);
-
-
-
-                SDL_SetRenderDrawColor(renderer,100,100,100,255);
-                SDL_RenderFillRect(renderer, &r_basEcran);
-                SDL_RenderFillRect(renderer, &r_hautEcran);
 
 
      
 
-                SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
+    SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
 
                 
-                    SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
+    SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
                 
 
-                SDL_RenderCopy(renderer, NomTexture, NULL, &NomRect);
-                SDL_RenderCopy(renderer, NumTourTexture, NULL, &NumTourRect);
+    SDL_RenderCopy(renderer, NomTexture, NULL, &NomRect);
+    SDL_RenderCopy(renderer, NumTourTexture, NULL, &NumTourRect);
             
 
-                affiche_point(we,he,renderer,r_basEcran,combat,map);
-                affiche_pv(we,he,renderer,r_GEcran,r_DEcran,combat,map);
-                barreCauchemard(personnage,renderer,map);
+    affiche_point(we,he,renderer,r_basEcran,combat,map);
+    affiche_pv(we,he,renderer,r_GEcran,r_DEcran,combat,map);
+    barreCauchemard(personnage,renderer,map);
 
 
 
@@ -1191,7 +1173,6 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         for (i=0;i<4;i++){
             if(pp->equipe[i]!=NULL){
                 combat->nb_allie++;
-                allie++;
                 combat->allie[i]=pp->equipe[i];
             }
         }
@@ -1351,6 +1332,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         i++;
                     }
                 }
+                printf("%d\n",allie);
                 if(allie != 0){
                     affichage_combat(we,he,renderer,combat,0,pp,map);
                 }

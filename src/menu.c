@@ -612,7 +612,7 @@ return 0;
 
 //fonction qui affiche l'ecran game over
 int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map) {
-if (personnage -> equipe[0] -> pv <= 0) {
+if (*personnage -> equipe[0] -> pv <= 0) {
 
 SDL_RenderClear(renderer);
 SDL_Color textColor = {255,255,255};
