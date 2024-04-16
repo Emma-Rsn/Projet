@@ -120,8 +120,6 @@ obj :
 
 afficher niv Zone dans la carte !
 
-finir generalisation save & load
-
 chargement layout objet + cas particulier
 
 choix leader (dans le game over)(Lina ?)

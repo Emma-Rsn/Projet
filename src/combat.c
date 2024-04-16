@@ -975,6 +975,7 @@ void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     int i;
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2){
+            Boss(cartec->tabObj[i],pp);
             debut_combat(event,cartec->tabObj[i]->tabObj[0],pp,cartec->tabObj[i]->cas);
         }
     }
