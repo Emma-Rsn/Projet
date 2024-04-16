@@ -63,7 +63,6 @@ int main(){
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
-    printf("bonsoir\n");
     SDL_Surface * logo = IMG_Load("logo.png");
     SDL_SetWindowIcon(window,logo);
     SDL_FreeSurface(logo);
@@ -87,7 +86,7 @@ int main(){
     remplir_map(&map);
     nb_texture_chargement(&map, "save/texture.txt");
     creation_tab_path(&map, "save/texture.txt");
-    afficher_zone(map);
+    //afficher_zone(map);
 
     map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,45);
     map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,46);
@@ -124,21 +123,16 @@ int main(){
         }
         xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0,*tabparam[4] = 0,*tabparam[5] = 1,*pv=100;
         for(ii = 6;ii<26;ii++){
-            printf("q %d\n",ii);
             *tabparam[ii] = 0;
         }
     }
     map.Zone2 = *tabparam[0],map.Zone3 = *tabparam[1],map.Zone4 = *tabparam[2],map.Zone5 = *tabparam[3],map.argent = *tabparam[4],map.nvEquipe = *tabparam[5];
-    for(ii = 6;ii < 15;ii++){
-        printf("A %d\n",*tabparam[ii]);
+    for(ii = 6;ii < 16;ii++){
         map.listeArtefact[ii-6]->equipe = *tabparam[ii];
     }
-    printf("test\n");
-    for(ii = 15;ii < 25;ii++){
-        printf("A %d\n",*tabparam[ii]);
-        map.listeArtefact[ii-15]->possession = *tabparam[ii];
+    for(ii = 16;ii < 26;ii++){
+        map.listeArtefact[ii-16]->possession = *tabparam[ii];
     }
-    printf("test\n");
     map.Nightmare=*Alex->Nightmare;
     carte_t * cartec =&map.tabMap[q][s];
     remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),0);

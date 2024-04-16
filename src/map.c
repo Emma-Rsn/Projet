@@ -85,9 +85,6 @@ carte_t creation_carte(int w, int h,int x,int y){
     if(x == 0 && y == (COLUMNS-1)) bord = 5;
     if(x == (ROWS-1) && y == 0) bord = 7;
     if(x == (ROWS-1) && y == (COLUMNS-1)) bord = 6;
-    if(bord == 2 || bord == 5)printf("%d \n",bord);
-    else if(bord == 6)printf("%d \nfin bord\n",bord);
-    else printf("%d ",bord);
     carte.grille=creation_grille(w,h,bord);
     carte.etat_brouillard=1;
     carte.r=255;

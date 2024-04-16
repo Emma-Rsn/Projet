@@ -148,7 +148,6 @@ void Boss(obj_t * boss,p_mv * Leader){
             }
             if(Leader->equipe[i]->type == type){
                 do{
-                    printf("test2 %d\n",type);
                     type = rand()%4;
                 }while(Leader->equipe[i]->type == type);
             }
