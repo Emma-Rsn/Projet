@@ -129,22 +129,23 @@ int main(){
 
     int *etat_dialogue=malloc(sizeof(int));
     *etat_dialogue=0;
-    obj_t * dial;
+    /*obj_t * dial;
     dial=init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[2][2],10,3,8);
     map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = dial;
     map.tabMap[cartec->xcarte][cartec->ycarte].nbObj = 1;
+    
 
     ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,15,0,1,10,0);
     Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    obj_t * ObjSlime1 = init_obj(&map.tabMap[0][0].grille.tabGrille[4][5],15,2,Slime1);
-    map.tabMap[0][0].tabObj[0] = ObjSlime1;
-    map.tabMap[0][0].nbObj = 1;
+    obj_t * ObjSlime1 = init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[4][5],15,2,Slime1);
+    map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = ObjSlime1;
+    map.tabMap[cartec->xcarte][cartec->ycarte].nbObj = 1;
 
     ennemi_t * Slime2 = init_ennemi("Boss",1,10,1,11,10,2,1,10,3);
     Slime2->combattant[1] = init_combattant("Lute2",1,10,1,11,10,3,1,10,0);
     obj_t * ObjSlime2 = init_obj(&map.tabMap[2][3].grille.tabGrille[3][2],10,2,Slime2);
     map.tabMap[2][3].tabObj[1] = ObjSlime2;
-    map.tabMap[2][3].nbObj = 1;
+    map.tabMap[2][3].nbObj = 1;*/
 
 
 
@@ -168,8 +169,8 @@ int main(){
 
 
     //creation personnage
-    Alex->equipe[1]=init_combattant("Lou",100,60,0,1,14,1,0,10,0);
-    Alex->equipe[2]=init_combattant("Finn",100,45,0,1,1,2,0,8,0);
+    Alex->equipe[1]=init_combattant("Lou",50,60,0,1,14,1,0,10,0);
+    Alex->equipe[2]=init_combattant("Finn",50,45,0,1,1,2,0,8,0);
     //Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
 
 
@@ -250,6 +251,7 @@ int main(){
 
             //menu
             menu_option(wEcran,hEcran,event,renderer,run,etatoption);
+            inventaire(wEcran, hEcran,event,renderer,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement);
             debut_dialogue_carte(cartec,event,Alex,etat_dialogue);
@@ -267,6 +269,7 @@ int main(){
             }
             
         }
+        
         //zone d'affichage
         //ajustement de dfps
         ajDFPS(&dfps,&cmpfps, nfps, t0, t1);
@@ -304,12 +307,14 @@ int main(){
         
         //Commence un combat
         combat_carte(cartec,wEcran,hEcran,event,renderer,Alex,&map);
+        
         dialogue_carte(cartec,wEcran,hEcran,event,renderer,&map,etat_dialogue);
 
 
 
         //Partie perdu
          menu_gameOver(wEcran,hEcran,event,renderer,run,Alex,&map);
+         
 
 
 
@@ -323,6 +328,7 @@ int main(){
     //combattant(pAlex);
 
     save_pos(cartec->xcarte,cartec->ycarte,*Alex,map);
+    
 
     free(etat_map);
     free(nfps);
@@ -339,7 +345,7 @@ int main(){
     Mix_CloseAudio();
 
     
-    dest_all_obj(map);
+    dest_all_obj(&map);
     //SDL_DestroyTexture(backgroundTexture);
     creation_tab_texture(&map,renderer,1,1);
     detruire_tab_path(&map);

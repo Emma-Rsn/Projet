@@ -58,7 +58,7 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
 int boolcol (case_t * obj_c,p_mv * pp);
 void dest_ennemi(ennemi_t * en);
 void dest_obj(carte_t * c,int ind);
-void dest_all_obj(map_t m);
+void dest_all_obj(map_t *m);
 void destruction_artefact(artefact_t * artefact);
 artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture);
 void Boss(obj_t * boss,p_mv * Leader);
