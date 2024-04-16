@@ -139,7 +139,6 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
 
 void Boss(obj_t * boss,p_mv * Leader){
     if(boss->typeObj == 2){
-        printf("blabla\n");
         if(((ennemi_t *)boss->tabObj[0])->forme == 3){
             srand( time( NULL ) );
             int type = ((ennemi_t *)boss->tabObj[0])->type;
@@ -147,7 +146,7 @@ void Boss(obj_t * boss,p_mv * Leader){
             for(i = 0;Leader->equipe[i]->type != type && Leader->equipe[i];i++){
                 printf("test\n");
             }
-            if(Leader->equipe[i]->type != type){
+            if(Leader->equipe[i]->type == type){
                 do{
                     type = rand()%4;
                 }while(Leader->equipe[i]->type == type);

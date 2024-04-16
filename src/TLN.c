@@ -63,7 +63,6 @@ int main(){
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
-    printf("bonsoir\n");
     SDL_Surface * logo = IMG_Load("logo.png");
     SDL_SetWindowIcon(window,logo);
     SDL_FreeSurface(logo);
@@ -87,12 +86,24 @@ int main(){
     remplir_map(&map);
     nb_texture_chargement(&map, "save/texture.txt");
     creation_tab_path(&map, "save/texture.txt");
-    afficher_zone(map);
+    //afficher_zone(map);
+
+    map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,45);
+    map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,46);
+    map.listeArtefact[2]=init_artefact("artefact1",1,"qui augmente les Pv max",2,10,47);
+    map.listeArtefact[3]=init_artefact("artefact1",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,48);
+    map.listeArtefact[4]=init_artefact("artefact1",0,"augmente le nombre de point au debut d'un combat",4,10,49);
+    map.listeArtefact[5]=init_artefact("artefact1",1,"l'effet de cet artefact est inconnu ",5,10,50);
+    map.listeArtefact[6]=init_artefact("artefact1",0,"diminue l'augmentation du cauchemar",6,10,51);
+    map.listeArtefact[7]=init_artefact("artefact1",0,"reduit le temps de recharde de 1 tour",7,10,52);
+    map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,53);
+    map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,54);
+
     //def spawn
     int q,s,ii;
     int * pv = malloc(sizeof(int));
-    int * tabparam[6];
-    for(ii = 0;ii<6;ii++){
+    int * tabparam[26];
+    for(ii = 0;ii<26;ii++){
         tabparam[ii] = malloc(sizeof(int));
     }
     p_mv * Alex = initp();
@@ -111,8 +122,17 @@ int main(){
             }
         }
         xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0,*tabparam[4] = 0,*tabparam[5] = 1,*pv=100;
+        for(ii = 6;ii<26;ii++){
+            *tabparam[ii] = 0;
+        }
     }
     map.Zone2 = *tabparam[0],map.Zone3 = *tabparam[1],map.Zone4 = *tabparam[2],map.Zone5 = *tabparam[3],map.argent = *tabparam[4],map.nvEquipe = *tabparam[5];
+    for(ii = 6;ii < 16;ii++){
+        map.listeArtefact[ii-6]->equipe = *tabparam[ii];
+    }
+    for(ii = 16;ii < 26;ii++){
+        map.listeArtefact[ii-16]->possession = *tabparam[ii];
+    }
     map.Nightmare=*Alex->Nightmare;
     carte_t * cartec =&map.tabMap[q][s];
     remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),0);
@@ -121,7 +141,7 @@ int main(){
     cartec->etat_brouillard = 0;
     map.zoneChargee = cartec->nZone;
     free(pv);
-    for(ii = 0;ii<6;ii++){
+    for(ii = 0;ii<26;ii++){
         free(tabparam[ii]);
     }
     chargement_Zone(&map,renderer,map.zoneChargee,gMusic);
@@ -154,24 +174,12 @@ int main(){
     load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
 
 
-    map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,45);
-    map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,46);
-    map.listeArtefact[2]=init_artefact("artefact1",1,"qui augmente les Pv max",2,10,47);
-    map.listeArtefact[3]=init_artefact("artefact1",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,48);
-    map.listeArtefact[4]=init_artefact("artefact1",0,"augmente le nombre de point au debut d'un combat",4,10,49);
-    map.listeArtefact[5]=init_artefact("artefact1",1,"l'effet de cet artefact est inconnu ",5,10,50);
-    map.listeArtefact[6]=init_artefact("artefact1",0,"diminue l'augmentation du cauchemar",6,10,51);
-    map.listeArtefact[7]=init_artefact("artefact1",0,"reduit le temps de recharde de 1 tour",7,10,52);
-    map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,53);
-    map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,54);
-
-
 
 
     //creation personnage
     Alex->equipe[1]=init_combattant("Lou",50,60,0,1,14,1,0,10,0);
-    Alex->equipe[2]=init_combattant("Finn",50,45,0,1,1,2,0,8,0);
-    //Alex.equipe[3]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
+    //Alex->equipe[2]=init_combattant("Finn",50,45,0,1,1,2,0,8,0);
+    //Alex->equipe[2]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
 
 
     //variable FPS
