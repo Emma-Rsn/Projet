@@ -100,7 +100,7 @@ int main(){
     map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,174);
 
     //def spawn
-    int q,s,ii;
+    int q,s,ii,last;
     int * pv = malloc(sizeof(int));
     int * tabparam[26];
     for(ii = 0;ii<26;ii++){
@@ -110,7 +110,8 @@ int main(){
     Alex->equipe[0]=pre_init_combattant();
 
     int xp,yp;
-    if(!load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam)){
+    last = load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam);
+    if(last != 1){
         for(q = 0;q<ROWS;q++){
             for(s = 0;s<COLUMNS;s++){
                 if(map.tabMap[q][s].nZone == 1){
@@ -121,8 +122,9 @@ int main(){
                     break;
             }
         }
-        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0,*tabparam[4] = 0,*tabparam[5] = 1,*pv=100;
-        for(ii = 6;ii<26;ii++){
+        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0,*pv=100;
+        if(last != 2)*tabparam[4] = 0,*tabparam[5] = 1;
+        for(ii = 6;ii<26 && last != 2;ii++){
             *tabparam[ii] = 0;
         }
     }
@@ -223,6 +225,7 @@ int main(){
                 }else{
                     ouilumiere = 0;
                     *Alex->equipe[0]->pv = 1;
+                    map.argent++;
                 }
             }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_3)){
@@ -367,6 +370,12 @@ int main(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-
+    //nouvelle partie
+    int res = 0;
+    FILE * fichier = fopen("save/save.txt", "r+");
+    fscanf(fichier, "%d", &res);
+    fclose(fichier);
+    if(res == 2){system("./bin/TLN");}
+    if(res == 3){effacer_sauvg();system("./bin/TLN");}
     return 0;
 }

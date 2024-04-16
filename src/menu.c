@@ -441,6 +441,8 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
                 //Pour creer une nouvelle partie
                 else if ((r_text_N.x <= event.button.x) && ((r_text_N.x + r_text_N.w) >= event.button.x) && ((r_text_N.y + r_text_N.h) >= event.button.y) && (r_text_N.y <= event.button.y)) {
                     etat = 0;
+                    nouvelle_partie(0);
+                    * run = 0;
                 }
 
             }
@@ -922,6 +924,8 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                     //pour continuer le jeu
                     if ((r_text_C.x <= event.button.x) && ((r_text_C.x + r_text_C.w) >= event.button.x) && ((r_text_C.y + r_text_C.h) >= event.button.y) && (r_text_C.y <= event.button.y)) {
                         etat = 0;
+                        nouvelle_partie(1);
+                        * run = 0;
                     }
 
                     //pour quitter le jeu

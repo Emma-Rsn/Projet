@@ -77,12 +77,19 @@ int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map)
         {
             rewind(fichier);
             fprintf(fichier, "%d", 1);
-        }
-        fprintf(fichier, " %d %d %d %d %d %d %d\n", xcarte, ycarte, pmv.c->x, pmv.c->y, *(pmv.d), *(pmv.NightP), *pmv.equipe[0]->pv);
-        fprintf(fichier, "%d %d %d %d %d %d\n", map.Zone2, map.Zone3, map.Zone4, map.Zone5, map.argent, map.nvEquipe);
-        fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->equipe, map.listeArtefact[1]->equipe, map.listeArtefact[2]->equipe, map.listeArtefact[3]->equipe, map.listeArtefact[4]->equipe, map.listeArtefact[5]->equipe, map.listeArtefact[6]->equipe, map.listeArtefact[7]->equipe, map.listeArtefact[8]->equipe, map.listeArtefact[9]->equipe);
-        fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d", map.listeArtefact[0]->possession, map.listeArtefact[1]->possession, map.listeArtefact[2]->possession, map.listeArtefact[3]->possession, map.listeArtefact[4]->possession, map.listeArtefact[5]->possession, map.listeArtefact[6]->possession, map.listeArtefact[7]->possession, map.listeArtefact[8]->possession, map.listeArtefact[9]->possession);
 
+            
+        }if(value == 2){
+            fprintf(fichier," %d %d\n",map.argent,map.nvEquipe);
+            fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->equipe, map.listeArtefact[1]->equipe, map.listeArtefact[2]->equipe, map.listeArtefact[3]->equipe, map.listeArtefact[4]->equipe, map.listeArtefact[5]->equipe, map.listeArtefact[6]->equipe, map.listeArtefact[7]->equipe, map.listeArtefact[8]->equipe, map.listeArtefact[9]->equipe);
+            fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->possession, map.listeArtefact[1]->possession, map.listeArtefact[2]->possession, map.listeArtefact[3]->possession, map.listeArtefact[4]->possession, map.listeArtefact[5]->possession, map.listeArtefact[6]->possession, map.listeArtefact[7]->possession, map.listeArtefact[8]->possession, map.listeArtefact[9]->possession);
+        }else if(value != 3){
+            fprintf(fichier, " %d %d %d %d %d %d %d\n", xcarte, ycarte, pmv.c->x, pmv.c->y, *(pmv.d), *(pmv.NightP), *pmv.equipe[0]->pv);
+            fprintf(fichier, "%d %d %d %d %d %d\n", map.Zone2, map.Zone3, map.Zone4, map.Zone5, map.argent, map.nvEquipe);
+            fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->equipe, map.listeArtefact[1]->equipe, map.listeArtefact[2]->equipe, map.listeArtefact[3]->equipe, map.listeArtefact[4]->equipe, map.listeArtefact[5]->equipe, map.listeArtefact[6]->equipe, map.listeArtefact[7]->equipe, map.listeArtefact[8]->equipe, map.listeArtefact[9]->equipe);
+            fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d", map.listeArtefact[0]->possession, map.listeArtefact[1]->possession, map.listeArtefact[2]->possession, map.listeArtefact[3]->possession, map.listeArtefact[4]->possession, map.listeArtefact[5]->possession, map.listeArtefact[6]->possession, map.listeArtefact[7]->possession, map.listeArtefact[8]->possession, map.listeArtefact[9]->possession);
+        }
+        
         fclose(fichier);
     }
     return 0;
@@ -98,16 +105,41 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
         printf("Erreur a l'ouerture du fichier\n");
     }
     fscanf(fichier, "%d", &last);
-    if (last)
+    if (last == 1)
     {
         fscanf(fichier, " %d %d %d %d %d %d %d\n", xcarte, ycarte, xpos, ypos, pmv->d, pmv->NightP, pv);
         fscanf(fichier, "%d %d %d %d %d %d\n", tabparam[0], tabparam[1], tabparam[2], tabparam[3], tabparam[4], tabparam[5]);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[6], tabparam[7], tabparam[8], tabparam[9], tabparam[10], tabparam[11], tabparam[12], tabparam[13], tabparam[14], tabparam[15]);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d", tabparam[16], tabparam[17], tabparam[18], tabparam[19], tabparam[20], tabparam[21], tabparam[22], tabparam[23], tabparam[24], tabparam[25]);
+    }else if(last == 2){
+        fscanf(fichier, "%d %d\n", tabparam[4], tabparam[5]);
+        fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[6], tabparam[7], tabparam[8], tabparam[9], tabparam[10], tabparam[11], tabparam[12], tabparam[13], tabparam[14], tabparam[15]);
+        fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[16], tabparam[17], tabparam[18], tabparam[19], tabparam[20], tabparam[21], tabparam[22], tabparam[23], tabparam[24], tabparam[25]);
+        rewind(fichier);
+        fprintf(fichier, "%d", 0);
     }
     fclose(fichier);
     return last;
 }
+
+//param = 1 pour garder la progression et = 0 pour effacer la progression
+void nouvelle_partie(int param){
+    FILE *fichier = fopen("save/save.txt", "r+");
+    if(param){
+        fprintf(fichier, "%d", 2);
+    }else{
+        fprintf(fichier, "%d", 3);
+    }
+    fclose(fichier);
+}
+
+void effacer_sauvg(){
+    FILE *fichier = fopen("save/save.txt", "w");
+    fprintf(fichier, "%d", 0);
+    fclose(fichier);
+}
+
+
 
 /*
 new load layout  test
@@ -136,5 +168,9 @@ chargement layout objet + cas particulier
 choix leader (dans le game over)(Lina ?)
 
 malloc save load in pmv map
+
+lumiere animation
+
+lumiere dans grotte
 
 */
