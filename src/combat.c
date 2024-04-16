@@ -150,7 +150,7 @@ void desctruction_combat(combat_t * combat){
 *\brief fonction qui affiche les point de la personnes et le multiplicateur de degat
 */
 //fonction qui affiche les point de la personnes et le multiplicateur de degat
-int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat)
+int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat,map_t * map )
 {
 	TTF_Font *font = TTF_OpenFont("fonts/alagard.ttf", 50);
 	if (!font)
@@ -175,26 +175,15 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 
 	SDL_Texture *textTexturemult = SDL_CreateTextureFromSurface(renderer, textSurfacemult);
 
-    //creation du texte du nombre de point
-
-	char *point = malloc(20);
-	sprintf(point, "nombre de point : %d", combat->nb_point);
-	SDL_Surface *textSurfacePoint = TTF_RenderText_Solid(font, point, textColor);
-	if (!textSurfacePoint)
-	{
-		erreur_sdl("Erreur lors de la création de la surface de texte \n",NULL,renderer,textTexturemult,NULL);
-		TTF_CloseFont(font);
-		return -1;
-	}
-
-	SDL_Texture *textTexturePoint = SDL_CreateTextureFromSurface(renderer, textSurfacePoint);
-
 	// Position du texte
-	SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2+50, textSurfacemult->w, textSurfacemult->h
-	};
+	SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2+50, textSurfacemult->w, textSurfacemult->h};
 
-	SDL_Rect r_point = {25, (r_basEcran.h*3)+r_basEcran.h/2-50, textSurfacePoint->w, textSurfacePoint->h
-	};
+    int i ;
+    for(i=0;i<combat->nb_point;i++){
+        SDL_Rect r_point = {r_mult.x+((r_basEcran.w/3)/20)*i, r_mult.h+r_mult.y, (r_basEcran.w/3)/20, (r_basEcran.w/3)/20};
+        SDL_RenderCopy(renderer, map -> tabTexture[55], NULL, & r_point);
+
+    }
     
 
 	// Afficher la texture sur le rendu
@@ -202,12 +191,6 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 	SDL_FreeSurface(textSurfacemult);
 	SDL_DestroyTexture(textTexturemult);
 
-	SDL_RenderCopy(renderer, textTexturePoint, NULL, &r_point);
-	SDL_FreeSurface(textSurfacePoint);
-	SDL_DestroyTexture(textTexturePoint);
-
-	free(point);
-	point = NULL;
 	free(textemult);
 	textemult = NULL;
 	TTF_CloseFont(font);
@@ -264,12 +247,12 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         }
         
         SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        SDL_Rect textRect = {10, r_GEcran.y+i*(r_GEcran.h/4), textSurface->w, textSurface->h};
+        SDL_Rect textRect = {10+(*we*2/100), (r_GEcran.y+i*(r_GEcran.h/4))+(*he*4/100), textSurface->w, textSurface->h};
         if(strcmp(combat->ennemi[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0 && combat->combattant[combat->indice_combattant]->status==0){
-            textRect.x = (r_GEcran.x+(100));
+            textRect.x = (r_GEcran.x+(100)+(*we*4/100));
         }
 
-        affVie(renderer,(r_GEcran.y+i*(r_GEcran.h/4))+textRect.h,10,combat->ennemi[i],map);
+        affVie(renderer,(r_GEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),10+(*we*2/100),combat->ennemi[i],map);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
         
         SDL_FreeSurface(textSurface);
@@ -300,11 +283,11 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         
         }
         SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        SDL_Rect textRect = {r_DEcran.x, r_DEcran.y+i*(r_GEcran.h/4), textSurface->w, textSurface->h};
+        SDL_Rect textRect = {r_DEcran.x+(*we*2/100), (r_DEcran.y+i*(r_GEcran.h/4))+(*he*4/100), textSurface->w, textSurface->h};
         if(strcmp(combat->allie[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0 && combat->combattant[combat->indice_combattant]->status==0){
-            textRect.x = (r_DEcran.x+(r_DEcran.w/50));
+            textRect.x = (r_DEcran.x+(r_DEcran.w/50)+(*we*4/100));
         }
-        affVie(renderer,(r_DEcran.y+i*(r_GEcran.h/4))+textRect.h,r_DEcran.x,combat->allie[i],map);
+        affVie(renderer,(r_DEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),r_DEcran.x+(*we*2/100),combat->allie[i],map);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
         SDL_FreeSurface(textSurface);
         SDL_DestroyTexture(textTexture);
@@ -547,9 +530,9 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             *ECRAN HAUT
             *
             */
-
-            SDL_Rect  r_hautEcran= {0,0,(*we),56};
-            SDL_Surface* NomSurface;
+            SDL_Rect r_hautEcran = {0,0,( * we),56};
+            SDL_Rect r_hautEcran_cadre = {( * we) / 4,r_hautEcran.h-r_hautEcran.h*5/100,(( * we) - ( * we) / 4)-( * we) / 4,r_hautEcran.h*5/100};
+            SDL_Surface * NomSurface;
 
             if(etat==0){
             //Nom du personnage selectionne
@@ -586,30 +569,31 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             SDL_Texture* NumTourTexture = SDL_CreateTextureFromSurface(renderer, NumTourSurface);
             SDL_Rect NumTourRect = {(r_hautEcran.w/4)*3+NumTourSurface->w, r_hautEcran.y/2+NumTourSurface->h/4, NumTourSurface->w, NumTourSurface->h};
             SDL_FreeSurface(NumTourSurface);
+    SDL_Rect r_ecran={0,0,( * we) ,( * he)};
 
+    /*
+     *
+     *ECRAN GAUCHE
+     *
+     */
 
-            /*
-            *
-            *ECRAN GAUCHE
-            *
-            */
+    SDL_Rect r_GEcran = {0,r_hautEcran.h,( * we) / 4,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
 
-            SDL_Rect r_GEcran={0,r_hautEcran.h,(*we)/4,r_basEcran.y};
+    /*
+     *
+     *ECRAN DROIT
+     *
+     */
+    SDL_Rect r_DEcran = {( * we) - ( * we) / 4,r_hautEcran.h,( * we)-((( * we) - ( * we) / 4)), (r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
 
-
-           /*
-            *
-            *ECRAN DROIT
-            *
-            */
-            SDL_Rect r_DEcran={(*we)-(*we)/4,r_hautEcran.h,(*we),r_basEcran.y};
-
-            /*
-            *
-            *ECRAN FOND
-            *
-            */
-            SDL_Rect r_MEcran={r_GEcran.w,r_hautEcran.h,r_DEcran.x-r_GEcran.w,(r_basEcran.y-r_hautEcran.y)-r_hautEcran.h};
+    /*
+     *
+     *ECRAN FOND
+     *
+     */
+    SDL_Rect r_MEcran = {r_GEcran.w,r_hautEcran.h,r_DEcran.x - r_GEcran.w,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+    SDL_Rect r_Fleches_GEcran={r_GEcran.w,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
+    SDL_Rect r_Fleches_DEcran={r_DEcran.x-r_MEcran.h/6,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
             
 
 
@@ -618,6 +602,9 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             *AFFICHAGE ENNEMI
             *
             */
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, map -> tabTexture[44], NULL, & r_ecran);
+    SDL_RenderCopy(renderer, map -> tabTexture[58], NULL, & r_MEcran);
 
             while(combat->allie[j]->mort==1){
                     j++;
@@ -703,7 +690,20 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
 
 
+    SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
+    SDL_RenderCopy(renderer, map -> tabTexture[43], NULL, & r_GEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[43], NULL, & r_DEcran);
+    //SDL_RenderFillRect(renderer, & r_Fleches_DEcran);
+    //SDL_RenderFillRect(renderer, & r_Fleches_GEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[42], NULL, & r_Fleches_DEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[41], NULL, & r_Fleches_GEcran);
 
+    //printf("w%d h%d",r_Fleches_DEcran.w,r_Fleches_DEcran.h);
+
+    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
+    SDL_RenderCopy(renderer, map -> tabTexture[56], NULL, & r_basEcran);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(renderer, & r_hautEcran_cadre);
 
             //fermeture de le police d'ecriture
             TTF_CloseFont(font);
@@ -738,7 +738,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                 SDL_RenderCopy(renderer, NumTourTexture, NULL, &NumTourRect);
             
 
-                affiche_point(we,he,renderer,r_basEcran,combat);
+                affiche_point(we,he,renderer,r_basEcran,combat,map);
                 affiche_pv(we,he,renderer,r_GEcran,r_DEcran,combat,map);
                 barreCauchemard(personnage,renderer,map);
 
@@ -868,41 +868,58 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                             combattant->temps_recharge=0;
                         }
                         else if((r_mult.x<=event.button.x) && ((r_mult.x+r_mult.w)>=event.button.x) && ((r_mult.y+r_mult.h)>=event.button.y) && (r_mult.y<=event.button.y)){
-                            
-                            if (combat->mult<2.5 && combat->nb_point>0){
-                                combat->mult+=0.5;
+                            if (combat -> mult < 2.5 && combat -> nb_point > 0 && map->listeArtefact[5]->equipe==0) {
+                                combat -> mult += 0.5;
                                 //augmentation barre de cauchemar
                                 if(combat->mult==1.5){
                                     *(personnage->NightP) = *(personnage->NightP) + 1;
                                     if(*personnage->NightP>personnage->NightMax){
                                         *personnage->NightP=personnage->NightMax;
                                     }
-                                }
-                                else if(combat->mult==2.0){
-                                    *personnage->NightP+=100;
-                                    if(*personnage->NightP>personnage->NightMax){
-                                        *personnage->NightP=personnage->NightMax;
+                                } else if (combat -> mult == 2.0) {
+                                    //artefact qui diminu l'augmentation du cauchemar
+                                    if(map->listeArtefact[6]->equipe==1){
+                                        *personnage -> NightP += 2;
+                                    }else{
+                                        *personnage -> NightP += 3;
+                                    }
+                                    if (*personnage -> NightP > personnage -> NightMax) {
+                                        *personnage -> NightP = personnage -> NightMax;
+                                    }
+                                } else if (combat -> mult == 2.5) {
+                                    if(map->listeArtefact[6]->equipe==1){
+                                        *personnage -> NightP += 5;
+                                    }else{
+                                        *personnage -> NightP += 6;
+                                    }
+                                    if (*personnage -> NightP > personnage -> NightMax) {
+                                        *personnage -> NightP = personnage -> NightMax;
                                     }
                                 }
-                                else if(combat->mult==2.5){
-                                    *personnage->NightP+=6;
-                                    if(*personnage->NightP>personnage->NightMax){
-                                        *personnage->NightP=personnage->NightMax;
+                                (combat -> nb_point) --;
+
+                            } 
+                            //artefact qui ajoute la possibilite d'augmenter 1 de plus le multiplicateur
+                            else if(combat -> mult < 3.0 && combat -> nb_point > 0 && map->listeArtefact[5]->equipe==1){
+                               combat -> mult += 0.5;
+                                //augmentation barre de cauchemar
+                                if (combat -> mult == 3.0) {
+                                    if(map->listeArtefact[6]->equipe==1){
+                                        *personnage -> NightP += 9;
+                                    }else{
+                                        *personnage -> NightP += 10;
                                     }
-                                }
-                                else if(combat->mult==3.0){
-                                    *personnage->NightP+=10;
-                                    if(*personnage->NightP>personnage->NightMax){
-                                        *personnage->NightP=personnage->NightMax;
+                                    
+                                    if (*personnage -> NightP > personnage -> NightMax) {
+                                        *personnage -> NightP = personnage -> NightMax;
                                     }
+                                (combat -> nb_point) --;
                                 }
-                                (combat->nb_point)--;
-                                
                             }
                             else{
-                                *personnage->NightP=Nightmare_deb;
-                                combat->nb_point=nb_point_deb;
-                                combat->mult=1;
+                                *personnage -> NightP = Nightmare_deb;
+                                combat -> nb_point = nb_point_deb;
+                                combat -> mult = 1;
                             }
                             
                         }
@@ -1085,12 +1102,35 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 }
                 i++;
             }
-            i=0;
-            while(pp->equipe[i]!=NULL && i<4){
-                if(pp->equipe[i]->mort==0){
-                    pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*(map->nvEquipe+map->bonusEquipeN);
-                    *(pp->equipe[i]->pv) =*(pp->equipe[i]->pv)*(map->nvEquipe+map->bonusEquipeN) ;
-                    pp->equipe[i]->puissance = pp->equipe[i]->puissance*(map->nvEquipe+map->bonusEquipeN);
+            i = 0;
+            while (pp -> equipe[i] != NULL && i < 4) {
+                if (pp -> equipe[i] -> mort == 0) {
+                    //artefact qui augmente les pv max
+                    if(map->listeArtefact[2]->equipe==1){
+                        pp -> equipe[i] -> pvMax = pp -> equipe[i] -> pvMax * (map -> nvEquipe + map -> bonusEquipeN+1);
+                        *pp -> equipe[i] -> pv = *pp -> equipe[i] -> pv * (map -> nvEquipe + map -> bonusEquipeN+1);
+                    }
+                    else{
+                        pp -> equipe[i] -> pvMax = pp -> equipe[i] -> pvMax * (map -> nvEquipe + map -> bonusEquipeN);
+                        *pp -> equipe[i] -> pv = *pp -> equipe[i] -> pv * (map -> nvEquipe + map -> bonusEquipeN);
+                    }
+
+                    //artefact qui augmente l'attaque
+                    if(map->listeArtefact[0]->equipe==1){
+                        pp -> equipe[i] -> puissance = pp -> equipe[i] -> puissance * (map -> nvEquipe + map -> bonusEquipeN+1);
+                    }
+                    else{
+                        pp -> equipe[i] -> puissance = pp -> equipe[i] -> puissance * (map -> nvEquipe + map -> bonusEquipeN);
+                    }
+                    //artefact qui augmente la vitesse
+                    if(map->listeArtefact[1]->equipe==1){
+                        pp -> equipe[i] -> vitesse = pp -> equipe[i] -> vitesse * 1.5;
+                    }
+                    //artefact qui diminue le temps de recharge de l'attaque special
+                    if(map->listeArtefact[7]->equipe==1){
+                        pp -> equipe[i] -> temps_recharge_max =pp -> equipe[i] -> temps_recharge_max-1;
+                    }
+                    
 
                 }
                 i++;
@@ -1106,11 +1146,38 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 ennemi->combattant[i]->puissance = ennemi->combattant[i]->puissance*map->nvZone;
                 i++;
             }
-            i=0;
-            while(pp->equipe[i]!=NULL && i<4){
-                *(pp->equipe[i]->pv) = *(pp->equipe[i]->pv)*map->nvEquipe;
-                pp->equipe[i]->pvMax = pp->equipe[i]->pvMax*map->nvEquipe;
-                pp->equipe[i]->puissance = pp->equipe[i]->puissance*map->nvEquipe;
+            i = 0;
+            while (pp -> equipe[i] != NULL && i < 4) {
+                //artefact qui augmente les pv max
+                if(map->listeArtefact[2]->equipe==1){
+                    *pp -> equipe[i] -> pv = *pp -> equipe[i] -> pv *( map -> nvEquipe+1);
+                    pp -> equipe[i] -> pvMax = pp -> equipe[i] -> pvMax * (map -> nvEquipe+1);
+                }
+                else{
+                    *pp -> equipe[i] -> pv = *pp -> equipe[i] -> pv * map -> nvEquipe;
+                    pp -> equipe[i] -> pvMax = pp -> equipe[i] -> pvMax * map -> nvEquipe;
+                }
+
+                //artefact qui augmente l'attaque
+                if(map->listeArtefact[0]->equipe==1){
+                    pp -> equipe[i] -> puissance = pp -> equipe[i] -> puissance * (map -> nvEquipe+1);
+                }
+                else{
+                   pp -> equipe[i] -> puissance = pp -> equipe[i] -> puissance * map -> nvEquipe;
+                }
+                //artefact qui augmente la vitesse
+                if(map->listeArtefact[1]->equipe==1){
+                    pp -> equipe[i] -> vitesse = pp -> equipe[i] -> vitesse * 1.5;
+                }
+                //artefact qui diminue le temps de recharge de l'attaque special
+                if(map->listeArtefact[7]->equipe==1){
+                    pp -> equipe[i] -> temps_recharge_max =pp -> equipe[i] -> temps_recharge_max-1;
+
+                }
+
+                
+
+
                 i++;
             }
 
@@ -1153,8 +1220,16 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             combat->combattant[i]=ennemi->combattant[j];
         }
 
-       combat->nb_point=2;
-       combat->num_tour=1;
+        //artefact qui augmente le nombre de point au debut
+        if(map->listeArtefact[4]->equipe==1){
+            combat -> nb_point = 3;
+        }
+        else{
+            combat -> nb_point = 2;
+        }
+
+        
+        combat -> num_tour = 1;
 
         while(Nennemi>0 && allie>0){
             //trie vitesse
@@ -1276,8 +1351,9 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         i++;
                     }
                 }
-
-                affichage_combat(we,he,renderer,combat,0,pp,map);
+                if(allie != 0){
+                    affichage_combat(we,he,renderer,combat,0,pp,map);
+                }
                 SDL_Delay(500);
 
                 
@@ -1290,10 +1366,19 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             if(combat->nb_point<6){
                 (combat->nb_point)++;
             }
+            //artefact qui ressusite les allies
+            if(allie==0 && map->listeArtefact[3]->equipe==1){
+                int k;
+                for(k=0;k<combat->nb_allie;k++){
+                    *combat->allie[k]->pv=combat->allie[k]->pvMax/2;
+                    combat->allie[k]->mort=0;
 
-
-
+                }
+                map->listeArtefact[3]->equipe=0;
+                map->listeArtefact[3]->possession=0;
+            }
         }
+
             //Si les alliees on tuer tous les ennemis
             if(Nennemi==0){
                 //cherche si dans les ennemis ils y avait un boss
@@ -1302,24 +1387,37 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
                         if(map->Nightmare){
                             map->Nightmare=0;
-                            pp->Nightmare=0;
+                           *pp->Nightmare=0;
                             *pp->NightP=pp->NightMax/2;
                             map->argent+=10;
                         }
                         //vide la barre de cauchemar
                         else{
-                            pp->NightP=0;
+                            *pp->NightP=0;
                         
                         }
-                        map->nvEquipe+=1;
+                    //artefact qui augmente le nombre d'argent gagner
+                    if(map->listeArtefact[8]->equipe==1){
+                         map -> argent += 15;
+                    }else{
+                         map -> argent += 10;
                     }
-                }
-                //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
-                if(map->Nightmare){
-                    map->bonusEquipeN+=0.5;
-                    map->bonusZoneN+=1;
+                    //artefact qui augmente le nombre de niveau gagner
+                    if(map->listeArtefact[9]->equipe==1){
+                         map -> nvEquipe += 2;
+                    }else{
+                         map -> nvEquipe += 1;
+                    }
+                    
                 }
             }
+            //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
+            if (map -> Nightmare) {
+                map -> bonusEquipeN += 0.5;
+                map -> bonusZoneN += 1;
+            }
+        }
+
         //SDL_RenderPresent(renderer);
         *ennemi = copieEnnemi;
 
@@ -1345,8 +1443,8 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 case 4 : map->Zone4 = 2 ;break;
                 case 5 : map->Zone5 = 2 ;break;
             default : return 1;
-        }   
-    }
+            }   
+        }
     }
     return 0;
 }
@@ -1391,7 +1489,7 @@ void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){
     SDL_SetRenderDrawColor(renderer, 43,27,85,255);
     SDL_RenderFillRect(renderer, &Night_barPleine);
 
-    SDL_RenderCopy(renderer,  map->tabTexture[29], NULL, &Night_bar);
+    SDL_RenderCopy(renderer,  map->tabTexture[59], NULL, &Night_bar);
 
 
 }
@@ -1448,7 +1546,7 @@ void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map
 
       // Afficher la texture sur le rendu
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
-    SDL_RenderCopy(renderer, map->tabTexture[29], NULL, &PV_bar);
+    SDL_RenderCopy(renderer, map->tabTexture[59], NULL, &PV_bar);
 
 
     SDL_FreeSurface(textSurface);
@@ -1504,5 +1602,6 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
 
     }
 }
+
 
 

@@ -112,6 +112,8 @@ map_t creation_map (int w, int h){
     m.Zone3 = 0;
     m.Zone4 = 0;
     m.Zone5 = 0;
+    m.nb_emplacement=4;
+    m.prix_emplacement=10;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(w,h,i,j);

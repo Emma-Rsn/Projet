@@ -50,6 +50,8 @@ struct map_s{
     int bonusZoneN;
     int argent;
     artefact_t * listeArtefact[10];
+    int nb_emplacement;
+    int prix_emplacement;
     //0 si pas rentrer dans la zone 1 si rentrer mais que le boss est vivant et 2 si le boss est mort
     int Zone2;
     int Zone3;
