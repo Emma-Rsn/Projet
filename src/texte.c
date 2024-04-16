@@ -21,7 +21,8 @@
 
 
 //affiche une boite de dialogue en finction du msg de l'ec de la liste et d'un portrait
-int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int we,int he){
+int aff_boite_dia(SDL_Renderer * rendu,int po,int *we,int* he,char * message,map_t * map){
+
     TTF_Font  * police = TTF_OpenFont("fonts/alagard.ttf", 20); 
     if (police == NULL){
             TTF_CloseFont(police);
@@ -30,22 +31,16 @@ int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int we,int 
             return -1;
     }
     SDL_Color blanc = {255, 255, 255};
-    SDL_Rect r_po = {0,he-TaillePo,TaillePo,TaillePo};
-    SDL_Rect r_text = {TaillePo,he-TaillePo,we-TaillePo,TaillePo};
+    SDL_Rect r_po = {0,*he-TaillePo,TaillePo,TaillePo};
+    SDL_Rect r_text = {TaillePo,*he-TaillePo,*we-TaillePo,TaillePo};
 
     //boite portrait
-    SDL_Texture * po_texture = SDL_CreateTextureFromSurface(rendu, po);
-    SDL_RenderCopy(rendu, po_texture, NULL, &r_po);
-    SDL_DestroyTexture(po_texture);
+    SDL_RenderCopy(rendu,  map->tabTexture[po], NULL, &r_po);
 
     //boite texte
-    int * w = malloc(sizeof(int));
-    int * h = malloc(sizeof(int));
-    *w= 10;
-    *h= 10;
     SDL_SetRenderDrawColor(rendu,0,0,0,255);
     SDL_RenderFillRect(rendu, &r_text);
-    SDL_Surface * texte = TTF_RenderText_Solid(police, liste->ec->message, blanc);
+    SDL_Surface * texte = TTF_RenderText_Solid(police, message, blanc);
     if (!texte){
         SDL_FreeSurface(texte);
         TTF_CloseFont(police);
@@ -64,242 +59,180 @@ int aff_boite_dia(SDL_Renderer * rendu,Liste *liste,SDL_Surface * po,int we,int 
         return -1;
     }
     SDL_RenderCopy(rendu, text_texture, NULL, &textRect);
-    free(w);
-    free(h);
     TTF_CloseFont(police);
     SDL_FreeSurface(texte); 
     SDL_DestroyTexture(text_texture);
+
     return 0;
 }
 
-/**
-*
-*\fn void dialogue(SDL_Event event,int * etat,Liste * liste)
-*\param event permet de savoir si il y a un evenement
-*\param etat etat du texte afficher
-*\param liste liste chaine du texte a afficher
-*
-*
-*
-*/
-
-//fonction pour afficher le texte ou non par rapport a son etat
-void dialogue (SDL_Event event,Liste * liste){
 
 
-	//si une touche est presser
-    if(event.type == SDL_KEYDOWN ){
-       //quelle touche est presser
-        switch(event.key.keysym.sym){
-            case SDLK_e:  
-                    //dernier texte dans la structure
-                    if(liste->ec->suivant==NULL){
-                        liste->etat = 2;
-                        liste_premier(liste);
-                    }
-                    else{
-                        //premier element de la structure
-                        if(liste->etat == 0){
-                            liste->etat=1;
-                        }
-                        //suite des elments de la structure
-                        else if (liste->etat == 1){
-                            liste_suivant(liste);        
-                        }
-                    }
-            	break;	
-            default:break;
+void debut_dialogue_carte(carte_t * cartec,SDL_Event event,p_mv * pp,int *etat_dialogue){
+    int i;
+    for(i=0;i<cartec->nbObj;i++){
+        if(cartec->tabObj[i]->typeObj==3 || cartec->tabObj[i]->typeObj==4){
+            debut_dialogue(event,pp,etat_dialogue,cartec->tabObj[i]->cas);
         }
+    }
+}
+
+
+void debut_dialogue(SDL_Event event,p_mv * pp,int *etat_dialogue,case_t * c){
+    if(boolcol(c,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+        *etat_dialogue=1;
+    } 
+}
+
+
+void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map,int *etat_dialogue){
+    int i;
+    for(i=0;i<cartec->nbObj;i++){
+        if(cartec->tabObj[i]->typeObj==3|| cartec->tabObj[i]->typeObj==4){
+            pnj_dialogue(event,renderer,he,we,map,etat_dialogue,cartec->tabObj[i]->tabObj[0]);
+        }
+    }
+}
+
+void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int num_dialogue){
+
+    if(*etat_dialogue == 1){
+        char * texte1="";
+        texte1=" ";
+        int portrait=0;
+
+        //sauvegarde du fond
+        SDL_Surface* surface = SDL_CreateRGBSurface(0, *we, *he, 32,0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+        // Copie les pixels du rendu actuel dans la surface
+        SDL_RenderReadPixels(renderer, NULL, surface->format->format, surface->pixels, surface->pitch);
+        // Créer une texture à partir de la surface
+        SDL_Texture* targetTexture = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+
+        SDL_Rect tecran = {0,0,*we,*he};
+        int etat=1;
+        while(etat){
+            switch(num_dialogue){
+                        case 1: 
+                            texte1="Il me faut la clef du manoir pour rentrer dedans.";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 2: 
+                            texte1="Il me faudrait une combianaison de plonger pour aller sous l'eau.";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 3: 
+                            texte1="Une puissante force me repousse.";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 4: 
+                            texte1="Merci de m'avoir sauvee.";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 5: 
+                            texte1="Merci de m'avoir sauve.";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 6: 
+                            texte1="Merci de m'avoir sauvee.";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 7: 
+                            texte1="Merci de m'avoir sauve.";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 8: 
+                            texte1="Oh non tu m'as tue !";
+                            portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        default:
+                            
+                            break;
+            }           
+            SDL_RenderClear(renderer);
+            while (SDL_PollEvent(&event) != 0) {
+            	//si une touche est presser
+                if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+                     switch(num_dialogue){
+                        case -1: 
+                            etat=0;
+                            *etat_dialogue = 0;
+                            break;
+                        default:
+                            *etat_dialogue =0;
+                            etat=0;
+                            break;
+                    }           
+                }
+            }
+
+
+            TTF_Font  * police = TTF_OpenFont("fonts/alagard.ttf", 40); 
+            if (police == NULL){
+                    TTF_CloseFont(police);
+                    TTF_Quit();
+                    fprintf(stderr,"probleme a l'ouverture de la police\n");
+                    return ;
+            }
+
+            SDL_Color blanc = {255, 255, 255};
+            SDL_Rect r_po = {0,*he-TaillePo,TaillePo,TaillePo};
+            SDL_Rect r_text = {TaillePo,*he-TaillePo,*we-TaillePo,TaillePo};
+
+            SDL_Surface * texte = TTF_RenderText_Solid(police, texte1, blanc);
+            if (!texte){
+                SDL_FreeSurface(texte);
+                TTF_CloseFont(police);
+                police = NULL;
+                TTF_Quit();
+                printf("probleme de texte\n");
+                return ;
+            }
+            SDL_Texture * text_texture = SDL_CreateTextureFromSurface(renderer,texte);
+
+            SDL_Rect textRect = {(*we)-(r_text.w/2)-texte->w/2, (*he)-(r_text.h/2)-(texte->h/2), texte->w, texte->h};
+            if(!text_texture){
+                printf("Impossible de creeer la texture\n");
+                TTF_CloseFont(police);
+                police = NULL;
+                TTF_Quit();
+                return ;
+            }
+            
+            SDL_RenderCopy(renderer, targetTexture, NULL, NULL);
+            SDL_SetRenderDrawColor(renderer,0,0,0,100);
+            SDL_RenderFillRect(renderer, &tecran);
+
         
-    }
 
-}
+            //boite portrait
+            SDL_RenderCopy(renderer,  map->tabTexture[portrait], NULL, &r_po);
+            //boite texte
+            SDL_SetRenderDrawColor(renderer,0,0,0,255);
+            SDL_RenderFillRect(renderer, &r_text);
 
+            SDL_RenderCopy(renderer, text_texture, NULL, &textRect);
+            
 
-/**
-*
-*\fn int liste_vide(Liste * liste)
-*\param liste liste chainee du texte a afficher
-*\brief fonction pour regarder si la liste chainee est vide 
-*/
-
-//fonction pour regarder si la liste chainee est vide 
-int liste_vide(Liste * liste){
-    if(liste->premier == NULL){
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
-/**
-*
-*\fn void liste_premier(Liste * liste)
-*\param liste liste chainee du texte a afficher
-*\brief fonction pour aller au premier element de la liste chainee
-*/
-
-//fonction pour aller au premier element de la liste chainee
-void liste_premier(Liste * liste){
-    if(liste != NULL){
-        liste->ec = liste->premier;
-    }
-}
-
-/**
-*
-*\fn void liste_suivant(Liste * liste)
-*\param liste liste chainee du texte a afficher
-*\brief fonction pour aller a l'element suivant de la liste chainee
-*/
-
-//fonction pour aller a l'element suivant de la liste chainee
-void liste_suivant(Liste * liste){
-    if(liste->ec != NULL){
-        liste->ec = liste->ec->suivant;
-    }
-}
-
-/**
-*
-*\fn Liste * initialisation()
-*\brief fonction pour initialiser la liste chainee
-*
-*/
-
-//fonction pour initialiser la liste chainee
-Liste * initialisation()
-{
-    Liste *liste = malloc(sizeof(*liste));
-
-    if (liste == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
-    liste->premier = NULL;
-    liste_premier(liste);
-    liste->etat=0;
-
-    return liste;
-}
-/**
-*
-*\fn void insertion(Liste *liste, char * nvMess)
-*\param liste liste chainee du texte a afficher
-*\param nvMess inserer un message dans la liste
-*\brief fonction pour inserer un element a la liste chainee
-*
-*/
-
-
-//fonction pour inserer un element a la liste chainee
-void insertion(Liste *liste, char * nvMess)
-{
-    /* Création du nouvel élément */
-    if (liste == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
-
-    mess_s *nouveau = malloc(sizeof(mess_s));
-
-    if (nouveau == NULL)
-    {
-        printf("Probleme d'allocation de memoire\n");
-        exit(EXIT_FAILURE);
-    }
-    
-    nouveau->message = malloc(strlen(nvMess)+1);
-    strcpy(nouveau->message,nvMess);
-
-    /* Insertion de l'élément au début de la liste */
-    
-    if(liste_vide(liste)){
-        nouveau->suivant = NULL;
-    }
-    else{
-        nouveau->suivant = liste->premier;  
-    }
-    liste->premier = nouveau;
-    nouveau = NULL;
-    liste_premier(liste);
-}
-
-/**
-*
-*\fn void liste_suppression(Liste *liste)
-*\param liste liste chainee du texte a afficher
-*\brief fonction pour supprimer le premier element de la liste chainee
-*
-*/
-
-//fonction pour supprimer le premier element de la liste chainee
-void liste_suppression(Liste *liste)
-{
-    if (liste == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
-
-     liste_premier(liste);
-
-    if (liste->ec != NULL)
-    {
-        mess_s *aSupprimer = liste->ec;
-        if(liste->ec->suivant != NULL){
-            liste_suivant(liste);
-            liste->premier = liste->ec;
-        }else{
-            liste->premier = NULL;
+            TTF_CloseFont(police);
+            SDL_FreeSurface(texte); 
+            SDL_DestroyTexture(text_texture);
+            SDL_RenderPresent(renderer);
+            SDL_Delay(100);
         }
-        free(aSupprimer->message);
-        free(aSupprimer);
+
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, targetTexture, NULL, NULL);
+        SDL_RenderPresent(renderer);
+        SDL_DestroyTexture(targetTexture);
     }
-} 
-
-/**
-*
-*\fn void afficherListe(Liste *liste)
-*\param liste liste chainee du texte a afficher
-*\brief fonction qui affiche la liste chainee
-*
-*/
-
-//fonction qui affiche la liste chainee
-void afficherListe(Liste *liste)
-{
-    if (liste == NULL)
-    {
-        exit(EXIT_FAILURE);
-    }
-
-    liste_premier(liste);
-
-    while (liste->ec != NULL)
-    {
-        printf("%s -> ", liste->ec->message);
-        liste_suivant(liste);
-    }
-    liste_premier(liste);
-    printf("NULL\n");
 }
-/**
-*
-*\fn void liste_destruction(Liste *liste)
-*\param liste liste chainee du texte a afficher
-*\brief fonction qui detruit la liste chainee
-*
-*/
 
-
-//fonction qui detruit la liste chainee
-void liste_destruction(Liste * liste){
-	liste_premier(liste);
-	
-	while(liste->ec != NULL){
-        liste_suppression(liste);
-        liste_premier(liste);
-	}
-    free(liste);
-    liste = NULL;
-}
