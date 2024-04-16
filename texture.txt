@@ -41,9 +41,9 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+texture/template/fleches_gauche.png
+texture/template/fleches_droite.png
+texture/template/cadre_cote.png
 texture/template/test_bois.png
 texture/objet/artefact1.png
 texture/objet/artefact2.png

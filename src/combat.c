@@ -224,12 +224,12 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         }
         
         SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        SDL_Rect textRect = {10, r_GEcran.y+i*(r_GEcran.h/4), textSurface->w, textSurface->h};
+        SDL_Rect textRect = {10+(*we*2/100), (r_GEcran.y+i*(r_GEcran.h/4))+(*he*4/100), textSurface->w, textSurface->h};
         if(strcmp(combat->ennemi[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0 && combat->combattant[combat->indice_combattant]->status==0){
-            textRect.x = (r_GEcran.x+(100));
+            textRect.x = (r_GEcran.x+(100)+(*we*4/100));
         }
 
-        affVie(renderer,(r_GEcran.y+i*(r_GEcran.h/4))+textRect.h,10,combat->ennemi[i],map);
+        affVie(renderer,(r_GEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),10+(*we*2/100),combat->ennemi[i],map);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
         
         SDL_FreeSurface(textSurface);
@@ -260,11 +260,11 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         
         }
         SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
-        SDL_Rect textRect = {r_DEcran.x, r_DEcran.y+i*(r_GEcran.h/4), textSurface->w, textSurface->h};
+        SDL_Rect textRect = {r_DEcran.x+(*we*2/100), (r_DEcran.y+i*(r_GEcran.h/4))+(*he*4/100), textSurface->w, textSurface->h};
         if(strcmp(combat->allie[i]->nom,combat->combattant[combat->indice_combattant]->nom)==0 && combat->combattant[combat->indice_combattant]->mort==0 && combat->combattant[combat->indice_combattant]->status==0){
-            textRect.x = (r_DEcran.x+(r_DEcran.w/50));
+            textRect.x = (r_DEcran.x+(r_DEcran.w/50)+(*we*4/100));
         }
-        affVie(renderer,(r_DEcran.y+i*(r_GEcran.h/4))+textRect.h,r_DEcran.x,combat->allie[i],map);
+        affVie(renderer,(r_DEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),r_DEcran.x+(*we*2/100),combat->allie[i],map);
         SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
         SDL_FreeSurface(textSurface);
         SDL_DestroyTexture(textTexture);
@@ -521,6 +521,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
      */
 
     SDL_Rect r_hautEcran = {0,0,( * we),56};
+    SDL_Rect r_hautEcran_cadre = {( * we) / 4,r_hautEcran.h-r_hautEcran.h*5/100,(( * we) - ( * we) / 4)-( * we) / 4,r_hautEcran.h*5/100};
     SDL_Surface * NomSurface;
 
     if (etat == 0) {
@@ -540,7 +541,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
     SDL_Texture * NomTexture = SDL_CreateTextureFromSurface(renderer, NomSurface);
     SDL_Rect NomRect = {
         r_hautEcran.w / 2 - NomSurface -> w / 2,
-        r_hautEcran.y / 2 + NomSurface -> h / 4,
+        r_hautEcran.h / 2 - NomSurface -> h / 2,
         NomSurface -> w,
         NomSurface -> h
     };
@@ -581,7 +582,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
      *ECRAN DROIT
      *
      */
-    SDL_Rect r_DEcran = {( * we) - ( * we) / 4,r_hautEcran.h,( * we), (r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+    SDL_Rect r_DEcran = {( * we) - ( * we) / 4,r_hautEcran.h,( * we)-((( * we) - ( * we) / 4)), (r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
 
     /*
      *
@@ -589,6 +590,8 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
      *
      */
     SDL_Rect r_MEcran = {r_GEcran.w,r_hautEcran.h,r_DEcran.x - r_GEcran.w,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+    SDL_Rect r_Fleches_GEcran={r_GEcran.w,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
+    SDL_Rect r_Fleches_DEcran={r_DEcran.x-r_MEcran.h/6,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
 
     /*
      *
@@ -688,14 +691,19 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
-    SDL_RenderFillRect(renderer, & r_GEcran);
-    SDL_RenderFillRect(renderer, & r_DEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[43], NULL, & r_GEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[43], NULL, & r_DEcran);
+    //SDL_RenderFillRect(renderer, & r_Fleches_DEcran);
+    //SDL_RenderFillRect(renderer, & r_Fleches_GEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[42], NULL, & r_Fleches_DEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[41], NULL, & r_Fleches_GEcran);
+
+    //printf("w%d h%d",r_Fleches_DEcran.w,r_Fleches_DEcran.h);
 
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
-    //SDL_RenderFillRect(renderer, & r_basEcran);
     SDL_RenderCopy(renderer, map -> tabTexture[56], NULL, & r_basEcran);
-    //printf("w : %d h:%d\n",r_basEcran.w,r_basEcran.h);
-    SDL_RenderFillRect(renderer, & r_hautEcran);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderFillRect(renderer, & r_hautEcran_cadre);
 
     SDL_RenderCopy(renderer, textTextureATQ1, NULL, & r_ATQ1);
 
