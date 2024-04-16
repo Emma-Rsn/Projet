@@ -176,7 +176,7 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
 	SDL_Texture *textTexturemult = SDL_CreateTextureFromSurface(renderer, textSurfacemult);
 
 	// Position du texte
-	SDL_Rect r_mult = { 50, (r_basEcran.y/2)- textSurfacemult->h/2, textSurfacemult->w, textSurfacemult->h};
+	SDL_Rect r_mult = { 50, ((*he)-(r_basEcran.h/2))- textSurfacemult->h/2, textSurfacemult->w, textSurfacemult->h};
 
     int i ;
     for(i=0;i<combat->nb_point;i++){
@@ -786,7 +786,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
         SDL_Rect r_Fleches_DEcran={r_DEcran.x-r_MEcran.h/6,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
         SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
         SDL_Rect  r_ATQ3= {(r_basEcran.w*40/100)+(r_basEcran.w*30/100),(r_basEcran.h*3)+r_basEcran.h/2,373,48};
-        SDL_Rect r_mult = { 50, (r_basEcran.h*3)+r_basEcran.h/2+50, 206, 47};
+        SDL_Rect r_mult = { 50, ((*he)-(r_basEcran.h/2))-47/2, 206, 47};
             int jouer=1;
             int nb_point_deb=combat->nb_point;
             int Nightmare_deb=*personnage->NightP;
@@ -862,7 +862,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                             }
                         }
                         else if((r_mult.x<=event.button.x) && ((r_mult.x+r_mult.w)>=event.button.x) && ((r_mult.y+r_mult.h)>=event.button.y) && (r_mult.y<=event.button.y)){
-                            if (combat -> mult < 2.5 && combat -> nb_point > 0 && map->listeArtefact[5]->equipe==0) {
+                            if (combat -> mult < 2.5 && combat -> nb_point > 0) {
                                 combat -> mult += 0.5;
                                 //augmentation barre de cauchemar
                                 if(combat->mult==1.5){
