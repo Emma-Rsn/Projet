@@ -138,9 +138,7 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
 }
 
 void dest_obj(carte_t * c,int ind){
-    printf("%d\n",ind);
-    printf("%d\n",c->nbObj);
-    printf("%p\n",c->tabObj[ind]);
+
     if(c->nbObj > 0){
         switch(c->tabObj[ind]->typeObj){
             case 2 : dest_ennemi(((ennemi_t *)(c->tabObj[ind]->tabObj[0])));break;
