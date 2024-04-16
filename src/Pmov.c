@@ -611,6 +611,7 @@ p_mv * initp(){
 
 //construit un point
 void remplirp(p_mv * p,case_t * c,int leader){
+    printf("add %p\n",c);
     p->c = c;
     p->r = p->c->Rectangle;
     if(*p->NightP == p->NightMax){
