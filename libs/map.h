@@ -57,6 +57,7 @@ struct map_s{
     int Zone3;
     int Zone4;
     int Zone5;
+    SDL_Texture *** tabminimap;
 };
 
 case_t creation_case();
