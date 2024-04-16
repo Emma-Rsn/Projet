@@ -63,6 +63,7 @@ int main(){
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
+    printf("bonsoir\n");
     SDL_Surface * logo = IMG_Load("logo.png");
     SDL_SetWindowIcon(window,logo);
     SDL_FreeSurface(logo);
@@ -150,8 +151,8 @@ int main(){
 
   
 
-
     load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
+
 
     map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,45);
     map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,46);
