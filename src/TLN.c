@@ -110,7 +110,7 @@ int main(){
     Alex->equipe[0]=pre_init_combattant();
 
     int xp,yp;
-    last = load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam);
+    last = load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam,toucheDeplacement);
     if(last != 1){
         for(q = 0;q<ROWS;q++){
             for(s = 0;s<COLUMNS;s++){
@@ -338,7 +338,7 @@ int main(){
     // Libérer les ressources
     //combattant(pAlex);
 
-    save_pos(cartec->xcarte,cartec->ycarte,*Alex,map);
+    save_pos(cartec->xcarte,cartec->ycarte,*Alex,map,*toucheDeplacement);
     
 
     free(etat_map);

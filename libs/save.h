@@ -6,9 +6,9 @@ extern int save_settings(void);
 
 extern int load_settings(int * lEcran,int * LEcran);
 
-int save_pos(int xcarte,int ycarte,p_mv pmv,map_t map);
+int save_pos(int xcarte,int ycarte,p_mv pmv,map_t map,int touche);
 
-int load_pos(int * xcarte,int * ycarte,int * xpos,int * ypos,map_t * map,int * pv,p_mv * pmv,int ** tabparam);
+int load_pos(int * xcarte,int * ycarte,int * xpos,int * ypos,map_t * map,int * pv,p_mv * pmv,int ** tabparam,int * touche);
 
 void nouvelle_partie(int param);
 
