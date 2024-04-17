@@ -891,7 +891,7 @@ int load_layout(carte_t *c, char *namefile) {
     
     return 0;
 }
-
+//IMPORTANT !!! NE PAS SUPPRIMER !!!
 /*int load_layout(carte_t *c, char *namefile) {
     FILE *file;
     file = fopen(namefile, "r");

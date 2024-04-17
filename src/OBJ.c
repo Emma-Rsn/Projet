@@ -68,11 +68,10 @@ int load_obj(carte_t *c, char *namefile){
                     break;
                 case 2 :
                     fscanf(file,"%s %d %d %d %d %d %d %d %d %d %d ",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme,&nbCombattant);
-                    //printf("%s %d %d %d %d %d %d %d %d %d %d\n",nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme,nbCombattant);
                     ennemi_t * newEnnemi=init_ennemi(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
                     for(i=1;i<=nbCombattant;i++){
                         fscanf(file,"%s %d %d %d %d %d %d %d %d %d",nom,&pv,&vitesse,&camp,&indice_portait,&indice_sprite,&typeE,&temps_recharge_max,&puissance,&forme);
-                        newEnnemi->combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme);
+                        newEnnemi->combattant[i]=init_combattant(nom,pv,vitesse,camp,indice_portait,indice_sprite,typeE,temps_recharge_max,puissance,forme,pv);
                     }
                     c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,newEnnemi);
                     c->nbObj++;
@@ -130,7 +129,8 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
     for(i=0;i<4;i++){
         en->combattant[i]=NULL;
     }
-    en->combattant[0]=init_combattant(en->nom,en->pv,en->vitesse,1,indice_portrait,indice_sprite,type,en->temps_recharge_max,puissance,forme);
+    if(en->combattant[0] != NULL)desctruction_combattant(en->combattant[0]);
+    en->combattant[0]=init_combattant(en->nom,en->pv,en->vitesse,1,indice_portrait,indice_sprite,type,en->temps_recharge_max,puissance,forme,pv);
     en->indice_portrait=indice_portrait;
     en->indice_sprite=indice_sprite;
     en->forme=forme;
@@ -142,50 +142,76 @@ void Boss(obj_t * boss,p_mv * Leader){
         if(((ennemi_t *)boss->tabObj[0])->forme == 3){
             srand( time( NULL ) );
             int type = ((ennemi_t *)boss->tabObj[0])->type;
-            int i;
-            for(i = 0;Leader->equipe[i]->type != type && Leader->equipe[i];i++){
-                printf("test\n");
+            int i,y,j,combat = ((ennemi_t *)boss->tabObj[0])->combat;
+            for(y = 0;Leader->equipe[y] && y < 4;y++);
+            if(y==4)return;
+            combattant_t * tab[y];
+            if(y>0){
+                for(j=1;j<y;j++){
+                    tab[j-1] = ((ennemi_t *)boss->tabObj[0])->combattant[j];
+                }
             }
+            for(i = 0;Leader->equipe[i] && Leader->equipe[i]->type != type;i++);
+            if(!Leader->equipe[i])return;
             if(Leader->equipe[i]->type == type){
                 do{
                     type = rand()%4;
-                }while(Leader->equipe[i]->type == type);
+                }while(BoolTypein(type,Leader));
             }
             dest_ennemi((boss->tabObj[0]));
             switch (type)
             {
             case 0://Alex
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Alex",100,50,0,13,12,0,2,15,0);
+            boss->tabObj[0]=init_ennemi("Alex",1,50,0,13,12,0,2,1,3);
                 break;
 
             case 1://Lou
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Lou",100,50,0,13,12,0,2,15,0);
+            boss->tabObj[0]=init_ennemi("Lou",1,50,0,13,12,1,2,1,3);
                 break;
 
             case 2://Finn
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Finn",100,50,0,13,12,0,2,15,0);
+            boss->tabObj[0]=init_ennemi("Finn",1,50,0,13,12,2,2,1,3);
                 break;
 
             case 3://Ada
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Ada",100,50,0,13,12,0,2,15,0);
+            boss->tabObj[0]=init_ennemi("Ada",1,50,0,13,12,3,2,1,3);
                 break;
             
             default:
                 break;
             }
+            ((ennemi_t *)boss->tabObj[0])->combat = combat;
+            if(y>0){
+                for(j=1;j<y;j++){
+                    ((ennemi_t *)boss->tabObj[0])->combattant[j] = tab[j-1];
+                }
+            }
         }
     }
+}
+
+int BoolTypein(int type,p_mv * Leader){
+    int nballie,i;
+    for(nballie=0;Leader->equipe[nballie] && nballie < 4;nballie++);
+    for(i =0;i<nballie;i++){
+        if(Leader->equipe[i]->type == type){
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void dest_obj(carte_t * c,int ind){
 
     if(c->nbObj > 0){
         switch(c->tabObj[ind]->typeObj){
-            case 2 : dest_ennemi(((ennemi_t *)(c->tabObj[ind]->tabObj[0])));break;
+            case 2 : dest_ennemi(((ennemi_t *)(c->tabObj[ind]->tabObj[0])));
+            c->tabObj[ind]->cas->etat=1;
+            break;
 
 
             default : break;
@@ -251,8 +277,6 @@ int boolcol (case_t * obj_c,p_mv * pp){
     }
     return 0;
 }
-
-
 
 
 

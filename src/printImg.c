@@ -116,7 +116,16 @@ int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     return 0;
 }
 
-//ajustement du diviseur de FPS
+/**
+*
+*\fn void ajDFPS(int * dfps,int * cmpfps,int *nfps,Uint32 * t0,Uint32 * t1)
+*\param dfps diviseur des fps pour s'approcher de la limite de 60 FPS
+*\param cmpfps max de fps en 1s
+*\param nfps nombre de fps actuelle
+*\param t0 debut de la mesure des fps
+*\param t1 quand la difference t1-t0 vaut 1s on a fini de mesurer les fps
+*\brief fonction qui ajuste les fps
+*/
 void ajDFPS(int * dfps,int * cmpfps,int *nfps,Uint32 * t0,Uint32 * t1){
     if(NB_Fps(nfps,t0,t1)){
         *cmpfps = *nfps;
@@ -127,6 +136,17 @@ void ajDFPS(int * dfps,int * cmpfps,int *nfps,Uint32 * t0,Uint32 * t1){
         }
     }
 }
+
+/**
+*
+*\fn void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv)
+*\param renderer rendu SDL
+*\param he pointeur sur la longeur de l'écran
+*\param we pointeur sur la hauteur de l'écran
+*\param map structure map du jeu
+*\param pmv personnage jouable
+*\brief fonction qui affiche le hud
+*/
 
 void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     //Variable PV

@@ -29,6 +29,7 @@
 #define BONUS_ZONE_N 1
 #define PLUS_BONUS_EQUIPE 0.5
 #define PLUS_BONUS_ZONE 1
+#define NB_PARAM 31
 
 
 typedef struct obj_s obj_t;

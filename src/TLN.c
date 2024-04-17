@@ -99,11 +99,11 @@ int main(){
     map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,173);
     map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,174);
 
-    //def spawn
+    //debut sauvegarde
     int q,s,ii,last;
     int * pv = malloc(sizeof(int));
-    int * tabparam[26];
-    for(ii = 0;ii<26;ii++){
+    int * tabparam[NB_PARAM];
+    for(ii = 0;ii<NB_PARAM;ii++){
         tabparam[ii] = malloc(sizeof(int));
     }
     p_mv * Alex = initp();
@@ -124,7 +124,7 @@ int main(){
         }
         xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0,*pv=100;
         if(last != 2)*tabparam[4] = 0,*tabparam[5] = 1;
-        for(ii = 6;ii<26 && last != 2;ii++){
+        for(ii = 6;ii<NB_PARAM && last != 2;ii++){
             *tabparam[ii] = 0;
         }
     }
@@ -137,51 +137,44 @@ int main(){
     }
     map.Nightmare=*Alex->Nightmare;
     carte_t * cartec =&map.tabMap[q][s];
-    remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),0);
+    remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),1);
+    printf("nom : %s\n",Alex->nom);
     *Alex->equipe[0]->pv=*pv;
+    for(ii = 1;ii<=*tabparam[26];ii++){
+        switch(*tabparam[27+ii-1]){
+            case 0 :
+                Alex->equipe[ii]=init_combattant("Alex",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                break;
+            case 1 :
+                Alex->equipe[ii]=init_combattant("Lou",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                break;
+            case 2 :
+                Alex->equipe[ii]=init_combattant("Finn",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                break;
+            case 3 :
+                Alex->equipe[ii]=init_combattant("Ada",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                break;
+            default: break;
+        }
+
+    }
 
     cartec->etat_brouillard = 0;
     map.zoneChargee = cartec->nZone;
     free(pv);
-    for(ii = 0;ii<26;ii++){
+    for(ii = 0;ii<NB_PARAM;ii++){
         free(tabparam[ii]);
     }
+    //fin sauvegarde
     chargement_Zone(&map,renderer,map.zoneChargee,gMusic);
     creer_map_layout(&map);
 
     int *etat_dialogue=malloc(sizeof(int));
     *etat_dialogue=0;
-    /*obj_t * dial;
-    dial=init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[2][2],10,3,8);
-    map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = dial;
-    map.tabMap[cartec->xcarte][cartec->ycarte].nbObj = 1;
-    
-
-    ennemi_t * Slime1 = init_ennemi("Slime1",100,10,1,11,15,0,1,10,0);
-    Slime1->combattant[1] = init_combattant("Lute1",100,10,1,11,10,0,1,10,0);
-    obj_t * ObjSlime1 = init_obj(&map.tabMap[cartec->xcarte][cartec->ycarte].grille.tabGrille[4][5],15,2,Slime1);
-    map.tabMap[cartec->xcarte][cartec->ycarte].tabObj[0] = ObjSlime1;
-    map.tabMap[cartec->xcarte][cartec->ycarte].nbObj = 1;
-
-    ennemi_t * Slime2 = init_ennemi("Boss",1,10,1,11,10,2,1,10,3);
-    Slime2->combattant[1] = init_combattant("Lute2",1,10,1,11,10,3,1,10,0);
-    obj_t * ObjSlime2 = init_obj(&map.tabMap[2][3].grille.tabGrille[3][2],10,2,Slime2);
-    map.tabMap[2][3].tabObj[1] = ObjSlime2;
-    map.tabMap[2][3].nbObj = 1;*/
-
-
-
-  
 
     load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
 
 
-
-
-    //creation personnage
-    Alex->equipe[1]=init_combattant("Lou",50,60,0,1,14,1,0,10,0);
-    //Alex->equipe[2]=init_combattant("Finn",50,45,0,1,1,2,0,8,0);
-    //Alex->equipe[2]=init_combattant("Ada",100,45,0,1,1,3,3,14,0);
 
 
     //variable FPS
@@ -291,9 +284,6 @@ int main(){
         //affiche la grille
         betaAfficherMap(renderer,&map,cartec);
         if(ouigrille)afficher_grille(cartec->grille,renderer);
-
-        //Affichage pnj
-        //aff_pnj(Alex2,renderer,cartec);
 
         //Affiche un personnage
         affp(Alex,renderer,event);
