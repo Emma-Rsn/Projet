@@ -722,13 +722,11 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
         SDL_RenderCopy(renderer, map -> tabTexture[144], NULL, & r_basEcran);
     }
     else if(combat->mult==3){
-        SDL_RenderCopy(renderer, map -> tabTexture[142], NULL, & r_GEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[142], NULL, & r_DEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[143], NULL, & r_basEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_GEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_DEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[142], NULL, & r_basEcran);
     }
 
-
-    
 
     SDL_RenderCopy(renderer, map -> tabTexture[162], NULL, & r_Fleches_DEcran);
     SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_Fleches_GEcran);
@@ -739,14 +737,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(renderer, & r_hautEcran_cadre);
 
-
-
-
-     
-
-    SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);
-
-                
+    SDL_RenderCopy(renderer, textTextureATQ1, NULL, &r_ATQ1);      
     SDL_RenderCopy(renderer, textTextureATQ3, NULL, &r_ATQ3);
                 
 
@@ -771,7 +762,6 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             
             }
                 
-                
                 SDL_RenderPresent(renderer);
 
                 if(combat->combattant[combat->indice_combattant]->camp==1 && combat->combattant[combat->indice_combattant]->mort==0 ){
@@ -785,11 +775,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                                         
                 //destruction des textures
                 SDL_DestroyTexture(textTextureATQ1);
-         
-                     SDL_DestroyTexture(textTextureATQ3);
-                
-
-
+                SDL_DestroyTexture(textTextureATQ3);
                 SDL_DestroyTexture(NomTexture);
                 SDL_DestroyTexture(NumTourTexture);
                 free(NumTour);

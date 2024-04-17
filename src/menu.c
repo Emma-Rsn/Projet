@@ -219,11 +219,7 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
 //fonction qui affiche l'ecran titre
 int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption, int * toucheDeplacement,map_t * map) {
     SDL_RenderClear(renderer);
-    SDL_Color textColor = {
-        255,
-        255,
-        255
-    };
+    SDL_Color textColor = {255,255,255};
 
     //chargement de la police d'écriture
     TTF_Font * fontT = TTF_OpenFont("fonts/alagard.ttf", 75);
@@ -232,11 +228,7 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
         return -1;
     }
 
-    SDL_Color textColorT = {
-        127,
-        0,
-        255
-    };
+    SDL_Color textColorT = {127,0,255};
 
     SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "The Last Nightmare", textColorT);
     if (!textSurfaceT) {
@@ -448,7 +440,6 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
             }
         }
         SDL_RenderClear(renderer);
-        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
         SDL_RenderCopy(renderer, map -> tabTexture[158], NULL, & r_ecran);
         SDL_RenderCopy(renderer, map -> tabTexture[157], NULL, & r_ecran);
         SDL_RenderCopy(renderer, map -> tabTexture[156], NULL, & r_ecran);
@@ -817,7 +808,7 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
 
         SDL_Rect r_bouton_T = {
                 (( * we) / 2)  - (((*we)*25/100) / 2),
-                ( * he / 10)-((*he)*15/100)/2,
+                ( * he / 8)*1-((*he)*15/100)/2,
                 (*we)*25/100,
                 (*he)*15/100
             };
@@ -895,9 +886,9 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
 
         SDL_Rect r_bouton_Q = {
                 (( * we) / 2)  - (((*we)*15/100) / 2),
-                 ( * he / 5) * 5- (*he)*15/100,
+                 ( * he / 6) * 5- (*he)*10/100,
                 (*we)*15/100,
-                (*he)*15/100
+                (*he)*10/100
             };
 
         SDL_Rect r_text_Q = {
@@ -908,9 +899,9 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
         };
         SDL_Rect r_bouton_N = {
                 (( * we) / 2)  - (((*we)*15/100) / 2),
-                 ( * he / 5) * 3- (*he)*15/100,
+                 ( * he / 6) * 3- (*he)*10/100,
                 (*we)*15/100,
-                (*he)*15/100
+                (*he)*10/100
             };
         SDL_Rect r_text_N = {
             (r_bouton_N.x+r_bouton_N.w/2)-(textSurfaceN -> w/2),
@@ -921,9 +912,9 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
 
         SDL_Rect r_bouton_C = {
                 (( * we) / 2)  - (((*we)*15/100) / 2),
-                 ( * he / 5) * 2- (*he)*15/100,
+                 ( * he / 6) * 2- (*he)*10/100,
                 (*we)*15/100,
-                (*he)*15/100
+                (*he)*10/100
             };
         SDL_Rect r_text_C = {
             (r_bouton_C.x+r_bouton_C.w/2)-(textSurfaceC -> w/2),
@@ -934,9 +925,9 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
 
         SDL_Rect r_bouton_I = {
                 (( * we) / 2)  - (((*we)*15/100) / 2),
-                 ( * he / 5) * 4- (*he)*15/100,
+                 ( * he / 6) * 4- (*he)*10/100,
                 (*we)*15/100,
-                (*he)*15/100
+                (*he)*10/100
             };
         SDL_Rect r_text_I = {
             (r_bouton_I.x+r_bouton_I.w/2)-(textSurfaceI -> w/2),
