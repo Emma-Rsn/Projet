@@ -24,13 +24,9 @@ struct carte_s{
     int xcarte;
     int ycarte;
     int etat_brouillard; // si 1 alors la carte est couverte de brouillard(pas encore explorée), si 0 alors la carte a été explorée
-    Uint8 r;// couleurs du background de chaque carte
-    Uint8 g; 
-    Uint8 b;
-    Uint8 a;
     int nZone;
     int nbObj;
-    int nrlayout; //numero du layout charger
+    int nrlayout; //numero du layout chargé
     obj_t * tabObj[20];
     grille_t grille; //quadrillage des cases dans une seule carte
 };
@@ -61,9 +57,9 @@ struct map_s{
 };
 
 case_t creation_case();
-grille_t creation_grille(int w, int h, int bord);
-carte_t creation_carte(int w, int h,int x,int y);
-map_t creation_map (int w, int h);
+grille_t creation_grille(int bord);
+carte_t creation_carte(int x,int y);
+map_t creation_map ();
 int afficher_grille(grille_t grille, SDL_Renderer *renderer);
 int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec);
 int creer_map(map_t * map);

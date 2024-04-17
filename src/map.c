@@ -26,7 +26,7 @@ case_t creation_case(){
     return c;
 }
 
-grille_t creation_grille(int w, int h, int bord){
+grille_t creation_grille(int bord){
     grille_t g;
     int i,j;
     int taille=64;
@@ -71,7 +71,7 @@ grille_t creation_grille(int w, int h, int bord){
 
 }
 
-carte_t creation_carte(int w, int h,int x,int y){
+carte_t creation_carte(int x,int y){
     carte_t carte;
     int bord = 0; //variable pour savoir si on est en bordure de map
     carte.nZone=0;
@@ -85,18 +85,14 @@ carte_t creation_carte(int w, int h,int x,int y){
     if(x == 0 && y == (COLUMNS-1)) bord = 5;
     if(x == (ROWS-1) && y == 0) bord = 7;
     if(x == (ROWS-1) && y == (COLUMNS-1)) bord = 6;
-    carte.grille=creation_grille(w,h,bord);
+    carte.grille=creation_grille(bord);
     carte.etat_brouillard=1;
-    carte.r=255;
-    carte.g=255;
-    carte.b=255;
-    carte.a=255;
     carte.nbObj = 0;
-    carte.nrlayout = 1;
+    carte.nrlayout = 0;
     return carte;
 }
 
-map_t creation_map (int w, int h){
+map_t creation_map (){
     map_t m;
     int i,j;
     m.tabTexture = NULL;
@@ -109,11 +105,11 @@ map_t creation_map (int w, int h){
     m.Zone3 = 0;
     m.Zone4 = 0;
     m.Zone5 = 0;
-    m.nb_emplacement=4;
-    m.prix_emplacement=10;
+    m.nb_emplacement=1;
+    m.prix_emplacement=20;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
-            m.tabMap[i][j]=creation_carte(w,h,i,j);
+            m.tabMap[i][j]=creation_carte(i,j);
         }
     }
     return m;
@@ -159,7 +155,6 @@ int afficher_texture(grille_t grille, SDL_Renderer *renderer){
 
 int creer_map(map_t * map){
     int x,y;
-    int cpt_z2,cpt_z3,cpt_z4,cpt_z5;
     int choix,choix2;
     srand( time( NULL ) );
 
@@ -176,25 +171,21 @@ int creer_map(map_t * map){
     map->tabMap[0][1].nZone=5;
     map->tabMap[1][0].nZone=5;
     map->tabMap[1][1].nZone=5;
-    cpt_z5=4;
 
     map->tabMap[4][0].nZone=4;
     map->tabMap[4][1].nZone=4;
     map->tabMap[5][0].nZone=4;
     map->tabMap[5][1].nZone=4;
-    cpt_z4=4;
 
     map->tabMap[0][4].nZone=3;
     map->tabMap[0][5].nZone=3;
     map->tabMap[1][4].nZone=3;
     map->tabMap[1][5].nZone=3;
-    cpt_z3=4;
 
     map->tabMap[4][4].nZone=2;
     map->tabMap[4][5].nZone=2;
     map->tabMap[5][4].nZone=2;
     map->tabMap[5][5].nZone=2;
-    cpt_z2=4;
 
     map->tabMap[3][0].nZone=4;
 
@@ -324,28 +315,21 @@ int creer_map(map_t * map){
     //Cas général
     else{
         map->tabMap[xZone1-1][yZone1].nZone=3;
-        cpt_z3++;
         map->tabMap[xZone1][yZone1-1].nZone=4;
-        cpt_z4++;
         map->tabMap[xZone1][yZone1+1].nZone=2;
-        cpt_z2++;
 
         map->tabMap[3][1].nZone=4;
-        cpt_z4++;
         
         choix=rand() % 2;
         if(choix==0){
             map->tabMap[xZone1+1][yZone1].nZone=2;
-            cpt_z2++;
         }
         else{
             map->tabMap[xZone1+1][yZone1].nZone=4;
-            cpt_z4++;
         }
 
         if(xZone1==2&&yZone1==2){
             map->tabMap[3][3].nZone=2;
-            cpt_z2++;
         }
 
 
@@ -360,7 +344,6 @@ int creer_map(map_t * map){
             for(y=3;y>=0;y--){
                 if(map->tabMap[x][y].nZone==0){
                     map->tabMap[x][y].nZone=5;
-                    cpt_z5++;
                 }
             }
         }
@@ -370,7 +353,6 @@ int creer_map(map_t * map){
             for(y=3;y<=5;y++){
                 if(map->tabMap[x][y].nZone==0){
                     map->tabMap[x][y].nZone=2;
-                    cpt_z2++;
                 }
             }
         }
@@ -458,6 +440,10 @@ int creer_map(map_t * map){
         else{
             map->tabMap[2][1].nZone=4;
             map->tabMap[2][0].nZone=5;
+        }
+
+        if(map->tabMap[2][3].nZone==1){
+            map->tabMap[3][2].nZone=4;
         }
     }
     
@@ -625,6 +611,12 @@ int creer_map_layout(map_t * map){
         load_layout(&map->tabMap[2][2],"layout/layout5_4.txt"); //Cul de sac
         load_layout(&map->tabMap[1][1],"layout/layout5_4.txt"); //Transition zone foret
         load_layout(&map->tabMap[1][0],"layout/layout5_3.txt"); //Carrefour
+        if(map->tabMap[2][0].nZone==4){
+            load_layout(&map->tabMap[2][0],"layout/layout4_10.txt");
+        }
+        else{
+            load_layout(&map->tabMap[2][0],"layout/layout5_4.txt");
+        }
     }
     else{
         load_layout(&map->tabMap[2][0],"layout/layout4_12.txt"); //Transition zone grotte

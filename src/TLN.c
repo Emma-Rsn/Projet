@@ -75,7 +75,7 @@ int main(){
     
     
     // Initialiser la map
-    map_t map=creation_map((*wEcran),(*hEcran));
+    map_t map=creation_map();
     int *etat_map=malloc(sizeof(int));
     (*etat_map)=0;
     int ouigrille = 0;

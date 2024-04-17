@@ -1,0 +1,167 @@
+\doxysection{src/texte.c File Reference}
+\hypertarget{texte_8c}{}\label{texte_8c}\index{src/texte.c@{src/texte.c}}
+
+
+Programme qui affiche un texte sur la fenetre.  
+
+
+{\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{texte_8c_a7d8f3914d7e0bf6bb56bff5417367dae}\label{texte_8c_a7d8f3914d7e0bf6bb56bff5417367dae} 
+int {\bfseries aff\+\_\+boite\+\_\+dia} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}rendu, Liste \texorpdfstring{$\ast$}{*}liste, SDL\+\_\+\+Surface \texorpdfstring{$\ast$}{*}po, int we, int he)
+\item 
+\Hypertarget{texte_8c_a7ff28400e3d0dd85877b83630d13475d}\label{texte_8c_a7ff28400e3d0dd85877b83630d13475d} 
+void {\bfseries dialogue} (SDL\+\_\+\+Event event, Liste \texorpdfstring{$\ast$}{*}liste)
+\item 
+int \mbox{\hyperlink{texte_8c_abdf638a7e200383fc4c44ba36617a17d}{liste\+\_\+vide}} (Liste \texorpdfstring{$\ast$}{*}liste)
+\begin{DoxyCompactList}\small\item\em fonction pour regarder si la liste chainee est vide \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{texte_8c_a1f1adcacc472dfa7c2897e873edd3940}{liste\+\_\+premier}} (Liste \texorpdfstring{$\ast$}{*}liste)
+\begin{DoxyCompactList}\small\item\em fonction pour aller au premier element de la liste chainee \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{texte_8c_ad41be85da760b2f56b999bd3fa8013ec}{liste\+\_\+suivant}} (Liste \texorpdfstring{$\ast$}{*}liste)
+\begin{DoxyCompactList}\small\item\em fonction pour aller a l\textquotesingle{}element suivant de la liste chainee \end{DoxyCompactList}\item 
+Liste \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{texte_8c_ab486883b940d0040d885bb755d2d50b7}{initialisation}} ()
+\begin{DoxyCompactList}\small\item\em fonction pour initialiser la liste chainee \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{texte_8c_aa243a4e64376d369905b0e71d231aa26}{insertion}} (Liste \texorpdfstring{$\ast$}{*}liste, char \texorpdfstring{$\ast$}{*}nv\+Mess)
+\begin{DoxyCompactList}\small\item\em fonction pour inserer un element a la liste chainee \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{texte_8c_a9fdda9d5ffd981e65044f047b463fb5b}{liste\+\_\+suppression}} (Liste \texorpdfstring{$\ast$}{*}liste)
+\begin{DoxyCompactList}\small\item\em fonction pour supprimer le premier element de la liste chainee \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{texte_8c_a6f2fa28ec42042b9d1b701cc278db8b4}{afficher\+Liste}} (Liste \texorpdfstring{$\ast$}{*}liste)
+\begin{DoxyCompactList}\small\item\em fonction qui affiche la liste chainee \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{texte_8c_aa04057b24a83d0015485990ff16cbf81}{liste\+\_\+destruction}} (Liste \texorpdfstring{$\ast$}{*}liste)
+\begin{DoxyCompactList}\small\item\em fonction qui detruit la liste chainee \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Programme qui affiche un texte sur la fenetre. 
+
+\begin{DoxyAuthor}{Author}
+Pasquier Lina 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+28 janvier 2024 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+3 
+\end{DoxyVersion}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{texte_8c_a6f2fa28ec42042b9d1b701cc278db8b4}\label{texte_8c_a6f2fa28ec42042b9d1b701cc278db8b4} 
+\index{texte.c@{texte.c}!afficherListe@{afficherListe}}
+\index{afficherListe@{afficherListe}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{afficherListe()}{afficherListe()}}
+{\footnotesize\ttfamily void afficher\+Liste (\begin{DoxyParamCaption}\item[{Liste \texorpdfstring{$\ast$}{*}}]{liste }\end{DoxyParamCaption})}
+
+
+
+fonction qui affiche la liste chainee 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liste} & liste chainee du texte a afficher  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{texte_8c_ab486883b940d0040d885bb755d2d50b7}\label{texte_8c_ab486883b940d0040d885bb755d2d50b7} 
+\index{texte.c@{texte.c}!initialisation@{initialisation}}
+\index{initialisation@{initialisation}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{initialisation()}{initialisation()}}
+{\footnotesize\ttfamily Liste \texorpdfstring{$\ast$}{*} initialisation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+fonction pour initialiser la liste chainee 
+
+\Hypertarget{texte_8c_aa243a4e64376d369905b0e71d231aa26}\label{texte_8c_aa243a4e64376d369905b0e71d231aa26} 
+\index{texte.c@{texte.c}!insertion@{insertion}}
+\index{insertion@{insertion}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{insertion()}{insertion()}}
+{\footnotesize\ttfamily void insertion (\begin{DoxyParamCaption}\item[{Liste \texorpdfstring{$\ast$}{*}}]{liste,  }\item[{char \texorpdfstring{$\ast$}{*}}]{nv\+Mess }\end{DoxyParamCaption})}
+
+
+
+fonction pour inserer un element a la liste chainee 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liste} & liste chainee du texte a afficher \\
+\hline
+{\em nv\+Mess} & inserer un message dans la liste  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{texte_8c_aa04057b24a83d0015485990ff16cbf81}\label{texte_8c_aa04057b24a83d0015485990ff16cbf81} 
+\index{texte.c@{texte.c}!liste\_destruction@{liste\_destruction}}
+\index{liste\_destruction@{liste\_destruction}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{liste\_destruction()}{liste\_destruction()}}
+{\footnotesize\ttfamily void liste\+\_\+destruction (\begin{DoxyParamCaption}\item[{Liste \texorpdfstring{$\ast$}{*}}]{liste }\end{DoxyParamCaption})}
+
+
+
+fonction qui detruit la liste chainee 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liste} & liste chainee du texte a afficher  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{texte_8c_a1f1adcacc472dfa7c2897e873edd3940}\label{texte_8c_a1f1adcacc472dfa7c2897e873edd3940} 
+\index{texte.c@{texte.c}!liste\_premier@{liste\_premier}}
+\index{liste\_premier@{liste\_premier}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{liste\_premier()}{liste\_premier()}}
+{\footnotesize\ttfamily void liste\+\_\+premier (\begin{DoxyParamCaption}\item[{Liste \texorpdfstring{$\ast$}{*}}]{liste }\end{DoxyParamCaption})}
+
+
+
+fonction pour aller au premier element de la liste chainee 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liste} & liste chainee du texte a afficher \\
+\hline
+\end{DoxyParams}
+\Hypertarget{texte_8c_ad41be85da760b2f56b999bd3fa8013ec}\label{texte_8c_ad41be85da760b2f56b999bd3fa8013ec} 
+\index{texte.c@{texte.c}!liste\_suivant@{liste\_suivant}}
+\index{liste\_suivant@{liste\_suivant}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{liste\_suivant()}{liste\_suivant()}}
+{\footnotesize\ttfamily void liste\+\_\+suivant (\begin{DoxyParamCaption}\item[{Liste \texorpdfstring{$\ast$}{*}}]{liste }\end{DoxyParamCaption})}
+
+
+
+fonction pour aller a l\textquotesingle{}element suivant de la liste chainee 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liste} & liste chainee du texte a afficher \\
+\hline
+\end{DoxyParams}
+\Hypertarget{texte_8c_a9fdda9d5ffd981e65044f047b463fb5b}\label{texte_8c_a9fdda9d5ffd981e65044f047b463fb5b} 
+\index{texte.c@{texte.c}!liste\_suppression@{liste\_suppression}}
+\index{liste\_suppression@{liste\_suppression}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{liste\_suppression()}{liste\_suppression()}}
+{\footnotesize\ttfamily void liste\+\_\+suppression (\begin{DoxyParamCaption}\item[{Liste \texorpdfstring{$\ast$}{*}}]{liste }\end{DoxyParamCaption})}
+
+
+
+fonction pour supprimer le premier element de la liste chainee 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liste} & liste chainee du texte a afficher  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{texte_8c_abdf638a7e200383fc4c44ba36617a17d}\label{texte_8c_abdf638a7e200383fc4c44ba36617a17d} 
+\index{texte.c@{texte.c}!liste\_vide@{liste\_vide}}
+\index{liste\_vide@{liste\_vide}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{liste\_vide()}{liste\_vide()}}
+{\footnotesize\ttfamily int liste\+\_\+vide (\begin{DoxyParamCaption}\item[{Liste \texorpdfstring{$\ast$}{*}}]{liste }\end{DoxyParamCaption})}
+
+
+
+fonction pour regarder si la liste chainee est vide 
+
+
+\begin{DoxyParams}{Parameters}
+{\em liste} & liste chainee du texte a afficher \\
+\hline
+\end{DoxyParams}

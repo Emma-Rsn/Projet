@@ -1,0 +1,91 @@
+\doxysection{src/map.c File Reference}
+\hypertarget{map_8c}{}\label{map_8c}\index{src/map.c@{src/map.c}}
+
+
+programme pour les maps  
+
+
+{\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{map_8c_a062b71f5b3b36577d6c10530a284da3f}\label{map_8c_a062b71f5b3b36577d6c10530a284da3f} 
+case\+\_\+t {\bfseries creation\+\_\+case} ()
+\item 
+\Hypertarget{map_8c_a68d628a62fdb874ec125e81627456d3d}\label{map_8c_a68d628a62fdb874ec125e81627456d3d} 
+grille\+\_\+t {\bfseries creation\+\_\+grille} (int w, int h, int bord)
+\item 
+\Hypertarget{map_8c_a52cf9d386596d5cf10619cf91027ec56}\label{map_8c_a52cf9d386596d5cf10619cf91027ec56} 
+carte\+\_\+t {\bfseries creation\+\_\+carte} (int w, int h, int x, int y)
+\item 
+\Hypertarget{map_8c_a77d5fc41a17e8e78c8bcc5ebbe8bf5c6}\label{map_8c_a77d5fc41a17e8e78c8bcc5ebbe8bf5c6} 
+map\+\_\+t {\bfseries creation\+\_\+map} (int w, int h)
+\item 
+\Hypertarget{map_8c_a1b3692771067ba94b020c3fced8713d9}\label{map_8c_a1b3692771067ba94b020c3fced8713d9} 
+int {\bfseries afficher\+\_\+grille} (grille\+\_\+t grille, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer)
+\item 
+\Hypertarget{map_8c_ab1a9ec5aaa1a716154847df952f9af36}\label{map_8c_ab1a9ec5aaa1a716154847df952f9af36} 
+int {\bfseries beta\+Afficher\+Map} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, map\+\_\+t \texorpdfstring{$\ast$}{*}map, carte\+\_\+t \texorpdfstring{$\ast$}{*}cartec)
+\item 
+\Hypertarget{map_8c_a038852c9e10ea5d1d40e5eed671df6e4}\label{map_8c_a038852c9e10ea5d1d40e5eed671df6e4} 
+int {\bfseries afficher\+\_\+texture} (grille\+\_\+t grille, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer)
+\item 
+\Hypertarget{map_8c_a3b830088159139c640bdfcab6ec2f78c}\label{map_8c_a3b830088159139c640bdfcab6ec2f78c} 
+int {\bfseries creer\+\_\+map} (map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{map_8c_abb40b6cbc30b6570dccbe61399794b37}\label{map_8c_abb40b6cbc30b6570dccbe61399794b37} 
+int {\bfseries sauvegarde\+\_\+map} (map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{map_8c_a8184bfc0eefea91f2eaecabeccbcaafa}\label{map_8c_a8184bfc0eefea91f2eaecabeccbcaafa} 
+int {\bfseries creer\+\_\+map\+\_\+layout} (map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{map_8c_acbca9c046e5c09910b503fa40435ad71}\label{map_8c_acbca9c046e5c09910b503fa40435ad71} 
+int {\bfseries sauvegarde\+\_\+map\+\_\+layout} (map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{map_8c_ab5362b98d7760ec3e3ee588d482dc705}\label{map_8c_ab5362b98d7760ec3e3ee588d482dc705} 
+int {\bfseries remplir\+\_\+map} (map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{map_8c_a3f2e7992cc3a40b701df609356f10df9}\label{map_8c_a3f2e7992cc3a40b701df609356f10df9} 
+int {\bfseries afficher\+\_\+zone} (map\+\_\+t map)
+\item 
+\Hypertarget{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}\label{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d} 
+int {\bfseries load\+\_\+layout} (carte\+\_\+t \texorpdfstring{$\ast$}{*}c, char \texorpdfstring{$\ast$}{*}namefile)
+\item 
+\Hypertarget{map_8c_a8ee42a5dd83886e7ad61d451d5a32956}\label{map_8c_a8ee42a5dd83886e7ad61d451d5a32956} 
+float {\bfseries min} (float a, float b)
+\item 
+\Hypertarget{map_8c_ae2ded2dc752db81be42ce0a41586d3fd}\label{map_8c_ae2ded2dc752db81be42ce0a41586d3fd} 
+int {\bfseries afficher\+\_\+map} (SDL\+\_\+\+Event event, map\+\_\+t map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, int \texorpdfstring{$\ast$}{*}etat\+\_\+map, carte\+\_\+t \texorpdfstring{$\ast$}{*}cartec)
+\item 
+\Hypertarget{map_8c_ab23faed97470aabb06c4c61cc4d57fd8}\label{map_8c_ab23faed97470aabb06c4c61cc4d57fd8} 
+int {\bfseries chargement\+\_\+\+Zone} (map\+\_\+t \texorpdfstring{$\ast$}{*}map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int n\+Zone, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music)
+\item 
+\Hypertarget{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94}\label{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94} 
+void {\bfseries lumiere} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, carte\+\_\+t \texorpdfstring{$\ast$}{*}cartec, case\+\_\+t \texorpdfstring{$\ast$}{*}c)
+\item 
+\Hypertarget{map_8c_aeb3891e63f7a34fe19a3f63913858607}\label{map_8c_aeb3891e63f7a34fe19a3f63913858607} 
+int {\bfseries nb\+\_\+texture\+\_\+chargement} (map\+\_\+t \texorpdfstring{$\ast$}{*}map, char \texorpdfstring{$\ast$}{*}namefile)
+\item 
+\Hypertarget{map_8c_a3686b64c783a42361c5ef63c74dbb1d4}\label{map_8c_a3686b64c783a42361c5ef63c74dbb1d4} 
+int {\bfseries detruire\+\_\+tab\+\_\+path} (map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{map_8c_a3078c3012db639786509be2fe3a882aa}\label{map_8c_a3078c3012db639786509be2fe3a882aa} 
+int {\bfseries creation\+\_\+tab\+\_\+path} (map\+\_\+t \texorpdfstring{$\ast$}{*}map, char \texorpdfstring{$\ast$}{*}namefile)
+\item 
+\Hypertarget{map_8c_a66541438dc7b27765976a096e380f315}\label{map_8c_a66541438dc7b27765976a096e380f315} 
+int {\bfseries creation\+\_\+tab\+\_\+texture} (map\+\_\+t \texorpdfstring{$\ast$}{*}map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int nb\+Zone, int eop)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+programme pour les maps 
+
+\begin{DoxyAuthor}{Author}
+Moreau Enzo Rasson Emma 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Fevrier 2024 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
