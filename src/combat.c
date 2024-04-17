@@ -661,7 +661,22 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                     
                     SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((8-(nb_combattant-nbMort))/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
                     if(j==combat->indice_combattant){
-                        SDL_RenderDrawRect(renderer,& r1);
+                        if(combat->mult==1.0){
+                            SDL_RenderCopy(renderer, map->tabTexture[139], NULL, &r1);
+                        }
+                        else if(combat->mult==1.5){
+                            SDL_RenderCopy(renderer, map->tabTexture[138], NULL, &r1);
+                        }
+                        else if(combat->mult==2){
+                            SDL_RenderCopy(renderer, map->tabTexture[137], NULL, &r1);
+                        }
+                        else if(combat->mult==2.5){
+                            SDL_RenderCopy(renderer, map->tabTexture[136], NULL, &r1);
+                        }
+                        else if(combat->mult==3.0){
+                            SDL_RenderCopy(renderer, map->tabTexture[135], NULL, &r1);
+                        }
+
                     }
                     if(map->Nightmare && combat->combattant[j]->forme!=3 ){
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
@@ -684,7 +699,22 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
                     SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((8-(nb_combattant-nbMort))/2)+(((r_DEcran.x-r_GEcran.w)/8)/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
                     if(j==combat->indice_combattant){
-                        SDL_RenderDrawRect(renderer,& r1);
+                        if(combat->mult==1.0){
+                            SDL_RenderCopy(renderer, map->tabTexture[139], NULL, &r1);
+                        }
+                        else if(combat->mult==1.5){
+                            SDL_RenderCopy(renderer, map->tabTexture[138], NULL, &r1);
+                        }
+                        else if(combat->mult==2){
+                            SDL_RenderCopy(renderer, map->tabTexture[137], NULL, &r1);
+                        }
+                        else if(combat->mult==2.5){
+                            SDL_RenderCopy(renderer, map->tabTexture[136], NULL, &r1);
+                        }
+                        else if(combat->mult==3.0){
+                            SDL_RenderCopy(renderer, map->tabTexture[135], NULL, &r1);
+                        }
+                        
                     }
                     if(map->Nightmare && combat->combattant[j]->forme!=3){
                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
