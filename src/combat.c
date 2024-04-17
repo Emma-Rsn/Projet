@@ -181,7 +181,7 @@ int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran,
     int i ;
     for(i=0;i<combat->nb_point;i++){
         SDL_Rect r_point = {r_mult.x+((r_basEcran.w/3)/20)*i, r_mult.h+r_mult.y, (r_basEcran.w/3)/20, (r_basEcran.w/3)/20};
-        SDL_RenderCopy(renderer, map -> tabTexture[175], NULL, & r_point);
+        SDL_RenderCopy(renderer, map -> tabTexture[195], NULL, & r_point);
 
     }
     
@@ -253,7 +253,7 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         }
         if(combat->ennemi[i]->status==1){
             SDL_Rect r_effet = {(textRect.x+textRect.w)+(*we)*2/100, textRect.y, (*we)*2/100, (*we)*2/100};
-            SDL_RenderCopy(renderer, map -> tabTexture[149], NULL, & r_effet);
+            SDL_RenderCopy(renderer, map -> tabTexture[169], NULL, & r_effet);
         }
 
         affVie(renderer,(r_GEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),10+(*we*2/100),combat->ennemi[i],map);
@@ -293,7 +293,7 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
         }
         if(combat->allie[i]->status==1){
             SDL_Rect r_effet = {(textRect.x+textRect.w)+(*we)*2/100, textRect.y, (*we)*2/100, (*we)*2/100};
-            SDL_RenderCopy(renderer, map -> tabTexture[149], NULL, & r_effet);
+            SDL_RenderCopy(renderer, map -> tabTexture[169], NULL, & r_effet);
 
         }
         affVie(renderer,(r_DEcran.y+i*(r_GEcran.h/4))+textRect.h+(*he*4/100),r_DEcran.x+(*we*2/100),combat->allie[i],map);
@@ -640,12 +640,12 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
             SDL_RenderClear(renderer);
             if(map->Nightmare==1){
-                SDL_RenderCopy(renderer, map -> tabTexture[140], NULL, & r_ecran);
+                SDL_RenderCopy(renderer, map -> tabTexture[170], NULL, & r_ecran);
             }else{
-                SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
+                SDL_RenderCopy(renderer, map -> tabTexture[184], NULL, & r_ecran);
             }
             
-            SDL_RenderCopy(renderer, map -> tabTexture[178], NULL, & r_MEcran);
+            SDL_RenderCopy(renderer, map -> tabTexture[198], NULL, & r_MEcran);
 
             SDL_SetRenderDrawColor(renderer,50,50,50,255);
 
@@ -662,19 +662,19 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                     SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((8-(nb_combattant-nbMort))/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
                     if(j==combat->indice_combattant){
                         if(combat->mult==1.0){
-                            SDL_RenderCopy(renderer, map->tabTexture[139], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[159], NULL, &r1);
                         }
                         else if(combat->mult==1.5){
-                            SDL_RenderCopy(renderer, map->tabTexture[138], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[158], NULL, &r1);
                         }
                         else if(combat->mult==2){
-                            SDL_RenderCopy(renderer, map->tabTexture[137], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[157], NULL, &r1);
                         }
                         else if(combat->mult==2.5){
-                            SDL_RenderCopy(renderer, map->tabTexture[136], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[156], NULL, &r1);
                         }
                         else if(combat->mult==3.0){
-                            SDL_RenderCopy(renderer, map->tabTexture[135], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[155], NULL, &r1);
                         }
 
                     }
@@ -700,19 +700,19 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                     SDL_Rect r1= {r_GEcran.w+((r_DEcran.x-r_GEcran.w)/8)*i+(((r_DEcran.x-r_GEcran.w)/8))*((8-(nb_combattant-nbMort))/2)+(((r_DEcran.x-r_GEcran.w)/8)/2),r_hautEcran.h,(r_DEcran.x-r_GEcran.w)/8,100};
                     if(j==combat->indice_combattant){
                         if(combat->mult==1.0){
-                            SDL_RenderCopy(renderer, map->tabTexture[139], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[159], NULL, &r1);
                         }
                         else if(combat->mult==1.5){
-                            SDL_RenderCopy(renderer, map->tabTexture[138], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[158], NULL, &r1);
                         }
                         else if(combat->mult==2){
-                            SDL_RenderCopy(renderer, map->tabTexture[137], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[157], NULL, &r1);
                         }
                         else if(combat->mult==2.5){
-                            SDL_RenderCopy(renderer, map->tabTexture[136], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[156], NULL, &r1);
                         }
                         else if(combat->mult==3.0){
-                            SDL_RenderCopy(renderer, map->tabTexture[135], NULL, &r1);
+                            SDL_RenderCopy(renderer, map->tabTexture[155], NULL, &r1);
                         }
                         
                     }
@@ -732,34 +732,34 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
     SDL_SetRenderDrawColor(renderer, 150, 150, 150, 255);
     if(combat->mult==1){
-        SDL_RenderCopy(renderer, map -> tabTexture[163], NULL, & r_GEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[163], NULL, & r_DEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_basEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[183], NULL, & r_GEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[183], NULL, & r_DEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[196], NULL, & r_basEcran);
     }
     else if(combat->mult==1.5){
-        SDL_RenderCopy(renderer, map -> tabTexture[147], NULL, & r_GEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[147], NULL, & r_DEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[148], NULL, & r_basEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[167], NULL, & r_GEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[167], NULL, & r_DEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[168], NULL, & r_basEcran);
     }
     else if(combat->mult==2){
-        SDL_RenderCopy(renderer, map -> tabTexture[145], NULL, & r_GEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[145], NULL, & r_DEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[146], NULL, & r_basEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[165], NULL, & r_GEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[165], NULL, & r_DEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[166], NULL, & r_basEcran);
     }
     else if(combat->mult==2.5){
-        SDL_RenderCopy(renderer, map -> tabTexture[143], NULL, & r_GEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[143], NULL, & r_DEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[144], NULL, & r_basEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[163], NULL, & r_GEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[163], NULL, & r_DEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_basEcran);
     }
     else if(combat->mult==3){
-        SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_GEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_DEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[142], NULL, & r_basEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_GEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_DEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[162], NULL, & r_basEcran);
     }
 
 
-    SDL_RenderCopy(renderer, map -> tabTexture[162], NULL, & r_Fleches_DEcran);
-    SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_Fleches_GEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[182], NULL, & r_Fleches_DEcran);
+    SDL_RenderCopy(renderer, map -> tabTexture[181], NULL, & r_Fleches_GEcran);
 
 
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 255);
@@ -1529,7 +1529,7 @@ void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map){
     SDL_SetRenderDrawColor(renderer, 43,27,85,255);
     SDL_RenderFillRect(renderer, &Night_barPleine);
 
-    SDL_RenderCopy(renderer,  map->tabTexture[150], NULL, &Night_bar);
+    SDL_RenderCopy(renderer,  map->tabTexture[170], NULL, &Night_bar);
 
 
 }
@@ -1586,7 +1586,7 @@ void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map
 
       // Afficher la texture sur le rendu
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
-    SDL_RenderCopy(renderer, map->tabTexture[179], NULL, &PV_bar);
+    SDL_RenderCopy(renderer, map->tabTexture[199], NULL, &PV_bar);
 
 
     SDL_FreeSurface(textSurface);

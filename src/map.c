@@ -1137,7 +1137,7 @@ int creation_tab_path(map_t *map,char * namefile){
     FILE * file;
     int i = 0;
     int j,k=-1;
-    char line[40];
+    char line[60];
 
     map->tabPath = malloc(sizeof(char ** )*NB_ZONE);
     for (i=0;i<NB_ZONE;i++){
@@ -1145,9 +1145,8 @@ int creation_tab_path(map_t *map,char * namefile){
     }
     file=fopen(namefile,"r");
     i=-1;
-
     if(file){
-        while (fgets(line, 40, file)){
+        while (fgets(line, 60, file)){
             if(line[0]>='0'&&line[0]<='5') {
                 i=atoi(line)-1;
                 k=-1;
@@ -1156,7 +1155,7 @@ int creation_tab_path(map_t *map,char * namefile){
             else{
                 if(i >= 0 && i < NB_ZONE && k < map->nbTexture[i] - 1){
                     k++;
-                    for(j=0; line[j]!='\n' && j < 39; j++){}
+                    for(j=0; line[j]!='\n' && j < 59; j++){}
                     line[j]='\0';
                     map->tabPath[i][k]=malloc(sizeof(char)*strlen(line)+1);
                     strcpy(map->tabPath[i][k],line);

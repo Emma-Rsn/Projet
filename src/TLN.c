@@ -88,16 +88,16 @@ int main(){
     creation_tab_path(&map, "save/texture.txt");
     //afficher_zone(map);
 
-    map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,165);
-    map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,166);
-    map.listeArtefact[2]=init_artefact("artefact1",1,"qui augmente les Pv max",2,10,167);
-    map.listeArtefact[3]=init_artefact("artefact1",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,168);
-    map.listeArtefact[4]=init_artefact("artefact1",0,"augmente le nombre de point au debut d'un combat",4,10,169);
-    map.listeArtefact[5]=init_artefact("artefact1",1,"l'effet de cet artefact est inconnu ",5,10,170);
-    map.listeArtefact[6]=init_artefact("artefact1",0,"diminue l'augmentation du cauchemar",6,10,171);
-    map.listeArtefact[7]=init_artefact("artefact1",0,"reduit le temps de recharde de 1 tour",7,10,172);
-    map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,173);
-    map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,174);
+    map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,185);
+    map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,186);
+    map.listeArtefact[2]=init_artefact("artefact1",1,"qui augmente les Pv max",2,10,187);
+    map.listeArtefact[3]=init_artefact("artefact1",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,188);
+    map.listeArtefact[4]=init_artefact("artefact1",0,"augmente le nombre de point au debut d'un combat",4,10,189);
+    map.listeArtefact[5]=init_artefact("artefact1",1,"l'effet de cet artefact est inconnu ",5,10,190);
+    map.listeArtefact[6]=init_artefact("artefact1",0,"diminue l'augmentation du cauchemar",6,10,191);
+    map.listeArtefact[7]=init_artefact("artefact1",0,"reduit le temps de recharde de 1 tour",7,10,192);
+    map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,193);
+    map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,194);
 
     //def spawn
     int q,s,ii,last;

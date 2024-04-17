@@ -440,19 +440,19 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
             }
         }
         SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, map -> tabTexture[158], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[157], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[156], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[155], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[151], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_C);
-        SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_O);
-        SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_Q);
-        SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_Bouton_N);
-        SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_Bouton_T);
+        SDL_RenderCopy(renderer, map -> tabTexture[178], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[177], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[175], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[174], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[173], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[172], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[171], NULL, & r_ecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_Bouton_C);
+        SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_Bouton_O);
+        SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_Bouton_Q);
+        SDL_RenderCopy(renderer, map -> tabTexture[180], NULL, & r_Bouton_N);
+        SDL_RenderCopy(renderer, map -> tabTexture[180], NULL, & r_Bouton_T);
 
 
         SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
@@ -725,11 +725,11 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
             }
 
             SDL_RenderClear(renderer);
-            SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_Ecran);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Azerty);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Qwerty);
+            SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_Ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_Azerty);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_Qwerty);
 
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_fleches);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_fleches);
         
 
 
@@ -997,15 +997,15 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                 ( * we),
                 ( * he)
             };
-            SDL_RenderCopy(renderer, map -> tabTexture[140], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_ecran);
 
 
-            SDL_RenderCopy(renderer, map -> tabTexture[141], NULL, & r_ecran);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_N);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_Q);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_C);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_I);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_bouton_T);
+            SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_N);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_Q);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_C);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_I);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_T);
             
 
 
