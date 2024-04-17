@@ -1,0 +1,97 @@
+\doxysection{src/print\+Img.c File Reference}
+\hypertarget{printImg_8c}{}\label{printImg_8c}\index{src/printImg.c@{src/printImg.c}}
+
+
+programme pour afficher les FPS et le background  
+
+
+{\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{printImg_8c_a3e5c960e6d993d3bcc1a6279572e9b84}{print\+\_\+bg}} (SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}background\+Texture, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}r, int LE, int lE)
+\begin{DoxyCompactList}\small\item\em fonction pour afficher le background \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{printImg_8c_acaf5114b88ec874b3664e7d24e06fb7d}{NB\+\_\+\+Fps}} (int \texorpdfstring{$\ast$}{*}nfps, Uint32 \texorpdfstring{$\ast$}{*}t0, Uint32 \texorpdfstring{$\ast$}{*}t1)
+\begin{DoxyCompactList}\small\item\em fonction pour calculer le nombre de FPS \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{printImg_8c_a8415a5c7f2569375daf20938c04dc5a1}{aff\+\_\+\+Fps}} (int cmpfps, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer)
+\begin{DoxyCompactList}\small\item\em fonction pour afficher le nombre de FPS \end{DoxyCompactList}\item 
+\Hypertarget{printImg_8c_a72bc1205cac8c2b5413141e06759fd00}\label{printImg_8c_a72bc1205cac8c2b5413141e06759fd00} 
+void {\bfseries aj\+DFPS} (int \texorpdfstring{$\ast$}{*}dfps, int \texorpdfstring{$\ast$}{*}cmpfps, int \texorpdfstring{$\ast$}{*}nfps, Uint32 \texorpdfstring{$\ast$}{*}t0, Uint32 \texorpdfstring{$\ast$}{*}t1)
+\item 
+\Hypertarget{printImg_8c_a857d20dd92a4f67bb80411427a0ed2bc}\label{printImg_8c_a857d20dd92a4f67bb80411427a0ed2bc} 
+void {\bfseries aff\+Hud} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}he, int \texorpdfstring{$\ast$}{*}we, map\+\_\+t map, p\+\_\+mv pmv)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+programme pour afficher les FPS et le background 
+
+\begin{DoxyAuthor}{Author}
+Moreau Enzo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Janvier 2024 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{printImg_8c_a8415a5c7f2569375daf20938c04dc5a1}\label{printImg_8c_a8415a5c7f2569375daf20938c04dc5a1} 
+\index{printImg.c@{printImg.c}!aff\_Fps@{aff\_Fps}}
+\index{aff\_Fps@{aff\_Fps}!printImg.c@{printImg.c}}
+\doxysubsubsection{\texorpdfstring{aff\_Fps()}{aff\_Fps()}}
+{\footnotesize\ttfamily int aff\+\_\+\+Fps (\begin{DoxyParamCaption}\item[{int}]{cmpfps,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer }\end{DoxyParamCaption})}
+
+
+
+fonction pour afficher le nombre de FPS 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmpfps} & nombre de FPS \\
+\hline
+{\em renderer} & rendu de la fenetre  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{printImg_8c_acaf5114b88ec874b3664e7d24e06fb7d}\label{printImg_8c_acaf5114b88ec874b3664e7d24e06fb7d} 
+\index{printImg.c@{printImg.c}!NB\_Fps@{NB\_Fps}}
+\index{NB\_Fps@{NB\_Fps}!printImg.c@{printImg.c}}
+\doxysubsubsection{\texorpdfstring{NB\_Fps()}{NB\_Fps()}}
+{\footnotesize\ttfamily int NB\+\_\+\+Fps (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{nfps,  }\item[{Uint32 \texorpdfstring{$\ast$}{*}}]{t0,  }\item[{Uint32 \texorpdfstring{$\ast$}{*}}]{t1 }\end{DoxyParamCaption})}
+
+
+
+fonction pour calculer le nombre de FPS 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nfps} & ? \\
+\hline
+{\em t0} & ? \\
+\hline
+{\em t1} & ?  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{printImg_8c_a3e5c960e6d993d3bcc1a6279572e9b84}\label{printImg_8c_a3e5c960e6d993d3bcc1a6279572e9b84} 
+\index{printImg.c@{printImg.c}!print\_bg@{print\_bg}}
+\index{print\_bg@{print\_bg}!printImg.c@{printImg.c}}
+\doxysubsubsection{\texorpdfstring{print\_bg()}{print\_bg()}}
+{\footnotesize\ttfamily int print\+\_\+bg (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}}]{background\+Texture,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{r,  }\item[{int}]{LE,  }\item[{int}]{lE }\end{DoxyParamCaption})}
+
+
+
+fonction pour afficher le background 
+
+
+\begin{DoxyParams}{Parameters}
+{\em background\+Texture} & texture \\
+\hline
+{\em r} & rendu de la fenetre \\
+\hline
+{\em LE} & Longueur de l\textquotesingle{}ecran \\
+\hline
+{\em lE} & Largeur de l\textquotesingle{}ecran  \\
+\hline
+\end{DoxyParams}
