@@ -840,18 +840,18 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 */
 //fonction d'attaque d'un allie
 int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map){
-         while (SDL_PollEvent(&event) != 0 );
+        while (SDL_PollEvent(&event) != 0 );
         if(combattant->mort==0){
-        SDL_Rect r_hautEcran = {0,0,( * we),56};
-        SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
-        SDL_Rect r_GEcran = {0,r_hautEcran.h,( * we) / 4,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
-        SDL_Rect r_DEcran = {( * we) - ( * we) / 4,r_hautEcran.h,( * we)-((( * we) - ( * we) / 4)), (r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
-        SDL_Rect r_MEcran = {r_GEcran.w,r_hautEcran.h,r_DEcran.x - r_GEcran.w,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
-        SDL_Rect r_Fleches_GEcran={r_GEcran.w,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
-        SDL_Rect r_Fleches_DEcran={r_DEcran.x-r_MEcran.h/6,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
-        SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
-        SDL_Rect  r_ATQ3= {(r_basEcran.w*40/100)+(r_basEcran.w*30/100),(r_basEcran.h*3)+r_basEcran.h/2,373,48};
-        SDL_Rect r_mult = { 50, ((*he)-(r_basEcran.h/2))-47/2, 206, 47};
+            SDL_Rect r_hautEcran = {0,0,( * we),56};
+            SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
+            SDL_Rect r_GEcran = {0,r_hautEcran.h,( * we) / 4,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+            SDL_Rect r_DEcran = {( * we) - ( * we) / 4,r_hautEcran.h,( * we)-((( * we) - ( * we) / 4)), (r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+            SDL_Rect r_MEcran = {r_GEcran.w,r_hautEcran.h,r_DEcran.x - r_GEcran.w,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+            SDL_Rect r_Fleches_GEcran={r_GEcran.w,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
+            SDL_Rect r_Fleches_DEcran={r_DEcran.x-r_MEcran.h/6,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
+            SDL_Rect  r_ATQ1= {(r_basEcran.w*40/100),(r_basEcran.h*3)+r_basEcran.h/2,175,48};
+            SDL_Rect  r_ATQ3= {(r_basEcran.w*40/100)+(r_basEcran.w*30/100),(r_basEcran.h*3)+r_basEcran.h/2,373,48};
+            SDL_Rect r_mult = { 50, ((*he)-(r_basEcran.h/2))-47/2, 206, 47};
             int jouer=1;
             int nb_point_deb=combat->nb_point;
             int Nightmare_deb=*personnage->NightP;
@@ -911,11 +911,13 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                             combattant->temps_recharge=0;
                         }
                         else if((r_Fleches_GEcran.x<=event.button.x) && (r_Fleches_GEcran.x+r_Fleches_GEcran.w>=event.button.x) && ((r_Fleches_GEcran.y+r_Fleches_GEcran.h)>=event.button.y) && (r_Fleches_GEcran.y<=event.button.y)){
-                            if(combat->indice_ennemi>=(combat->nb_ennemi-1)){
-                                combat->indice_ennemi--;
+                            if(combat->indice_ennemi<=0){
+                                 combat->indice_ennemi=combat->nb_ennemi-1;
+                                
                             }
                             else{
-                                combat->indice_ennemi=combat->nb_ennemi-1;
+                                combat->indice_ennemi--;
+                               
                             }
                         }
                         else if((r_Fleches_DEcran.x<=event.button.x) && (r_Fleches_DEcran.x+r_Fleches_DEcran.w>=event.button.x) && ((r_Fleches_DEcran.y+r_Fleches_DEcran.h)>=event.button.y) && (r_Fleches_DEcran.y<=event.button.y)){
