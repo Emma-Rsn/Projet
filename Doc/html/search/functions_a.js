@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['option_0',['option',['../menu_8c.html#aa3d6142cc06e62186af4aabc60b58cb4',1,'menu.c']]]
+  ['print_5fbg_0',['print_bg',['../printImg_8c.html#a3e5c960e6d993d3bcc1a6279572e9b84',1,'printImg.c']]]
 ];

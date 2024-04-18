@@ -1,0 +1,97 @@
+\doxysection{combattant\+\_\+s Struct Reference}
+\hypertarget{structcombattant__s}{}\label{structcombattant__s}\index{combattant\_s@{combattant\_s}}
+
+
+structure d\textquotesingle{}un combattant  
+
+
+
+
+{\ttfamily \#include $<$combat.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structcombattant__s_ad642b51ff5f38a4de4da9ff1bd1f5e92}\label{structcombattant__s_ad642b51ff5f38a4de4da9ff1bd1f5e92} 
+char \texorpdfstring{$\ast$}{*} {\bfseries nom}
+\item 
+\Hypertarget{structcombattant__s_aa61606e5beba1cbdd4592a17f205aa8b}\label{structcombattant__s_aa61606e5beba1cbdd4592a17f205aa8b} 
+int \texorpdfstring{$\ast$}{*} {\bfseries pv}
+\item 
+\Hypertarget{structcombattant__s_a6919c8b00860355418059c8908a6eb58}\label{structcombattant__s_a6919c8b00860355418059c8908a6eb58} 
+int {\bfseries pv\+Max}
+\item 
+\Hypertarget{structcombattant__s_adbccd038591d6c467ee30ae3a6d7f710}\label{structcombattant__s_adbccd038591d6c467ee30ae3a6d7f710} 
+int {\bfseries vitesse}
+\item 
+\Hypertarget{structcombattant__s_ab71775991e75f4097cd41d5e4d1dfc16}\label{structcombattant__s_ab71775991e75f4097cd41d5e4d1dfc16} 
+int {\bfseries mort}
+\item 
+\Hypertarget{structcombattant__s_a96c63dad4f829062fd310b4922a18ca9}\label{structcombattant__s_a96c63dad4f829062fd310b4922a18ca9} 
+int {\bfseries camp}
+\item 
+\Hypertarget{structcombattant__s_a7b805138dfcde9c9fe4704c08422cc38}\label{structcombattant__s_a7b805138dfcde9c9fe4704c08422cc38} 
+int {\bfseries temps\+\_\+recharge}
+\item 
+\Hypertarget{structcombattant__s_ad871ed9d8368c52807e0d622ae4905e5}\label{structcombattant__s_ad871ed9d8368c52807e0d622ae4905e5} 
+int {\bfseries temps\+\_\+recharge\+\_\+max}
+\item 
+\Hypertarget{structcombattant__s_a205e9eeaf5f52f1e77081739bd021252}\label{structcombattant__s_a205e9eeaf5f52f1e77081739bd021252} 
+int {\bfseries indice\+\_\+portrait}
+\item 
+\Hypertarget{structcombattant__s_a1440efa4f229e6d0b304f1655e130b93}\label{structcombattant__s_a1440efa4f229e6d0b304f1655e130b93} 
+int {\bfseries indice\+\_\+sprite}
+\item 
+\Hypertarget{structcombattant__s_a701759ad2562806fe72e87fb2ad4d520}\label{structcombattant__s_a701759ad2562806fe72e87fb2ad4d520} 
+int {\bfseries type}
+\item 
+\Hypertarget{structcombattant__s_a637c634664da8755ad996a4977a19b2f}\label{structcombattant__s_a637c634664da8755ad996a4977a19b2f} 
+int {\bfseries status}
+\item 
+\Hypertarget{structcombattant__s_a63a68e1a35603c9c906d16aff319b5eb}\label{structcombattant__s_a63a68e1a35603c9c906d16aff319b5eb} 
+int {\bfseries puissance}
+\item 
+\Hypertarget{structcombattant__s_a1cae99f68dd02b96c7b4a3e49bffb0b0}\label{structcombattant__s_a1cae99f68dd02b96c7b4a3e49bffb0b0} 
+int {\bfseries forme}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+structure d\textquotesingle{}un combattant 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nom} & prenom du combattant \\
+\hline
+{\em pv} & les pv du combattant \\
+\hline
+{\em pv\+Max} & les pv maximum du combattant \\
+\hline
+{\em vitesse} & vitesse du combattant \\
+\hline
+{\em mort} & mort du combattant (0=vivant,1=mort) \\
+\hline
+{\em camp} & camp du combattant (0=allie,1=ennemi) \\
+\hline
+{\em temps\+\_\+recharge} & le temps de recharge du combattant \\
+\hline
+{\em temps\+\_\+recharge\+\_\+max} & le temps de recharge qu\textquotesingle{}il faut atteindre pour avoir son attaque special \\
+\hline
+{\em indice\+\_\+portrait} & l\textquotesingle{}indice du portrait qu\textquotesingle{}on lit dans un fichier \\
+\hline
+{\em indice\+\_\+sprite} & l\textquotesingle{}indice du sprite qu\textquotesingle{}on lit dans un fichier \\
+\hline
+{\em type} & les differente attaque special (0=une attaque puissante sur une cible,1=fait passer le tour a un ennemi,2=soigne le combattant choisi,3=attaque toute les personnes pas dans son camp) \\
+\hline
+{\em status} & status du combattant (0=aucun effet,1=passe son tour) \\
+\hline
+{\em puissance} & force d\textquotesingle{}attaque du combattant \\
+\hline
+{\em forme} & forme de l\textquotesingle{}ennemi (0=slime, 1=?,2=?,3=boss) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/combat.\+h\end{DoxyCompactItemize}

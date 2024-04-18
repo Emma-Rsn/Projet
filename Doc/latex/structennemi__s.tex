@@ -1,0 +1,92 @@
+\doxysection{ennemi\+\_\+s Struct Reference}
+\hypertarget{structennemi__s}{}\label{structennemi__s}\index{ennemi\_s@{ennemi\_s}}
+
+
+structure d\textquotesingle{}un ennemi  
+
+
+
+
+{\ttfamily \#include $<$OBJ.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structennemi__s_a0928cbeee6295b778f04976ef3bd7e03}\label{structennemi__s_a0928cbeee6295b778f04976ef3bd7e03} 
+char \texorpdfstring{$\ast$}{*} {\bfseries nom}
+\item 
+\Hypertarget{structennemi__s_abb9d9021f5610e0ec14b421d0dddf5a1}\label{structennemi__s_abb9d9021f5610e0ec14b421d0dddf5a1} 
+int {\bfseries indice\+\_\+portrait}
+\item 
+\Hypertarget{structennemi__s_afcad183a02363fa94b3066d29418588b}\label{structennemi__s_afcad183a02363fa94b3066d29418588b} 
+int {\bfseries indice\+\_\+sprite}
+\item 
+\Hypertarget{structennemi__s_a86a20de22eb60202b9e8fa327e6343bb}\label{structennemi__s_a86a20de22eb60202b9e8fa327e6343bb} 
+int {\bfseries combat}
+\item 
+\Hypertarget{structennemi__s_acced51b66bf14056583ddbe794fcc2e3}\label{structennemi__s_acced51b66bf14056583ddbe794fcc2e3} 
+int {\bfseries pv}
+\item 
+\Hypertarget{structennemi__s_ab65eed88c079f3bd1dfb0dc03b037b86}\label{structennemi__s_ab65eed88c079f3bd1dfb0dc03b037b86} 
+\mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries combattant} \mbox{[}4\mbox{]}
+\item 
+\Hypertarget{structennemi__s_a85cf35e77a677101347280e8c2e4c02e}\label{structennemi__s_a85cf35e77a677101347280e8c2e4c02e} 
+\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries c}
+\item 
+\Hypertarget{structennemi__s_a946dbbe1a58b8a23b52719c055517659}\label{structennemi__s_a946dbbe1a58b8a23b52719c055517659} 
+int {\bfseries type}
+\item 
+\Hypertarget{structennemi__s_a0895599282495b0a9e1e8f63cfe60461}\label{structennemi__s_a0895599282495b0a9e1e8f63cfe60461} 
+int {\bfseries status}
+\item 
+\Hypertarget{structennemi__s_a2209ba506bbe6b6bfba8434837deba28}\label{structennemi__s_a2209ba506bbe6b6bfba8434837deba28} 
+int {\bfseries vitesse}
+\item 
+\Hypertarget{structennemi__s_a4717380a47998fa4c33a978e839d4a7b}\label{structennemi__s_a4717380a47998fa4c33a978e839d4a7b} 
+int {\bfseries mort}
+\item 
+\Hypertarget{structennemi__s_a4620a7e6c631106e250bf2023d6304c6}\label{structennemi__s_a4620a7e6c631106e250bf2023d6304c6} 
+int {\bfseries temps\+\_\+recharge\+\_\+max}
+\item 
+\Hypertarget{structennemi__s_ac9ddf9f549fd7bcf3e6a4cd748b8e262}\label{structennemi__s_ac9ddf9f549fd7bcf3e6a4cd748b8e262} 
+int {\bfseries forme}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+structure d\textquotesingle{}un ennemi 
+
+
+\begin{DoxyParams}{Parameters}
+{\em nom} & prenom de l\textquotesingle{}ennemi \\
+\hline
+{\em indice\+\_\+portrait} & l\textquotesingle{}indice du portrait qu\textquotesingle{}on lit dans un fichier \\
+\hline
+{\em indice\+\_\+sprite} & l\textquotesingle{}indice du sprite qu\textquotesingle{}on lit dans un fichier \texorpdfstring{$\ast$}{*}\\
+\hline
+{\em combat} & variable pour savoir si l\textquotesingle{}ennemi est en combat (0=pas en combat,1=en combat) \\
+\hline
+{\em pv} & les pv de l\textquotesingle{}ennemi \\
+\hline
+{\em combattant} & tableau de structure de combattant des ennemis \\
+\hline
+{\em c} & structure case pour savoir sur quelle case il est \\
+\hline
+{\em type} & les differente attaque special (0=une attaque puissante sur une cible,1=fait passer le tour a un ennemi,2=soigne le combattant choisi,3=attaque toute les personnes pas dans son camp) \\
+\hline
+{\em status} & status de l\textquotesingle{}ennemi (0=aucun effet,1=passe son tour) \\
+\hline
+{\em vitesse} & vitesse de l\textquotesingle{}ennemi \\
+\hline
+{\em mort} & mort de l\textquotesingle{}ennemi (0=vivant,1=mort) \\
+\hline
+{\em temps\+\_\+recharge\+\_\+max} & le temps de recharge qu\textquotesingle{}il faut atteindre pour avoir son attaque special \\
+\hline
+{\em forme} & forme de l\textquotesingle{}ennemi (0=slime, 1=necromancien,2=minotaur,3=boss) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+libs/OBJ.\+h\end{DoxyCompactItemize}

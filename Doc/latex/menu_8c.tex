@@ -11,15 +11,16 @@ programme pour afficher tous les menus
 \item 
 int \mbox{\hyperlink{menu_8c_a3cc83f54665f74ac5f06f172739c1fbb}{menu\+\_\+option}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}run, int \texorpdfstring{$\ast$}{*}etatoption)
 \begin{DoxyCompactList}\small\item\em fonction qui affiche le menu dans le jeu \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{menu_8c_a5f66d2e6fb76b422782696b1f5340149}{menu}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}run, int \texorpdfstring{$\ast$}{*}etatoption, int \texorpdfstring{$\ast$}{*}touche\+Deplacement)
+int \mbox{\hyperlink{menu_8c_adc91e3a8f3ac5cea1205e11c827f46b1}{menu}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}run, int \texorpdfstring{$\ast$}{*}etatoption, int \texorpdfstring{$\ast$}{*}touche\+Deplacement, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \begin{DoxyCompactList}\small\item\em fonction qui affiche l\textquotesingle{}ecran titre \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{menu_8c_aa3d6142cc06e62186af4aabc60b58cb4}{option}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}etatoption, int \texorpdfstring{$\ast$}{*}touche\+Deplacement)
-\begin{DoxyCompactList}\small\item\em fonction qui affiche les options \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{menu_8c_a05cb310d9dc0bd08bc152376234e9214}{menu\+\_\+game\+Over}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}run, p\+\_\+mv \texorpdfstring{$\ast$}{*}personnage, map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+\Hypertarget{menu_8c_ac7742e2ca2b6ce51834a4df09c3cf2ef}\label{menu_8c_ac7742e2ca2b6ce51834a4df09c3cf2ef} 
+int {\bfseries option} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}etatoption, int \texorpdfstring{$\ast$}{*}touche\+Deplacement, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\item 
+int \mbox{\hyperlink{menu_8c_a05cb310d9dc0bd08bc152376234e9214}{menu\+\_\+game\+Over}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}run, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structpersonnage}{personnage}}, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \begin{DoxyCompactList}\small\item\em fonction qui affiche l\textquotesingle{}ecran game over \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{menu_8c_aad3be169f94f5adb78221f43f415824a}{magasin}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, p\+\_\+mv \texorpdfstring{$\ast$}{*}personnage, map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+int \mbox{\hyperlink{menu_8c_aad3be169f94f5adb78221f43f415824a}{magasin}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structpersonnage}{personnage}}, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \begin{DoxyCompactList}\small\item\em fonction qui affiche et gere le magasin \end{DoxyCompactList}\item 
-int \mbox{\hyperlink{menu_8c_aa0dea1e510b75502550a28de7982a1b4}{inventaire}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, map\+\_\+t \texorpdfstring{$\ast$}{*}map)
+int \mbox{\hyperlink{menu_8c_aa0dea1e510b75502550a28de7982a1b4}{inventaire}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \begin{DoxyCompactList}\small\item\em fonction qui affiche et gere l\textquotesingle{}inventaire \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -42,7 +43,7 @@ Janvier 2024
 \index{menu.c@{menu.c}!inventaire@{inventaire}}
 \index{inventaire@{inventaire}!menu.c@{menu.c}}
 \doxysubsubsection{\texorpdfstring{inventaire()}{inventaire()}}
-{\footnotesize\ttfamily int inventaire (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{map\+\_\+t \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int inventaire (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
 
 
 
@@ -65,7 +66,7 @@ fonction qui affiche et gere l\textquotesingle{}inventaire
 \index{menu.c@{menu.c}!magasin@{magasin}}
 \index{magasin@{magasin}!menu.c@{menu.c}}
 \doxysubsubsection{\texorpdfstring{magasin()}{magasin()}}
-{\footnotesize\ttfamily int magasin (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{p\+\_\+mv \texorpdfstring{$\ast$}{*}}]{personnage,  }\item[{map\+\_\+t \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int magasin (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{personnage,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
 
 
 
@@ -88,11 +89,11 @@ fonction qui affiche et gere le magasin
 {\em map} & structure de la map \\
 \hline
 \end{DoxyParams}
-\Hypertarget{menu_8c_a5f66d2e6fb76b422782696b1f5340149}\label{menu_8c_a5f66d2e6fb76b422782696b1f5340149} 
+\Hypertarget{menu_8c_adc91e3a8f3ac5cea1205e11c827f46b1}\label{menu_8c_adc91e3a8f3ac5cea1205e11c827f46b1} 
 \index{menu.c@{menu.c}!menu@{menu}}
 \index{menu@{menu}!menu.c@{menu.c}}
 \doxysubsubsection{\texorpdfstring{menu()}{menu()}}
-{\footnotesize\ttfamily int menu (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{run,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etatoption,  }\item[{int \texorpdfstring{$\ast$}{*}}]{touche\+Deplacement }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int menu (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{run,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etatoption,  }\item[{int \texorpdfstring{$\ast$}{*}}]{touche\+Deplacement,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
 
 
 
@@ -114,12 +115,14 @@ fonction qui affiche l\textquotesingle{}ecran titre
 \hline
 {\em touche\+Deplacement} & variable pour savoir quel touche de deplacement le joueur a choisis \\
 \hline
+{\em map} & structure de la map \\
+\hline
 \end{DoxyParams}
 \Hypertarget{menu_8c_a05cb310d9dc0bd08bc152376234e9214}\label{menu_8c_a05cb310d9dc0bd08bc152376234e9214} 
 \index{menu.c@{menu.c}!menu\_gameOver@{menu\_gameOver}}
 \index{menu\_gameOver@{menu\_gameOver}!menu.c@{menu.c}}
 \doxysubsubsection{\texorpdfstring{menu\_gameOver()}{menu\_gameOver()}}
-{\footnotesize\ttfamily int menu\+\_\+game\+Over (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{run,  }\item[{p\+\_\+mv \texorpdfstring{$\ast$}{*}}]{personnage,  }\item[{map\+\_\+t \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily int menu\+\_\+game\+Over (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{run,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{personnage,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
 
 
 
@@ -165,30 +168,5 @@ fonction qui affiche le menu dans le jeu
 {\em run} & pointeur pour continuer le programme \\
 \hline
 {\em etatoption} & etat du menu des options \\
-\hline
-\end{DoxyParams}
-\Hypertarget{menu_8c_aa3d6142cc06e62186af4aabc60b58cb4}\label{menu_8c_aa3d6142cc06e62186af4aabc60b58cb4} 
-\index{menu.c@{menu.c}!option@{option}}
-\index{option@{option}!menu.c@{menu.c}}
-\doxysubsubsection{\texorpdfstring{option()}{option()}}
-{\footnotesize\ttfamily int option (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etatoption,  }\item[{int \texorpdfstring{$\ast$}{*}}]{touche\+Deplacement }\end{DoxyParamCaption})}
-
-
-
-fonction qui affiche les options 
-
-
-\begin{DoxyParams}{Parameters}
-{\em we} & Largeur de l\textquotesingle{}ecran \\
-\hline
-{\em he} & Longueur de l\textquotesingle{}ecran \\
-\hline
-{\em event} & permet de savoir si il y a un evenement \\
-\hline
-{\em renderer} & rendu de la fenetre \\
-\hline
-{\em etatoption} & etat du menu des options \\
-\hline
-{\em touche\+Deplacement} & variable pour savoir quel touche de deplacement le joueur a choisis \\
 \hline
 \end{DoxyParams}

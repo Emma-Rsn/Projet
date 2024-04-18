@@ -2,17 +2,26 @@
 #define __COMBAT_H__
 
 //#include "../libs/commun.h"
+
 /**
 *
 *\struct combattant_s
 *\param nom prenom du combattant
 *\param pv les pv du combattant
+*\param pvMax les pv maximum du combattant
 *\param vitesse vitesse du combattant
-*\param nomATQ1 nom de l'attaque de base du combattant
-*\param nomATQspe nom de l'attaque special du combattant dans le cauchemar
+*\param mort mort du combattant (0=vivant,1=mort)
+*\param camp camp du combattant (0=allie,1=ennemi)
+*\param temps_recharge le temps de recharge du combattant
+*\param temps_recharge_max le temps de recharge qu'il faut atteindre pour avoir son attaque special
+*\param indice_portrait l'indice du portrait qu'on lit dans un fichier
+*\param indice_sprite l'indice du sprite qu'on lit dans un fichier
+*\param type les differente attaque special (0=une attaque puissante sur une cible,1=fait passer le tour a un ennemi,2=soigne le combattant choisi,3=attaque toute les personnes pas dans son camp)
+*\param status status du combattant (0=aucun effet,1=passe son tour)
+*\param puissance force d'attaque du combattant
+*\param forme forme de l'ennemi (0=slime, 1=?,2=?,3=boss)
 *\brief structure d'un combattant 
 */
-
 
 struct combattant_s{
     char * nom;
@@ -31,6 +40,22 @@ struct combattant_s{
     int forme; //0=slime faible,1=ennemi moyen, 2=ennemi fort, 3=boss alliee corrompu
 };
 
+/**
+*
+*\struct combat_s
+*\param combattant tableau de tout les combbattant qui vont combattre
+*\param ennemi tableau de combattant des ennemis
+*\param allie tableau de combattant des allies
+*\param nb_point nombre de point que l'on a pendant le combat
+*\param mult multiplicateur des attaques
+*\param indice_combattant indice du combattant qui va jouer du tableau combattant
+*\param indice_allie indice de l'allie viser ou attaquer du tableau allie
+*\param indice_ennemi indice de l'ennemi viser ou attaquer du tableau ennemi
+*\param nb_ennemi nombre d'ennemi au debut du combat
+*\param nb_allie nombre d'allie au debut du combat
+*\param num_tour Numero du tour que l'on est
+*\brief structure d'un combattant 
+*/
 struct combat_s{
     combattant_t * combattant[8];
     combattant_t * ennemi[4];

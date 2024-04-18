@@ -16,15 +16,15 @@
 
 
 /**
- *\fn int menu_option(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,int * etatoption)
- *\param we Largeur de l'ecran
- *\param he Longueur de l'ecran
- *\param event permet de savoir si il y a un evenement
- *\param renderer rendu de la fenetre
- *\param run pointeur pour continuer le programme
- *\param etatoption etat du menu des options
- *\brief fonction qui affiche le menu dans le jeu
- */
+*\fn int menu_option(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,int * etatoption)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param run pointeur pour continuer le programme
+*\param etatoption etat du menu des options 
+*\brief fonction qui affiche le menu dans le jeu
+*/
 
 //fonction qui affiche le menu dans le jeu
 int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption) {
@@ -43,11 +43,7 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
         return -1;
     }
 
-    SDL_Color textColorT = {
-        43,
-        27,
-        85
-    };
+    SDL_Color textColorT = {43,27,85};
 
     SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "The Last Nightmare", textColorT);
     if (!textSurfaceT) {
@@ -203,18 +199,18 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
 
     return 0;
 }
-
 /**
- *\fn int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,int * etatoption,int * toucheDeplacement)
- *\param we Largeur de l'ecran
- *\param he Longueur de l'ecran
- *\param event permet de savoir si il y a un evenement
- *\param renderer rendu de la fenetre
- *\param run pointeur pour continuer le programme
- *\param etatoption etat du menu des options
- *\param toucheDeplacement variable pour savoir quel touche de deplacement le joueur a choisis
- *\brief fonction qui affiche l'ecran titre
- */
+*\fn int menu(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,int * etatoption,int * toucheDeplacement,map_t * map)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param run pointeur pour continuer le programme
+*\param etatoption etat du menu des options 
+*\param toucheDeplacement variable pour savoir quel touche de deplacement le joueur a choisis
+*\param map structure de la map
+*\brief fonction qui affiche l'ecran titre
+*/
 
 //fonction qui affiche l'ecran titre
 int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption, int * toucheDeplacement,map_t * map) {
@@ -480,15 +476,16 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
 }
 
 /**
- *\fn int option(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * etatoption,int * toucheDeplacement)
- *\param we Largeur de l'ecran
- *\param he Longueur de l'ecran
- *\param event permet de savoir si il y a un evenement
- *\param renderer rendu de la fenetre
- *\param etatoption etat du menu des options
- *\param toucheDeplacement variable pour savoir quel touche de deplacement le joueur a choisis
- *\brief fonction qui affiche les options
- */
+*\fn int option(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * etatoption,int * toucheDeplacement)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param etatoption etat du menu des options 
+*\param toucheDeplacement variable pour savoir quel touche de deplacement le joueur a choisis
+*\param map structure de la map
+*\brief fonction qui affiche les options
+*/
 
 //fonction qui affiche les options
 int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * etatoption, int * toucheDeplacement,map_t * map) {
@@ -762,16 +759,16 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
 }
 
 /**
- *\fn int menu_gameOver(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map)
- *\param we Largeur de l'ecran
- *\param he Longueur de l'ecran
- *\param event permet de savoir si il y a un evenement
- *\param renderer rendu de la fenetre
- *\param run pointeur pour continuer le programme
- *\param personnage structure du personnage jouer
- *\param map structure de la map
- *\brief fonction qui affiche l'ecran game over
- */
+*\fn int menu_gameOver(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param run pointeur pour continuer le programme
+*\param personnage structure du personnage jouer
+*\param map structure de la map
+*\brief fonction qui affiche l'ecran game over
+*/
 
 //fonction qui affiche l'ecran game over
 int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map) {
@@ -1033,16 +1030,16 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
 }
 
 /**
- *\fn int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv* personnage,map_t * map)
- *\param we Largeur de l'ecran
- *\param he Longueur de l'ecran
- *\param event permet de savoir si il y a un evenement
- *\param renderer rendu de la fenetre
- *\param run pointeur pour continuer le programme
- *\param personnage structure du personnage jouer
- *\param map structure de la map
- *\brief fonction qui affiche et gere le magasin
- */
+*\fn int magasin(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv* personnage,map_t * map)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param run pointeur pour continuer le programme
+*\param personnage structure du personnage jouer
+*\param map structure de la map
+*\brief fonction qui affiche et gere le magasin
+*/
 
 //fonction qui affiche et gere le magasin
 int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv * personnage, map_t * map) {
@@ -1727,14 +1724,14 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 }
 
 /**
- *\fn int inventaire(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map)
- *\param we Largeur de l'ecran
- *\param he Longueur de l'ecran
- *\param event permet de savoir si il y a un evenement
- *\param renderer rendu de la fenetre
- *\param map structure de la map
- *\brief fonction qui affiche et gere l'inventaire
- */
+*\fn int inventaire(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param map structure de la map
+*\brief fonction qui affiche et gere l'inventaire
+*/
 
 //fonction qui affiche et gere l'inventaire
 int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map_t * map) {

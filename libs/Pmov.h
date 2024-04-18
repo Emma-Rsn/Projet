@@ -7,36 +7,19 @@
 
 /**
 *
-*\struct personnage_equipe
-*\param nom prenom du personnage
-*\param pv les pv du personnage
-*\param nomATQ1 nom de l'attaque de base du personnage
-*\param nomATQ2 nom de l'attaque particuliere de personnage
-*\param nomATQspe nom de l'attaque special du personnage dans le cauchemar
-*\brief structure de personnage de l'equipe
-*/
-
-/*
-struct personnage_equipe{
-    //coordonées du personnage et taille dans un rect
-    char * nom;
-    int pv;
-    char * nomATQ1;
-    char * nomATQspe;
-    int vitesse;
-    combattant_t * combattant;
-};
-*/
-/**
-*
 *\struct personnage
 *\param r taille du personnage
 *\param d direction orienté{N,E,S,O}{0,1,2,3}
 *\param e etat du personnage
 *\param nom prenom du personnage
+*\param equipe tableau de structure de combattant
+*\param Nightmare variable pour savoir si le personnage est en cauchemar ou non (0=pas en cauchemar,1=en cauchemar)
+*\param NightP point de cauchemar dans la barre de cauchemar
+*\param NightMax maximum de la barre de cauchemar
+*\param frame indiquateur du nombre de frame ecouler depuis le debut du deplacement du personnage
+*\param lock variable pour bloquer le personnage (0=peut se deplacer,1=peut pas se deplacer)
 *\brief structure de personnage
 */
-
 
 struct personnage{
     //coordonées du personnage et taille dans un rect
