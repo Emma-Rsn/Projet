@@ -1,10 +1,14 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "src/map.c" 
 #include "src/musique.c"
+#include "src/combat.c"
+#include "src/map.c"
+#include "src/OBJ.c"
 
-int init_suite(void) { return 0; }
-int clean_suite(void) { return 0; }
+
+int init_suite(void) {return 0;}
+int clean_suite(void){return 0;}
+
 
 // Tests pour la fonction creation_case()
 void test_creation_case(void) {
@@ -101,16 +105,125 @@ void test_creer_map_layout(void) {
     }
 }
 
+// Tests pour la fonction remplir_combattant()
+void test_remplir_combattant(void) {
+    combattant_t *comb = pre_init_combattant();
+    char *nom="alex";
+    remplir_combattant(comb,nom,100,10,1,15,14,1,5,20,0);
+
+    //verifie si le combattant est bien initialise
+    CU_ASSERT(strcmp(nom,comb->nom)==0);
+    CU_ASSERT(*comb->pv == 100);
+    CU_ASSERT(comb->vitesse == 10);
+    CU_ASSERT(comb->camp == 1);
+    CU_ASSERT(comb->indice_portrait == 15);
+    CU_ASSERT(comb->indice_sprite == 14);
+    CU_ASSERT(comb->type == 1);
+    CU_ASSERT(comb->temps_recharge_max == 5);
+    CU_ASSERT(comb->puissance == 20);
+    CU_ASSERT(comb->forme == 0);
+}
+
+// Tests pour la fonction init_combattant()
+void test_init_combattant(void) {
+    combattant_t *comb;
+    char *nom="alex";
+    comb=init_combattant(nom,100,10,1,15,14,1,5,20,0);
+
+    //verifie si le combattant est bien initialise
+    CU_ASSERT(strcmp(nom,comb->nom)==0);
+    CU_ASSERT(*comb->pv == 100);
+    CU_ASSERT(comb->vitesse == 10);
+    CU_ASSERT(comb->camp == 1);
+    CU_ASSERT(comb->indice_portrait == 15);
+    CU_ASSERT(comb->indice_sprite == 14);
+    CU_ASSERT(comb->type == 1);
+    CU_ASSERT(comb->temps_recharge_max == 5);
+    CU_ASSERT(comb->puissance == 20);
+    CU_ASSERT(comb->forme == 0);
+}
+
+// Tests pour la fonction init_combattant()
+void test_attaque_ennemi(void) {
+    int test;
+    combattant_t * comb=init_combattant("alex",100,10,1,15,14,1,5,20,0);
+    combattant_t * en=init_combattant("alex",100,10,1,15,14,1,5,20,0);
+    combat_t * combat=init_combat();
+    combat->combattant[0]=comb;
+    combat->combattant[1]=en;
+    combat->allie[0]=comb;
+    combat->ennemi[0]=en;
+    test=attaque_ennemi(1,combat);
+    //verifie si l'ennemi attaque bien
+    CU_ASSERT(test==0);
+
+}
+
+// Tests pour la fonction compare_vitesse()
+void test_compare_vitesse(void) {
+    int test;
+    combattant_t * comb=init_combattant("alex",100,10,1,15,14,1,5,20,0);
+    combattant_t * en=init_combattant("alex",100,15,1,15,14,1,5,20,0);
+    test=compare_vitesse(comb,en);
+    //verifie si l'ennemi est plus rapide que le combattant
+    CU_ASSERT(test==1);
+}
+
+// Tests pour la fonction init_combat()
+void test_init_combat(void) {
+    combat_t * combat;
+
+    combat=init_combat();
+    //verifie si la structure combat est bien initialise
+    CU_ASSERT_FALSE(combat->nb_allie);
+    CU_ASSERT_FALSE(combat->nb_ennemi);
+    CU_ASSERT_FALSE(combat->mult);
+    CU_ASSERT_FALSE(combat->nb_point);
+    CU_ASSERT_FALSE(combat->indice_ennemi);
+    CU_ASSERT_FALSE(combat->indice_combattant);
+    CU_ASSERT_FALSE(combat->num_tour);
+}
+
+// Tests pour la fonction copier_combattant()
+void test_copier_combattant(void) {
+    combattant_t * comb=init_combattant("alex",100,10,0,12,13,0,1,15,1);
+    combattant_t * en=init_combattant("test",100,15,1,15,14,1,5,20,0);
+    copier_combattant(comb,en);
+    //verifie si l'ennemi est plus rapide que le combattant
+    CU_ASSERT_STRING_EQUAL(comb->nom,en->nom);
+    CU_ASSERT(*comb->pv==*en->pv);
+    CU_ASSERT(comb->vitesse==en->vitesse);
+    CU_ASSERT(comb->camp==en->camp);
+    CU_ASSERT(comb->indice_portrait==en->indice_portrait);
+    CU_ASSERT(comb->indice_sprite==en->indice_sprite);
+    CU_ASSERT(comb->type==en->type);
+    CU_ASSERT(comb->temps_recharge_max==en->temps_recharge_max);
+    CU_ASSERT(comb->puissance==en->puissance);
+    CU_ASSERT(comb->forme==en->forme);
+}
+
+
+
 int main() {
     CU_initialize_registry();
     CU_pSuite suite = CU_add_suite("map_test_suite", init_suite, clean_suite);
 
+     printf("\n TEST MAP : \n");
     CU_add_test(suite, "test creation_case()", test_creation_case);
     CU_add_test(suite, "test creation_grille()", test_creation_grille);
     CU_add_test(suite, "test creation_carte()", test_creation_carte);
     CU_add_test(suite, "test creation_map()", test_creation_map);
     CU_add_test(suite, "test creer_map()", test_creer_map);
     CU_add_test(suite, "test creer_map_layout()", test_creer_map_layout);
+
+
+    printf("\n TEST COMBAT : \n");
+    CU_add_test(suite, "test remplir_combattant()", test_remplir_combattant);
+    CU_add_test(suite, "test test_init_combattant()", test_init_combattant);
+    CU_add_test(suite, "test test_attaque_ennemi()", test_attaque_ennemi);
+    CU_add_test(suite, "test test_compare_vitesse()", test_compare_vitesse);
+    CU_add_test(suite, "test test_init_combat()", test_init_combat);
+    CU_add_test(suite, "test test_copier_combattant()", test_copier_combattant);
 
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();

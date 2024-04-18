@@ -261,7 +261,7 @@ int main(){
             pause(event,gMusic);
 
             //menu
-            menu_option(wEcran,hEcran,event,renderer,run,etatoption);
+            menu_option(wEcran,hEcran,event,renderer,run,etatoption,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement,&map);
             debut_dialogue_carte(cartec,event,Alex,etat_dialogue);

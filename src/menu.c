@@ -16,18 +16,19 @@
 
 
 /**
-*\fn int menu_option(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,int * etatoption)
+*\fn int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption,map_t * map)
 *\param we Largeur de l'ecran
 *\param he Longueur de l'ecran
 *\param event permet de savoir si il y a un evenement
 *\param renderer rendu de la fenetre
 *\param run pointeur pour continuer le programme
 *\param etatoption etat du menu des options 
+*\param map structure de la map
 *\brief fonction qui affiche le menu dans le jeu
 */
 
 //fonction qui affiche le menu dans le jeu
-int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption) {
+int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption,map_t * map) {
 
     SDL_RenderClear(renderer);
     SDL_Color textColor = {
@@ -54,9 +55,16 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
 
     SDL_Texture * textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
 
+    SDL_Rect r_Bouton_T = {
+        (( * we) / 2) - ((*we)*45/100 / 2),
+        (( * he) / 5) * 1 - (((*he)*15/100)/2),
+        (*we)*45/100,
+         (*he)*15/100
+    };
+
     SDL_Rect r_text_T = {
-        (( * we) / 2) - ((textSurfaceT -> w) / 2),
-        10,
+        (r_Bouton_T.x+(r_Bouton_T.w)/2-textSurfaceT -> w/2),
+        (r_Bouton_T.y+(r_Bouton_T.h)/2-textSurfaceT -> h /2),
         textSurfaceT -> w,
         textSurfaceT -> h
     };
@@ -112,24 +120,47 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
     font = NULL;
 
     //creation rectangle pour les textes
+
+    SDL_Rect r_Bouton_C = {
+        (( * we) / 2) - ((*we)*15/100 / 2),
+        (( * he) / 5) * 2 - (((*he)*8/100)/2),
+        (*we)*15/100,
+         (*he)*8/100
+    };
     SDL_Rect r_text_C = {
-        (( * we) / 2) - ((textSurfaceC -> w) / 2),
-        (( * he) / 3) * 1 - textSurfaceC -> h,
+        (r_Bouton_C.x+(r_Bouton_C.w)/2-textSurfaceC -> w/2),
+        (r_Bouton_C.y+(r_Bouton_C.h)/2-textSurfaceC -> h /2),
         textSurfaceC -> w,
         textSurfaceC -> h
     };
+    SDL_Rect r_Bouton_Q = {
+        (( * we) / 2) - ((*we)*15/100 / 2),
+        (( * he) / 5) * 4 - (((*he)*8/100)/2),
+        (*we)*15/100,
+         (*he)*8/100
+    };
     SDL_Rect r_text_Q = {
-        (( * we) / 2) - ((textSurfaceQ -> w) / 2),
-        (( * he) / 3) * 2 - textSurfaceQ -> h,
+        (r_Bouton_Q.x+(r_Bouton_Q.w)/2-textSurfaceQ -> w/2),
+        (r_Bouton_Q.y+(r_Bouton_Q.h)/2-textSurfaceQ -> h /2),
         textSurfaceQ -> w,
         textSurfaceQ -> h
     };
+
+    SDL_Rect r_Bouton_O = {
+        (( * we) / 2) - ((*we)*15/100 / 2),
+        (( * he) / 5) * 3 - (((*he)*8/100)/2),
+        (*we)*15/100,
+         (*he)*8/100
+    };
     SDL_Rect r_text_O = {
-        (( * we) / 2) - ((textSurfaceO -> w) / 2),
-        (( * he) / 3) * 3 - textSurfaceO -> h - 50,
+        (r_Bouton_O.x+(r_Bouton_O.w)/2-textSurfaceO -> w/2),
+        (r_Bouton_O.y+(r_Bouton_O.h)/2-textSurfaceO -> h /2),
         textSurfaceO -> w,
         textSurfaceO -> h
     };
+
+    SDL_Rect r_Ecran = {0,0,(*we),(*he)};
+
 
     SDL_FreeSurface(textSurfaceC);
     SDL_FreeSurface(textSurfaceQ);
@@ -175,11 +206,23 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
                     }
 
                 }
+                if ((event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)) {
+                    etat = 0;
+                    * etatoption = 0;
+                }
             }
 
             SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 
             SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_Ecran);
+
+            SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_Ecran);
+
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_Bouton_C);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_Bouton_O);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_Bouton_Q);
+            SDL_RenderCopy(renderer, map -> tabTexture[180], NULL, & r_Bouton_T);
 
             SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
             SDL_RenderCopy(renderer, textTextureC, NULL, & r_text_C);
@@ -722,6 +765,8 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
             }
 
             SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_Ecran);
+
             SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_Ecran);
             SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_Azerty);
             SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_Qwerty);
@@ -994,8 +1039,7 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                 ( * we),
                 ( * he)
             };
-            SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_ecran);
-
+            
 
             SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_ecran);
             SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_N);
@@ -1091,9 +1135,9 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
     }
 
     SDL_Color textColorT = {
-        43,
-        27,
-        85
+        200,
+        132,
+        15
     };
 
     SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "Magasin", textColorT);
@@ -1141,7 +1185,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
         return -1;
     }
 
-    SDL_Surface * textSurfaceQ = TTF_RenderText_Solid(font, "Retour", textColor);
+    SDL_Surface * textSurfaceQ = TTF_RenderText_Solid(font, "Retour", textColorT);
     if (!textSurfaceQ) {
         fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
         TTF_CloseFont(font);
@@ -1174,12 +1218,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
     int etat = 1;
     while (etat) {
         SDL_RenderClear(renderer);
-        SDL_Rect r_Mecran = {
-            0,
-            r_HEcran.h,
-            ( * we),
-            r_BEcran.y - r_HEcran.h
-        };
+
         //affichage du rectangle du haut et du bas
         SDL_SetRenderDrawColor(renderer, 112, 114, 110, 255);
         SDL_Rect r_ecran = {
@@ -1188,11 +1227,10 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
             ( * we),
             ( * he)
         };
-        SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
-        SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_HEcran);
-        SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_BEcran);
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderFillRect(renderer, & r_Mecran);
+        SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_ecran);
+
+        SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_HEcran);
+        SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_BEcran);
 
         /*
          *
@@ -1218,12 +1256,12 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
 
         SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
 
-        SDL_Rect r_text_A = {
-            10,
-            r_HEcran.h / 2 - textSurface -> h / 2,
-            textSurface -> w,
-            textSurface -> h
-        };
+            SDL_Rect r_text_A = {
+                10 + (( * we) * 3 / 100),
+                r_HEcran.h / 2 - textSurface -> h / 2,
+                textSurface -> w,
+                textSurface -> h
+            };
         SDL_FreeSurface(textSurface);
 
         if (SDL_QueryTexture(textTexture, NULL, NULL, & r_text_A.w, & r_text_A.h) != 0) {
@@ -1265,10 +1303,11 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
             r_HEcran.h - (r_HEcran.h / 4)
         };
 
-        SDL_RenderFillRect(renderer, & r_emplacement1);
-        SDL_RenderFillRect(renderer, & r_emplacement2);
-        SDL_RenderFillRect(renderer, & r_emplacement3);
-        SDL_RenderFillRect(renderer, & r_emplacement4);
+
+        SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_emplacement1);
+        SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_emplacement2);
+        SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_emplacement3);
+        SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_emplacement4);
 
         TTF_CloseFont(font);
         font = NULL;
@@ -1295,11 +1334,13 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
                 SDL_Texture * textTextureEmp = SDL_CreateTextureFromSurface(renderer, textSurfaceEmp);
 
                 SDL_Rect r_text_Emp = {
-                    (( * we) - ((r_HEcran.h - (r_HEcran.h / 4)) * k)) - (10 * k) + (r_emplacement4.w / 2) - (textSurfaceEmp -> w / 2),
+                     (( * we) - ((r_HEcran.h - (r_HEcran.h / 4)) * k)) - (10 * k) - (( * we) * 3 / 100)+(r_HEcran.h - (r_HEcran.h / 4))/2  - (textSurfaceEmp -> w / 2),
                     (r_HEcran.h / 4) - (r_HEcran.h / 4) / 2 + (r_emplacement4.h / 2) - (textSurfaceEmp -> h / 2),
                     textSurfaceEmp -> w,
                     textSurfaceEmp -> h
+                   
                 };
+                
 
                 SDL_FreeSurface(textSurfaceEmp);
                 if (SDL_QueryTexture(textTextureEmp, NULL, NULL, & r_text_Emp.w, & r_text_Emp.h) != 0) {
@@ -1327,36 +1368,73 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
             return -1;
         }
 
-        //afficher les carres des artefacts adegauche
-        SDL_Rect r_artefactGauche1 = {
+        SDL_Rect r_cadreGauche1 = {
             ( * we) / 8,
-            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 0 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 0 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+        };
+        SDL_Rect r_cadreGauche2 = {
+            ( * we) / 8,
+            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 1 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+        };
+        SDL_Rect r_cadreGauche3 = {
+            ( * we) / 8,
+            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 2 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+        };
+        SDL_Rect r_cadreGauche4 = {
+            ( * we) / 8,
+            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 3 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+        };
+        SDL_Rect r_cadreGauche5 = {
+            ( * we) / 8,
+            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 4 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+        };
+
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche1);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche2);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche3);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche4);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche5);
+
+        //afficher les artefacts de gauche
+        SDL_Rect r_artefactGauche1 = {
+            (r_cadreGauche1.x)+(r_cadreGauche1.w)/2-((((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100)/2),
+            (r_cadreGauche1.y)+(r_cadreGauche1.h)/2-((((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100)/2),
+            ((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100,
+            ((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100 
         };
         SDL_Rect r_artefactGauche2 = {
-            ( * we) / 8,
-            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 1 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            (r_cadreGauche2.x)+(r_cadreGauche2.w)/2-((((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100)/2),
+            (r_cadreGauche2.y)+(r_cadreGauche2.h)/2-((((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100)/2),
+            ((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100,
+            ((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100 
         };
         SDL_Rect r_artefactGauche3 = {
-            ( * we) / 8,
-            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 2 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            (r_cadreGauche3.x)+(r_cadreGauche3.w)/2-((((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100)/2),
+            (r_cadreGauche3.y)+(r_cadreGauche3.h)/2-((((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100)/2),
+            ((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100,
+            ((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100 
         };
         SDL_Rect r_artefactGauche4 = {
-            ( * we) / 8,
-            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 3 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            (r_cadreGauche4.x)+(r_cadreGauche4.w)/2-((((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*73/100)/2),
+            (r_cadreGauche4.y)+(r_cadreGauche4.h)/2-((((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*73/100)/2),
+            ((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*75/100,
+            ((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*75/100 
         };
         SDL_Rect r_artefactGauche5 = {
-            ( * we) / 8,
-            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 4 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            (r_cadreGauche5.x)+(r_cadreGauche5.w)/2-((((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100)/2),
+            (r_cadreGauche5.y)+(r_cadreGauche5.h)/2-((((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100)/2),
+            ((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100,
+            ((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100 
         };
 
         //SDL_RenderFillRect(renderer, &r_artefactGauche);
@@ -1366,36 +1444,76 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
         SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[3] -> indice_texture], NULL, & r_artefactGauche4);
         SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[4] -> indice_texture], NULL, & r_artefactGauche5);
 
-        //afficher les carres des artefacts de droite
-        SDL_Rect r_artefactDroit1 = {
+
+        SDL_Rect r_cadreDroite1 = {
             ( * we) - (( * we) / 8 * 3),
             r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 0 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
         };
-        SDL_Rect r_artefactDroit2 = {
+        SDL_Rect r_cadreDroite2 = {
             ( * we) - (( * we) / 8 * 3),
             r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 1 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
         };
-        SDL_Rect r_artefactDroit3 = {
+        SDL_Rect r_cadreDroite3 = {
             ( * we) - (( * we) / 8 * 3),
             r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 2 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
         };
-        SDL_Rect r_artefactDroit4 = {
+        SDL_Rect r_cadreDroite4 = {
             ( * we) - (( * we) / 8 * 3),
             r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 3 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
         };
-        SDL_Rect r_artefactDroit5 = {
+        SDL_Rect r_cadreDroite5 = {
             ( * we) - (( * we) / 8 * 3),
             r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 4 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+        };
+
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite1);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite2);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite3);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite4);
+        SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite5);
+
+
+
+        //afficher les carres des artefacts de droite
+        SDL_Rect r_artefactDroit1 = {
+            (r_cadreDroite1.x)+(r_cadreDroite1.w)/2-((((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100)/2),
+            (r_cadreDroite1.y)+(r_cadreDroite1.h)/2-((((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100)/2),
+            ((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100,
+            ((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100 
+        };
+        SDL_Rect r_artefactDroit2 = {
+            (r_cadreDroite2.x)+(r_cadreDroite2.w)/2-((((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100)/2),
+            (r_cadreDroite2.y)+(r_cadreDroite2.h)/2-((((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100)/2),
+            ((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100,
+            ((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100 
+        };
+        SDL_Rect r_artefactDroit3 = {
+            (r_cadreDroite3.x)+(r_cadreDroite3.w)/2-((((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100)/2),
+            (r_cadreDroite3.y)+(r_cadreDroite3.h)/2-((((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100)/2),
+            ((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100,
+            ((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100 
+        };
+        SDL_Rect r_artefactDroit4 = {
+            (r_cadreDroite4.x)+(r_cadreDroite4.w)/2-((((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100)/2),
+            (r_cadreDroite4.y)+(r_cadreDroite4.h)/2-((((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100)/2),
+            ((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100,
+            ((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100 
+        };
+        SDL_Rect r_artefactDroit5 = {
+            (r_cadreDroite5.x)+(r_cadreDroite5.w)/2-((((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100)/2),
+            (r_cadreDroite5.y)+(r_cadreDroite5.h)/2-((((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100)/2),
+            ((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100,
+            ((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100 
         };
 
         SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[5] -> indice_texture], NULL, & r_artefactDroit1);
@@ -1404,10 +1522,7 @@ int magasin(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, p_mv *
         SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[8] -> indice_texture], NULL, & r_artefactDroit4);
         SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[9] -> indice_texture], NULL, & r_artefactDroit5);
 
-        //((*we)-(((*we)-(r_artefactGauche.w+r_artefactGauche.x))/2))-(((r_BEcran.y-r_HEcran.h)/5)-((r_BEcran.y-r_HEcran.h)/5)*10/100)/2 Le X
 
-        //SDL_RenderFillRect(renderer, &r_artefactDroit);
-        SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[i] -> indice_texture], NULL, & r_artefactDroit1);
 
         for (j = 0, k = 5; j < 5 && k < 10; j++, k++) {
             if (map -> listeArtefact[j] -> possession == 1) {
@@ -1782,9 +1897,9 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
         }
 
         SDL_Color textColorT = {
-            43,
-            27,
-            85
+            200,
+            132,
+            15
         };
 
         SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "Inventaire", textColorT);
@@ -1832,7 +1947,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
             return -1;
         }
 
-        SDL_Surface * textSurfaceQ = TTF_RenderText_Solid(font, "Retour", textColor);
+        SDL_Surface * textSurfaceQ = TTF_RenderText_Solid(font, "Retour", textColorT);
         if (!textSurfaceQ) {
             fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
             TTF_CloseFont(font);
@@ -1860,16 +1975,11 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
         TTF_CloseFont(font);
         font = NULL;
 
+        
+
         int etat = 1;
         while (etat) {
-            SDL_RenderClear(renderer);
-            SDL_Rect r_Mecran = {
-                0,
-                r_HEcran.h,
-                ( * we),
-                r_BEcran.y - r_HEcran.h
-            };
-            //affichage du rectangle du haut et du bas
+                        //affichage du rectangle du haut et du bas
             SDL_SetRenderDrawColor(renderer, 112, 114, 110, 255);
             SDL_Rect r_ecran = {
                 0,
@@ -1877,11 +1987,13 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
                 ( * we),
                 ( * he)
             };
-            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_ecran);
-            SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_HEcran);
-            SDL_RenderCopy(renderer, map -> tabTexture[176], NULL, & r_BEcran);
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-            SDL_RenderFillRect(renderer, & r_Mecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_HEcran);
+            SDL_RenderCopy(renderer, map -> tabTexture[164], NULL, & r_BEcran);
+
+
+
+
 
 
             /*
@@ -1928,6 +2040,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
              *
              */
 
+            //permet de savoir quel artefact est equipe
             for (i = 0, k = 0; i < 10; i++) {
                 if (map -> listeArtefact[i] -> equipe == 1) {
                     indice_art_emp[k] = map -> listeArtefact[i] -> indice;
@@ -1935,7 +2048,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
 
                 }
             }
-
+            //carre des emplacements
             SDL_Rect r_emplacement1 = {
                 (( * we) - ((r_HEcran.h - (r_HEcran.h / 4)) * 1)) - (10 * 1) - (( * we) * 3 / 100),
                 (r_HEcran.h / 4) - (r_HEcran.h / 4) / 2,
@@ -1961,37 +2074,66 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
                 r_HEcran.h - (r_HEcran.h / 4)
             };
 
-            SDL_SetRenderDrawColor(renderer, 192, 192, 192, 255);
+            //carre avec l'artefact dedans
+            SDL_Rect r_emplacement1_art = {
+                (r_emplacement1.x)+(r_emplacement1.w)/2-((((r_emplacement1.y+r_emplacement1.h)-r_emplacement1.y )*75/100)/2),
+                (r_emplacement1.y)+(r_emplacement1.h)/2-((((r_emplacement1.y+r_emplacement1.h)-r_emplacement1.y )*75/100)/2),
+                ((r_emplacement1.y+r_emplacement1.h)-r_emplacement1.y )*75/100,
+                ((r_emplacement1.y+r_emplacement1.h)-r_emplacement1.y )*75/100 
+            };
+            SDL_Rect r_emplacement2_art = {
+                (r_emplacement2.x)+(r_emplacement2.w)/2-((((r_emplacement2.y+r_emplacement2.h)-r_emplacement2.y )*75/100)/2),
+                (r_emplacement2.y)+(r_emplacement2.h)/2-((((r_emplacement2.y+r_emplacement2.h)-r_emplacement2.y )*75/100)/2),
+                ((r_emplacement2.y+r_emplacement2.h)-r_emplacement2.y )*75/100,
+                ((r_emplacement2.y+r_emplacement2.h)-r_emplacement2.y )*75/100 
+            };
+            SDL_Rect r_emplacement3_art = {
+                (r_emplacement3.x)+(r_emplacement3.w)/2-((((r_emplacement3.y+r_emplacement3.h)-r_emplacement3.y )*73/100)/2),
+                (r_emplacement3.y)+(r_emplacement3.h)/2-((((r_emplacement3.y+r_emplacement3.h)-r_emplacement3.y )*73/100)/2),
+                ((r_emplacement3.y+r_emplacement3.h)-r_emplacement3.y )*75/100,
+                ((r_emplacement3.y+r_emplacement3.h)-r_emplacement3.y )*75/100 
+            };
+            SDL_Rect r_emplacement4_art = {
+                (r_emplacement4.x)+(r_emplacement4.w)/2-((((r_emplacement4.y+r_emplacement4.h)-r_emplacement4.y )*75/100)/2),
+                (r_emplacement4.y)+(r_emplacement4.h)/2-((((r_emplacement4.y+r_emplacement4.h)-r_emplacement4.y )*75/100)/2),
+                ((r_emplacement4.y+r_emplacement4.h)-r_emplacement4.y )*75/100,
+                ((r_emplacement4.y+r_emplacement4.h)-r_emplacement4.y )*75/100 
+            };
 
+            //affichage des artefacts dans les emplacements ou non
             if (nb_artefact_equipe > 0) {
-                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[0]] -> indice_texture], NULL, & r_emplacement4);
+                SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement4);
+                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[0]] -> indice_texture], NULL, & r_emplacement4_art);
             } else {
-                SDL_RenderFillRect(renderer, & r_emplacement4);
+                SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement4);
             }
             if (nb_artefact_equipe > 1) {
-                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[1]] -> indice_texture], NULL, & r_emplacement3);
+                SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement3);
+                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[1]] -> indice_texture], NULL, & r_emplacement3_art);
             } else {
                 if (map -> nb_emplacement < 2) {
-                    SDL_SetRenderDrawColor(renderer, 56, 62, 66, 255);
+                    SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement3);
                 }
-                SDL_RenderFillRect(renderer, & r_emplacement3);
+                SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_emplacement3);
             }
             if (nb_artefact_equipe > 2) {
-                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[2]] -> indice_texture], NULL, & r_emplacement2);
+                SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement2);
+                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[2]] -> indice_texture], NULL, & r_emplacement2_art);
             } else {
                 if (map -> nb_emplacement < 3) {
-                    SDL_SetRenderDrawColor(renderer, 56, 62, 66, 255);
+                    SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement2);
                 }
-                SDL_RenderFillRect(renderer, & r_emplacement2);
+                SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_emplacement2);
             }
 
             if (nb_artefact_equipe > 3) {
-                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[3]] -> indice_texture], NULL, & r_emplacement1);
+                SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement1);
+                SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[indice_art_emp[3]] -> indice_texture], NULL, & r_emplacement1_art);
             } else {
                 if (map -> nb_emplacement < 4) {
-                    SDL_SetRenderDrawColor(renderer, 56, 62, 66, 255);
+                    SDL_RenderCopy(renderer, map -> tabTexture[152], NULL, & r_emplacement1);
                 }
-                SDL_RenderFillRect(renderer, & r_emplacement1);
+                SDL_RenderCopy(renderer, map -> tabTexture[153], NULL, & r_emplacement1);
             }
 
             /*
@@ -2001,35 +2143,73 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
              */
 
             //afficher les carres des artefacts adegauche
-            SDL_Rect r_artefactGauche1 = {
+            SDL_Rect r_cadreGauche1 = {
+            ( * we) / 8,
+            r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 0 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+            ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+            };
+            SDL_Rect r_cadreGauche2 = {
                 ( * we) / 8,
-                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 0 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 1 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+            };
+            SDL_Rect r_cadreGauche3 = {
+                ( * we) / 8,
+                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 2 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+            };
+            SDL_Rect r_cadreGauche4 = {
+                ( * we) / 8,
+                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 3 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+            };
+            SDL_Rect r_cadreGauche5 = {
+                ( * we) / 8,
+                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 4 + (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100) / 2,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+            };
+
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche1);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche2);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche3);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche4);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreGauche5);
+
+            //afficher les artefacts de gauche
+            SDL_Rect r_artefactGauche1 = {
+                (r_cadreGauche1.x)+(r_cadreGauche1.w)/2-((((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100)/2),
+                (r_cadreGauche1.y)+(r_cadreGauche1.h)/2-((((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100)/2),
+                ((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100,
+                ((r_cadreGauche1.y+r_cadreGauche1.h)-r_cadreGauche1.y )*75/100 
             };
             SDL_Rect r_artefactGauche2 = {
-                ( * we) / 8,
-                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 1 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                (r_cadreGauche2.x)+(r_cadreGauche2.w)/2-((((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100)/2),
+                (r_cadreGauche2.y)+(r_cadreGauche2.h)/2-((((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100)/2),
+                ((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100,
+                ((r_cadreGauche2.y+r_cadreGauche2.h)-r_cadreGauche2.y )*75/100 
             };
             SDL_Rect r_artefactGauche3 = {
-                ( * we) / 8,
-                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 2 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                (r_cadreGauche3.x)+(r_cadreGauche3.w)/2-((((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100)/2),
+                (r_cadreGauche3.y)+(r_cadreGauche3.h)/2-((((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100)/2),
+                ((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100,
+                ((r_cadreGauche3.y+r_cadreGauche3.h)-r_cadreGauche3.y )*75/100 
             };
             SDL_Rect r_artefactGauche4 = {
-                ( * we) / 8,
-                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 3 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                (r_cadreGauche4.x)+(r_cadreGauche4.w)/2-((((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*73/100)/2),
+                (r_cadreGauche4.y)+(r_cadreGauche4.h)/2-((((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*73/100)/2),
+                ((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*75/100,
+                ((r_cadreGauche4.y+r_cadreGauche4.h)-r_cadreGauche4.y )*75/100 
             };
             SDL_Rect r_artefactGauche5 = {
-                ( * we) / 8,
-                r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 4 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                (r_cadreGauche5.x)+(r_cadreGauche5.w)/2-((((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100)/2),
+                (r_cadreGauche5.y)+(r_cadreGauche5.h)/2-((((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100)/2),
+                ((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100,
+                ((r_cadreGauche5.y+r_cadreGauche5.h)-r_cadreGauche5.y )*75/100 
             };
 
             //SDL_RenderFillRect(renderer, &r_artefactGauche);
@@ -2039,36 +2219,76 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[3] -> indice_texture], NULL, & r_artefactGauche4);
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[4] -> indice_texture], NULL, & r_artefactGauche5);
 
-            //afficher les carres des artefacts de droite
-            SDL_Rect r_artefactDroit1 = {
+
+            SDL_Rect r_cadreDroite1 = {
                 ( * we) - (( * we) / 8 * 3),
                 r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 0 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
             };
-            SDL_Rect r_artefactDroit2 = {
+            SDL_Rect r_cadreDroite2 = {
                 ( * we) - (( * we) / 8 * 3),
                 r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 1 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
             };
-            SDL_Rect r_artefactDroit3 = {
+            SDL_Rect r_cadreDroite3 = {
                 ( * we) - (( * we) / 8 * 3),
                 r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 2 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
             };
-            SDL_Rect r_artefactDroit4 = {
+            SDL_Rect r_cadreDroite4 = {
                 ( * we) - (( * we) / 8 * 3),
                 r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 3 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
             };
-            SDL_Rect r_artefactDroit5 = {
+            SDL_Rect r_cadreDroite5 = {
                 ( * we) - (( * we) / 8 * 3),
                 r_HEcran.h + ((r_BEcran.y - r_HEcran.h) / 5) * 4 + (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) - (((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100) / 2,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100,
-                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 10 / 100
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100,
+                ((r_BEcran.y - r_HEcran.h) / 5) - ((r_BEcran.y - r_HEcran.h) / 5) * 11 / 100
+            };
+
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite1);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite2);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite3);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite4);
+            SDL_RenderCopy(renderer, map -> tabTexture[154], NULL, & r_cadreDroite5);
+
+
+
+            //afficher les carres des artefacts de droite
+            SDL_Rect r_artefactDroit1 = {
+                (r_cadreDroite1.x)+(r_cadreDroite1.w)/2-((((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100)/2),
+                (r_cadreDroite1.y)+(r_cadreDroite1.h)/2-((((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100)/2),
+                ((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100,
+                ((r_cadreDroite1.y+r_cadreDroite1.h)-r_cadreDroite1.y )*75/100 
+            };
+            SDL_Rect r_artefactDroit2 = {
+                (r_cadreDroite2.x)+(r_cadreDroite2.w)/2-((((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100)/2),
+                (r_cadreDroite2.y)+(r_cadreDroite2.h)/2-((((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100)/2),
+                ((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100,
+                ((r_cadreDroite2.y+r_cadreDroite2.h)-r_cadreDroite2.y )*75/100 
+            };
+            SDL_Rect r_artefactDroit3 = {
+                (r_cadreDroite3.x)+(r_cadreDroite3.w)/2-((((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100)/2),
+                (r_cadreDroite3.y)+(r_cadreDroite3.h)/2-((((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100)/2),
+                ((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100,
+                ((r_cadreDroite3.y+r_cadreDroite3.h)-r_cadreDroite3.y )*75/100 
+            };
+            SDL_Rect r_artefactDroit4 = {
+                (r_cadreDroite4.x)+(r_cadreDroite4.w)/2-((((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100)/2),
+                (r_cadreDroite4.y)+(r_cadreDroite4.h)/2-((((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100)/2),
+                ((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100,
+                ((r_cadreDroite4.y+r_cadreDroite4.h)-r_cadreDroite4.y )*75/100 
+            };
+            SDL_Rect r_artefactDroit5 = {
+                (r_cadreDroite5.x)+(r_cadreDroite5.w)/2-((((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100)/2),
+                (r_cadreDroite5.y)+(r_cadreDroite5.h)/2-((((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100)/2),
+                ((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100,
+                ((r_cadreDroite5.y+r_cadreDroite5.h)-r_cadreDroite5.y )*75/100 
             };
 
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[5] -> indice_texture], NULL, & r_artefactDroit1);
@@ -2076,10 +2296,6 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[7] -> indice_texture], NULL, & r_artefactDroit3);
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[8] -> indice_texture], NULL, & r_artefactDroit4);
             SDL_RenderCopy(renderer, map -> tabTexture[map -> listeArtefact[9] -> indice_texture], NULL, & r_artefactDroit5);
-
-            //((*we)-(((*we)-(r_artefactGauche.w+r_artefactGauche.x))/2))-(((r_BEcran.y-r_HEcran.h)/5)-((r_BEcran.y-r_HEcran.h)/5)*10/100)/2 Le X
-
-            //SDL_RenderFillRect(renderer, &r_artefactDroit);
 
             for (j = 0, k = 5; j < 5 && k < 10; j++, k++) {
                 if (map -> listeArtefact[j] -> possession == 0) {
