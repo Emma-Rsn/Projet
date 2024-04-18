@@ -987,12 +987,46 @@ int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
     return 0;
 }
 
+int boolMemeCase(case_t c1, case_t c2){
+    if(c1.x == c2.x && c1.y == c2.y){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int boolDebutCombat(carte_t * cartec,p_mv * pp,obj_t * ennemi){
+    int i,j;
+    int xp = pp->c->x,yp = pp->c->y;
+    int xe = ennemi->cas->x,ye = ennemi->cas->y;
+    for(i=-1;i<2;i++){
+        for(j=-1;j<2;j++){
+            if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe+i][ye+j])){
+                return 1;
+            }
+        }
+    }
+    if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe+2][ye])){
+        return 1;
+    }else if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe-2][ye])){
+        return 1;
+    }else if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe][ye+2])){
+        return 1;
+    }else if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe+i][ye-2])){
+        return 1;
+    }
+
+    return 0;
+}
+
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     int i;
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2){
             Boss(cartec->tabObj[i],pp);
-            debut_combat(event,cartec->tabObj[i]->tabObj[0],pp,cartec->tabObj[i]->cas);
+            if(boolDebutCombat(cartec,pp,cartec->tabObj[i])){
+                ((ennemi_t *)cartec->tabObj[i]->tabObj[0])->combat=1;
+            }
         }
     }
 }
@@ -1636,7 +1670,8 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
 void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
     if(Boss->forme == 3){
         int i;
-        for(i=0;(*Leader)->equipe[i];i++);
+        for(i=0;(*Leader)->equipe[i] && i < 4;i++);
+        if((*Leader)->equipe[i])return;
         switch (Boss->type)
         {
         case 0://Alex

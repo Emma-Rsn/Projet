@@ -160,12 +160,20 @@ save :
     leader
     ennemi mort
     variable d'exploration
+    layout obj et load texture
 
 obj :
     transition :
         sous marine
         manoir
         grotte
+
+début combat 
+
+boss boss
+
+apres boss variable exploration avec dialogue
+
 
 
 afficher niv Zone dans la carte !

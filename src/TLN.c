@@ -137,8 +137,7 @@ int main(){
     }
     map.Nightmare=*Alex->Nightmare;
     carte_t * cartec =&map.tabMap[q][s];
-    remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),1);
-    printf("nom : %s\n",Alex->nom);
+    remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),0);
     *Alex->equipe[0]->pv=*pv;
     for(ii = 1;ii<=*tabparam[26];ii++){
         switch(*tabparam[27+ii-1]){

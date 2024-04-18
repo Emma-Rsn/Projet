@@ -70,4 +70,6 @@ int forme_attaque(int nb_combattant,combat_t * combat);
 void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie);
 void newCompagnon(p_mv ** Leader,ennemi_t * Boss);
 int boolTousMort(ennemi_t * ennemi);
+int boolMemeCase(case_t c1, case_t c2);
+int boolDebutCombat(carte_t * cartec,p_mv * pp,obj_t * ennemi);
 #endif
