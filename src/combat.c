@@ -1413,7 +1413,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         attaque_ennemi(nb_combattant,combat);
 
                         //passif Ada ennemi, elle peut jouer 2 fois de suite (attente de 2 tour)
-                        if((combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3) (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1 && attenteAda==0)){
+                        if((combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3) || (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1 && attenteAda==0)){
                            attaque_ennemi(nb_combattant,combat);
                            attenteAdaEnnemi=2;
                         }
