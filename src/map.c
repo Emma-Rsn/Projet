@@ -167,9 +167,7 @@ int creer_map(map_t * map){
     int xZone1 = rand() % 2 + 2;
     int yZone1 = rand() % 2 + 2;
 
-    printf("zone 1 x:%d y:%d\n",xZone1,yZone1);
     map->tabMap[xZone1][yZone1].nZone=1;
-    printf("%d\n",map->tabMap[xZone1][yZone1].nZone);
 
     //Initialisation des zones dans les coins de la map
     map->tabMap[0][0].nZone=5;

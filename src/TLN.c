@@ -102,6 +102,8 @@ int main(){
     //debut sauvegarde
     int q,s,ii,last;
     int * pv = malloc(sizeof(int));
+    int * leader = malloc(sizeof(int));
+    * leader = 0;
     int * tabparam[NB_PARAM];
     for(ii = 0;ii<NB_PARAM;ii++){
         tabparam[ii] = malloc(sizeof(int));
@@ -110,7 +112,7 @@ int main(){
     Alex->equipe[0]=pre_init_combattant();
 
     int xp,yp;
-    last = load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam,toucheDeplacement);
+    last = load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam,toucheDeplacement,leader);
     if(last != 1){
         for(q = 0;q<ROWS;q++){
             for(s = 0;s<COLUMNS;s++){
@@ -137,7 +139,7 @@ int main(){
     }
     map.Nightmare=*Alex->Nightmare;
     carte_t * cartec =&map.tabMap[q][s];
-    remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),0);
+    remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),*leader);
     *Alex->equipe[0]->pv=*pv;
     for(ii = 1;ii<=*tabparam[26];ii++){
         switch(*tabparam[27+ii-1]){
@@ -161,6 +163,7 @@ int main(){
     cartec->etat_brouillard = 0;
     map.zoneChargee = cartec->nZone;
     free(pv);
+    free(leader);
     for(ii = 0;ii<NB_PARAM;ii++){
         free(tabparam[ii]);
     }
@@ -326,6 +329,11 @@ int main(){
     // Libérer les ressources
     //combattant(pAlex);
 
+    int res = 0;
+    FILE * fichier = fopen("save/save.txt", "r+");
+    fscanf(fichier, "%d", &res);
+    fclose(fichier);
+
     save_pos(cartec->xcarte,cartec->ycarte,*Alex,map,*toucheDeplacement);
     
 
@@ -358,11 +366,6 @@ int main(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    //nouvelle partie
-    int res = 0;
-    FILE * fichier = fopen("save/save.txt", "r+");
-    fscanf(fichier, "%d", &res);
-    fclose(fichier);
     if(res == 2){system("./bin/TLN");}
     if(res == 3){effacer_sauvg();system("./bin/TLN");}
     return 0;

@@ -611,7 +611,7 @@ p_mv * initp(){
 //construit un point
 void remplirp(p_mv * p,case_t * c,int leader){
     p->c = c;
-    p->r = p->c->Rectangle;
+    p->r = c->Rectangle;
     if(*p->NightP == p->NightMax){
         *p->Nightmare = 1;
     }else{
@@ -631,17 +631,17 @@ void remplirp(p_mv * p,case_t * c,int leader){
 
     case 1://Lou
     p->nom="Lou";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,1,2,15,0,100);
         break;
 
     case 2://Finn
     p->nom="Finn";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,2,2,15,0,100);
         break;
 
     case 3://Ada
     p->nom="Ada";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,3,2,15,0,100);
         break;
     
     default:

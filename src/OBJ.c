@@ -137,6 +137,16 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
     return en;
 }
 
+int newLeader(p_mv pp){
+    if(!pp.equipe[1])return pp.equipe[0]->type;
+    srand( time( NULL ) );
+    int i;
+    do{
+        i = rand()%3+1;
+    }while(!pp.equipe[i]);
+    return pp.equipe[i]->type;
+}
+
 void Boss(obj_t * boss,p_mv * Leader){
     if(boss->typeObj == 2){
         if(((ennemi_t *)boss->tabObj[0])->forme == 3){
