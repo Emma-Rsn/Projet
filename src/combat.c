@@ -370,7 +370,7 @@ int attaque_ennemi(int nb_combattant,combat_t * combat){
     }
 
     //passif de ennemi Finn, soigne un peu tout les ennemis a son tour
-    if(combat->combattant[combat->indice_combattant]->type==2 && combat->combattant[combat->indice_combattant]->forme==3){
+    if((combat->combattant[combat->indice_combattant]->type==2 && combat->combattant[combat->indice_combattant]->forme==3) || combat->combattant[combat->indice_combattant]->forme==4){
         int k=0;
         for(k=0;k<combat->nb_ennemi;k++){
             if(combat->ennemi[k]->mort==0)
@@ -436,7 +436,7 @@ int forme_attaque(int nb_combattant,combat_t * combat){
         }
 
         //ennemi de boss taille (?) attaque l'allie qui a le plus de pv max
-        if(combat->combattant[combat->indice_combattant]->forme==3){
+        if(combat->combattant[combat->indice_combattant]->forme==3 || combat->combattant[combat->indice_combattant]->forme==4){
             //recupere l'allie qui a le plus de pv max
             int i=0;
             int indice=0;
@@ -1204,6 +1204,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         int alexMortEnnemi=0;
         int attenteAdaEnnemi=0;
 
+
         ennemi_t copieEnnemi;
         copieEnnemi=*ennemi;
 
@@ -1398,7 +1399,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                     else{
                         //passif de Lou ennemi,si l'allie doit passer son tour, il perd aussi des pv
                         for(i=0;i<combat->nb_ennemi;i++){
-                            if(combat->ennemi[i]->forme==3 && combat->ennemi[i]->type==1 ){
+                            if((combat->ennemi[i]->forme==3 && combat->ennemi[i]->type==1) || (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1) ){
                                 *(combat->combattant[combat->indice_combattant]->pv)-=combat->ennemi[i]->puissance*1.5;
                             }
                         }
@@ -1412,7 +1413,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         attaque_ennemi(nb_combattant,combat);
 
                         //passif Ada ennemi, elle peut jouer 2 fois de suite (attente de 2 tour)
-                        if(combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3){
+                        if((combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3) (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1 && attenteAda==0)){
                            attaque_ennemi(nb_combattant,combat);
                            attenteAdaEnnemi=2;
                         }
@@ -1441,7 +1442,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                     }
                 
                     //passif d'Alex ennemi, si il meurt il peut ressuciter une fois
-                    if(combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && *(combat->combattant[j]->pv)<=0 && combat->combattant[j]->forme==3 ){
+                    if((combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && *(combat->combattant[j]->pv)<=0 && combat->combattant[j]->forme==3) && (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1 && alexMortEnnemi==0) ){
                         *(combat->combattant[j]->pv)=combat->combattant[j]->pvMax;
                         alexMortEnnemi=1;
                     }
