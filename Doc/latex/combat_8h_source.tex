@@ -1,0 +1,66 @@
+\doxysection{combat.\+h}
+\hypertarget{combat_8h_source}{}\label{combat_8h_source}\index{libs/combat.h@{libs/combat.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_COMBAT\_H\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_COMBAT\_H\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{//\#include\ "{}../libs/commun.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcombattant__s}{combattant\_s}}\{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{char}\ *\ nom;}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ *\ pv;}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ pvMax;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{int}\ vitesse;}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{int}\ mort;\ \textcolor{comment}{//0\ vivant,\ 1\ mort}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{int}\ camp;\ \textcolor{comment}{//0\ alliee,\ 1\ ennemi}}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ temps\_recharge;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ temps\_recharge\_max;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_portrait;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_sprite;}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ type;}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ status;\ \textcolor{comment}{//0\ aucun\ effet\ ,1\ passe\ leur\ tour}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ puissance;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ forme;\ \textcolor{comment}{//0=slime\ faible,1=ennemi\ moyen,\ 2=ennemi\ fort,\ 3=boss\ alliee\ corrompu}}
+\DoxyCodeLine{00041\ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00059\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcombat__s}{combat\_s}}\{}
+\DoxyCodeLine{00060\ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant[8];}
+\DoxyCodeLine{00061\ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ ennemi[4];}
+\DoxyCodeLine{00062\ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ allie[4];}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_point;}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{float}\ mult;}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_combattant;}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_allie;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_ennemi;}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_ennemi;}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_allie;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_tour;}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{comment}{//barre\ de\ cauchemard}}
+\DoxyCodeLine{00072\ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ pre\_init\_combattant();}
+\DoxyCodeLine{00075\ \textcolor{keywordtype}{void}\ remplir\_combattant(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ c,\textcolor{keywordtype}{char}*\ nom,\textcolor{keywordtype}{int}\ pv,\textcolor{keywordtype}{int}\ vitesse,\textcolor{keywordtype}{int}\ camp,\textcolor{keywordtype}{int}\ indice\_portrait,\textcolor{keywordtype}{int}\ indice\_sprite,\textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{int}\ temps\_recharge\_max,\textcolor{keywordtype}{int}\ puissance,\textcolor{keywordtype}{int}\ forme);}
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{int}\ compare\_vitesse\_enc(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ \textcolor{keyword}{const}\ combattant1\ ,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ \textcolor{keyword}{const}\ combattant2\ )\ ;}
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a11a01ef94ed383d1247ddd96defd67d5}{compare\_vitesse}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ \textcolor{keyword}{const}\ combattant1,\textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ \textcolor{keyword}{const}\ combattant2);}
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_ab66e455ee98a4dfda8dcf23067525a6c}{debut\_combat}}(SDL\_Event\ event,\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ ennemi,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c);}
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a03b796318e6258edee9f81c48f83ed2e}{combat}}(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Event\ event,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ ennemi,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{int}\ attaque\_allie(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Event\ event,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ ennemi,\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *combattant,\textcolor{keywordtype}{int}\ Nbennemi,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ combat,\textcolor{keywordtype}{int}\ allie,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ \mbox{\hyperlink{structpersonnage}{personnage}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00081\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a4d4a067e39c533eb845de2afdd388a08}{attaque\_ennemi}}(\textcolor{keywordtype}{int}\ nb\_combattant,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ combat);}
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_af904aa22a4c73018b89f20911c97023c}{affiche\_pv}}(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Renderer\ *\ renderer,SDL\_Rect\ r\_GEcran,SDL\_Rect\ r\_DEcran,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *combat,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00083\ \textcolor{keywordtype}{int}\ affiche\_point(\textcolor{keywordtype}{int}\ *we,\ \textcolor{keywordtype}{int}\ *he,\ SDL\_Renderer\ *renderer,\ SDL\_Rect\ r\_basEcran,\ \mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ combat,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00084\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ message,SDL\_Window\ *\ fenetre,SDL\_Renderer\ *renderer,SDL\_Texture\ *Texture,SDL\_Texture\ *Texture2);}
+\DoxyCodeLine{00085\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a86609479bf6edf9d746cb7c4aab0db66}{desctruction\_combattant}}(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant);}
+\DoxyCodeLine{00086\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *init\_combattant(\textcolor{keywordtype}{char}*\ nom,\textcolor{keywordtype}{int}\ pv,\textcolor{keywordtype}{int}\ vitesse,\textcolor{keywordtype}{int}\ camp,\textcolor{keywordtype}{int}\ indice\_portrait,\textcolor{keywordtype}{int}\ indice\_sprite,\textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{int}\ temps\_recharge\_max,\textcolor{keywordtype}{int}\ puissance,\textcolor{keywordtype}{int}\ forme);}
+\DoxyCodeLine{00087\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a8a2ebe3dafdfa818fa29088616e163d5}{affichage\_combat}}(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *combat,\textcolor{keywordtype}{int}\ etat,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ \mbox{\hyperlink{structpersonnage}{personnage}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00088\ \mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a4c96e4b113cdef70898987ec2643b58a}{init\_combat}}();}
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a0d87b5d37574da9e640d7e765a72a77a}{affVie}}(SDL\_Renderer\ *\ renderer,\textcolor{keywordtype}{int}\ \ he,\textcolor{keywordtype}{int}\ we,\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00090\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a7a699ed594a782ddb94670b35d996375}{soin}}(\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ combat,SDL\_Rect\ r\_basEcran,SDL\_Renderer\ *\ renderer,\textcolor{keywordtype}{int}\ *\ we,\textcolor{keywordtype}{int}\ *\ he,\textcolor{keywordtype}{int}\ allie,SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ \mbox{\hyperlink{structpersonnage}{personnage}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00091\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a62514ac450b1abb2c25b9e296abf75f0}{barreCauchemard}}(\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pmv,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00092\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a14c2400b250f63a0567ea989e68f4254}{debut\_combat\_carte}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec,SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp);}
+\DoxyCodeLine{00093\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a7e8f66612bd51569eb7f860f53fc3206}{combat\_carte}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec,\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Event\ event,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00094\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_af49ae13d77b9fd993ae63e147aa4ec6b}{forme\_attaque}}(\textcolor{keywordtype}{int}\ nb\_combattant,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ combat);}
+\DoxyCodeLine{00095\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_ad99a3e5f895d581276a65237782c6f46}{copier\_combattant}}(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant,\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattantcopie);}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

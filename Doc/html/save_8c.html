@@ -91,12 +91,18 @@ Functions</h2></td></tr>
 <tr class="memitem:ab1a79f4e0da37eaac88524048fa19d17"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="save_8c.html#ab1a79f4e0da37eaac88524048fa19d17">load_settings</a> (int *wEcran, int *hEcran)</td></tr>
 <tr class="memdesc:ab1a79f4e0da37eaac88524048fa19d17"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction de sauvegarde des parametres  <br /></td></tr>
 <tr class="separator:ab1a79f4e0da37eaac88524048fa19d17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95b58d2e1ea002bfdd04b1793aa2f505"><td class="memItemLeft" align="right" valign="top"><a id="a95b58d2e1ea002bfdd04b1793aa2f505" name="a95b58d2e1ea002bfdd04b1793aa2f505"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>save_pos</b> (int xcarte, int ycarte, int xpos, int ypos)</td></tr>
-<tr class="separator:a95b58d2e1ea002bfdd04b1793aa2f505"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a38b8d3b08c31667b111c31eefbd21f7a"><td class="memItemLeft" align="right" valign="top"><a id="a38b8d3b08c31667b111c31eefbd21f7a" name="a38b8d3b08c31667b111c31eefbd21f7a"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>load_pos</b> (int *xcarte, int *ycarte, int *xpos, int *ypos)</td></tr>
-<tr class="separator:a38b8d3b08c31667b111c31eefbd21f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29815678aab82f1df1351aa2b3baf347"><td class="memItemLeft" align="right" valign="top"><a id="a29815678aab82f1df1351aa2b3baf347" name="a29815678aab82f1df1351aa2b3baf347"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>save_pos</b> (int xcarte, int ycarte, <a class="el" href="structpersonnage.html">p_mv</a> pmv, <a class="el" href="structmap__s.html">map_t</a> map, int touche)</td></tr>
+<tr class="separator:a29815678aab82f1df1351aa2b3baf347"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fa6e5cf7250984491129f81a03cf368"><td class="memItemLeft" align="right" valign="top"><a id="a1fa6e5cf7250984491129f81a03cf368" name="a1fa6e5cf7250984491129f81a03cf368"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>load_pos</b> (int *xcarte, int *ycarte, int *xpos, int *ypos, <a class="el" href="structmap__s.html">map_t</a> *map, int *pv, <a class="el" href="structpersonnage.html">p_mv</a> *pmv, int **tabparam, int *touche)</td></tr>
+<tr class="separator:a1fa6e5cf7250984491129f81a03cf368"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94e10f726f700c02866555ba6fedf1a5"><td class="memItemLeft" align="right" valign="top"><a id="a94e10f726f700c02866555ba6fedf1a5" name="a94e10f726f700c02866555ba6fedf1a5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>nouvelle_partie</b> (int param)</td></tr>
+<tr class="separator:a94e10f726f700c02866555ba6fedf1a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0a1cbe543e72a4fc8863714a108007c"><td class="memItemLeft" align="right" valign="top"><a id="ad0a1cbe543e72a4fc8863714a108007c" name="ad0a1cbe543e72a4fc8863714a108007c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>effacer_sauvg</b> ()</td></tr>
+<tr class="separator:ad0a1cbe543e72a4fc8863714a108007c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>programme pour la sauvegarde </p>

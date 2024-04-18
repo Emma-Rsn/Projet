@@ -4,21 +4,6 @@
 //#include "../libs/commun.h"
 
 
-struct mess_t
-{
-    char * message;
-    mess_s *suivant;
-};
-
-
-struct Liste
-{
-    mess_s * premier;
-    mess_s * ec;
-    int etat; //0 = pas d'affichage debut liste 1 == affichage premier 2 == affichage element 3 == affichage dernier
-};
-
-extern SDL_Event event;
 
 int aff_boite_dia(SDL_Renderer * rendu,int po,int *we,int* he,char * message,map_t * map);
 void debut_dialogue(SDL_Event event,p_mv * pp,int *etat_dialogue,case_t * c);

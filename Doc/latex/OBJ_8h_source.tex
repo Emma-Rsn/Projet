@@ -1,0 +1,60 @@
+\doxysection{OBJ.\+h}
+\hypertarget{OBJ_8h_source}{}\label{OBJ_8h_source}\index{libs/OBJ.h@{libs/OBJ.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_OBJ\_H\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_OBJ\_H\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{comment}{//\#include\ "{}../libs/commun.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structobj__s}{obj\_s}}\{}
+\DoxyCodeLine{00007\ \ \ \ \ \mbox{\hyperlink{structcase__s}{case\_t}}\ *\ cas;}
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keywordtype}{int}\ indTexture;}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keywordtype}{int}\ typeObj;}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keywordtype}{void}\ *\ tabObj[20];}
+\DoxyCodeLine{00011\ \};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structennemi__s}{ennemi\_s}}\{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{char}\ *\ nom;}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_portrait;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_sprite;}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{int}\ combat;\ \textcolor{comment}{//1\ en\ combat\ 0\ pas\ en\ combat}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{int}\ pv;}
+\DoxyCodeLine{00037\ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant[4];}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c;}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ type;}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ status;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{int}\ vitesse;}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ mort;}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{int}\ temps\_recharge\_max;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{int}\ forme;}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structartefact__s}{artefact\_s}}\{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{char}\ *\ nom;}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{int}\ possession;\ \textcolor{comment}{//si\ -\/1\ artefact\ bloque,0\ on\ l'a\ pas,\ 1\ on\ l'a}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keywordtype}{int}\ indice;\ \textcolor{comment}{//indice\ dans\ le\ tableau\ de\ la\ map}}
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{char}\ *\ descriptif;}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{int}\ prix;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{int}\ indice\_texture;}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{int}\ equipe;}
+\DoxyCodeLine{00069\ \};}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ init\_obj(\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c,\textcolor{keywordtype}{int}\ indText,\textcolor{keywordtype}{int}\ type,...);}
+\DoxyCodeLine{00072\ \textcolor{keywordtype}{int}\ load\_obj(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *c,\ \textcolor{keywordtype}{char}\ *namefile);}
+\DoxyCodeLine{00073\ \textcolor{keywordtype}{void}\ affObj(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ o,\mbox{\hyperlink{structmap__s}{map\_t}}\ map);}
+\DoxyCodeLine{00074\ \textcolor{keywordtype}{void}\ affTabObj(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structmap__s}{map\_t}}\ map,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ carte);}
+\DoxyCodeLine{00075\ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ init\_ennemi(\textcolor{keywordtype}{char}*\ nom,\textcolor{keywordtype}{int}\ pv,\textcolor{keywordtype}{int}\ vitesse,\textcolor{keywordtype}{int}\ camp,\textcolor{keywordtype}{int}\ indice\_portrait,\textcolor{keywordtype}{int}\ indice\_sprite,\textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{int}\ temps\_recharge\_max,\textcolor{keywordtype}{int}\ puissance,\textcolor{keywordtype}{int}\ forme);}
+\DoxyCodeLine{00076\ \textcolor{keywordtype}{int}\ boolcol\ (\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ obj\_c,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp);}
+\DoxyCodeLine{00077\ \textcolor{keywordtype}{void}\ dest\_ennemi(\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ en);}
+\DoxyCodeLine{00078\ \textcolor{keywordtype}{void}\ dest\_obj(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ c,\textcolor{keywordtype}{int}\ ind);}
+\DoxyCodeLine{00079\ \textcolor{keywordtype}{void}\ dest\_all\_obj(\mbox{\hyperlink{structmap__s}{map\_t}}\ *m);}
+\DoxyCodeLine{00080\ \textcolor{keywordtype}{void}\ destruction\_artefact(\mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ artefact);}
+\DoxyCodeLine{00081\ \mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ init\_artefact(\textcolor{keywordtype}{char}*\ nom,\ \textcolor{keywordtype}{int}\ possession,\textcolor{keywordtype}{char}\ *\ descriptif,\textcolor{keywordtype}{int}\ indice,\textcolor{keywordtype}{int}\ prix,\textcolor{keywordtype}{int}\ indice\_texture);}
+\DoxyCodeLine{00082\ \textcolor{keywordtype}{void}\ Boss(\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ boss,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ Leader);}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
