@@ -289,7 +289,7 @@ int main(){
         SDL_SetRenderDrawColor(renderer, 255, 255, 245, 255);
 
         //affiche la grille
-        betaAfficherMap(renderer,&map,cartec);
+        afficher_carte(renderer,&map,cartec);
         if(ouigrille)afficher_grille(cartec->grille,renderer);
 
         //Affichage pnj
