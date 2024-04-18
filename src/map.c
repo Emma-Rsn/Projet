@@ -133,6 +133,9 @@ map_t creation_map (){
     m.Zone3 = 0;
     m.Zone4 = 0;
     m.Zone5 = 0;
+    m.plongee = 0;
+    m.talisman = 0;
+    m.talisman = 0;
     m.nb_emplacement=1;
     m.prix_emplacement=20;
     for(i=0;i<ROWS;i++){

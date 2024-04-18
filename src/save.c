@@ -156,7 +156,7 @@ void effacer_sauvg(){
 
 
 
-/*
+    /*
 new load layout  test
 
 save :
@@ -170,19 +170,12 @@ obj :
         manoir
         grotte
 
-début combat 
 
-boss boss
+boss boss /2
 
 apres boss variable exploration avec dialogue
 
-
-
-afficher niv Zone dans la carte !
-
 chargement layout objet + cas particulier
-
-lumiere dans grotte
 
 rejouer :
     bug artefact

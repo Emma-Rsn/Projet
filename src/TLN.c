@@ -259,6 +259,7 @@ int main(){
             menu_option(wEcran,hEcran,event,renderer,run,etatoption,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement,&map);
+            debut_loot_carte(cartec,event,Alex,&map,etat_dialogue);
             debut_dialogue_carte(cartec,event,Alex,etat_dialogue);
             debut_combat_carte(cartec,event,Alex);
             if(*Alex->NightP == 100 && tN == 1){
@@ -291,7 +292,7 @@ int main(){
         affp(Alex,renderer,event);
         affTabObj(renderer,map,cartec);
 
-        if(ouilumiere)lumiere(renderer,cartec,Alex->c);
+        if(ouilumiere || map.zoneChargee == 5)lumiere(renderer,cartec,Alex->c);
 
         affHud(renderer,hEcran,wEcran,map,*Alex);
 
@@ -299,7 +300,6 @@ int main(){
         if(ouifps)aff_Fps(cmpfps,renderer);
 
         transition(renderer,transi,*wEcran,*hEcran);
-
 
         //afficher dialogue
         //pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);

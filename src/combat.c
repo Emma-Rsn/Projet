@@ -1170,7 +1170,28 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2 ){
             combat(we,he,event,renderer,cartec->tabObj[i]->tabObj[0],pp,map);
-            if(boolTousMort((ennemi_t *)cartec->tabObj[i]->tabObj[0]))dest_obj(cartec,i);
+            if(boolTousMort((ennemi_t *)cartec->tabObj[i]->tabObj[0])){
+                if(((ennemi_t *)cartec->tabObj[i]->tabObj[0])->forme == 3){
+                    switch (map->zoneChargee)
+                    {
+                    case 4 :
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,5,5,2);
+                        cartec->nbObj++; 
+                        break;
+                    case 2 :
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,5,5,1);
+                        cartec->nbObj++; 
+                        break;
+                    case 3 :
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,5,5,3);
+                        cartec->nbObj++; 
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                dest_obj(cartec,i);
+            }
         }
     }
 }

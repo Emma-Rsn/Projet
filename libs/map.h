@@ -103,6 +103,9 @@ struct map_s{
     int Zone3;
     int Zone4;
     int Zone5;
+    int cle;
+    int plongee;
+    int talisman;
 };
 
 case_t creation_case();

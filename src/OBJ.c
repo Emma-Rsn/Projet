@@ -30,6 +30,10 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
             n = 1;
             newObj->cas->etat = 1;
             break;
+        case 5 :
+            n = 1;
+            newObj->cas->etat = 0;
+            break;
         default://cas d'un objet inconnu
             n = -1;
             break;
@@ -40,6 +44,32 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
     va_end(args);
     return newObj;
 }
+
+void debut_loot_carte(carte_t * cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue){
+    int i;
+    for(i=0;i<cartec->nbObj;i++){
+        if(cartec->tabObj[i]->typeObj==5){
+            debut_loot(event,pp,cartec->tabObj[i]->cas,map,cartec->tabObj[i],etat_dialogue,cartec->tabObj[i]->tabObj[0]);
+            //dest_obj(cartec,i);
+        }
+    }
+}
+
+
+void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int num_dialogue){
+    if(boolcol(c,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+        switch(num_dialogue){
+            case 0 : map->plongee = 1;
+            break;
+            case 1 : map->cle = 1;
+            break;
+            case 2 : map->talisman = 1;
+            break;
+        }
+        *etat_dialogue=1;
+    } 
+}
+
 
 int load_obj(carte_t *c, char *namefile){
     int x,y,indText,type;
@@ -82,6 +112,11 @@ int load_obj(carte_t *c, char *namefile){
                     c->nbObj++; 
                     break;
                 case 4 :
+                    fscanf(file,"%d",&num_dialogue);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,num_dialogue);
+                    c->nbObj++; 
+                    break;
+                case 5 :
                     fscanf(file,"%d",&num_dialogue);
                     c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,num_dialogue);
                     c->nbObj++; 
