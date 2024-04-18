@@ -940,6 +940,7 @@ int load_layout(carte_t *c, char *namefile) {
 \*\param namefile nom du fichier à charger
 *\brief Fonction qui charge un layout à partir d'un fichier dans une carte
 */
+//IMPORTANT !!! NE PAS SUPPRIMER !!!
 /*int load_layout(carte_t *c, char *namefile) {
     FILE *file;
     file = fopen(namefile, "r");

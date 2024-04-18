@@ -3,7 +3,7 @@ FLAGS=-Wall -g
 EXE = TLN
 EXETEST = test
 LFLAGS   = -Wall -I. -lm
-CFLAGS   = -std=c99 -Wall -I.
+CFLAGS   = -std=c99 -Wall
 LDFLAGS = -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 CUFLAGS=-I/usr/include/CUnit -L/usr/lib -lcunit
 

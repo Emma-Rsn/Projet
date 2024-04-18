@@ -83,7 +83,7 @@ int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rec
 int affiche_point(int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, combat_t * combat,map_t * map);
 void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer,SDL_Texture *Texture,SDL_Texture *Texture2);
 void desctruction_combattant(combattant_t * combattant);
-combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme);
+combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme,int pvMax);
 int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,int etat,p_mv * personnage,map_t * map);
 combat_t * init_combat();
 void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map_t * map);
@@ -93,4 +93,8 @@ void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp);
 void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map);
 int forme_attaque(int nb_combattant,combat_t * combat);
 void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie);
+void newCompagnon(p_mv ** Leader,ennemi_t * Boss);
+int boolTousMort(ennemi_t * ennemi);
+int boolMemeCase(case_t c1, case_t c2);
+int boolDebutCombat(carte_t * cartec,p_mv * pp,obj_t * ennemi);
 #endif

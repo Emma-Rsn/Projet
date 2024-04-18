@@ -259,7 +259,6 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     int y = pmv->c->Rectangle.y;
     char * name = malloc(sizeof(pmv->nom)+1);
     lower(pmv->nom,name);
-
     int nbMaxFrame = (FPS/10)*4;
     if(*(pmv->frame) != 0){
         pmv->lock = 1;
@@ -627,29 +626,29 @@ void remplirp(p_mv * p,case_t * c,int leader){
     {
     case 0://Alex
     p->nom="Alex";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
         break;
 
     case 1://Lou
     p->nom="Lou";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
         break;
 
     case 2://Finn
     p->nom="Finn";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
         break;
 
     case 3://Ada
     p->nom="Ada";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
         break;
     
     default:
+    p->nom="alex";
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
         break;
     }
-    p->nom="alex";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0);
 }
 
 void transition(SDL_Renderer * renderer,int * transi,int we,int he){

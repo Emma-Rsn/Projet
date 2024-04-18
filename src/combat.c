@@ -85,13 +85,13 @@ void remplir_combattant(combattant_t * combattant,char* nom,int pv,int vitesse,i
 *\param forme la forme des ennemis (0=slime,1=?,2=?,3=boss)
 *\brief fonction qui creer le combattant 
 */
-combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
+combattant_t *init_combattant(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme,int pvMax){
     combattant_t * combattant=malloc(sizeof(combattant_t));
     combattant->nom=malloc(strlen(nom)+1);
     strcpy(combattant->nom,nom);
     combattant->pv=malloc(sizeof(int));
     *combattant->pv=pv;
-    combattant->pvMax=pv;
+    combattant->pvMax=pvMax;
     combattant->vitesse=vitesse;
     combattant->puissance=puissance;
     combattant->mort=0;
@@ -1032,6 +1032,40 @@ int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
     } 
     return 0;
 }
+
+
+int boolMemeCase(case_t c1, case_t c2){
+    if(c1.x == c2.x && c1.y == c2.y){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
+int boolDebutCombat(carte_t * cartec,p_mv * pp,obj_t * ennemi){
+    int i,j;
+    int xp = pp->c->x,yp = pp->c->y;
+    int xe = ennemi->cas->x,ye = ennemi->cas->y;
+    for(i=-1;i<2;i++){
+        for(j=-1;j<2;j++){
+            if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe+i][ye+j])){
+                return 1;
+            }
+        }
+    }
+    if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe+2][ye])){
+        return 1;
+    }else if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe-2][ye])){
+        return 1;
+    }else if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe][ye+2])){
+        return 1;
+    }else if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe+i][ye-2])){
+        return 1;
+    }
+
+    return 0;
+}
+
 /**
 *
 *\fn void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp)
@@ -1046,7 +1080,9 @@ void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2){
             Boss(cartec->tabObj[i],pp);
-            debut_combat(event,cartec->tabObj[i]->tabObj[0],pp,cartec->tabObj[i]->cas);
+            if(boolDebutCombat(cartec,pp,cartec->tabObj[i])){
+                ((ennemi_t *)cartec->tabObj[i]->tabObj[0])->combat=1;
+            }
         }
     }
 }
@@ -1107,6 +1143,15 @@ combat_t * init_combat(){
 }
 
 
+
+int boolTousMort(ennemi_t * ennemi){
+    int i;
+    for(i=0;ennemi->combattant[i];i++){
+        if(!ennemi->combattant[i]->mort)return 0;
+    }
+    return 1;
+}
+
 /**
 *
 *\fn void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map)
@@ -1125,6 +1170,7 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2 ){
             combat(we,he,event,renderer,cartec->tabObj[i]->tabObj[0],pp,map);
+            if(boolTousMort((ennemi_t *)cartec->tabObj[i]->tabObj[0]))dest_obj(cartec,i);
         }
     }
 }
@@ -1174,7 +1220,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
         //copie des allies pour pouvoir changer ses statistiques pendant le combat
         for(i=0;i<allie;i++){
-            copieAllie1=init_combattant(pp->equipe[i]->nom,*(pp->equipe[i]->pv),pp->equipe[i]->vitesse,pp->equipe[i]->camp,pp->equipe[i]->indice_portrait,pp->equipe[i]->indice_sprite,pp->equipe[i]->type,pp->equipe[i]->temps_recharge_max,pp->equipe[i]->puissance,pp->equipe[i]->forme);
+            copieAllie1=init_combattant(pp->equipe[i]->nom,*(pp->equipe[i]->pv),pp->equipe[i]->vitesse,pp->equipe[i]->camp,pp->equipe[i]->indice_portrait,pp->equipe[i]->indice_sprite,pp->equipe[i]->type,pp->equipe[i]->temps_recharge_max,pp->equipe[i]->puissance,pp->equipe[i]->forme,pp->equipe[i]->pvMax);
             tabAllie[i]=copieAllie1;
         }
 
@@ -1474,34 +1520,32 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             //Si les alliees on tuer tous les ennemis
             if(Nennemi==0){
                 //cherche si dans les ennemis ils y avait un boss
-                for(i=0;i<combat->nb_ennemi;i++){
-                    if(combat->ennemi[i]->forme==3){
-                        //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
-                        if(map->Nightmare){
-                            map->Nightmare=0;
-                           *pp->Nightmare=0;
-                            *pp->NightP=pp->NightMax/2;
-                            map->argent+=10;
-                        }
-                        //vide la barre de cauchemar
-                        else{
-                            *pp->NightP=0;
-                        
-                        }
-                    //artefact qui augmente le nombre d'argent gagner
-                    if(map->listeArtefact[8]->equipe==1){
-                         map -> argent += 15;
-                    }else{
-                         map -> argent += 10;
+                if(ennemi->forme==3){
+                    //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
+                    if(map->Nightmare){
+                        map->Nightmare=0;
+                        *pp->Nightmare=0;
+                        *pp->NightP=(pp->NightMax)/2;
+                        map->argent+=10;
                     }
-                    //artefact qui augmente le nombre de niveau gagner
-                    if(map->listeArtefact[9]->equipe==1){
-                         map -> nvEquipe += 2;
-                    }else{
-                         map -> nvEquipe += 1;
-                    }
+                    //vide la barre de cauchemar
+                    else{
+                        *pp->NightP=0;
                     
+                    }
+                //artefact qui augmente le nombre d'argent gagner
+                if(map->listeArtefact[8]->equipe==1){
+                        map -> argent += 15;
+                }else{
+                        map -> argent += 10;
                 }
+                //artefact qui augmente le nombre de niveau gagner
+                if(map->listeArtefact[9]->equipe==1){
+                        map -> nvEquipe += 2;
+                }else{
+                        map -> nvEquipe += 1;
+                }
+                
             }
             //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
             if (map -> Nightmare) {
@@ -1527,8 +1571,8 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         }
         desctruction_combat(combat);
 
-
-        if(ennemi->type==3){
+        if(ennemi->forme==3){
+            newCompagnon(&pp,ennemi);
             switch(map->zoneChargee){
                 case 2 : map->Zone2 = 2 ;break;
                 case 3 : map->Zone3 = 2 ;break;
@@ -1749,5 +1793,32 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
     }
 }
 
+void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
+    if(Boss->forme == 3){
+        int i;
+        for(i=0;(*Leader)->equipe[i] && i < 4;i++);
+        if((*Leader)->equipe[i])return;
+        switch (Boss->type)
+        {
+        case 0://Alex
+        (*Leader)->equipe[i]=init_combattant("Alex",1,50,0,13,12,0,2,1,3,100);
+            break;
 
+        case 1://Lou
+        (*Leader)->equipe[i]=init_combattant("Lou",1,50,0,13,12,1,2,1,3,100);
+            break;
+
+        case 2://Finn
+        (*Leader)->equipe[i]=init_combattant("Finn",1,50,0,13,12,2,2,1,3,100);
+            break;
+
+        case 3://Ada
+        (*Leader)->equipe[i]=init_combattant("Ada",1,50,0,13,12,3,2,1,3,100);
+            break;
+        
+        default:
+            break;
+        }
+    }
+}
 

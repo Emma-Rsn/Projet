@@ -80,5 +80,6 @@ void dest_all_obj(map_t *m);
 void destruction_artefact(artefact_t * artefact);
 artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture);
 void Boss(obj_t * boss,p_mv * Leader);
+int BoolTypein(int type,p_mv * Leader);
 
 #endif

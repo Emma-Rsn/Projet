@@ -29,7 +29,7 @@ struct personnage{
     int * d; //direction orienté{N,E,S,W}{0,1,2,3}
     int e; //etat du personnage
     char * nom;
-    combattant_t *equipe[4];
+    combattant_t * equipe[4];
     int * Nightmare;
     int * NightP; //pointcauchemar
     int NightMax;
