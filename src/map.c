@@ -5,7 +5,7 @@
 
 /**
 *\file map.c
-*\brief programme pour les maps
+*\brief Programme s'occupant de la création, l'initialisation et la gestion de la carte de jeu 
 *\author Moreau Enzo Rasson Emma
 *\date  Fevrier 2024
 *\version 1.0
@@ -15,6 +15,12 @@
 
 #include "../libs/commun.h"
 
+/**
+*
+*\fn case_t creation_case()
+*\return Une case de 64*64 pixels
+*\brief Fonction qui crée et initialise une case correspondant à un carré de 64*64 pixels
+*/
 case_t creation_case(){
     case_t c;
     c.etat=1;
@@ -26,6 +32,13 @@ case_t creation_case(){
     return c;
 }
 
+/**
+*
+*\fn grille_t creation_grille(int bord)
+*\param bord Indique les bords de maps bloqués (9 valeurs différentes)
+*\return Une grille de 30*16 cases
+*\brief Fonction qui crée et initialise une grille de cases
+*/
 grille_t creation_grille(int bord){
     grille_t g;
     int i,j;
@@ -71,6 +84,14 @@ grille_t creation_grille(int bord){
 
 }
 
+/**
+*
+*\fn carte_t creation_carte(int x,int y)
+*\param x Position x de la carte dans la matrice tabMap de la carte
+*\param y Position y de la carte dans la matrice tabMap de la carte
+*\return Une carte initialisée
+*\brief Fonction qui crée et initialise une carte 
+*/
 carte_t creation_carte(int x,int y){
     carte_t carte;
     int bord = 0; //variable pour savoir si on est en bordure de map
@@ -92,6 +113,13 @@ carte_t creation_carte(int x,int y){
     return carte;
 }
 
+
+/**
+*
+*\fn map_t creation_map()
+*\return Une map correspond à la carte de jeu entière
+*\brief Fonction qui crée et initialise une map avec une matrice de cartes
+*/
 map_t creation_map (){
     map_t m;
     int i,j;
@@ -130,7 +158,15 @@ int afficher_grille(grille_t grille, SDL_Renderer *renderer){
     return 0;
 }
 
-int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
+/**
+*
+*\fn int afficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec)
+*\param renderer Rendu de la fenetre SDL
+*\param map Map de jeu
+*\param cartec Carte où le joueur se situe au moment d'afficher la map
+*\brief Fonction qui affiche la carte
+*/
+int afficher_carte(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
     int i,j;
     int n = 0;
     if(map->Nightmare)n=map->nbN;
@@ -142,17 +178,12 @@ int betaAfficherMap(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
     return 0;
 }
 
-int afficher_texture(grille_t grille, SDL_Renderer *renderer){
-    int i,j;
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    for(i=0;i<LONG;i++){
-        for(j=0;j<LARG;j++){
-            SDL_RenderDrawRect(renderer, &(grille.tabGrille[i][j].Rectangle));
-        }
-    }
-    return 0;
-}
-
+/**
+*
+*\fn int creer_map(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui initialise la map de jeu procéduralement
+*/
 int creer_map(map_t * map){
     int x,y;
     int choix,choix2;
@@ -451,6 +482,12 @@ int creer_map(map_t * map){
 
 }
 
+/**
+*
+*\fn int sauvegarde_map(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui sauvegarde le numéro de zone de chaque carte de la map dans un fichier
+*/
 int sauvegarde_map(map_t * map){
     //Sauvegarde de la map dans un fichier
     FILE * file;
@@ -482,6 +519,12 @@ int sauvegarde_map(map_t * map){
     return 0;
 }
 
+/**
+*
+*\fn int creer_map_layout(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui initialise les layouts carte par carte procéduralement
+*/
 int creer_map_layout(map_t * map){
     int choix;
     srand( time( NULL ) );
@@ -764,6 +807,12 @@ int creer_map_layout(map_t * map){
     return (sauvegarde_map_layout(map));
 }
 
+/**
+*
+*\fn int sauvegarde_map_layout(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui sauvegarde le numéro de layout de chaque carte de la map dans un fichier
+*/
 int sauvegarde_map_layout(map_t * map){
     //Sauvegarde de la map des layouts dans un fichier
     FILE * file;
@@ -791,6 +840,12 @@ int sauvegarde_map_layout(map_t * map){
     return 0;
 }
 
+/**
+*
+*\fn int remplir_map(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui soit charge à partir d'un fichier, s'il existe, les numéros de zone dans chaque carte de la map soit appelle la fonction creer_map()
+*/
 int remplir_map(map_t *map){
     FILE * file;
 
@@ -832,19 +887,13 @@ int remplir_map(map_t *map){
     }
 }
 
-int afficher_zone (map_t map){
-    int i,j;
-    for(i=0;i<ROWS;i++){
-        for(j=0;j<COLUMNS;j++){
-            printf("%d ",map.tabMap[i][j].nZone);
-        }
-        printf("\n");
-    }
-    printf("\n");
-    return 0;
-
-}
-
+/**
+*
+*\fn int load_layout(carte_t *c, char *namefile)
+\*\param c Carte dans laquelle on a chargé le layout
+\*\param namefile nom du fichier à charger
+*\brief Fonction qui charge un layout à partir d'un fichier dans une carte
+*/
 int load_layout(carte_t *c, char *namefile) {
     FILE *file;
     file = fopen(namefile, "r");
@@ -884,6 +933,13 @@ int load_layout(carte_t *c, char *namefile) {
     return 0;
 }
 
+/**
+*
+*\fn int load_layout(carte_t *c, char *namefile)
+\*\param c Carte dans laquelle on a chargé le layout
+\*\param namefile nom du fichier à charger
+*\brief Fonction qui charge un layout à partir d'un fichier dans une carte
+*/
 /*int load_layout(carte_t *c, char *namefile) {
     FILE *file;
     file = fopen(namefile, "r");
@@ -919,10 +975,29 @@ int load_layout(carte_t *c, char *namefile) {
     return 0;
 }*/
 
+/**
+*
+*\fn float min(float a, float b)
+\*\param a Premier float
+\*\param b Deuxième float
+*\brief Fonction qui retourne le plus petit float entre a et b
+*/
 float min(float a, float b) {
     return (a < b) ? a : b;
 }
 
+/**
+*
+*\fn int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec)
+*\param event Pile des évènements SDL
+*\param map Map de jeu
+*\param renderer Rendu de la fenetre SDL
+*\param we Largeur de l'écran
+*\param he Hauteur de l'écran
+*\param etat_map Indique si la carte a été explorée ou non
+*\param cartec Carte où le joueur se situe au moment d'afficher la map
+*\brief Fonction qui affiche en mode réduit l'entièreté de la map
+*/
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec){
     int i, j;
 
@@ -1015,6 +1090,15 @@ int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int
     return 0;
 }
 
+/**
+*
+*\fn int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMusic)
+*\param map Map de jeu
+*\param renderer Rendu de la fenetre SDL
+*\param nZone Zone courante du joueur
+*\param gMusic Pointeur sur la musique courante
+*\brief Fonction qui charge les textures et la musique d'une zone quand le joueur y rentre
+*/
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMusic){
     int m = nZone;
         switch (nZone)
@@ -1057,6 +1141,13 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
     return 0;
 }
 
+/**
+*
+*\fn int zone_fini(map_t map)
+*\param map Map de jeu
+*\return Booléen pour savoir si la zone est finie
+*\brief Fonction qui vérifie si le joueur peut sortir d'une zone s'il l'a fini ou non
+*/
 int zone_fini(map_t map){
     switch(map.zoneChargee){
         case 2 : if(map.Zone2 != 1)return 1;else return 0;break;
@@ -1067,6 +1158,14 @@ int zone_fini(map_t map){
     }
 }
 
+/**
+*
+*\fn void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c)
+*\param renderer Rendu de la fenêtre SDL
+*\param cartec Carte courante du joueur
+*\param c Case qui sera la source de lumière
+*\brief Fonction qui applique un filtre sur l'écran pour donner un effet d'obscurcissement
+*/
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c){
     int i,j;
     for(i=0;i<LONG;i++){
@@ -1087,13 +1186,18 @@ void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c){
     }
 }
 
+/**
+*
+*\fn int nb_texture_chargement(map_t *map, char* namefile)
+*\param map Map du jeu
+*\param namefile Nom du fichier des textures
+*\brief Fonction qui affecte le nombre de texture d'une zone à la map
+*/
 int nb_texture_chargement(map_t *map, char* namefile){
     FILE * file;
     int nb_zone[5] = {0,0,0,0,0};
     char line[80];
     int i=-1;
-
-    //check = regcomp(&rx,"^[:number:]N[:number:]", 0);
 
     file=fopen(namefile,"r");
 
@@ -1118,6 +1222,12 @@ int nb_texture_chargement(map_t *map, char* namefile){
     return 0;
 }
 
+/**
+*
+*\fn int detruire_tab_path(map_t *map)
+*\param map Map du jeu
+*\brief Fonction qui détruit le tableau de chemin des textures
+*/
 int detruire_tab_path(map_t *map){
     int i,k;
     if(map->tabPath!=NULL){
@@ -1133,6 +1243,13 @@ int detruire_tab_path(map_t *map){
     return 0;
 }
 
+/**
+*
+*\fn int creation_tab_path(map_t *map,char * namefile)
+*\param map Map du jeu
+*\param namefile Nom du fichier de texture
+*\brief Fonction qui crée le tableau de chemin des textures
+*/
 int creation_tab_path(map_t *map,char * namefile){
     FILE * file;
     int i = 0;
@@ -1173,6 +1290,15 @@ int creation_tab_path(map_t *map,char * namefile){
 
 }
 
+/**
+*
+*\fn int creation_tab_texture(map_t *map, SDL_Renderer *renderer, int nbZone, int eop)
+*\param map Map du jeu
+*\param renderer Rendu de la fenêtre SDL
+*\param nbZone Zone courante du joueur
+*\param eop Variable pour savoir si on est à la fin du programme ou non
+*\brief Fonction qui crée le tableau de textures SDL
+*/
 int creation_tab_texture(map_t *map, SDL_Renderer *renderer, int nbZone, int eop) {
     int i = 0;
     SDL_Surface *surf;
