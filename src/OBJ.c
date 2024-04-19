@@ -28,8 +28,24 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
             break;
         case 4 : //cas d'un objet avec dialogue sans collision
             n = 1;
-            newObj->cas->etat = 1;
+            newObj->cas->etat = 0;
             break;
+        case 5 : //cas d'un loot apres boss
+            n = 1;
+            newObj->cas->etat = 0;
+            break;
+        case 6 : //cas d'une porte nécessitant la clé
+            n = 0;
+            newObj->cas->etat = 0;
+        case 7 : //cas de la zone de plongée
+            n = 0;
+            newObj->cas->etat = 0;
+        case 8 : //cas d'une porte nécessitant la clé
+            n = 0;
+            newObj->cas->etat = 0;
+        case 9 : //cas de la zone de plongée
+            n = 0;
+            newObj->cas->etat = 0;
         default://cas d'un objet inconnu
             n = -1;
             break;
@@ -40,6 +56,60 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
     va_end(args);
     return newObj;
 }
+
+void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue){
+    int i;
+    for(i=0;i<(*cartec)->nbObj;i++){
+        if((*cartec)->tabObj[i]->typeObj==5){
+            debut_loot(event,pp,(*cartec)->tabObj[i]->cas,map,(*cartec)->tabObj[i],etat_dialogue,(*cartec)->tabObj[i]->tabObj[0]);
+        }else if((*cartec)->tabObj[i]->typeObj==6){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e && map->cle == 1){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte][(*cartec)->ycarte+1];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[0][5]);
+                 pp->r = pp->c->Rectangle;
+            }
+        }else if((*cartec)->tabObj[i]->typeObj==7){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e && map->plongee == 1){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte+1][(*cartec)->ycarte];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[15][0]);
+                pp->r = pp->c->Rectangle;
+            }
+        }else if((*cartec)->tabObj[i]->typeObj==8){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte][(*cartec)->ycarte-1];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[15][0]);
+                pp->r = pp->c->Rectangle;
+            }
+        }else if((*cartec)->tabObj[i]->typeObj==9){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte-1][(*cartec)->ycarte];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[15][0]);
+                pp->r = pp->c->Rectangle;
+            }
+        }
+    }
+}
+
+
+
+void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int num_dialogue){
+    if(boolcol(c,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+        switch(num_dialogue){
+            case 0 : map->plongee = 1;
+            break;
+            case 1 : map->cle = 1;
+            break;
+            case 2 : map->talisman = 1;
+            break;
+        }
+        *etat_dialogue=1;
+    } 
+}
+
 
 int load_obj(carte_t *c, char *namefile){
     int x,y,indText,type;
@@ -54,8 +124,6 @@ int load_obj(carte_t *c, char *namefile){
     file=fopen(namefile,"r");
 
     if(file){
-        /*fscanf(file,"%d %d %d %d ",&x,&y,&indText,&type);
-        printf("%d %d %d %d \n",x,y,indText,type);*/
         while(fscanf(file,"%d %d %d %d ",&x,&y,&indText,&type)!= EOF){
             switch(type){
                 case 0 :
@@ -86,13 +154,33 @@ int load_obj(carte_t *c, char *namefile){
                     c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,num_dialogue);
                     c->nbObj++; 
                     break;
+                case 5 :
+                    fscanf(file,"%d",&num_dialogue);
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,num_dialogue);
+                    c->nbObj++; 
+                    break;
+                case 6 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 7 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 8 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 9 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
             }
             fscanf(file,"\n");
         }
     }
     else{
-        printf("Fichier inexistant\n");
-        fclose(file);
+        printf("%s\n",namefile);
         return 1;
     }
     fclose(file);
@@ -173,22 +261,22 @@ void Boss(obj_t * boss,p_mv * Leader){
             {
             case 0://Alex
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Alex",1,50,0,13,12,0,2,1,3);
+            boss->tabObj[0]=init_ennemi("Alex",100,50,0,136,135,0,2,15,0);
                 break;
 
             case 1://Lou
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Lou",1,50,0,13,12,1,2,1,3);
+            boss->tabObj[0]=init_ennemi("Lou",100,50,0,138,137,1,2,15,0);
                 break;
 
             case 2://Finn
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Finn",1,50,0,13,12,2,2,1,3);
+            boss->tabObj[0]=init_ennemi("Finn",100,50,0,140,139,2,2,15,0);
                 break;
 
             case 3://Ada
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Ada",1,50,0,13,12,3,2,1,3);
+            boss->tabObj[0]=init_ennemi("Ada",100,50,0,142,141,3,2,15,0);
                 break;
             
             default:

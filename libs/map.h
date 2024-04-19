@@ -54,7 +54,7 @@ struct carte_s{
     int nZone;
     int nbObj;
     int nrlayout; //numero du layout chargé
-    obj_t * tabObj[20];
+    obj_t * tabObj[50];
     grille_t grille; //quadrillage des cases dans une seule carte
 };
 
@@ -103,8 +103,12 @@ struct map_s{
     int Zone3;
     int Zone4;
     int Zone5;
+    int cle;
+    int plongee;
+    int talisman;
 };
 
+int load_layout_texture(map_t * map);
 case_t creation_case();
 grille_t creation_grille(int bord);
 carte_t creation_carte(int x,int y);
@@ -118,6 +122,7 @@ int sauvegarde_map_layout(map_t * map);
 int remplir_map(map_t *map);
 float min(float a, float b);
 int zone_fini(map_t map);
+int zone_bloquer(int zone,map_t map);
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec);
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMusic);
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c);
@@ -126,5 +131,8 @@ int detruire_tab_path(map_t *map);
 int nb_texture_chargement(map_t *map, char* namefile);
 int creation_tab_path(map_t *map,char * namefile);
 int creation_tab_texture(map_t *map,SDL_Renderer *renderer,int nbZone,int free);
+int sauvegarde_map_brouillard(map_t * map);
+int load_brouillard(map_t *map);
+int load_layout_obj(map_t * map);
 
 #endif

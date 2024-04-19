@@ -216,7 +216,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                 }
                 }
             //deplacement statique
-            if((temp != (*carte)->nZone) && !zone_fini(*map)){
+            if(((temp != (*carte)->nZone) && !zone_fini(*map)) || ((temp != (*carte)->nZone) && zone_bloquer((*carte)->nZone,*map))){
                 *carte = dcartec;
                 pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
                 pmv->r = pmv->c->Rectangle;
@@ -645,8 +645,8 @@ void remplirp(p_mv * p,case_t * c,int leader){
         break;
     
     default:
-    p->nom="alex";
-    p->equipe[0]=init_combattant(p->nom,100,50,0,136,135,0,2,15,0,100);
+    p->nom="Default";
+    p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
         break;
     }
 }

@@ -126,8 +126,10 @@ void debut_dialogue(SDL_Event event,p_mv * pp,int *etat_dialogue,case_t * c){
 void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map,int *etat_dialogue,p_mv * pp){
     int i;
     for(i=0;i<cartec->nbObj;i++){
-        if(cartec->tabObj[i]->typeObj==3|| cartec->tabObj[i]->typeObj==4){
+        if(cartec->tabObj[i]->typeObj==3|| cartec->tabObj[i]->typeObj==4 || cartec->tabObj[i]->typeObj==5){
+            int dialentree = *etat_dialogue;
             pnj_dialogue(event,renderer,he,we,map,etat_dialogue,cartec->tabObj[i]->tabObj[0],pp);
+            if(cartec->tabObj[i]->typeObj==5 && dialentree == 1 && *etat_dialogue == 0)dest_obj(cartec,i);
         }
     }
 }

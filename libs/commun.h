@@ -18,7 +18,8 @@
 #define BONUS_ZONE_N 1
 #define PLUS_BONUS_EQUIPE 0.5
 #define PLUS_BONUS_ZONE 1
-#define NB_PARAM 31
+
+#define NB_PARAM 36
 
 
 typedef struct obj_s obj_t;
@@ -46,6 +47,7 @@ typedef struct Liste Liste;
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "../libs/save.h"
 #include "../libs/printImg.h"

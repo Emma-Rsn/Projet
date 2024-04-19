@@ -74,6 +74,11 @@ int main(){
 
     //IMG de fond
     //SDL_Texture* backgroundTexture = NULL;
+
+    if (access("save/ennemi.txt", F_OK) == -1) {
+        system("touch save/ennemi.txt");
+        system("chmod a+w save/ennemi.txt");
+    }
     
     
     // Initialiser la map
@@ -102,7 +107,7 @@ int main(){
     map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,194);
 
     //debut sauvegarde
-    int q,s,ii,last;
+    int q,s,ii,last,jj;
     int * pv = malloc(sizeof(int));
     int * leader = malloc(sizeof(int));
     * leader = 0;
@@ -144,24 +149,27 @@ int main(){
     carte_t * cartec =&map.tabMap[q][s];
     remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),*leader);
     *Alex->equipe[0]->pv=*pv;
-    for(ii = 1;ii<=*tabparam[26];ii++){
-        switch(*tabparam[27+ii-1]){
+    for(ii = 0,jj = 1;ii<((*tabparam[26]-1)*2) && ii < 8;ii=ii+2,jj++){
+        switch(*tabparam[27+ii]){
             case 0 :
-                Alex->equipe[ii]=init_combattant("Alex",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Alex",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
                 break;
             case 1 :
-                Alex->equipe[ii]=init_combattant("Lou",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
                 break;
             case 2 :
-                Alex->equipe[ii]=init_combattant("Finn",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
                 break;
             case 3 :
-                Alex->equipe[ii]=init_combattant("Ada",*tabparam[28+ii-1],60,0,1,14,*tabparam[27+ii-1],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
                 break;
             default: break;
         }
 
     }
+    map.plongee = *tabparam[33];
+    map.cle  = *tabparam[34];
+    map.talisman = *tabparam[35];
 
     cartec->etat_brouillard = 0;
     map.zoneChargee = cartec->nZone;
@@ -173,11 +181,17 @@ int main(){
     //fin sauvegarde
     chargement_Zone(&map,renderer,map.zoneChargee,gMusic);
     creer_map_layout(&map);
+    load_layout_obj(&map);
 
     int *etat_dialogue=malloc(sizeof(int));
     *etat_dialogue=0;
 
-    load_obj(&map.tabMap[2][3],"layoutbeachObj.txt");
+    load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
+
+
+
+    load_brouillard(&map);
+    load_ennemi(&map);
 
 
 
@@ -245,6 +259,9 @@ int main(){
                 map.Zone3 = 2;
                 map.Zone4 = 2;
                 map.Zone5 = 2;
+                map.plongee = 1;
+                map.cle = 1;
+                map.talisman = 1;
             }if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_1)){
                 if(*(Alex->NightP) == 0){
                     *(Alex->NightP) = 100;
@@ -258,12 +275,13 @@ int main(){
                 (*etat_map)=1;
             }
             pinput(Alex,event,&cartec,&map,renderer,transi,gMusic,toucheDeplacement);
-            pause(event,gMusic);
+            pause_SDL(event,gMusic);
 
             //menu
             menu_option(wEcran,hEcran,event,renderer,run,etatoption,&map);
             //aller dans les options
             option(wEcran,hEcran,event,renderer,etatoption,toucheDeplacement,&map);
+            debut_loot_carte(&cartec,event,Alex,&map,etat_dialogue);
             debut_dialogue_carte(cartec,event,Alex,etat_dialogue);
             debut_combat_carte(cartec,event,Alex);
             if(*Alex->NightP == 100 && tN == 1){
@@ -296,7 +314,7 @@ int main(){
         affp(Alex,renderer,event);
         affTabObj(renderer,map,cartec);
 
-        if(ouilumiere)lumiere(renderer,cartec,Alex->c);
+        if(ouilumiere || map.zoneChargee == 5)lumiere(renderer,cartec,Alex->c);
 
         affHud(renderer,hEcran,wEcran,map,*Alex);
 
@@ -304,7 +322,6 @@ int main(){
         if(ouifps)aff_Fps(cmpfps,renderer);
 
         transition(renderer,transi,*wEcran,*hEcran);
-
 
         //afficher dialogue
         //pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
@@ -342,6 +359,7 @@ int main(){
     fclose(fichier);
 
     save_pos(cartec->xcarte,cartec->ycarte,*Alex,map,*toucheDeplacement);
+    sauvegarde_map_brouillard(&map);
     
 
     free(etat_map);

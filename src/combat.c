@@ -1198,7 +1198,29 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2 ){
             combat(we,he,event,renderer,cartec->tabObj[i]->tabObj[0],pp,map,etat_boss);
-            if(boolTousMort((ennemi_t *)cartec->tabObj[i]->tabObj[0]))dest_obj(cartec,i);
+            if(boolTousMort((ennemi_t *)cartec->tabObj[i]->tabObj[0])){
+                if(((ennemi_t *)cartec->tabObj[i]->tabObj[0])->forme == 3){
+                    switch (map->zoneChargee)
+                    {
+                    case 4 :
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,50,5,2);
+                        cartec->nbObj++; 
+                        break;
+                    case 2 :
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,50,5,1);
+                        cartec->nbObj++; 
+                        break;
+                    case 3 :
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,50,5,3);
+                        cartec->nbObj++; 
+                        break;
+                    default:
+                        break;
+                    }
+                }
+                save_ennemi(*cartec,*cartec->tabObj[i]);
+                dest_obj(cartec,i);
+            }
         }
     }
 }
@@ -1608,9 +1630,9 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         if(ennemi->forme==3){
             newCompagnon(&pp,ennemi);
             switch(map->zoneChargee){
-                case 2 : map->Zone2 = 2 ;break;
-                case 3 : map->Zone3 = 2 ;break;
-                case 4 : map->Zone4 = 2 ;break;
+                case 2 : map->Zone2 = 2 ;map->cle = 1;break;
+                case 3 : map->Zone3 = 2 ;map->talisman = 1;break;
+                case 4 : map->Zone4 = 2 ;map->plongee = 1;break;
                 case 5 : map->Zone5 = 2 ;break;
             default : return 1;
             }   
@@ -1835,19 +1857,19 @@ void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
         switch (Boss->type)
         {
         case 0://Alex
-        (*Leader)->equipe[i]=init_combattant("Alex",1,50,0,13,12,0,2,1,3,100);
+        (*Leader)->equipe[i]=init_combattant("Alex",100,50,0,136,135,0,2,15,0,100);
             break;
 
         case 1://Lou
-        (*Leader)->equipe[i]=init_combattant("Lou",1,50,0,13,12,1,2,1,3,100);
+        (*Leader)->equipe[i]=init_combattant("Lou",100,50,0,138,137,1,2,15,0,100);
             break;
 
         case 2://Finn
-        (*Leader)->equipe[i]=init_combattant("Finn",1,50,0,13,12,2,2,1,3,100);
+        (*Leader)->equipe[i]=init_combattant("Finn",100,50,0,140,139,2,2,15,0,100);
             break;
 
         case 3://Ada
-        (*Leader)->equipe[i]=init_combattant("Ada",1,50,0,13,12,3,2,1,3,100);
+        (*Leader)->equipe[i]=init_combattant("Ada",100,50,0,142,141,3,2,15,0,100);
             break;
         
         default:

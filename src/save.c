@@ -93,11 +93,13 @@ int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche)
             fprintf(fichier, "%d %d %d %d %d %d %d %d\n", map.Zone2, map.Zone3, map.Zone4, map.Zone5, map.argent, map.nvEquipe,touche,pmv.equipe[0]->type);
             fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->equipe, map.listeArtefact[1]->equipe, map.listeArtefact[2]->equipe, map.listeArtefact[3]->equipe, map.listeArtefact[4]->equipe, map.listeArtefact[5]->equipe, map.listeArtefact[6]->equipe, map.listeArtefact[7]->equipe, map.listeArtefact[8]->equipe, map.listeArtefact[9]->equipe);
             fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->possession, map.listeArtefact[1]->possession, map.listeArtefact[2]->possession, map.listeArtefact[3]->possession, map.listeArtefact[4]->possession, map.listeArtefact[5]->possession, map.listeArtefact[6]->possession, map.listeArtefact[7]->possession, map.listeArtefact[8]->possession, map.listeArtefact[9]->possession);
-            fprintf(fichier,"%d",i-1);
+            fprintf(fichier,"%d",i);
             for(y = 1;y<i;y++){
                 fprintf(fichier," %d %d",pmv.equipe[y]->type,*pmv.equipe[y]->pv);
             }
             fprintf(fichier,"\n");
+            fprintf(fichier,"%d %d %d\n",map.plongee,map.cle,map.talisman);
+
         }
         
         fclose(fichier);
@@ -123,9 +125,10 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[6], tabparam[7], tabparam[8], tabparam[9], tabparam[10], tabparam[11], tabparam[12], tabparam[13], tabparam[14], tabparam[15]);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[16], tabparam[17], tabparam[18], tabparam[19], tabparam[20], tabparam[21], tabparam[22], tabparam[23], tabparam[24], tabparam[25]);
         fscanf(fichier, "%d",tabparam[26]);
-        for(y = 0;y<(*tabparam[26]);y++){//31 max
+        for(y = 0;y<((*tabparam[26]-1)*2);y=y+2){//32 max
             fscanf(fichier," %d %d",tabparam[27+y],tabparam[28+y]);
         }
+        fscanf(fichier,"\n%d %d %d\n",tabparam[33],tabparam[34],tabparam[35]);
     }else if(last == 2){
         fscanf(fichier, "%d %d %d %d\n", tabparam[4], tabparam[5],touche,leader);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[6], tabparam[7], tabparam[8], tabparam[9], tabparam[10], tabparam[11], tabparam[12], tabparam[13], tabparam[14], tabparam[15]);
@@ -137,6 +140,37 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
     return last;
 }
 
+void save_ennemi(carte_t cartec,obj_t ennemi){
+    if(ennemi.typeObj == 2 && (boolTousMort((ennemi_t *)ennemi.tabObj[0]))){
+        FILE *fichier = NULL;
+        fichier = fopen("save/ennemi.txt", "a");
+        if (fichier == NULL)
+        {
+            printf("Erreur a l'ouerture du fichier\n");
+            return;
+        }
+        fprintf(fichier,"%d %d %d %d\n",cartec.xcarte,cartec.ycarte,ennemi.cas->x,ennemi.cas->y);
+        fclose(fichier);
+    }
+}
+void load_ennemi(map_t * map){
+    FILE *fichier = NULL;
+    fichier = fopen("save/ennemi.txt", "r+");
+    if (fichier == NULL)
+    {
+        fclose(fichier);
+        return;
+    }
+    int xc,yc,x,y,i;
+    while(fscanf(fichier,"%d %d %d %d\n",&xc,&yc,&x,&y) != EOF){
+        for(i = 0 ;i < (*map).tabMap[xc][yc].nbObj && !boolMemeCase(*(*map).tabMap[xc][yc].tabObj[i]->cas,(*map).tabMap[xc][yc].grille.tabGrille[x][y]) ;i++);
+        if(i < (*map).tabMap[xc][yc].nbObj){
+            dest_obj(&(*map).tabMap[xc][yc],i);
+        }
+    }
+    fclose(fichier);
+}
+
 //param = 1 pour garder la progression et = 0 pour effacer la progression
 void nouvelle_partie(int param){
     FILE *fichier = fopen("save/save.txt", "w");
@@ -145,6 +179,10 @@ void nouvelle_partie(int param){
     }else{
         fprintf(fichier, "%d", 3);
     }
+    system("rm save/ennemi.txt");
+    system("rm save/map.txt");
+    system("rm save/mapbrouillard.txt");
+    system("rm save/maplayout.txt");
     fclose(fichier);
 }
 
@@ -156,36 +194,10 @@ void effacer_sauvg(){
 
 
 
-/*
-new load layout  test
+    /*
+boss boss /2
 
-save :
-    ennemi mort
-    variable d'exploration
-    layout obj et load texture
+chargement layout objet cas particulier
 
-obj :
-    transition :
-        sous marine
-        manoir
-        grotte
-
-début combat 
-
-boss boss
-
-apres boss variable exploration avec dialogue
-
-
-
-afficher niv Zone dans la carte !
-
-chargement layout objet + cas particulier
-
-lumiere dans grotte
-
-rejouer :
-    bug artefact
-    bug layout texture
-
+bug plusieurs loot sur la carte
 */

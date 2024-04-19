@@ -1,6 +1,6 @@
 #include "../libs/commun.h"
 
-void pause(SDL_Event event,Mix_Music* gMusic){
+void pause_SDL(SDL_Event event,Mix_Music* gMusic){
     if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_9)){
         if( Mix_PlayingMusic() == 0 ){
              Mix_PlayMusic( gMusic, -1 );

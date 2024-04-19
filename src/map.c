@@ -133,6 +133,9 @@ map_t creation_map (){
     m.Zone3 = 0;
     m.Zone4 = 0;
     m.Zone5 = 0;
+    m.plongee = 0;
+    m.talisman = 0;
+    m.talisman = 0;
     m.nb_emplacement=1;
     m.prix_emplacement=20;
     for(i=0;i<ROWS;i++){
@@ -185,6 +188,7 @@ int afficher_carte(SDL_Renderer *renderer,map_t * map,carte_t * cartec){
 *\brief Fonction qui initialise la map de jeu procéduralement
 */
 int creer_map(map_t * map){
+
     int x,y;
     int choix,choix2;
     srand( time( NULL ) );
@@ -524,6 +528,11 @@ int sauvegarde_map(map_t * map){
 *\brief Fonction qui initialise les layouts carte par carte procéduralement
 */
 int creer_map_layout(map_t * map){
+
+    if(load_layout_texture(map)){
+        return 1;
+    }
+
     int choix;
     srand( time( NULL ) );
 
@@ -805,6 +814,28 @@ int creer_map_layout(map_t * map){
     return (sauvegarde_map_layout(map));
 }
 
+int sauvegarde_map_brouillard(map_t * map){
+    FILE * file;
+    int x,y;
+
+    file=fopen("save/mapbrouillard.txt","w");
+    if(file){
+        for(x=0;x<ROWS;x++){
+            for(y=0;y<COLUMNS;y++){
+                fprintf(file,"%d",map->tabMap[x][y].etat_brouillard);
+            }
+            fprintf(file,"\n");
+        }
+        fclose(file);
+        return 0;
+    }
+    else{
+        printf("Fichier inexistant\n");
+        return 1;
+    }
+    return 0;
+}
+
 /**
 *
 *\fn int sauvegarde_map_layout(map_t * map)
@@ -833,6 +864,29 @@ int sauvegarde_map_layout(map_t * map){
     }
     else{
         printf("Fichier inexistant\n");
+        return 1;
+    }
+    return 0;
+}
+
+int load_brouillard(map_t *map){
+    FILE * file;
+    int x,y;
+
+    file=fopen("save/mapbrouillard.txt","r");
+    if(file){
+        for (x = 0; x < ROWS; ++x) {
+            for (y = 0; y < COLUMNS; ++y) {
+                char caractere;
+                fscanf(file, "%c", &caractere);
+                map->tabMap[x][y].etat_brouillard = caractere - '0';
+            }
+            fscanf(file, "\n");
+        }
+        fclose(file);
+        return 0;
+    }
+    else{
         return 1;
     }
     return 0;
@@ -877,12 +931,67 @@ int remplir_map(map_t *map){
             fscanf(file,"%c",&numZone);
         }
         fclose(file);
-        return 0;
+        return 1;
     }
     else{
         creer_map(map);
         return 0;
     }
+}
+
+int load_layout_texture(map_t * map) {
+    FILE *file;
+    file = fopen("save/maplayout.txt", "r");
+    int i = 0, j = 0,nr;
+    char num[5];
+    char res[50];
+    if (file) {
+        for (i = 0; i < ROWS; i++) {
+            for (j = 0; j < COLUMNS; j++) {
+                if (fscanf(file, "%d",&nr) != 1) {
+                    printf("Erreur à la ligne %d, colonne %d.\n", i, j);
+                    fclose(file);
+                    return 1;
+                }
+                strcpy(res,"layout/layout");
+                sprintf(num,"%d",map->tabMap[i][j].nZone);
+                strcat(res,num);
+                strcat(res,"_");
+                sprintf(num,"%d",nr);
+                strcat(res,num);
+                strcat(res,".txt");
+                load_layout(&map->tabMap[i][j],res);
+            }
+            fscanf(file,"\n");
+        }
+    }else {
+        return 0;
+    }
+
+    fclose(file);
+    return 1;
+}
+
+int load_layout_obj(map_t * map) {
+    int i = 0, j = 0,nr;
+    char num[5];
+    char res[50];
+    for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLUMNS; j++) {
+            strcpy(res,"layoutobj/layout");
+            sprintf(num,"%d",map->tabMap[i][j].nZone);
+            strcat(res,num);
+            strcat(res,"_");
+            nr = map->tabMap[i][j].nrlayout;
+            //cas particulier
+            sprintf(num,"%d",nr);
+            strcat(res,num);
+            strcat(res,".txt");
+            load_obj(&map->tabMap[i][j],res);
+        }
+    }
+
+    return 1;
 }
 
 /**
@@ -939,7 +1048,8 @@ int load_layout(carte_t *c, char *namefile) {
 *\brief Fonction qui charge un layout à partir d'un fichier dans une carte
 */
 //IMPORTANT !!! NE PAS SUPPRIMER !!!
-/*int load_layout(carte_t *c, char *namefile) {
+/*
+int load_layout(carte_t *c, char *namefile) {
     FILE *file;
     file = fopen(namefile, "r");
     int i = 0, j = 0;
@@ -956,14 +1066,15 @@ int load_layout(carte_t *c, char *namefile) {
     }
 
     if (file) {
-        for (i = 0; i < LONG; i++) {
-            for (j = 0; j < LARG; j++) {
-                if (fscanf(file, "%d", &c->grille.tabGrille[i][j].ntexture) != 1) {
+        for (i = 0; i < LARG; i++) {
+            for (j = 0; j < LONG; j++) {
+                if (fscanf(file, "%d", &c->grille.tabGrille[j][i].ntexture) != 1) {
                     printf("Erreur à la ligne %d, colonne %d.\n", i, j);
                     fclose(file);
                     return 1;
                 }
             }
+            fscanf(file,"\n");
         }
     } else {
         printf("Fichier inexistant\n");
@@ -1154,6 +1265,15 @@ int zone_fini(map_t map){
         case 4 : if(map.Zone4 != 1)return 1;else return 0;break;
         case 5 : if(map.Zone5 != 1)return 1;else return 0;break;
         default : return 1;
+    }
+}
+
+int zone_bloquer(int zone,map_t map){
+    switch(zone){
+        case 2 : if(map.plongee == 0)return 1;else return 0;break;
+        case 5 : if(map.talisman == 0)return 1;else return 0;break;
+        case 3 : if(map.cle == 0)return 1;else return 0;break;
+        default : return 0;
     }
 }
 
