@@ -23,9 +23,11 @@ int main(){
     int * run=malloc(sizeof(int));
     int * etatoption=malloc(sizeof(int));
     int * toucheDeplacement=malloc(sizeof(int));
+    int * etat_boss=malloc(sizeof(int));
     *toucheDeplacement=0;
     *run=1;
     *etatoption=0;
+    *etat_boss=0;
 
      
     //resolution de l'ecran
@@ -308,7 +310,7 @@ int main(){
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
         
         //Commence un combat
-        combat_carte(cartec,wEcran,hEcran,event,renderer,Alex,&map);
+        combat_carte(cartec,wEcran,hEcran,event,renderer,Alex,&map,etat_boss);
         
         dialogue_carte(cartec,wEcran,hEcran,event,renderer,&map,etat_dialogue,Alex);
 
@@ -347,6 +349,7 @@ int main(){
     free(etatoption);
     free(toucheDeplacement);
     free(etat_dialogue);
+    free(etat_boss);
 
     Mix_FreeMusic(gMusic);
     Mix_CloseAudio();

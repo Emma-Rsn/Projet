@@ -76,7 +76,7 @@ void remplir_combattant(combattant_t * c,char* nom,int pv,int vitesse,int camp,i
 int compare_vitesse_enc( const void * const combattant1 , const void * const combattant2 ) ;
 int compare_vitesse(const combattant_t * const combattant1,const combattant_t * const combattant2);
 int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c);
-int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map);
+int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map,int * etat_boss);
 int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,combattant_t *combattant,int Nbennemi,combat_t * combat,int allie,p_mv * personnage,map_t * map);
 int attaque_ennemi(int nb_combattant,combat_t * combat);
 int affiche_pv(int *we,int *he,SDL_Renderer * renderer,SDL_Rect r_GEcran,SDL_Rect r_DEcran,combat_t *combat,map_t * map);
@@ -90,7 +90,7 @@ void affVie(SDL_Renderer * renderer,int  he,int we,combattant_t * combattant,map
 void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we,int * he,int allie,SDL_Event event,p_mv * personnage,map_t * map);
 void barreCauchemard(p_mv * pmv,SDL_Renderer * renderer,map_t * map);
 void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp);
-void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map);
+void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map,int * etat_boss);
 int forme_attaque(int nb_combattant,combat_t * combat);
 void copier_combattant(combattant_t * combattant,combattant_t * combattantcopie);
 void newCompagnon(p_mv ** Leader,ennemi_t * Boss);

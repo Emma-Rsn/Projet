@@ -1109,25 +1109,25 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
             break;
         case 2:
             creation_tab_texture(map,renderer,2,0);
-            map->nbN = 71;
+            map->nbN = 67;
             map->nvZone=2;
             if(map->Zone2 == 0)map->Zone2 = 1;
             break;
         case 3:
             creation_tab_texture(map,renderer,3,0);
-            map->nbN = 78;
+            map->nbN = 74;
             map->nvZone=3;
             if(map->Zone3 == 0)map->Zone3 = 1;
             break;
         case 4:
             creation_tab_texture(map,renderer,4,0);
-            map->nbN = 48;
+            map->nbN = 44;
             map->nvZone=4;
             if(map->Zone4 == 0)map->Zone4 = 1;
             break;
         case 5:
             creation_tab_texture(map,renderer,5,0);
-            map->nbN = 48;
+            map->nbN = 44;
             map->nvZone=5;
             if(map->Zone5 == 0)map->Zone5 = 1;
             break;

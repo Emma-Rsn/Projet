@@ -132,6 +132,10 @@ void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Rendere
     }
 }
 
+
+
+
+
 /**
 *\fn void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int num_dialogue,p_mv * pp)
 *\param event pile d'evenement
@@ -272,6 +276,9 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
                 TTF_Quit();
                 return ;
             }
+
+
+            
             
             SDL_RenderCopy(renderer, targetTexture, NULL, NULL);
             SDL_SetRenderDrawColor(renderer,0,0,0,100);
@@ -281,9 +288,14 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
 
             //boite portrait
             SDL_RenderCopy(renderer,  map->tabTexture[portrait], NULL, &r_po);
+            SDL_RenderCopy(renderer, map->tabTexture[159], NULL, &r_po);
+           
+
             //boite texte
-            SDL_SetRenderDrawColor(renderer,0,0,0,255);
-            SDL_RenderFillRect(renderer, &r_text);
+            SDL_RenderCopy(renderer, map -> tabTexture[184], NULL, & r_text);
+            SDL_RenderCopy(renderer, map -> tabTexture[196], NULL, & r_text);
+            //SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_text);
+            
 
             SDL_RenderCopy(renderer, text_texture, NULL, &textRect);
             

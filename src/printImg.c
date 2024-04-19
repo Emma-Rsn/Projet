@@ -174,8 +174,45 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     SDL_Rect Night_barVide = {xn+81,yn+19,144,26};
     SDL_Rect Night_barPleine= {xn+81,yn+19,pn,26}; //144 = pleine
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &HUD);
+
+    //chargement de la police d'écriture
+        SDL_Color textColor = {
+        0,
+        0,
+        0};
+        TTF_Font * font = TTF_OpenFont("fonts/alagard.ttf", 30);
+        if (!font) {
+            //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+            return ;
+        }
+
+        char * texte = malloc(20);
+        snprintf(texte, 20, "Niveau Equipe : %d", map . nvEquipe);
+
+        SDL_Surface * textSurface = TTF_RenderText_Blended(font, texte, textColor);
+        if (!textSurface) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            return ;
+        }
+
+        SDL_Texture * textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+
+            SDL_Rect r_text_A = {
+                (( * we/6) * 5 )-(textSurface -> w/2),
+                HUD.h / 2 - textSurface -> h / 2,
+                textSurface -> w,
+                textSurface -> h
+            };
+        SDL_FreeSurface(textSurface);
+
+        if (SDL_QueryTexture(textTexture, NULL, NULL, & r_text_A.w, & r_text_A.h) != 0) {
+            printf("Impossible de charger le texte\n");
+            return ;
+
+        }
+    SDL_RenderCopy(renderer, map.tabTexture[184], NULL, & HUD);
+
 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderFillRect(renderer, &PV_barVide);
@@ -192,4 +229,12 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     SDL_RenderFillRect(renderer, &Night_barPleine);
 
     SDL_RenderCopy(renderer, map.tabTexture[170], NULL, &Night_bar);
+    SDL_RenderCopy(renderer, textTexture, NULL, & r_text_A);
+            SDL_DestroyTexture(textTexture);
+
+
+
+
+    TTF_CloseFont(font);
+    font = NULL;
 }

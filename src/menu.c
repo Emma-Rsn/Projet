@@ -2527,7 +2527,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
 }
 
 /**
-*\fn int menu_FinPartie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map)
+*\fn int menu_FinPartie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map,int * etat_boss)
 *\param we Largeur de l'ecran
 *\param he Longueur de l'ecran
 *\param event permet de savoir si il y a un evenement
@@ -2535,12 +2535,13 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
 *\param run pointeur pour continuer le programme
 *\param personnage structure du personnage jouer
 *\param map structure de la map
+*\param etat_boss pointeur sur l'etat du boss final
 *\brief fonction qui affiche l'ecran de fin de partie lorsque le joueur a gagne
 */
 
 //fonction qui affiche l'ecran de fin de partie lorsque le joueur a gagne
-int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map) {
-    if ( * personnage -> equipe[0] -> pv <= 0) {
+int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map,int * etat_boss) {
+    if ( * etat_boss==1) {
 
         SDL_RenderClear(renderer);
         SDL_Color textColor = {

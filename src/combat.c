@@ -689,10 +689,11 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                         }
 
                     }
-                    if(map->Nightmare && combat->combattant[j]->forme!=3 ){
+                    if(map->Nightmare && combat->combattant[j]->forme!=3 && etat==0){
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
 
-                    }else{
+                    }
+                    else{
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
 
                     }
@@ -727,11 +728,15 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                         }
                         
                     }
-                    if(map->Nightmare && combat->combattant[j]->forme!=3){
-                        SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
-                    }else{
-                        SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
+                    if(map->Nightmare && combat->combattant[j]->forme!=3 && etat==0){
+                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
+
                     }
+                    else{
+                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
+
+                    }
+
                     
                 }
 
@@ -792,16 +797,16 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
 
 
-            if(etat==0){
+            if(etat==0 && map->Nightmare==0){
                 //creation texture de l'ennemi
                 SDL_RenderCopy(renderer, map->tabTexture[combat->ennemi[combat->indice_ennemi]->indice_portrait], NULL, &r_ennemi);
             }
-            else{
-                //creation texture de l'ennemi
+            else if (etat==1 && map->Nightmare==0){
+                //creation texture de l'allie
                 SDL_RenderCopy(renderer, map->tabTexture[combat->allie[combat->indice_allie]->indice_portrait], NULL, &r_ennemi);
-
             
             }
+
                 
                 SDL_RenderPresent(renderer);
 
@@ -1154,7 +1159,7 @@ int boolTousMort(ennemi_t * ennemi){
 
 /**
 *
-*\fn void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map)
+*\fn void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map,int * etat_boss)
 *\param cartec structure de la carte ou le personnage se trouve
 *\param we Largeur de la fenetre 
 *\param he hauteur de la fenetre
@@ -1162,14 +1167,15 @@ int boolTousMort(ennemi_t * ennemi){
 *\param renderer rendu de la fenetre
 *\param pp structure du personnage jouer
 *\param map structure de la map
+*\param etat_boss pointeur sur l'etat du boss final
 *\brief fonction qui appelle combat avec tout les ennemis sur la map
 */
 //fonction qui appelle combat avec tout les ennemis sur la map
-void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map){
+void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,p_mv * pp,map_t * map,int * etat_boss){
     int i;
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2 ){
-            combat(we,he,event,renderer,cartec->tabObj[i]->tabObj[0],pp,map);
+            combat(we,he,event,renderer,cartec->tabObj[i]->tabObj[0],pp,map,etat_boss);
             if(boolTousMort((ennemi_t *)cartec->tabObj[i]->tabObj[0]))dest_obj(cartec,i);
         }
     }
@@ -1177,7 +1183,7 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
 
 /**
 *
-*\fn int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map)
+*\fn int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map,int * etat_boss)
 *\param we Largeur de la fenetre 
 *\param he hauteur de la fenetre
 *\param event evenement 
@@ -1185,11 +1191,12 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
 *\param ennemi structure d'un ennemi
 *\param pp structure du personnage jouer
 *\param map structure de la map
+*\param etat_boss pointeur sur l'etat du boss final
 *\brief fonction qui s'occupe du combat avec un ennemi
 */
 
 //fonction qui s'occupe du combat avec un ennemi
-int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map){
+int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * ennemi,p_mv * pp,map_t * map,int * etat_boss){
     if(ennemi->combat){
          
 
@@ -1366,6 +1373,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
         
         combat -> num_tour = 1;
+        
 
         while(Nennemi>0 && allie>0){
             //trie vitesse
@@ -1375,11 +1383,12 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
             for(combat->indice_combattant=0;combat->indice_combattant<nb_combattant && Nennemi>0 && allie>0;combat->indice_combattant++){
 
-                
+                printf("test\n");
                 combat->mult=1;
                 if(allie != 0){
                     affichage_combat(we,he,renderer,combat,0,pp,map);
                 }
+                printf("test\n");
                 SDL_Delay(500);
 
                 if(combat->combattant[combat->indice_combattant]->camp==0 && combat->combattant[combat->indice_combattant]->mort==0){
@@ -1521,7 +1530,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
             //Si les alliees on tuer tous les ennemis
             if(Nennemi==0){
                 //cherche si dans les ennemis ils y avait un boss
-                if(ennemi->forme==3){
+                if(ennemi->forme==3 || ennemi->forme==4){
                     //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
                     if(map->Nightmare){
                         map->Nightmare=0;
@@ -1546,7 +1555,11 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 }else{
                         map -> nvEquipe += 1;
                 }
+
                 
+            }
+            if(ennemi->forme==4){
+                * etat_boss=1;
             }
             //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
             if (map -> Nightmare) {
