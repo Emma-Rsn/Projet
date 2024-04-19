@@ -1,6 +1,6 @@
 # The Last Nightmare
 
-##PROJET DE FIN D'ETUDES L2 INFORMATIQUE 2023-2024
+## PROJET DE FIN D'ETUDES L2 INFORMATIQUE 2023-2024
 
 **The Last Nightmare** est un projet réalisé par trois étudiants de L2 d’Informatique à l’Université du Mans.
 
