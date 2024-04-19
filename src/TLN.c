@@ -178,6 +178,7 @@ int main(){
     //fin sauvegarde
     chargement_Zone(&map,renderer,map.zoneChargee,gMusic);
     creer_map_layout(&map);
+    load_layout_obj(&map);
 
     int *etat_dialogue=malloc(sizeof(int));
     *etat_dialogue=0;
@@ -186,6 +187,7 @@ int main(){
 
 
 
+    load_brouillard(&map);
     load_ennemi(&map);
 
 
@@ -350,6 +352,7 @@ int main(){
     fclose(fichier);
 
     save_pos(cartec->xcarte,cartec->ycarte,*Alex,map,*toucheDeplacement);
+    sauvegarde_map_brouillard(&map);
     
 
     free(etat_map);

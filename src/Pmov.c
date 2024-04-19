@@ -645,7 +645,7 @@ void remplirp(p_mv * p,case_t * c,int leader){
         break;
     
     default:
-    p->nom="alex";
+    p->nom="Default";
     p->equipe[0]=init_combattant(p->nom,100,50,0,13,12,0,2,15,0,100);
         break;
     }

@@ -54,7 +54,7 @@ struct carte_s{
     int nZone;
     int nbObj;
     int nrlayout; //numero du layout chargé
-    obj_t * tabObj[20];
+    obj_t * tabObj[50];
     grille_t grille; //quadrillage des cases dans une seule carte
 };
 
@@ -108,6 +108,7 @@ struct map_s{
     int talisman;
 };
 
+int load_layout_texture(map_t * map);
 case_t creation_case();
 grille_t creation_grille(int bord);
 carte_t creation_carte(int x,int y);
@@ -130,5 +131,8 @@ int detruire_tab_path(map_t *map);
 int nb_texture_chargement(map_t *map, char* namefile);
 int creation_tab_path(map_t *map,char * namefile);
 int creation_tab_texture(map_t *map,SDL_Renderer *renderer,int nbZone,int free);
+int sauvegarde_map_brouillard(map_t * map);
+int load_brouillard(map_t *map);
+int load_layout_obj(map_t * map);
 
 #endif
