@@ -650,6 +650,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
 
             SDL_RenderClear(renderer);
+         
             if(map->Nightmare==1){
                 SDL_RenderCopy(renderer, map -> tabTexture[170], NULL, & r_ecran);
             }else{
@@ -659,6 +660,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             SDL_RenderCopy(renderer, map -> tabTexture[198], NULL, & r_MEcran);
 
             SDL_SetRenderDrawColor(renderer,50,50,50,255);
+          
 
             if((nb_combattant-nbMort)%2==0){
                 //affichage des combattant en haut pour savoir qui joue dans le cas paire
@@ -689,14 +691,20 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                         }
 
                     }
-                    if(map->Nightmare && combat->combattant[j]->forme!=3 && etat==0){
+                    
+                    if(map->Nightmare && combat->combattant[j]->forme!=3 && combat->combattant[j]->camp==1){
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
+
+                    }
+                    else if(map->Nightmare && combat->combattant[j]->camp==0){
+                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+8], NULL, &r1);
 
                     }
                     else{
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
 
                     }
+                
                    
 
                 }
@@ -728,14 +736,21 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                         }
                         
                     }
-                    if(map->Nightmare && combat->combattant[j]->forme!=3 && etat==0){
+
+                    if(map->Nightmare && combat->combattant[j]->forme!=3 && combat->combattant[j]->camp==1){
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
+
+                    }
+                    else if(map->Nightmare && combat->combattant[j]->camp==0){
+                         SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+8], NULL, &r1);
 
                     }
                     else{
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite], NULL, &r1);
 
                     }
+                    
+
 
                     
                 }
@@ -801,11 +816,18 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                 //creation texture de l'ennemi
                 SDL_RenderCopy(renderer, map->tabTexture[combat->ennemi[combat->indice_ennemi]->indice_portrait], NULL, &r_ennemi);
             }
+            else if(etat==0 && map->Nightmare==1){
+                SDL_RenderCopy(renderer, map->tabTexture[combat->ennemi[combat->indice_ennemi]->indice_portrait+map->nbN], NULL, &r_ennemi);
+            }
             else if (etat==1 && map->Nightmare==0){
                 //creation texture de l'allie
                 SDL_RenderCopy(renderer, map->tabTexture[combat->allie[combat->indice_allie]->indice_portrait], NULL, &r_ennemi);
-            
             }
+            else if(etat==1 && map->Nightmare==1){
+                SDL_RenderCopy(renderer, map->tabTexture[combat->allie[combat->indice_allie]->indice_portrait+8], NULL, &r_ennemi);
+
+            }
+ 
 
                 
                 SDL_RenderPresent(renderer);
@@ -1383,12 +1405,10 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
             for(combat->indice_combattant=0;combat->indice_combattant<nb_combattant && Nennemi>0 && allie>0;combat->indice_combattant++){
 
-                printf("test\n");
                 combat->mult=1;
                 if(allie != 0){
                     affichage_combat(we,he,renderer,combat,0,pp,map);
                 }
-                printf("test\n");
                 SDL_Delay(500);
 
                 if(combat->combattant[combat->indice_combattant]->camp==0 && combat->combattant[combat->indice_combattant]->mort==0){
