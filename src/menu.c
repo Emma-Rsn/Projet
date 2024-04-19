@@ -256,7 +256,7 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
 */
 
 //fonction qui affiche l'ecran titre
-int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption, int * toucheDeplacement,map_t * map) {
+int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption, int * toucheDeplacement,map_t * map,int * leader) {
     SDL_RenderClear(renderer);
     SDL_Color textColor = {255,255,255};
 
@@ -473,6 +473,7 @@ int menu(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run
                 else if ((r_text_N.x <= event.button.x) && ((r_text_N.x + r_text_N.w) >= event.button.x) && ((r_text_N.y + r_text_N.h) >= event.button.y) && (r_text_N.y <= event.button.y)) {
                     etat = 0;
                     nouvelle_partie(0);
+                    
                     * run = 0;
                 }
 
@@ -2794,5 +2795,174 @@ int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer,
         SDL_RenderPresent(renderer);
 
     }
+    return 0;
+}
+
+
+/**
+*\fn int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption,map_t * map)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param run pointeur pour continuer le programme
+*\param etatoption etat du menu des options 
+*\param map structure de la map
+*\brief fonction qui affiche le menu dans le jeu
+*/
+
+//fonction qui affiche le menu dans le jeu
+int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, map_t * map,int * leader) {
+
+    SDL_RenderClear(renderer);
+    SDL_Color textColor = {
+        255,
+        255,
+        255
+    };
+
+    //chargement de la police d'écriture
+    TTF_Font * fontT = TTF_OpenFont("fonts/alagard.ttf", 75);
+    if (!fontT) {
+        //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+        return -1;
+    }
+
+
+    SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "choisissez votre personnage", textColor);
+    if (!textSurfaceT) {
+        fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+        TTF_CloseFont(fontT);
+        return -1;
+    }
+
+    SDL_Texture * textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
+
+    SDL_Rect r_Bouton_T = {
+        (( * we) / 2) - ((*we)*45/100 / 2),
+        (( * he) / 5) * 1 - (((*he)*15/100)/2),
+        (*we)*45/100,
+         (*he)*15/100
+    };
+
+    SDL_Rect r_text_T = {
+        (r_Bouton_T.x+(r_Bouton_T.w)/2-textSurfaceT -> w/2),
+        (r_Bouton_T.y+(r_Bouton_T.h)/2-textSurfaceT -> h /2),
+        textSurfaceT -> w,
+        textSurfaceT -> h
+    };
+    SDL_FreeSurface(textSurfaceT);
+
+    if (SDL_QueryTexture(textTextureT, NULL, NULL, & r_text_T.w, & r_text_T.h) != 0) {
+        printf("Impossible de charger le texte\n");
+        return -1;
+
+    }
+
+    TTF_CloseFont(fontT);
+    fontT = NULL;
+
+
+    //creation rectangle pour les textes
+
+    SDL_Rect r_Bouton_C = {
+        (( * we) / 5)*1 - ((( * we) / 5) / 2),
+        (( * he) /2) - ((( * we) / 5) / 2),
+        ( * we) / 5,
+        ( * we) / 5
+    };
+
+    SDL_Rect r_Bouton_Q = {
+        (( * we) / 5)*2 - ((( * we) / 5) / 2),
+        (( * he) /2)  - ((( * we) / 5) / 2),
+        ( * we) / 5,
+        ( * we) / 5
+    };
+ 
+
+    SDL_Rect r_Bouton_O = {
+        (( * we) / 5)*3 - ((( * we) / 5) / 2),
+        (( * he) /2)- ((( * we) / 5) / 2),
+        ( * we) / 5,
+        ( * we) / 5
+    };
+        SDL_Rect r_Bouton_A = {
+        (( * we) / 5)*4 - ((( * we) / 5) / 2),
+        (( * he) /2) - ((( * we) / 5) / 2),
+        ( * we) / 5,
+        ( * we) / 5
+    };
+
+ 
+
+    SDL_Rect r_Ecran = {0,0,(*we),(*he)};
+
+
+ 
+        int etat = 1;
+        while (etat) {
+
+            while (SDL_PollEvent( & event) != 0) {
+
+                if (event.type == SDL_MOUSEBUTTONDOWN) {
+
+                    //pour continuer le jeu
+                    if ((r_Bouton_C.x <= event.button.x) && ((r_Bouton_C.x + r_Bouton_C.w) >= event.button.x) && ((r_Bouton_C.y + r_Bouton_C.h) >= event.button.y) && (r_Bouton_C.y <= event.button.y)) {
+                        etat = 0;
+                        *leader=0;
+                        * run = 1;
+                    }
+                    //pour quitter le jeu
+                    else if ((r_Bouton_Q.x <= event.button.x) && ((r_Bouton_Q.x + r_Bouton_Q.w) >= event.button.x) && ((r_Bouton_Q.y + r_Bouton_Q.h) >= event.button.y) && (r_Bouton_Q.y <= event.button.y)) {
+                        etat = 0;
+                        *leader=2;
+                        * run = 1;
+                    } else if ((r_Bouton_O.x <= event.button.x) && ((r_Bouton_O.x + r_Bouton_O.w) >= event.button.x) && ((r_Bouton_O.y + r_Bouton_O.h) >= event.button.y) && (r_Bouton_O.y <= event.button.y)) {
+                        etat = 0;
+                        *leader=1;
+                        * run = 1;
+                    }
+                     else if ((r_Bouton_A.x <= event.button.x) && ((r_Bouton_A.x + r_Bouton_A.w) >= event.button.x) && ((r_Bouton_A.y + r_Bouton_A.h) >= event.button.y) && (r_Bouton_A.y <= event.button.y)) {
+                        etat = 0;
+                        *leader=3;
+                        * run = 1;
+                    }
+
+                }
+            }
+
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+            SDL_RenderClear(renderer);
+            SDL_RenderCopy(renderer, map -> tabTexture[160], NULL, & r_Ecran);
+
+            SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_Ecran);
+
+            SDL_RenderCopy(renderer, map -> tabTexture[136], NULL, & r_Bouton_C);
+            SDL_RenderCopy(renderer, map -> tabTexture[140], NULL, & r_Bouton_O);
+            SDL_RenderCopy(renderer, map -> tabTexture[138], NULL, & r_Bouton_Q);
+            SDL_RenderCopy(renderer, map -> tabTexture[142], NULL, & r_Bouton_A);
+
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_C);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_O);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_Q);
+            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_A);
+            
+            
+
+
+            SDL_RenderCopy(renderer, textTextureT, NULL, & r_text_T);
+ 
+
+            SDL_RenderPresent(renderer);
+            SDL_Delay(100);
+
+        }
+
+    
+
+    SDL_DestroyTexture(textTextureT);
+
+
     return 0;
 }

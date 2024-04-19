@@ -113,6 +113,7 @@ int main(){
     p_mv * Alex = initp();
     Alex->equipe[0]=pre_init_combattant();
 
+
     int xp,yp;
     last = load_pos(&q,&s,&xp,&yp,&map,pv,Alex,tabparam,toucheDeplacement,leader);
     if(last != 1){
@@ -199,12 +200,14 @@ int main(){
     *transi = 0;
     int tN = 1; //variable musique cauchemar
 
-    SDL_Event event;
+    
     //char * command = NULL;
+        //menu d'ecran titre
+    SDL_Event event;
+    menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement,&map,leader);
 
 
-    //menu d'ecran titre
-    menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement,&map);
+
     //boucle du programme
     while (*run) {
         //zone d'evenement
@@ -318,6 +321,8 @@ int main(){
 
         //Partie perdu
          menu_gameOver(wEcran,hEcran,event,renderer,run,Alex,&map);
+        //Partie gagne
+         menu_FinPartie(wEcran,hEcran,event,renderer,run,Alex,&map,etat_boss);
          
 
 
