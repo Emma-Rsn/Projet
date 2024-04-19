@@ -140,6 +140,37 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
     return last;
 }
 
+void save_ennemi(carte_t cartec,obj_t ennemi){
+    if(ennemi.typeObj == 2 && (boolTousMort((ennemi_t *)ennemi.tabObj[0]))){
+        FILE *fichier = NULL;
+        fichier = fopen("save/ennemi.txt", "a");
+        if (fichier == NULL)
+        {
+            printf("Erreur a l'ouerture du fichier\n");
+            return;
+        }
+        fprintf(fichier,"%d %d %d %d\n",cartec.xcarte,cartec.ycarte,ennemi.cas->x,ennemi.cas->y);
+        fclose(fichier);
+    }
+}
+void load_ennemi(map_t * map){
+    FILE *fichier = NULL;
+    fichier = fopen("save/ennemi.txt", "r+");
+    if (fichier == NULL)
+    {
+        fclose(fichier);
+        return;
+    }
+    int xc,yc,x,y,i;
+    while(fscanf(fichier,"%d %d %d %d\n",&xc,&yc,&x,&y) != EOF){
+        for(i = 0 ;i < (*map).tabMap[xc][yc].nbObj && !boolMemeCase(*(*map).tabMap[xc][yc].tabObj[i]->cas,(*map).tabMap[xc][yc].grille.tabGrille[x][y]) ;i++);
+        if(i < (*map).tabMap[xc][yc].nbObj){
+            dest_obj(&(*map).tabMap[xc][yc],i);
+        }
+    }
+    fclose(fichier);
+}
+
 //param = 1 pour garder la progression et = 0 pour effacer la progression
 void nouvelle_partie(int param){
     FILE *fichier = fopen("save/save.txt", "w");
@@ -148,6 +179,7 @@ void nouvelle_partie(int param){
     }else{
         fprintf(fichier, "%d", 3);
     }
+    system("rm save/ennemi.txt");
     fclose(fichier);
 }
 

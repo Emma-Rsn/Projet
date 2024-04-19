@@ -72,6 +72,11 @@ int main(){
 
     //IMG de fond
     //SDL_Texture* backgroundTexture = NULL;
+
+    if (access("save/ennemi.txt", F_OK) == -1) {
+        system("touch save/ennemi.txt");
+        system("chmod a+w save/ennemi.txt");
+    }
     
     
     // Initialiser la map
@@ -181,6 +186,10 @@ int main(){
 
 
 
+    load_ennemi(&map);
+
+
+
 
     //variable FPS
     int cmpfps = 0;
@@ -259,7 +268,7 @@ int main(){
                 (*etat_map)=1;
             }
             pinput(Alex,event,&cartec,&map,renderer,transi,gMusic,toucheDeplacement);
-            pause(event,gMusic);
+            pause_SDL(event,gMusic);
 
             //menu
             menu_option(wEcran,hEcran,event,renderer,run,etatoption,&map);

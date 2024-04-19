@@ -1190,6 +1190,7 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
                         break;
                     }
                 }
+                save_ennemi(*cartec,*cartec->tabObj[i]);
                 dest_obj(cartec,i);
             }
         }
@@ -1595,9 +1596,9 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         if(ennemi->forme==3){
             newCompagnon(&pp,ennemi);
             switch(map->zoneChargee){
-                case 2 : map->Zone2 = 2 ;break;
-                case 3 : map->Zone3 = 2 ;break;
-                case 4 : map->Zone4 = 2 ;break;
+                case 2 : map->Zone2 = 2 ;map->cle = 1;break;
+                case 3 : map->Zone3 = 2 ;map->talisman = 1;break;
+                case 4 : map->Zone4 = 2 ;map->plongee = 1;break;
                 case 5 : map->Zone5 = 2 ;break;
             default : return 1;
             }   

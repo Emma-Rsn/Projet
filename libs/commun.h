@@ -47,6 +47,7 @@ typedef struct Liste Liste;
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "../libs/save.h"
 #include "../libs/printImg.h"

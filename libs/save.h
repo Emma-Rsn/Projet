@@ -14,4 +14,8 @@ void nouvelle_partie(int param);
 
 void effacer_sauvg();
 
+void save_ennemi(carte_t cartec,obj_t ennemi);
+
+void load_ennemi(map_t * map);
+
 #endif
