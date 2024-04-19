@@ -18,9 +18,17 @@
 #include "../libs/commun.h"
 
 
-
-
-//affiche une boite de dialogue en finction du msg de l'ec de la liste et d'un portrait
+/**
+*\fn int menu_FinPartie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map)
+*\param rendu rendu de la fenetre
+*\param po portrait a afficher 
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param message message a ecrire dans la boite de dialogue
+*\param map structure de la map
+*\brief fonction qui affiche une boite de dialogue et un portrait 
+*/
+//affiche une boite de dialogue et un portrait 
 int aff_boite_dia(SDL_Renderer * rendu,int po,int *we,int* he,char * message,map_t * map){
 
     TTF_Font  * police = TTF_OpenFont("fonts/alagard.ttf", 20); 
@@ -67,7 +75,17 @@ int aff_boite_dia(SDL_Renderer * rendu,int po,int *we,int* he,char * message,map
 }
 
 
-
+/**
+*\fn int menu_FinPartie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map)
+*\param rendu rendu de la fenetre
+*\param po portrait a afficher 
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param message message a ecrire dans la boite de dialogue
+*\param map structure de la map
+*\brief fonction qui affiche une boite de dialogue et un portrait 
+*/
+//affiche une boite de dialogue et un portrait 
 void debut_dialogue_carte(carte_t * cartec,SDL_Event event,p_mv * pp,int *etat_dialogue){
     int i;
     for(i=0;i<cartec->nbObj;i++){
@@ -77,24 +95,57 @@ void debut_dialogue_carte(carte_t * cartec,SDL_Event event,p_mv * pp,int *etat_d
     }
 }
 
-
+/**
+*\fn void debut_dialogue(SDL_Event event,p_mv * pp,int *etat_dialogue,case_t * c)
+*\param event pile d'evenement
+*\param pp structure du personnage joue
+*\param etat_dialogue pointeur pour savoir si le joueur est en dialogue ou non
+*\param c strcture de la case du joueur
+*\brief fonction qui met le joueur en dialogue 
+*/
+//fonction qui met le joueur en dialogue 
 void debut_dialogue(SDL_Event event,p_mv * pp,int *etat_dialogue,case_t * c){
     if(boolcol(c,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
         *etat_dialogue=1;
     } 
 }
 
-
-void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map,int *etat_dialogue){
+/**
+*\fn void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map,int *etat_dialogue)
+*\param cartec strcture de la case du joueur
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event pile d'evenement
+*\param rendu rendu de la fenetre
+*\param map structure de la map
+*\param etat_dialogue pointeur pour savoir si le joueur est en dialogue ou non
+*\param pp structure du personnage joue
+*\brief fonction qui permet de savoir avec quelle objet le joueur est en dialogue
+*/
+//fonction qui permet de savoir avec quelle objet le joueur est en dialogue
+void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer * renderer,map_t * map,int *etat_dialogue,p_mv * pp){
     int i;
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==3|| cartec->tabObj[i]->typeObj==4){
-            pnj_dialogue(event,renderer,he,we,map,etat_dialogue,cartec->tabObj[i]->tabObj[0]);
+            pnj_dialogue(event,renderer,he,we,map,etat_dialogue,cartec->tabObj[i]->tabObj[0],pp);
         }
     }
 }
 
-void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int num_dialogue){
+/**
+*\fn void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int num_dialogue,p_mv * pp)
+*\param event pile d'evenement
+*\param rendu rendu de la fenetre
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param map structure de la map
+*\param etat_dialogue pointeur pour savoir si le joueur est en dialogue ou non
+*\param num_dialogue numero du dialogue a afficher
+*\param pp structure du personnage joue
+*\brief fonction qui choisis le bon texte a afficher
+*/
+//fonction qui choisis le bon texte a afficher
+void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int num_dialogue,p_mv * pp){
 
     if(*etat_dialogue == 1){
         char * texte1="";
@@ -115,17 +166,17 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
             switch(num_dialogue){
                         case 1: 
                             texte1="Il me faut la clef du manoir pour rentrer dedans.";
-                            portrait=0;
+                            portrait=pp->equipe[0]->indice_portrait;
                             num_dialogue=-1;
                             break;
                         case 2: 
                             texte1="Il me faudrait une combianaison de plonger pour aller sous l'eau.";
-                            portrait=0;
+                            portrait=pp->equipe[0]->indice_portrait;
                             num_dialogue=-1;
                             break;
                         case 3: 
                             texte1="Une puissante force me repousse.";
-                            portrait=0;
+                            portrait=pp->equipe[0]->indice_portrait;
                             num_dialogue=-1;
                             break;
                         case 4: 
@@ -151,6 +202,21 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
                         case 8: 
                             texte1="Oh non tu m'as tue !";
                             portrait=0;
+                            num_dialogue=-1;
+                            break;
+                        case 9: 
+                            texte1="J'ai recupere une tenue de plonge !";
+                            portrait=pp->equipe[0]->indice_portrait;
+                            num_dialogue=-1;
+                            break;
+                        case 10: 
+                            texte1="J'ai recupere une clef !";
+                            portrait=pp->equipe[0]->indice_portrait;
+                            num_dialogue=-1;
+                            break;
+                        case 11: 
+                            texte1="J'ai recupere un talisman !";
+                            portrait=pp->equipe[0]->indice_portrait;
                             num_dialogue=-1;
                             break;
                         default:

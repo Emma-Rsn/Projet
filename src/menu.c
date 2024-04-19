@@ -2526,3 +2526,272 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
     return 0;
 }
 
+/**
+*\fn int menu_FinPartie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,int * run,p_mv* personnage,map_t * map)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param event permet de savoir si il y a un evenement
+*\param renderer rendu de la fenetre
+*\param run pointeur pour continuer le programme
+*\param personnage structure du personnage jouer
+*\param map structure de la map
+*\brief fonction qui affiche l'ecran de fin de partie lorsque le joueur a gagne
+*/
+
+//fonction qui affiche l'ecran de fin de partie lorsque le joueur a gagne
+int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map) {
+    if ( * personnage -> equipe[0] -> pv <= 0) {
+
+        SDL_RenderClear(renderer);
+        SDL_Color textColor = {
+            255,
+            255,
+            255
+        };
+
+        //chargement de la police d'écriture
+        TTF_Font * fontT = TTF_OpenFont("fonts/alagard.ttf", 75);
+        if (!fontT) {
+            //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+            return -1;
+        }
+
+        SDL_Color textColorT = {
+            150,
+            0,
+            0
+        };
+
+        SDL_Surface * textSurfaceT = TTF_RenderText_Solid(fontT, "Gagne", textColorT);
+        if (!textSurfaceT) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(fontT);
+            return -1;
+        }
+
+        SDL_Texture * textTextureT = SDL_CreateTextureFromSurface(renderer, textSurfaceT);
+
+        SDL_Rect r_bouton_T = {
+                (( * we) / 2)  - (((*we)*25/100) / 2),
+                ( * he / 8)*1-((*he)*15/100)/2,
+                (*we)*25/100,
+                (*he)*15/100
+            };
+
+        SDL_Rect r_text_T = {
+            (r_bouton_T.x+r_bouton_T.w/2)-(textSurfaceT -> w/2),
+            (r_bouton_T.y+r_bouton_T.h/2)-(textSurfaceT -> h/2),
+            textSurfaceT -> w,
+            textSurfaceT -> h
+        };
+
+        SDL_FreeSurface(textSurfaceT);
+
+        if (SDL_QueryTexture(textTextureT, NULL, NULL, & r_text_T.w, & r_text_T.h) != 0) {
+            printf("Impossible de charger le texte\n");
+            return -1;
+
+        }
+
+        TTF_CloseFont(fontT);
+        fontT = NULL;
+
+        //chargement de la police d'écriture
+        TTF_Font * font = TTF_OpenFont("fonts/alagard.ttf", 50);
+        if (!font) {
+            //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+            return -1;
+        }
+
+        SDL_Surface * textSurfaceQ = TTF_RenderText_Solid(font, "Quitter", textColor);
+        if (!textSurfaceQ) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            return -1;
+        }
+
+        SDL_Texture * textTextureQ = SDL_CreateTextureFromSurface(renderer, textSurfaceQ);
+
+        SDL_Surface * textSurfaceC = TTF_RenderText_Solid(font, "Rejouer", textColor);
+        if (!textSurfaceC) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            return -1;
+        }
+
+        SDL_Texture * textTextureC = SDL_CreateTextureFromSurface(renderer, textSurfaceC);
+
+        SDL_Surface * textSurfaceN = TTF_RenderText_Solid(font, "Magasin", textColor);
+        if (!textSurfaceN) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            SDL_FreeSurface(textSurfaceC);
+            return -1;
+        }
+
+        SDL_Texture * textTextureN = SDL_CreateTextureFromSurface(renderer, textSurfaceN);
+
+        SDL_Surface * textSurfaceI = TTF_RenderText_Solid(font, "Inventaire", textColor);
+        if (!textSurfaceI) {
+            fprintf(stderr, "Erreur lors de la création de la surface de texte : %s\n", TTF_GetError());
+            TTF_CloseFont(font);
+            SDL_FreeSurface(textSurfaceQ);
+            SDL_FreeSurface(textSurfaceC);
+            return -1;
+        }
+
+        SDL_Texture * textTextureI = SDL_CreateTextureFromSurface(renderer, textSurfaceI);
+
+        TTF_CloseFont(font);
+        font = NULL;
+
+        //creation rectangle pour les textes
+
+        SDL_Rect r_bouton_Q = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 6) * 5- (*he)*10/100,
+                (*we)*15/100,
+                (*he)*10/100
+            };
+
+        SDL_Rect r_text_Q = {
+            (r_bouton_Q.x+r_bouton_Q.w/2)-(textSurfaceQ -> w/2),
+            (r_bouton_Q.y+r_bouton_Q.h/2)-(textSurfaceQ -> h/2),
+            textSurfaceQ -> w,
+            textSurfaceQ -> h
+        };
+        SDL_Rect r_bouton_N = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 6) * 3- (*he)*10/100,
+                (*we)*15/100,
+                (*he)*10/100
+            };
+        SDL_Rect r_text_N = {
+            (r_bouton_N.x+r_bouton_N.w/2)-(textSurfaceN -> w/2),
+            (r_bouton_N.y+r_bouton_N.h/2)-(textSurfaceN -> h/2),
+            textSurfaceN -> w,
+            textSurfaceN -> h
+        };
+
+        SDL_Rect r_bouton_C = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 6) * 2- (*he)*10/100,
+                (*we)*15/100,
+                (*he)*10/100
+            };
+        SDL_Rect r_text_C = {
+            (r_bouton_C.x+r_bouton_C.w/2)-(textSurfaceC -> w/2),
+            (r_bouton_C.y+r_bouton_C.h/2)-(textSurfaceC -> h/2),
+            textSurfaceC -> w,
+            textSurfaceC -> h
+        };
+
+        SDL_Rect r_bouton_I = {
+                (( * we) / 2)  - (((*we)*15/100) / 2),
+                 ( * he / 6) * 4- (*he)*10/100,
+                (*we)*15/100,
+                (*he)*10/100
+            };
+        SDL_Rect r_text_I = {
+            (r_bouton_I.x+r_bouton_I.w/2)-(textSurfaceI -> w/2),
+            (r_bouton_I.y+r_bouton_I.h/2)-(textSurfaceI -> h/2),
+            textSurfaceI -> w,
+            textSurfaceI -> h
+        };
+
+        SDL_FreeSurface(textSurfaceC);
+        SDL_FreeSurface(textSurfaceI);
+        SDL_FreeSurface(textSurfaceQ);
+        SDL_FreeSurface(textSurfaceN);
+
+        if (SDL_QueryTexture(textTextureQ, NULL, NULL, & r_text_Q.w, & r_text_Q.h) != 0) {
+            printf("Impossible de charger le texte\n");
+            return -1;
+        }
+
+        if (SDL_QueryTexture(textTextureC, NULL, NULL, & r_text_C.w, & r_text_C.h) != 0) {
+            printf("Impossible de charger le texte\n");
+            return -1;
+        }
+
+        if (SDL_QueryTexture(textTextureN, NULL, NULL, & r_text_N.w, & r_text_N.h) != 0) {
+            printf("Impossible de charger le texte\n");
+            return -1;
+
+        }
+
+        int etat = 1;
+        while (etat) {
+
+            while (SDL_PollEvent( & event) != 0) {
+
+                if (event.type == SDL_MOUSEBUTTONDOWN) {
+
+                    //pour continuer le jeu
+                    if ((r_text_C.x <= event.button.x) && ((r_text_C.x + r_text_C.w) >= event.button.x) && ((r_text_C.y + r_text_C.h) >= event.button.y) && (r_text_C.y <= event.button.y)) {
+                        etat = 0;
+                        nouvelle_partie(1);
+                        * run = 0;
+                    }
+
+                    //pour quitter le jeu
+                    else if ((r_text_Q.x <= event.button.x) && ((r_text_Q.x + r_text_Q.w) >= event.button.x) && ((r_text_Q.y + r_text_Q.h) >= event.button.y) && (r_text_Q.y <= event.button.y)) {
+                        etat = 0;
+                        * run = 0;
+                    }
+                    //Pour aller au magasin
+                    else if ((r_text_N.x <= event.button.x) && ((r_text_N.x + r_text_N.w) >= event.button.x) && ((r_text_N.y + r_text_N.h) >= event.button.y) && (r_text_N.y <= event.button.y)) {
+                        magasin(we, he, event, renderer, personnage, map);
+                    }
+                    else if ((r_text_I.x <= event.button.x) && ((r_text_I.x + r_text_I.w) >= event.button.x) && ((r_text_I.y + r_text_I.h) >= event.button.y) && (r_text_I.y <= event.button.y)) {
+
+                        inventaire(we, he, event, renderer, map);
+                    }
+
+                }
+            }
+
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+            SDL_RenderClear(renderer);
+            SDL_Rect r_ecran = {
+                0,
+                0,
+                ( * we),
+                ( * he)
+            };
+            
+
+            SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_ecran);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_N);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_Q);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_C);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_I);
+            SDL_RenderCopy(renderer, map -> tabTexture[179], NULL, & r_bouton_T);
+            
+
+
+            SDL_RenderCopy(renderer, textTextureQ, NULL, & r_text_Q);
+            SDL_RenderCopy(renderer, textTextureC, NULL, & r_text_C);
+            SDL_RenderCopy(renderer, textTextureT, NULL, & r_text_T);
+            SDL_RenderCopy(renderer, textTextureN, NULL, & r_text_N);
+            SDL_RenderCopy(renderer, textTextureI, NULL, & r_text_I);
+
+            SDL_RenderPresent(renderer);
+            SDL_Delay(100);
+
+        }
+
+        SDL_DestroyTexture(textTextureQ);
+        SDL_DestroyTexture(textTextureC);
+        SDL_DestroyTexture(textTextureT);
+        SDL_DestroyTexture(textTextureN);
+        SDL_DestroyTexture(textTextureI);
+
+        SDL_RenderPresent(renderer);
+
+    }
+    return 0;
+}

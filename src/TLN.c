@@ -310,7 +310,7 @@ int main(){
         //Commence un combat
         combat_carte(cartec,wEcran,hEcran,event,renderer,Alex,&map);
         
-        dialogue_carte(cartec,wEcran,hEcran,event,renderer,&map,etat_dialogue);
+        dialogue_carte(cartec,wEcran,hEcran,event,renderer,&map,etat_dialogue,Alex);
 
 
 
