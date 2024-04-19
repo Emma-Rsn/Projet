@@ -28,12 +28,24 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
             break;
         case 4 : //cas d'un objet avec dialogue sans collision
             n = 1;
-            newObj->cas->etat = 1;
+            newObj->cas->etat = 0;
             break;
-        case 5 :
+        case 5 : //cas d'un loot apres boss
             n = 1;
             newObj->cas->etat = 0;
             break;
+        case 6 : //cas d'une porte nécessitant la clé
+            n = 0;
+            newObj->cas->etat = 0;
+        case 7 : //cas de la zone de plongée
+            n = 0;
+            newObj->cas->etat = 0;
+        case 8 : //cas d'une porte nécessitant la clé
+            n = 0;
+            newObj->cas->etat = 0;
+        case 9 : //cas de la zone de plongée
+            n = 0;
+            newObj->cas->etat = 0;
         default://cas d'un objet inconnu
             n = -1;
             break;
@@ -45,15 +57,43 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
     return newObj;
 }
 
-void debut_loot_carte(carte_t * cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue){
+void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue){
     int i;
-    for(i=0;i<cartec->nbObj;i++){
-        if(cartec->tabObj[i]->typeObj==5){
-            debut_loot(event,pp,cartec->tabObj[i]->cas,map,cartec->tabObj[i],etat_dialogue,cartec->tabObj[i]->tabObj[0]);
-            //dest_obj(cartec,i);
+    for(i=0;i<(*cartec)->nbObj;i++){
+        if((*cartec)->tabObj[i]->typeObj==5){
+            debut_loot(event,pp,(*cartec)->tabObj[i]->cas,map,(*cartec)->tabObj[i],etat_dialogue,(*cartec)->tabObj[i]->tabObj[0]);
+        }else if((*cartec)->tabObj[i]->typeObj==6){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e && map->cle == 1){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte][(*cartec)->ycarte+1];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[0][5]);
+                 pp->r = pp->c->Rectangle;
+            }
+        }else if((*cartec)->tabObj[i]->typeObj==7){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e && map->plongee == 1){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte+1][(*cartec)->ycarte];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[15][0]);
+                pp->r = pp->c->Rectangle;
+            }
+        }else if((*cartec)->tabObj[i]->typeObj==8){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte][(*cartec)->ycarte-1];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[15][0]);
+                pp->r = pp->c->Rectangle;
+            }
+        }else if((*cartec)->tabObj[i]->typeObj==9){
+            if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
+                (*cartec) = &map->tabMap[(*cartec)->xcarte-1][(*cartec)->ycarte];
+                (*cartec)->etat_brouillard = 0;
+                pp->c = &((*cartec)->grille.tabGrille[15][0]);
+                pp->r = pp->c->Rectangle;
+            }
         }
     }
 }
+
 
 
 void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int num_dialogue){
@@ -119,6 +159,22 @@ int load_obj(carte_t *c, char *namefile){
                 case 5 :
                     fscanf(file,"%d",&num_dialogue);
                     c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type,num_dialogue);
+                    c->nbObj++; 
+                    break;
+                case 6 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 7 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 8 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
+                    c->nbObj++; 
+                    break;
+                case 9 :
+                    c->tabObj[c->nbObj]=init_obj(&c->grille.tabGrille[x][y],indText,type);
                     c->nbObj++; 
                     break;
             }

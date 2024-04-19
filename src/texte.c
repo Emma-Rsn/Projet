@@ -89,8 +89,9 @@ void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Rendere
     int i;
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==3|| cartec->tabObj[i]->typeObj==4 || cartec->tabObj[i]->typeObj==5){
-            if(cartec->tabObj[i]->typeObj==5 && *etat_dialogue == 1)dest_obj(cartec,i);
+            int dialentree = *etat_dialogue;
             pnj_dialogue(event,renderer,he,we,map,etat_dialogue,cartec->tabObj[i]->tabObj[0]);
+            if(cartec->tabObj[i]->typeObj==5 && dialentree == 1 && *etat_dialogue == 0)dest_obj(cartec,i);
         }
     }
 }

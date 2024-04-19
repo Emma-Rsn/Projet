@@ -1175,15 +1175,15 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
                     switch (map->zoneChargee)
                     {
                     case 4 :
-                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,5,5,2);
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,50,5,2);
                         cartec->nbObj++; 
                         break;
                     case 2 :
-                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,5,5,1);
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,50,5,1);
                         cartec->nbObj++; 
                         break;
                     case 3 :
-                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,5,5,3);
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,50,5,3);
                         cartec->nbObj++; 
                         break;
                     default:

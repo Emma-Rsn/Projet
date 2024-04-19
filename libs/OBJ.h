@@ -68,7 +68,7 @@ struct artefact_s{
     int equipe;
 };
 
-void debut_loot_carte(carte_t * cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue);
+void debut_loot_carte(carte_t ** cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue);
 void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int num_dialogue);
 obj_t * init_obj(case_t * c,int indText,int type,...);
 int newLeader(p_mv pp);

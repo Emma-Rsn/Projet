@@ -1160,6 +1160,15 @@ int zone_fini(map_t map){
     }
 }
 
+int zone_bloquer(int zone,map_t map){
+    switch(zone){
+        case 2 : if(map.plongee == 1)return 1;else return 0;break;
+        case 5 : if(map.talisman == 0)return 1;else return 0;break;
+        case 3 : if(map.cle == 0)return 1;else return 0;break;
+        default : return 0;
+    }
+}
+
 /**
 *
 *\fn void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c)
