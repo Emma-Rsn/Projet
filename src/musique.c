@@ -1,3 +1,12 @@
+/**
+*\file musique.c
+*\brief programme qui gere les musiques du jeu
+*\author Moreau Enzo
+*\date  Avril 2024
+*\version 1.0
+*
+*/
+
 #include "../libs/commun.h"
 
 void pause_SDL(SDL_Event event,Mix_Music* gMusic){

@@ -1,3 +1,12 @@
+/**
+*\file OBJ.c
+*\brief programme qui gere les objets du jeu
+*\author Moreau Enzo
+*\date  Avril 2024
+*\version 1.0
+*
+*/
+
 #include "../libs/commun.h"
 
 obj_t * init_obj(case_t * c,int indText,int type,...){

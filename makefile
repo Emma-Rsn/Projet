@@ -33,7 +33,7 @@ $(SAVEDIR):
 	touch save/save.txt
 	chmod a+w save/save.txt
 	echo "0" >> save/save.txt
-	cp texture.txt save
+	cp texture/texture.txt save
 	
 #recupere les fichiers .c et .h du repertoires sources dans 2 variables
 SOURCES  := $(wildcard $(SRCDIR)/*.c)

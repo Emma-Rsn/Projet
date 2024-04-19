@@ -65,7 +65,7 @@ int main(){
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
-    SDL_Surface * logo = IMG_Load("logo.png");
+    SDL_Surface * logo = IMG_Load("texture/logo.png");
     SDL_SetWindowIcon(window,logo);
     SDL_FreeSurface(logo);
     //mode de transparence
@@ -191,8 +191,6 @@ int main(){
     int *etat_dialogue=malloc(sizeof(int));
     *etat_dialogue=0;
 
-    load_obj(&map.tabMap[cartec->xcarte][cartec->ycarte],"layoutbeachObj.txt");
-
 
 
     load_brouillard(&map);
@@ -212,8 +210,8 @@ int main(){
 
     
     //variable indique l'etat du prog
-    int i;//brouillard debug
-    int j;//brouillard debug
+    //int i;//brouillard debug
+    //int j;//brouillard debug
 
     int * transi = malloc(sizeof(int));
     *transi = 0;
