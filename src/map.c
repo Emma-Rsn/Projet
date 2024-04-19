@@ -1000,7 +1000,7 @@ int load_layout_obj(map_t * map) {
 \*\param c Carte dans laquelle on a chargé le layout
 \*\param namefile nom du fichier à charger
 *\brief Fonction qui charge un layout à partir d'un fichier dans une carte
-*/
+*//*
 int load_layout(carte_t *c, char *namefile) {
     FILE *file;
     file = fopen(namefile, "r");
@@ -1038,7 +1038,7 @@ int load_layout(carte_t *c, char *namefile) {
     fclose(file);
     
     return 0;
-}
+}*/
 
 /**
 *
@@ -1048,7 +1048,7 @@ int load_layout(carte_t *c, char *namefile) {
 *\brief Fonction qui charge un layout à partir d'un fichier dans une carte
 */
 //IMPORTANT !!! NE PAS SUPPRIMER !!!
-/*
+
 int load_layout(carte_t *c, char *namefile) {
     FILE *file;
     file = fopen(namefile, "r");
@@ -1083,7 +1083,7 @@ int load_layout(carte_t *c, char *namefile) {
 
     fclose(file);
     return 0;
-}*/
+}
 
 /**
 *
@@ -1220,25 +1220,25 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
             break;
         case 2:
             creation_tab_texture(map,renderer,2,0);
-            map->nbN = 67;
+            map->nbN = 63;
             map->nvZone=2;
             if(map->Zone2 == 0)map->Zone2 = 1;
             break;
         case 3:
             creation_tab_texture(map,renderer,3,0);
-            map->nbN = 74;
+            map->nbN = 69;
             map->nvZone=3;
             if(map->Zone3 == 0)map->Zone3 = 1;
             break;
         case 4:
             creation_tab_texture(map,renderer,4,0);
-            map->nbN = 44;
+            map->nbN = 40;
             map->nvZone=4;
             if(map->Zone4 == 0)map->Zone4 = 1;
             break;
         case 5:
             creation_tab_texture(map,renderer,5,0);
-            map->nbN = 44;
+            map->nbN = 40;
             map->nvZone=5;
             if(map->Zone5 == 0)map->Zone5 = 1;
             break;

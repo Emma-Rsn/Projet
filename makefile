@@ -34,8 +34,6 @@ $(SAVEDIR):
 	chmod a+w save/save.txt
 	echo "0" >> save/save.txt
 	cp texture.txt save
-	cp layout3_1.txt save
-	cp layoutbeach.txt save
 	
 #recupere les fichiers .c et .h du repertoires sources dans 2 variables
 SOURCES  := $(wildcard $(SRCDIR)/*.c)

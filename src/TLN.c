@@ -79,6 +79,11 @@ int main(){
         system("touch save/ennemi.txt");
         system("chmod a+w save/ennemi.txt");
     }
+
+    if (access("save/mapbrouillard.txt", F_OK) == -1) {
+        system("touch save/mapbrouillard.txt");
+        system("chmod a+w save/mapbrouillard.txt");
+    }
     
     
     // Initialiser la map
@@ -95,16 +100,16 @@ int main(){
     creation_tab_path(&map, "save/texture.txt");
     //afficher_zone(map);
 
-    map.listeArtefact[0]=init_artefact("artefact1",0,"augmente la force d'attaque",0,10,185);
-    map.listeArtefact[1]=init_artefact("artefact1",0,"augmente la vitesse",1,10,186);
-    map.listeArtefact[2]=init_artefact("artefact1",1,"qui augmente les Pv max",2,10,187);
-    map.listeArtefact[3]=init_artefact("artefact1",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,188);
-    map.listeArtefact[4]=init_artefact("artefact1",0,"augmente le nombre de point au debut d'un combat",4,10,189);
-    map.listeArtefact[5]=init_artefact("artefact1",1,"l'effet de cet artefact est inconnu ",5,10,190);
-    map.listeArtefact[6]=init_artefact("artefact1",0,"diminue l'augmentation du cauchemar",6,10,191);
-    map.listeArtefact[7]=init_artefact("artefact1",0,"reduit le temps de recharde de 1 tour",7,10,192);
-    map.listeArtefact[8]=init_artefact("artefact1",0,"permet de recuperer plus d'argent",8,10,193);
-    map.listeArtefact[9]=init_artefact("artefact1",0,"permet de recuperer un niveau",9,10,194);
+    map.listeArtefact[0]=init_artefact("Dague du chaos",0,"augmente la force d'attaque",0,10,185);
+    map.listeArtefact[1]=init_artefact("Horizon doree",0,"augmente la vitesse",1,10,186);
+    map.listeArtefact[2]=init_artefact("Regrets d'Eden",1,"qui augmente les Pv max",2,10,187);
+    map.listeArtefact[3]=init_artefact("Calice de jouvence",1,"ressuscite tous les personnages avec la moitier de leur pv",3,10,188);
+    map.listeArtefact[4]=init_artefact("Trinite restauree",0,"augmente le nombre de point au debut d'un combat",4,10,189);
+    map.listeArtefact[5]=init_artefact("L'embrassement",1,"l'effet de cet artefact est inconnu ",5,10,190);
+    map.listeArtefact[6]=init_artefact("Trismege",0,"diminue l'augmentation du cauchemar",6,10,191);
+    map.listeArtefact[7]=init_artefact("Doux poison",0,"reduit le temps de recharde de 1 tour",7,10,192);
+    map.listeArtefact[8]=init_artefact("Tendance avare",0,"permet de recuperer plus d'argent",8,10,193);
+    map.listeArtefact[9]=init_artefact("Lode Vad Lorum",0,"permet de recuperer un niveau",9,10,194);
 
     //debut sauvegarde
     int q,s,ii,last,jj;
@@ -226,7 +231,7 @@ int main(){
     while (*run) {
         //zone d'evenement
         while (SDL_PollEvent(&event) != 0) {
-            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
+            /*if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
                 if(ouigrille == 0){
                     ouigrille = 1;
                 }else{
@@ -270,7 +275,7 @@ int main(){
                     *(Alex->NightP) = 0;
                     tN = 1;
                 }
-            }
+            }*/
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_x)){                
                 (*etat_map)=1;
             }

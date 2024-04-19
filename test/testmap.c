@@ -1,7 +1,7 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "src/musique.c"
 #include "src/combat.c"
+#include "src/musique.c"
 #include "src/map.c"
 #include "src/OBJ.c"
 
@@ -203,6 +203,16 @@ void test_copier_combattant(void) {
 }
 
 
+// Tests pour la fonction copier_combattant()
+void test_BoolTypein(void) {
+    case_t c = creation_case();
+    pm_v * Leader = initp();
+    remplirp(Leader,c,0);
+    int test = BoolTypein(1,Leader);
+    //verifie si l'ennemi est plus rapide que le combattant
+    CU_ASSERT(test==1);
+}
+
 
 int main() {
     CU_initialize_registry();
@@ -224,6 +234,8 @@ int main() {
     CU_add_test(suite, "test test_compare_vitesse()", test_compare_vitesse);
     CU_add_test(suite, "test test_init_combat()", test_init_combat);
     CU_add_test(suite, "test test_copier_combattant()", test_copier_combattant);
+    printf("\n TEST OBJ : \n");
+    CU_add_test(suite, "test test_BoolTypein()", test_BoolTypein);
 
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();

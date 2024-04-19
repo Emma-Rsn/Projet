@@ -1849,6 +1849,14 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
     }
 }
 
+/**
+*
+*\fn void newCompagnon(p_mv ** Leader,ennemi_t * Boss)
+*\param Leader variable de sortie sur un pointeur d'entier
+*\param Boss ennemi affronté
+*\brief fonction qui qui permet de recuperer un compagnon apres l'avoir sauvée
+*/
+
 void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
     if(Boss->forme == 3){
         int i;
