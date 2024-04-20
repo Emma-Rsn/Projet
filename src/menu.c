@@ -2904,7 +2904,7 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ma
                     //pour continuer le jeu
                     if ((r_Bouton_C.x <= event.button.x) && ((r_Bouton_C.x + r_Bouton_C.w) >= event.button.x) && ((r_Bouton_C.y + r_Bouton_C.h) >= event.button.y) && (r_Bouton_C.y <= event.button.y)) {
                         etat = 0;
-                        *leader=i;
+                        *leader=pp->equipe[i]->status;
 
                     }
                     if((r_Fleches_GEcran.x<=event.button.x) && (r_Fleches_GEcran.x+r_Fleches_GEcran.w>=event.button.x) && ((r_Fleches_GEcran.y+r_Fleches_GEcran.h)>=event.button.y) && (r_Fleches_GEcran.y<=event.button.y)){
@@ -2913,7 +2913,6 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ma
                         }
                         else{
                             i--;
-                            
                         }
                     }
                     if((r_Fleches_DEcran.x<=event.button.x) && (r_Fleches_DEcran.x+r_Fleches_DEcran.w>=event.button.x) && ((r_Fleches_DEcran.y+r_Fleches_DEcran.h)>=event.button.y) && (r_Fleches_DEcran.y<=event.button.y)){
@@ -2924,7 +2923,6 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ma
                             i++;
                         }
                     }
-
                 }
             }
 
