@@ -1011,7 +1011,7 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                     //pour continuer le jeu
                     if ((r_text_C.x <= event.button.x) && ((r_text_C.x + r_text_C.w) >= event.button.x) && ((r_text_C.y + r_text_C.h) >= event.button.y) && (r_text_C.y <= event.button.y)) {
                         etat = 0;
-                        choix_perso(we, he,event, renderer, map,leader);
+                        choix_perso(we, he,event, renderer, map,leader,personnage);
                         nouvelle_partie(1);
                         * run = 0;
                     }
@@ -2802,18 +2802,27 @@ int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer,
 
 
 /**
-*\fn int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption,map_t * map)
+*\fn int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption,map_t * map,p_mv * pp)
 *\param we Largeur de l'ecran
 *\param he Longueur de l'ecran
 *\param event permet de savoir si il y a un evenement
 *\param renderer rendu de la fenetre
 *\param etatoption etat du menu des options 
 *\param map structure de la map
+*\param pp structure du personnage jouer
 *\brief fonction qui affiche le menu dans le jeu
 */
 
 //fonction qui affiche le menu dans le jeu
-int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map_t * map,int * leader) {
+int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map_t * map,int * leader,p_mv * pp) {
+
+    SDL_Rect r_hautEcran = {0,0,( * we),56};
+    SDL_Rect r_basEcran={0,(*he)-(*he)/4,(*we),(*he)/4};
+    SDL_Rect r_GEcran = {0,r_hautEcran.h,( * we) / 4,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+    SDL_Rect r_DEcran = {( * we) - ( * we) / 4,r_hautEcran.h,( * we)-((( * we) - ( * we) / 4)), (r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+    SDL_Rect r_MEcran = {r_GEcran.w,r_hautEcran.h,r_DEcran.x - r_GEcran.w,(r_basEcran.y - r_hautEcran.y) - r_hautEcran.h};
+    SDL_Rect r_Fleches_GEcran={r_GEcran.w,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
+    SDL_Rect r_Fleches_DEcran={r_DEcran.x-r_MEcran.h/6,r_MEcran.h/2+r_hautEcran.h-(r_MEcran.h/6)/2,r_MEcran.h/6,r_MEcran.h/6};
 
     SDL_RenderClear(renderer);
     SDL_Color textColor = {
@@ -2867,38 +2876,23 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ma
     //creation rectangle pour les textes
 
     SDL_Rect r_Bouton_C = {
-        (( * we) / 5)*1 - ((( * we) / 5) / 2),
+        (( * we) / 2) - ((( * we) / 5) / 2),
         (( * he) /2) - ((( * we) / 5) / 2),
         ( * we) / 5,
         ( * we) / 5
     };
 
-    SDL_Rect r_Bouton_Q = {
-        (( * we) / 5)*2 - ((( * we) / 5) / 2),
-        (( * he) /2)  - ((( * we) / 5) / 2),
-        ( * we) / 5,
-        ( * we) / 5
-    };
- 
 
-    SDL_Rect r_Bouton_O = {
-        (( * we) / 5)*3 - ((( * we) / 5) / 2),
-        (( * he) /2)- ((( * we) / 5) / 2),
-        ( * we) / 5,
-        ( * we) / 5
-    };
-        SDL_Rect r_Bouton_A = {
-        (( * we) / 5)*4 - ((( * we) / 5) / 2),
-        (( * he) /2) - ((( * we) / 5) / 2),
-        ( * we) / 5,
-        ( * we) / 5
-    };
-
- 
 
     SDL_Rect r_Ecran = {0,0,(*we),(*he)};
+    int i =0;
+    int nb_allie=0;
+        for (i =0;i<4 && pp->equipe[i]!=NULL;i++){
+            nb_allie++;
+        }
 
 
+        i=0;
  
         int etat = 1;
         while (etat) {
@@ -2910,23 +2904,25 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ma
                     //pour continuer le jeu
                     if ((r_Bouton_C.x <= event.button.x) && ((r_Bouton_C.x + r_Bouton_C.w) >= event.button.x) && ((r_Bouton_C.y + r_Bouton_C.h) >= event.button.y) && (r_Bouton_C.y <= event.button.y)) {
                         etat = 0;
-                        *leader=0;
+                        *leader=i;
 
                     }
-                    //pour quitter le jeu
-                    else if ((r_Bouton_Q.x <= event.button.x) && ((r_Bouton_Q.x + r_Bouton_Q.w) >= event.button.x) && ((r_Bouton_Q.y + r_Bouton_Q.h) >= event.button.y) && (r_Bouton_Q.y <= event.button.y)) {
-                        etat = 0;
-                        *leader=1;
-                  
-                    } else if ((r_Bouton_O.x <= event.button.x) && ((r_Bouton_O.x + r_Bouton_O.w) >= event.button.x) && ((r_Bouton_O.y + r_Bouton_O.h) >= event.button.y) && (r_Bouton_O.y <= event.button.y)) {
-                        etat = 0;
-                        *leader=2;
-                      
+                    if((r_Fleches_GEcran.x<=event.button.x) && (r_Fleches_GEcran.x+r_Fleches_GEcran.w>=event.button.x) && ((r_Fleches_GEcran.y+r_Fleches_GEcran.h)>=event.button.y) && (r_Fleches_GEcran.y<=event.button.y)){
+                        if(i<=0){
+                            i=nb_allie-1;
+                        }
+                        else{
+                            i--;
+                            
+                        }
                     }
-                     else if ((r_Bouton_A.x <= event.button.x) && ((r_Bouton_A.x + r_Bouton_A.w) >= event.button.x) && ((r_Bouton_A.y + r_Bouton_A.h) >= event.button.y) && (r_Bouton_A.y <= event.button.y)) {
-                        etat = 0;
-                        *leader=3;
-                      
+                    if((r_Fleches_DEcran.x<=event.button.x) && (r_Fleches_DEcran.x+r_Fleches_DEcran.w>=event.button.x) && ((r_Fleches_DEcran.y+r_Fleches_DEcran.h)>=event.button.y) && (r_Fleches_DEcran.y<=event.button.y)){
+                        if(i>=(nb_allie-1)){
+                            i=0;
+                            }
+                        else{
+                            i++;
+                        }
                     }
 
                 }
@@ -2939,17 +2935,14 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ma
 
             SDL_RenderCopy(renderer, map -> tabTexture[161], NULL, & r_Ecran);
 
-            SDL_RenderCopy(renderer, map -> tabTexture[136], NULL, & r_Bouton_C);
-            SDL_RenderCopy(renderer, map -> tabTexture[140], NULL, & r_Bouton_O);
-            SDL_RenderCopy(renderer, map -> tabTexture[138], NULL, & r_Bouton_Q);
-            SDL_RenderCopy(renderer, map -> tabTexture[142], NULL, & r_Bouton_A);
+            SDL_RenderCopy(renderer, map -> tabTexture[pp->equipe[i]->indice_sprite], NULL, & r_Bouton_C);
+
 
             SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_C);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_O);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_Q);
-            SDL_RenderCopy(renderer, map -> tabTexture[159], NULL, & r_Bouton_A);
-            
-            
+
+            SDL_RenderCopy(renderer, map -> tabTexture[182], NULL, & r_Fleches_DEcran);
+            SDL_RenderCopy(renderer, map -> tabTexture[181], NULL, & r_Fleches_GEcran);
+
 
 
             SDL_RenderCopy(renderer, textTextureT, NULL, & r_text_T);

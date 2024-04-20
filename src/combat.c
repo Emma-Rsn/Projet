@@ -1827,11 +1827,11 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
                     jouer=0;
                 }
                 if((r_Fleches_GEcran.x<=event.button.x) && (r_Fleches_GEcran.x+r_Fleches_GEcran.w>=event.button.x) && ((r_Fleches_GEcran.y+r_Fleches_GEcran.h)>=event.button.y) && (r_Fleches_GEcran.y<=event.button.y)){
-                    if(combat->indice_allie>=(combat->nb_allie-1)){
-                        combat->indice_allie--;
+                    if(combat->indice_allie<=0){
+                        combat->indice_allie=combat->nb_allie-1;
                     }
                     else{
-                         combat->indice_allie=combat->nb_allie-1;
+                          combat->indice_allie--;
                     }
                 }
                 if((r_Fleches_DEcran.x<=event.button.x) && (r_Fleches_DEcran.x+r_Fleches_DEcran.w>=event.button.x) && ((r_Fleches_DEcran.y+r_Fleches_DEcran.h)>=event.button.y) && (r_Fleches_DEcran.y<=event.button.y)){
@@ -1869,15 +1869,15 @@ void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
             break;
 
         case 1://Lou
-        (*Leader)->equipe[i]=init_combattant("Lou",100,75,0,137,136,1,3,20,0,100);
+        (*Leader)->equipe[i]=init_combattant("Lou",100,75,0,138,137,1,3,20,0,100);
             break;
 
         case 2://Finn
-        (*Leader)->equipe[i]=init_combattant("Finn",150,70,0,139,138,2,3,10,0,150);
+        (*Leader)->equipe[i]=init_combattant("Finn",150,70,0,140,139,2,3,10,0,150);
             break;
 
         case 3://Ada
-        (*Leader)->equipe[i]=init_combattant("Ada",80,65,0,141,140,3,2,30,0,80);
+        (*Leader)->equipe[i]=init_combattant("Ada",80,65,0,142,141,3,2,30,0,80);
             break;
         
         default:

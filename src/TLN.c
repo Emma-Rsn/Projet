@@ -160,13 +160,13 @@ int main(){
                 Alex->equipe[jj]=init_combattant("Alex",*tabparam[28+ii],60,0,136,135,*tabparam[27+ii],2,25,0,110);
                 break;
             case 1 :
-                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],75,0,137,136,*tabparam[27+ii],3,20,0,100);
+                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],75,0,138,137,*tabparam[27+ii],3,20,0,100);
                 break;
             case 2 :
-                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],70,0,139,138,*tabparam[27+ii],3,10,0,150);
+                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],70,0,140,139,*tabparam[27+ii],3,10,0,150);
                 break;
             case 3 :
-                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],65,0,141,140,*tabparam[27+ii],2,30,0,80);
+                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],65,0,142,141,*tabparam[27+ii],2,30,0,80);
                 break;
             default: break;
         }
@@ -347,9 +347,6 @@ int main(){
          menu_FinPartie(wEcran,hEcran,event,renderer,run,Alex,&map,etat_boss);
          
 
-
-
-    
         // Mettre à jour le rendu
         SDL_RenderPresent(renderer);
         SDL_Delay(1000/dfps);

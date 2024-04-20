@@ -275,17 +275,17 @@ void Boss(obj_t * boss,p_mv * Leader){
 
             case 1://Lou
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Lou",100,75,0,137,136,1,3,20,0);
+            boss->tabObj[0]=init_ennemi("Lou",100,75,0,138,137,1,3,20,0);
                 break;
 
             case 2://Finn
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Finn",150,70,0,139,138,2,3,10,0);
+            boss->tabObj[0]=init_ennemi("Finn",150,70,0,140,139,2,3,10,0);
                 break;
 
             case 3://Ada
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Ada",80,65,0,141,140,3,2,30,0);
+            boss->tabObj[0]=init_ennemi("Ada",80,65,0,142,141,3,2,30,0);
                 break;
             
             default:
