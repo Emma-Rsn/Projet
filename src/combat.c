@@ -888,7 +888,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                 int k=0;
                 for(k=0;k<combat->nb_allie;k++){
                      if(combat->allie[k]->mort==0)
-                        *(combat->allie[k]->pv)+=combat->combattant[combat->indice_combattant]->pvMax*5/100;
+                        *(combat->allie[k]->pv)+=combat->combattant[combat->indice_combattant]->pvMax*15/100;
                 }
             }
 
@@ -917,7 +917,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                         }
                         else if(((r_ATQ3.x<=event.button.x) && ((r_ATQ3.x+r_ATQ3.w)>=event.button.x) && ((r_ATQ3.y+r_ATQ3.h)>=event.button.y) && (r_ATQ3.y<=event.button.y)) && (combattant->temps_recharge>=combattant->temps_recharge_max)){
                             if(combattant->type==0){
-                                *(ennemi->combattant[combat->indice_ennemi]->pv)-=combat->combattant[combat->indice_combattant]->puissance*combat->mult*2;
+                                *(ennemi->combattant[combat->indice_ennemi]->pv)-=combat->combattant[combat->indice_combattant]->puissance*3*combat->mult;
                             }
                             else if(combattant->type==1){
                                 combat->ennemi[combat->indice_ennemi]->status=1;
@@ -930,7 +930,7 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
                             else if(combattant->type==3){
                                 int k=0;
                                 for(k=0;k<combat->nb_ennemi;k++){
-                                    *(ennemi->combattant[k]->pv)-=combat->combattant[combat->indice_combattant]->puissance*combat->mult;
+                                    *(ennemi->combattant[k]->pv)-=combat->combattant[combat->indice_combattant]->puissance*2*combat->mult;
                                 }
                             }
                             
@@ -1820,7 +1820,7 @@ void soin(combat_t * combat,SDL_Rect r_basEcran,SDL_Renderer * renderer,int * we
             if(event.type == SDL_MOUSEBUTTONDOWN ){
 
                 if((r_ATQ1.x<=event.button.x) && (r_ATQ1.x+r_ATQ1.w>=event.button.x) && ((r_ATQ1.y+r_ATQ1.h)>=event.button.y) && (r_ATQ1.y<=event.button.y)){
-                    *(combat->allie[combat->indice_allie]->pv)+=10*combat->mult;
+                    *(combat->allie[combat->indice_allie]->pv)+=20*combat->combattant[combat->indice_combattant]->pvMax/100*combat->mult;
                     if(*(combat->allie[combat->indice_allie]->pv)>combat->allie[combat->indice_allie]->pvMax){
                         *(combat->allie[combat->indice_allie]->pv)=combat->allie[combat->indice_allie]->pvMax;
                     }
@@ -1865,19 +1865,19 @@ void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
         switch (Boss->type)
         {
         case 0://Alex
-        (*Leader)->equipe[i]=init_combattant("Alex",100,50,0,136,135,0,2,15,0,100);
+        (*Leader)->equipe[i]=init_combattant("Alex",110,60,0,136,135,0,2,25,0,110);
             break;
 
         case 1://Lou
-        (*Leader)->equipe[i]=init_combattant("Lou",100,50,0,138,137,1,2,15,0,100);
+        (*Leader)->equipe[i]=init_combattant("Lou",100,75,0,137,136,1,3,20,0,100);
             break;
 
         case 2://Finn
-        (*Leader)->equipe[i]=init_combattant("Finn",100,50,0,140,139,2,2,15,0,100);
+        (*Leader)->equipe[i]=init_combattant("Finn",150,70,0,139,138,2,3,10,0,150);
             break;
 
         case 3://Ada
-        (*Leader)->equipe[i]=init_combattant("Ada",100,50,0,142,141,3,2,15,0,100);
+        (*Leader)->equipe[i]=init_combattant("Ada",80,65,0,141,140,3,2,30,0,80);
             break;
         
         default:

@@ -813,11 +813,12 @@ int option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * e
 *\param run pointeur pour continuer le programme
 *\param personnage structure du personnage jouer
 *\param map structure de la map
+*\param leader variable pour savoir qui est le leader
 *\brief fonction qui affiche l'ecran game over
 */
 
 //fonction qui affiche l'ecran game over
-int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map) {
+int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map,int * leader) {
     if ( * personnage -> equipe[0] -> pv <= 0) {
 
         SDL_RenderClear(renderer);
@@ -1010,6 +1011,7 @@ int menu_gameOver(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, 
                     //pour continuer le jeu
                     if ((r_text_C.x <= event.button.x) && ((r_text_C.x + r_text_C.w) >= event.button.x) && ((r_text_C.y + r_text_C.h) >= event.button.y) && (r_text_C.y <= event.button.y)) {
                         etat = 0;
+                        choix_perso(we, he,event, renderer, map,leader);
                         nouvelle_partie(1);
                         * run = 0;
                     }
@@ -2805,14 +2807,13 @@ int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer,
 *\param he Longueur de l'ecran
 *\param event permet de savoir si il y a un evenement
 *\param renderer rendu de la fenetre
-*\param run pointeur pour continuer le programme
 *\param etatoption etat du menu des options 
 *\param map structure de la map
 *\brief fonction qui affiche le menu dans le jeu
 */
 
 //fonction qui affiche le menu dans le jeu
-int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, map_t * map,int * leader) {
+int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map_t * map,int * leader) {
 
     SDL_RenderClear(renderer);
     SDL_Color textColor = {
@@ -2910,22 +2911,22 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
                     if ((r_Bouton_C.x <= event.button.x) && ((r_Bouton_C.x + r_Bouton_C.w) >= event.button.x) && ((r_Bouton_C.y + r_Bouton_C.h) >= event.button.y) && (r_Bouton_C.y <= event.button.y)) {
                         etat = 0;
                         *leader=0;
-                        * run = 1;
+
                     }
                     //pour quitter le jeu
                     else if ((r_Bouton_Q.x <= event.button.x) && ((r_Bouton_Q.x + r_Bouton_Q.w) >= event.button.x) && ((r_Bouton_Q.y + r_Bouton_Q.h) >= event.button.y) && (r_Bouton_Q.y <= event.button.y)) {
                         etat = 0;
-                        *leader=2;
-                        * run = 1;
+                        *leader=1;
+                  
                     } else if ((r_Bouton_O.x <= event.button.x) && ((r_Bouton_O.x + r_Bouton_O.w) >= event.button.x) && ((r_Bouton_O.y + r_Bouton_O.h) >= event.button.y) && (r_Bouton_O.y <= event.button.y)) {
                         etat = 0;
-                        *leader=1;
-                        * run = 1;
+                        *leader=2;
+                      
                     }
                      else if ((r_Bouton_A.x <= event.button.x) && ((r_Bouton_A.x + r_Bouton_A.w) >= event.button.x) && ((r_Bouton_A.y + r_Bouton_A.h) >= event.button.y) && (r_Bouton_A.y <= event.button.y)) {
                         etat = 0;
                         *leader=3;
-                        * run = 1;
+                      
                     }
 
                 }

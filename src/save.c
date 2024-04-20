@@ -57,7 +57,7 @@ int load_settings(int *wEcran, int *hEcran)
     return 0;
 }
 
-int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche)
+int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche,int leader)
 {
     int i,y;
     for(i = 0;pmv.equipe[i] && i < 4;i++);
@@ -84,7 +84,6 @@ int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche)
             
         }
         if(value == 2){//rejoue
-            int leader = newLeader(pmv); 
             fprintf(fichier," %d %d %d %d\n",map.argent,map.nvEquipe,touche,leader);
             fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->equipe, map.listeArtefact[1]->equipe, map.listeArtefact[2]->equipe, map.listeArtefact[3]->equipe, map.listeArtefact[4]->equipe, map.listeArtefact[5]->equipe, map.listeArtefact[6]->equipe, map.listeArtefact[7]->equipe, map.listeArtefact[8]->equipe, map.listeArtefact[9]->equipe);
             fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->possession, map.listeArtefact[1]->possession, map.listeArtefact[2]->possession, map.listeArtefact[3]->possession, map.listeArtefact[4]->possession, map.listeArtefact[5]->possession, map.listeArtefact[6]->possession, map.listeArtefact[7]->possession, map.listeArtefact[8]->possession, map.listeArtefact[9]->possession);

@@ -157,21 +157,23 @@ int main(){
     for(ii = 0,jj = 1;ii<((*tabparam[26]-1)*2) && ii < 8;ii=ii+2,jj++){
         switch(*tabparam[27+ii]){
             case 0 :
-                Alex->equipe[jj]=init_combattant("Alex",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Alex",*tabparam[28+ii],60,0,136,135,*tabparam[27+ii],2,25,0,110);
                 break;
             case 1 :
-                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],75,0,137,136,*tabparam[27+ii],3,20,0,100);
                 break;
             case 2 :
-                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],70,0,139,138,*tabparam[27+ii],3,10,0,150);
                 break;
             case 3 :
-                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],60,0,1,14,*tabparam[27+ii],0,10,0,100);
+                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],65,0,141,140,*tabparam[27+ii],2,30,0,80);
                 break;
             default: break;
         }
 
     }
+
+
     map.plongee = *tabparam[33];
     map.cle  = *tabparam[34];
     map.talisman = *tabparam[35];
@@ -210,8 +212,8 @@ int main(){
 
     
     //variable indique l'etat du prog
-    //int i;//brouillard debug
-    //int j;//brouillard debug
+    int i;//brouillard debug
+    int j;//brouillard debug
 
     int * transi = malloc(sizeof(int));
     *transi = 0;
@@ -219,7 +221,7 @@ int main(){
 
     
     //char * command = NULL;
-        //menu d'ecran titre
+    //menu d'ecran titre
     SDL_Event event;
     menu(wEcran,hEcran,event,renderer,run,etatoption,toucheDeplacement,&map,leader);
 
@@ -229,7 +231,7 @@ int main(){
     while (*run) {
         //zone d'evenement
         while (SDL_PollEvent(&event) != 0) {
-            /*if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
+            if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_h)){
                 if(ouigrille == 0){
                     ouigrille = 1;
                 }else{
@@ -273,7 +275,7 @@ int main(){
                     *(Alex->NightP) = 0;
                     tN = 1;
                 }
-            }*/
+            }
             if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_x)){                
                 (*etat_map)=1;
             }
@@ -340,7 +342,7 @@ int main(){
 
 
         //Partie perdu
-         menu_gameOver(wEcran,hEcran,event,renderer,run,Alex,&map);
+         menu_gameOver(wEcran,hEcran,event,renderer,run,Alex,&map,leader);
         //Partie gagne
          menu_FinPartie(wEcran,hEcran,event,renderer,run,Alex,&map,etat_boss);
          
@@ -361,7 +363,7 @@ int main(){
     fscanf(fichier, "%d", &res);
     fclose(fichier);
 
-    save_pos(cartec->xcarte,cartec->ycarte,*Alex,map,*toucheDeplacement);
+    save_pos(cartec->xcarte,cartec->ycarte,*Alex,map,*toucheDeplacement,* leader);
     sauvegarde_map_brouillard(&map);
     
 
