@@ -138,7 +138,7 @@ int main(){
                     break;
             }
         }
-        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0;
+        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0, *tabparam[33] = 0,*tabparam[34] = 0,*tabparam[35] = 0;
         if(last != 2)*tabparam[4] = 0,*tabparam[5] = 1;
         for(ii = 6;ii<NB_PARAM && last != 2;ii++){
             *tabparam[ii] = 0;
@@ -395,7 +395,19 @@ int main(){
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
-    if(res == 2){system("./bin/TLN");}
-    if(res == 3){effacer_sauvg();system("./bin/TLN");}
+    if(res == 2){
+        system("rm save/ennemi.txt");
+        system("rm save/map.txt");
+        system("rm save/mapbrouillard.txt");
+        system("rm save/maplayout.txt");
+        system("./bin/TLN");
+    }
+    if(res == 3){
+        system("rm save/ennemi.txt");
+        system("rm save/map.txt");
+        system("rm save/mapbrouillard.txt");
+        system("rm save/maplayout.txt");
+        effacer_sauvg();system("./bin/TLN");
+    }
     return 0;
 }

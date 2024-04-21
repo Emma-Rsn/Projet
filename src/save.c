@@ -128,7 +128,7 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
             fscanf(fichier," %d %d",tabparam[27+y],tabparam[28+y]);
         }
         fscanf(fichier,"\n%d %d %d\n",tabparam[33],tabparam[34],tabparam[35]);
-    }else if(last == 2){
+    }if(last == 2){
         fscanf(fichier, "%d %d %d %d\n", tabparam[4], tabparam[5],touche,leader);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[6], tabparam[7], tabparam[8], tabparam[9], tabparam[10], tabparam[11], tabparam[12], tabparam[13], tabparam[14], tabparam[15]);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[16], tabparam[17], tabparam[18], tabparam[19], tabparam[20], tabparam[21], tabparam[22], tabparam[23], tabparam[24], tabparam[25]);
@@ -178,10 +178,6 @@ void nouvelle_partie(int param){
     }else{
         fprintf(fichier, "%d", 3);
     }
-    system("rm save/ennemi.txt");
-    system("rm save/map.txt");
-    system("rm save/mapbrouillard.txt");
-    system("rm save/maplayout.txt");
     fclose(fichier);
 }
 
