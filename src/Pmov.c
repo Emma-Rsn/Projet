@@ -626,27 +626,27 @@ void remplirp(p_mv * p,case_t * c,int leader){
     {
     case 0://Alex
     p->nom="Alex";
-    p->equipe[0]=init_combattant(p->nom,110,60,0,136,135,0,2,25,0,110);
+    p->equipe[0]=init_combattant(p->nom,190,60,0,136,135,0,2,27,0,190);
         break;
 
     case 1://Lou
     p->nom="Lou";
-    p->equipe[0]=init_combattant(p->nom,100,75,0,137,136,1,3,20,0,100);
+    p->equipe[0]=init_combattant(p->nom,180,75,0,138,137,1,3,23,0,180);
         break;
 
     case 2://Finn
     p->nom="Finn";
-    p->equipe[0]=init_combattant(p->nom,150,70,0,139,138,2,3,10,0,150);
+    p->equipe[0]=init_combattant(p->nom,230,70,0,140,139,2,3,15,0,230);
         break;
 
     case 3://Ada
     p->nom="Ada";
-    p->equipe[0]=init_combattant(p->nom,80,65,0,141,140,3,2,30,0,80);
+    p->equipe[0]=init_combattant(p->nom,135,65,0,142,141,3,2,36,0,135);
         break;
     
     default:
     p->nom="Default";
-    p->equipe[0]=init_combattant(p->nom,110,60,0,136,135,0,2,20,0,110);
+    p->equipe[0]=init_combattant(p->nom,200,50,0,136,135,0,2,20,0,200);
         break;
     }
 }

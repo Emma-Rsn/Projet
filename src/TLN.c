@@ -65,7 +65,7 @@ int main(){
     {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
     }
-    SDL_Surface * logo = IMG_Load("texture/logo.png");
+    SDL_Surface * logo = IMG_Load("texture/logoTLN.png");
     SDL_SetWindowIcon(window,logo);
     SDL_FreeSurface(logo);
     //mode de transparence
@@ -83,6 +83,7 @@ int main(){
     if (access("save/mapbrouillard.txt", F_OK) == -1) {
         system("touch save/mapbrouillard.txt");
         system("chmod a+w save/mapbrouillard.txt");
+        system("./Shell/Script_brouillard.bash");
     }
     
     
@@ -137,7 +138,7 @@ int main(){
                     break;
             }
         }
-        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0,*pv=100;
+        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0;
         if(last != 2)*tabparam[4] = 0,*tabparam[5] = 1;
         for(ii = 6;ii<NB_PARAM && last != 2;ii++){
             *tabparam[ii] = 0;
@@ -153,20 +154,19 @@ int main(){
     map.Nightmare=*Alex->Nightmare;
     carte_t * cartec =&map.tabMap[q][s];
     remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),*leader);
-    *Alex->equipe[0]->pv=*pv;
     for(ii = 0,jj = 1;ii<((*tabparam[26]-1)*2) && ii < 8;ii=ii+2,jj++){
         switch(*tabparam[27+ii]){
             case 0 :
-                Alex->equipe[jj]=init_combattant("Alex",*tabparam[28+ii],60,0,136,135,*tabparam[27+ii],2,25,0,110);
+                Alex->equipe[jj]=init_combattant("Alex",*tabparam[28+ii],60,0,136,135,*tabparam[27+ii],2,27,0,190);
                 break;
             case 1 :
-                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],75,0,137,136,*tabparam[27+ii],3,20,0,100);
+                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],75,0,137,136,*tabparam[27+ii],3,23,0,180);
                 break;
             case 2 :
-                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],70,0,139,138,*tabparam[27+ii],3,10,0,150);
+                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],70,0,139,138,*tabparam[27+ii],3,15,0,230);
                 break;
             case 3 :
-                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],65,0,141,140,*tabparam[27+ii],2,30,0,80);
+                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],65,0,141,140,*tabparam[27+ii],2,36,0,135);
                 break;
             default: break;
         }
@@ -178,7 +178,6 @@ int main(){
     map.cle  = *tabparam[34];
     map.talisman = *tabparam[35];
 
-    cartec->etat_brouillard = 0;
     map.zoneChargee = cartec->nZone;
     free(pv);
     free(leader);
@@ -196,6 +195,7 @@ int main(){
 
 
     load_brouillard(&map);
+    cartec->etat_brouillard = 0;
     load_ennemi(&map);
 
 
@@ -243,7 +243,8 @@ int main(){
                     ouilumiere = 1;
                 }else{
                     ouilumiere = 0;
-                    *Alex->equipe[0]->pv = 1;
+                    if(*Alex->equipe[0]->pv == 1)*Alex->equipe[0]->pv = Alex->equipe[0]->pvMax;
+                    else *Alex->equipe[0]->pv = 1;
                     map.argent++;
                 }
             }
