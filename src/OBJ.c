@@ -20,11 +20,11 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
     int i;
     switch(type){
         case 0 : //cas d'un objet de décors avec collision
-            n = -1;
+            n = 0;
             newObj->cas->etat = 0;
             break;
         case 1 : //cas d'un objet de décors sans collision
-            n = -1;
+            n = 0;
             newObj->cas->etat = 1;
             break;
         case 2 : //cas d'un ennemi
@@ -37,7 +37,7 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
             break;
         case 4 : //cas d'un objet avec dialogue sans collision
             n = 1;
-            newObj->cas->etat = 0;
+            newObj->cas->etat = 1;
             break;
         case 5 : //cas d'un loot apres boss
             n = 1;
@@ -189,7 +189,6 @@ int load_obj(carte_t *c, char *namefile){
         }
     }
     else{
-        printf("%s\n",namefile);
         return 1;
     }
     fclose(file);
@@ -205,8 +204,9 @@ void affObj(SDL_Renderer *renderer,obj_t * o,map_t map){
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     int i;
     int n = 0;
-    if(map.Nightmare == 1)n=map.nbN;
     for(i = 0; i < carte->nbObj;i++){
+        if(map.Nightmare == 1 && carte->tabObj[i]->typeObj < 3)n=map.nbN;
+        else n=0;
         SDL_RenderCopy(renderer, map.tabTexture[(carte->tabObj[i]->indTexture)+n], NULL, &(carte->tabObj[i]->cas->Rectangle));
     }
 }
@@ -270,22 +270,22 @@ void Boss(obj_t * boss,p_mv * Leader){
             {
             case 0://Alex
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Alex",110,60,0,136,135,0,2,25,0);
+            boss->tabObj[0]=init_ennemi("Alex",190,60,0,136,135,0,2,27,0);
                 break;
 
             case 1://Lou
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Lou",100,75,0,138,137,1,3,20,0);
+            boss->tabObj[0]=init_ennemi("Lou",180,75,0,137,136,1,3,23,0);
                 break;
 
             case 2://Finn
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Finn",150,70,0,140,139,2,3,10,0);
+            boss->tabObj[0]=init_ennemi("Finn",230,70,0,139,138,2,3,15,0);
                 break;
 
             case 3://Ada
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Ada",80,65,0,142,141,3,2,30,0);
+            boss->tabObj[0]=init_ennemi("Ada",135,65,0,141,140,3,2,36,0);
                 break;
             
             default:

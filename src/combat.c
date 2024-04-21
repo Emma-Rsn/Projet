@@ -1865,19 +1865,19 @@ void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
         switch (Boss->type)
         {
         case 0://Alex
-        (*Leader)->equipe[i]=init_combattant("Alex",110,60,0,136,135,0,2,25,0,110);
+        (*Leader)->equipe[i]=init_combattant("Alex",190,60,0,136,135,0,2,27,0,190);
             break;
 
         case 1://Lou
-        (*Leader)->equipe[i]=init_combattant("Lou",100,75,0,138,137,1,3,20,0,100);
+        (*Leader)->equipe[i]=init_combattant("Lou",180,75,0,137,136,1,3,23,0,180);
             break;
 
         case 2://Finn
-        (*Leader)->equipe[i]=init_combattant("Finn",150,70,0,140,139,2,3,10,0,150);
+        (*Leader)->equipe[i]=init_combattant("Finn",230,70,0,139,138,2,3,15,0,230);
             break;
 
         case 3://Ada
-        (*Leader)->equipe[i]=init_combattant("Ada",80,65,0,142,141,3,2,30,0,80);
+        (*Leader)->equipe[i]=init_combattant("Ada",135,65,0,141,140,3,2,36,0,135);
             break;
         
         default:

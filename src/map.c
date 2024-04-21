@@ -138,6 +138,9 @@ map_t creation_map (){
     m.talisman = 0;
     m.nb_emplacement=1;
     m.prix_emplacement=20;
+    m.plongee = 0;
+    m.cle = 0;
+    m.talisman = 0;
     for(i=0;i<ROWS;i++){
         for(j=0;j<COLUMNS;j++){
             m.tabMap[i][j]=creation_carte(i,j);
@@ -1215,7 +1218,7 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
         {
         case 1:
             creation_tab_texture(map,renderer,1,0);
-            map->nbN = 4;
+            map->nbN = 7;
             map->nvZone=1;
             break;
         case 2:
@@ -1227,19 +1230,19 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
         case 3:
             creation_tab_texture(map,renderer,3,0);
             map->nbN = 69;
-            map->nvZone=3;
+            map->nvZone=4;
             if(map->Zone3 == 0)map->Zone3 = 1;
             break;
         case 4:
             creation_tab_texture(map,renderer,4,0);
             map->nbN = 40;
-            map->nvZone=4;
+            map->nvZone=1;
             if(map->Zone4 == 0)map->Zone4 = 1;
             break;
         case 5:
             creation_tab_texture(map,renderer,5,0);
             map->nbN = 40;
-            map->nvZone=5;
+            map->nvZone=6;
             if(map->Zone5 == 0)map->Zone5 = 1;
             break;
         
