@@ -87,6 +87,7 @@ int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche,int leader)
             fprintf(fichier," %d %d %d %d\n",map.argent,map.nvEquipe,touche,leader);
             fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->equipe, map.listeArtefact[1]->equipe, map.listeArtefact[2]->equipe, map.listeArtefact[3]->equipe, map.listeArtefact[4]->equipe, map.listeArtefact[5]->equipe, map.listeArtefact[6]->equipe, map.listeArtefact[7]->equipe, map.listeArtefact[8]->equipe, map.listeArtefact[9]->equipe);
             fprintf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", map.listeArtefact[0]->possession, map.listeArtefact[1]->possession, map.listeArtefact[2]->possession, map.listeArtefact[3]->possession, map.listeArtefact[4]->possession, map.listeArtefact[5]->possession, map.listeArtefact[6]->possession, map.listeArtefact[7]->possession, map.listeArtefact[8]->possession, map.listeArtefact[9]->possession);
+            fprintf(fichier,"%d\n",map.nb_emplacement);
         }if(value == 1){//sauvegarde classique
             fprintf(fichier, " %d %d %d %d %d %d %d\n", xcarte, ycarte, pmv.c->x, pmv.c->y, *(pmv.d), *(pmv.NightP), *pmv.equipe[0]->pv);
             fprintf(fichier, "%d %d %d %d %d %d %d %d\n", map.Zone2, map.Zone3, map.Zone4, map.Zone5, map.argent, map.nvEquipe,touche,pmv.equipe[0]->type);
@@ -97,7 +98,7 @@ int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche,int leader)
                 fprintf(fichier," %d %d",pmv.equipe[y]->type,*pmv.equipe[y]->pv);
             }
             fprintf(fichier,"\n");
-            fprintf(fichier,"%d %d %d\n",map.plongee,map.cle,map.talisman);
+            fprintf(fichier,"%d %d %d %d\n",map.plongee,map.cle,map.talisman,map.nb_emplacement);
 
         }
         
@@ -127,11 +128,12 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
         for(y = 0;y<((*tabparam[26]-1)*2);y=y+2){//32 max
             fscanf(fichier," %d %d",tabparam[27+y],tabparam[28+y]);
         }
-        fscanf(fichier,"\n%d %d %d\n",tabparam[33],tabparam[34],tabparam[35]);
+        fscanf(fichier,"\n%d %d %d %d\n",tabparam[33],tabparam[34],tabparam[35],tabparam[36]);
     }if(last == 2){
         fscanf(fichier, "%d %d %d %d\n", tabparam[4], tabparam[5],touche,leader);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[6], tabparam[7], tabparam[8], tabparam[9], tabparam[10], tabparam[11], tabparam[12], tabparam[13], tabparam[14], tabparam[15]);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[16], tabparam[17], tabparam[18], tabparam[19], tabparam[20], tabparam[21], tabparam[22], tabparam[23], tabparam[24], tabparam[25]);
+        fscanf(fichier,"%d\n",tabparam[36]);
         rewind(fichier);
         fprintf(fichier, "%d", 0);
     }

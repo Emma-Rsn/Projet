@@ -1263,20 +1263,11 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
 */
 int zone_fini(map_t map){
     switch(map.zoneChargee){
-        case 2 : if(map.Zone2 != 1)return 1;else return 0;break;
-        case 3 : if(map.Zone3 != 1)return 1;else return 0;break;
+        case 2 : if(map.Zone2 != 1 || map.plongee == 0)return 1;else return 0;break;
+        case 3 : if(map.Zone3 != 1 || map.cle == 0)return 1;else return 0;break;
         case 4 : if(map.Zone4 != 1)return 1;else return 0;break;
         case 5 : if(map.Zone5 != 1)return 1;else return 0;break;
         default : return 1;
-    }
-}
-
-int zone_bloquer(int zone,map_t map){
-    switch(zone){
-        case 2 : if(map.plongee == 0)return 1;else return 0;break;
-        case 5 : if(map.talisman == 0)return 1;else return 0;break;
-        case 3 : if(map.cle == 0)return 1;else return 0;break;
-        default : return 0;
     }
 }
 

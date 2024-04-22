@@ -122,7 +122,6 @@ int sauvegarde_map_layout(map_t * map);
 int remplir_map(map_t *map);
 float min(float a, float b);
 int zone_fini(map_t map);
-int zone_bloquer(int zone,map_t map);
 int afficher_map(SDL_Event event,map_t map, SDL_Renderer *renderer, int *we, int *he, int *etat_map,carte_t * cartec);
 int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMusic);
 void lumiere(SDL_Renderer *renderer,carte_t *cartec,case_t *c);
