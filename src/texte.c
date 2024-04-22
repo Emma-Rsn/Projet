@@ -8,7 +8,7 @@
 *\brief Programme qui affiche un texte sur la fenetre
 *\author Pasquier Lina 
 *\date 28 janvier 2024
-*\version 0.3
+*\version 1.0
 *
 *
 *

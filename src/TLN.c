@@ -8,7 +8,7 @@
 *\brief programme principale
 *\author Moreau Enzo Rasson Emma Pasquier Lina 
 *\date  janvier 2024
-*\version 0.0
+*\version 1.0
 *
 */
 
