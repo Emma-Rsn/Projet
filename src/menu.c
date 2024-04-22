@@ -2736,7 +2736,7 @@ int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer,
                     //pour continuer le jeu
                     if ((r_text_C.x <= event.button.x) && ((r_text_C.x + r_text_C.w) >= event.button.x) && ((r_text_C.y + r_text_C.h) >= event.button.y) && (r_text_C.y <= event.button.y)) {
                         etat = 0;
-                        nouvelle_partie(1);
+                        nouvelle_partie(0);
                         * run = 0;
                     }
 

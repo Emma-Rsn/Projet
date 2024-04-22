@@ -708,7 +708,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
 
                     }
                     
-                    if(map->Nightmare && combat->combattant[j]->forme!=3 && combat->combattant[j]->camp==1){
+                    if(map->Nightmare && combat->combattant[j]->forme!=3 && combat->combattant[j]->forme!=4 && combat->combattant[j]->camp==1){
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
 
                     }
@@ -753,7 +753,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                         
                     }
 
-                    if(map->Nightmare && combat->combattant[j]->forme!=3 && combat->combattant[j]->camp==1){
+                    if(map->Nightmare && combat->combattant[j]->forme!=3 && combat->combattant[j]->forme!=4 && combat->combattant[j]->camp==1){
                          SDL_RenderCopy(renderer, map->tabTexture[combat->combattant[j]->indice_sprite+map->nbN], NULL, &r1);
 
                     }
@@ -832,7 +832,7 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
                 //creation texture de l'ennemi
                 SDL_RenderCopy(renderer, map->tabTexture[combat->ennemi[combat->indice_ennemi]->indice_portrait], NULL, &r_ennemi);
             }
-            else if(etat==0 && map->Nightmare==1){
+            else if(etat==0 && map->Nightmare==1 && combat->ennemi[combat->indice_ennemi]->forme!=4 && combat->ennemi[combat->indice_ennemi]->forme!=3 ){
                 SDL_RenderCopy(renderer, map->tabTexture[combat->ennemi[combat->indice_ennemi]->indice_portrait+map->nbN], NULL, &r_ennemi);
             }
             else if (etat==1 && map->Nightmare==0){
@@ -842,6 +842,8 @@ int affichage_combat(int *we,int *he,SDL_Renderer * renderer,combat_t *combat,in
             else if(etat==1 && map->Nightmare==1){
                 SDL_RenderCopy(renderer, map->tabTexture[combat->allie[combat->indice_allie]->indice_portrait+8], NULL, &r_ennemi);
 
+            }else{
+                SDL_RenderCopy(renderer, map->tabTexture[combat->ennemi[combat->indice_ennemi]->indice_portrait], NULL, &r_ennemi);
             }
  
 
@@ -1233,8 +1235,7 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
                         break;
                     }
                 }else if(((ennemi_t *)cartec->tabObj[i]->tabObj[0])->forme == 4 && *etat_boss < 2){
-                    printf("TEST\n");
-                    ennemi_t * newEnnemi = init_ennemi("?????",400,100,1,90,91,1,3,40,4);
+                    ennemi_t * newEnnemi = init_ennemi("?????",400,100,1,134,133,1,3,40,4);
                     cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,2,newEnnemi);
                     cartec->nbObj++; 
                     *pp->Nightmare = 1;
@@ -1504,7 +1505,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                     }
                 
                     //passif d'Alex ennemi, si il meurt il peut ressuciter une fois
-                    if((combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && *(combat->combattant[j]->pv)<=0 && combat->combattant[j]->forme==3) && (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1 && alexMortEnnemi==0) ){
+                    if((combat->combattant[j]->camp==1 && alexMortEnnemi==0 && combat->combattant[j]->type==0 && *(combat->combattant[j]->pv)<=0 && combat->combattant[j]->forme==3) || (combat->combattant[combat->indice_combattant]->forme==4 && alexMortEnnemi==0) ){
                         *(combat->combattant[j]->pv)=combat->combattant[j]->pvMax;
                         alexMortEnnemi=1;
                     }

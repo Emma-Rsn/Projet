@@ -943,10 +943,10 @@ sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
 sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
-sprite/slimeblue.png
+sprite/bossfinal.png
+sprite/bossdialfinal.png
+sprite/boss2.png
+sprite/boss2dial.png
 sprite/alexface2.png
 sprite/alexdial.png
 sprite/louface2.png
