@@ -1172,7 +1172,7 @@ combat_t * init_combat(){
 
 int boolTousMort(ennemi_t * ennemi){
     int i;
-    for(i=0;ennemi->combattant[i];i++){
+    for(i=0;ennemi->combattant[i] && i < 4;i++){
         if(!ennemi->combattant[i]->mort)return 0;
     }
     return 1;
@@ -1216,8 +1216,16 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
                     default:
                         break;
                     }
+                }else if(((ennemi_t *)cartec->tabObj[i]->tabObj[0])->forme == 4 && *etat_boss < 2){
+                    printf("TEST\n");
+                    ennemi_t * newEnnemi = init_ennemi("?????",400,100,1,90,91,1,3,40,4);
+                    cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,2,newEnnemi);
+                    cartec->nbObj++; 
+                    *pp->Nightmare = 1;
+                    *pp->NightP = 100;
+                    map->Nightmare = 1;
                 }
-                save_ennemi(*cartec,*cartec->tabObj[i]);
+                if(((ennemi_t *)cartec->tabObj[i]->tabObj[0])->forme != 4)save_ennemi(*cartec,*cartec->tabObj[i]);
                 dest_obj(cartec,i);
             }
         }
@@ -1597,7 +1605,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                     }
                 }
                 if(ennemi->forme==4){
-                    * etat_boss=1;
+                    *etat_boss = *etat_boss + 1;
                 }
                 else if(ennemi->forme==3){
                     newCompagnon(&pp,ennemi);

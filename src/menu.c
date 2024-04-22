@@ -2544,7 +2544,7 @@ int inventaire(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map
 
 //fonction qui affiche l'ecran de fin de partie lorsque le joueur a gagne
 int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, p_mv * personnage, map_t * map,int * etat_boss) {
-    if ( * etat_boss==1) {
+    if ( * etat_boss==2) {
 
         SDL_RenderClear(renderer);
         SDL_Color textColor = {
