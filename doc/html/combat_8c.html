@@ -1,0 +1,1115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Last Nightmare: Référence du fichier src/combat.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logoTLN.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">The Last Nightmare
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier combat.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Programme qui s'occupe du combat.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &quot;../libs/commun.h&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de combat.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="combat_8c__incl.png" border="0" usemap="#asrc_2combat_8c" alt=""/></div>
+<map name="asrc_2combat_8c" id="asrc_2combat_8c">
+<area shape="rect" title="Programme qui s&#39;occupe du combat." alt="" coords="1006,5,1111,31"/>
+<area shape="rect" href="commun_8h_source.html" title=" " alt="" coords="993,79,1124,104"/>
+<area shape="poly" title=" " alt="" coords="1061,31,1061,65,1056,65,1056,31"/>
+<area shape="rect" title=" " alt="" coords="5,152,101,177"/>
+<area shape="poly" title=" " alt="" coords="993,97,624,111,374,129,115,155,115,149,373,123,623,106,993,91"/>
+<area shape="rect" title=" " alt="" coords="125,152,243,177"/>
+<area shape="poly" title=" " alt="" coords="993,98,680,117,471,133,257,155,256,149,471,128,679,111,993,93"/>
+<area shape="rect" title=" " alt="" coords="267,152,411,177"/>
+<area shape="poly" title=" " alt="" coords="993,101,748,122,425,154,424,149,747,117,993,95"/>
+<area shape="rect" title=" " alt="" coords="435,152,573,177"/>
+<area shape="poly" title=" " alt="" coords="993,103,587,155,587,149,993,98"/>
+<area shape="rect" title=" " alt="" coords="598,152,669,177"/>
+<area shape="poly" title=" " alt="" coords="994,104,855,125,683,155,682,149,854,119,993,99"/>
+<area shape="rect" title=" " alt="" coords="693,152,760,177"/>
+<area shape="poly" title=" " alt="" coords="1002,107,774,155,774,155,772,149,773,149,1001,101"/>
+<area shape="rect" title=" " alt="" coords="785,152,853,177"/>
+<area shape="poly" title=" " alt="" coords="1021,107,867,152,865,147,1019,101"/>
+<area shape="rect" title=" " alt="" coords="877,152,941,177"/>
+<area shape="poly" title=" " alt="" coords="1036,106,947,148,945,144,1034,102"/>
+<area shape="rect" title=" " alt="" coords="965,152,1040,177"/>
+<area shape="poly" title=" " alt="" coords="1052,106,1022,143,1018,140,1047,103"/>
+<area shape="rect" href="save_8h_source.html" title=" " alt="" coords="1064,152,1168,177"/>
+<area shape="poly" title=" " alt="" coords="1070,103,1100,139,1096,143,1066,106"/>
+<area shape="rect" href="printImg_8h_source.html" title=" " alt="" coords="1192,152,1320,177"/>
+<area shape="poly" title=" " alt="" coords="1091,102,1212,145,1210,150,1089,107"/>
+<area shape="rect" href="texte_8h_source.html" title=" " alt="" coords="1344,152,1451,177"/>
+<area shape="poly" title=" " alt="" coords="1114,101,1331,147,1330,152,1113,107"/>
+<area shape="rect" href="map_8h_source.html" title=" " alt="" coords="1475,152,1578,177"/>
+<area shape="poly" title=" " alt="" coords="1125,99,1462,149,1461,155,1124,104"/>
+<area shape="rect" href="OBJ_8h_source.html" title=" " alt="" coords="1523,225,1619,251"/>
+<area shape="poly" title=" " alt="" coords="1124,93,1250,99,1397,110,1524,127,1568,137,1593,150,1600,165,1600,183,1588,215,1583,213,1595,182,1595,167,1589,154,1566,142,1523,132,1396,116,1250,104,1124,98"/>
+<area shape="rect" href="menu_8h_source.html" title=" " alt="" coords="1654,152,1765,177"/>
+<area shape="poly" title=" " alt="" coords="1124,96,1350,117,1635,149,1641,150,1640,155,1634,155,1350,123,1124,101"/>
+<area shape="rect" href="combat_8h_source.html" title=" " alt="" coords="1789,152,1912,177"/>
+<area shape="poly" title=" " alt="" coords="1124,94,1404,114,1776,149,1776,155,1403,119,1124,99"/>
+<area shape="rect" href="musique_8h_source.html" title=" " alt="" coords="1937,152,2066,177"/>
+<area shape="poly" title=" " alt="" coords="1125,93,1462,111,1689,128,1923,149,1923,155,1688,133,1462,117,1124,98"/>
+<area shape="rect" href="Pmov_8h_source.html" title=" " alt="" coords="2091,152,2200,177"/>
+<area shape="poly" title=" " alt="" coords="1125,91,1523,106,1796,123,2077,149,2077,155,1795,129,1523,112,1124,97"/>
+<area shape="poly" title=" " alt="" coords="1536,176,1559,212,1554,215,1532,179"/>
+</map>
+</div>
+</div>
+<p><a href="combat_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a800f73c2f9971267ab6c8ebca5e5c7cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a800f73c2f9971267ab6c8ebca5e5c7cf">erreur_sdl</a> (const char *message, SDL_Window *fenetre, SDL_Renderer *renderer, SDL_Texture *Texture, SDL_Texture *Texture2)</td></tr>
+<tr class="memdesc:a800f73c2f9971267ab6c8ebca5e5c7cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui gere les erreurs de SDL  <br /></td></tr>
+<tr class="separator:a800f73c2f9971267ab6c8ebca5e5c7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e649397f1b21df57c13a1b49b7e3ed6"><td class="memItemLeft" align="right" valign="top"><a id="a1e649397f1b21df57c13a1b49b7e3ed6" name="a1e649397f1b21df57c13a1b49b7e3ed6"></a>
+<a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pre_init_combattant</b> ()</td></tr>
+<tr class="separator:a1e649397f1b21df57c13a1b49b7e3ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7272323e35c8bb1663ddb021ebd4fc80"><td class="memItemLeft" align="right" valign="top"><a id="a7272323e35c8bb1663ddb021ebd4fc80" name="a7272323e35c8bb1663ddb021ebd4fc80"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>remplir_combattant</b> (<a class="el" href="structcombattant__s.html">combattant_t</a> *combattant, char *nom, int pv, int vitesse, int camp, int indice_portrait, int indice_sprite, int type, int temps_recharge_max, int puissance, int forme)</td></tr>
+<tr class="separator:a7272323e35c8bb1663ddb021ebd4fc80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd61c1a074ea6c286f7af664993242a"><td class="memItemLeft" align="right" valign="top"><a id="aadd61c1a074ea6c286f7af664993242a" name="aadd61c1a074ea6c286f7af664993242a"></a>
+<a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>init_combattant</b> (char *nom, int pv, int vitesse, int camp, int indice_portrait, int indice_sprite, int type, int temps_recharge_max, int puissance, int forme, int pvMax)</td></tr>
+<tr class="separator:aadd61c1a074ea6c286f7af664993242a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86609479bf6edf9d746cb7c4aab0db66"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a86609479bf6edf9d746cb7c4aab0db66">desctruction_combattant</a> (<a class="el" href="structcombattant__s.html">combattant_t</a> *combattant)</td></tr>
+<tr class="memdesc:a86609479bf6edf9d746cb7c4aab0db66"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui detruit un combattant  <br /></td></tr>
+<tr class="separator:a86609479bf6edf9d746cb7c4aab0db66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b21bda13ba257e7e0969b24b654f9f5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a5b21bda13ba257e7e0969b24b654f9f5">desctruction_combat</a> (<a class="el" href="structcombat__s.html">combat_t</a> *combat)</td></tr>
+<tr class="memdesc:a5b21bda13ba257e7e0969b24b654f9f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui detruit le combat  <br /></td></tr>
+<tr class="separator:a5b21bda13ba257e7e0969b24b654f9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf83afaffa93beb60cae1f89ada61f60"><td class="memItemLeft" align="right" valign="top"><a id="aaf83afaffa93beb60cae1f89ada61f60" name="aaf83afaffa93beb60cae1f89ada61f60"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>affiche_point</b> (int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_basEcran, <a class="el" href="structcombat__s.html">combat_t</a> *combat, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="separator:aaf83afaffa93beb60cae1f89ada61f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af904aa22a4c73018b89f20911c97023c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#af904aa22a4c73018b89f20911c97023c">affiche_pv</a> (int *we, int *he, SDL_Renderer *renderer, SDL_Rect r_GEcran, SDL_Rect r_DEcran, <a class="el" href="structcombat__s.html">combat_t</a> *combat, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:af904aa22a4c73018b89f20911c97023c"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui affiche les allies et les ennemis sur les cotes  <br /></td></tr>
+<tr class="separator:af904aa22a4c73018b89f20911c97023c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5abe0330656d7653985248d140f74db0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a5abe0330656d7653985248d140f74db0">attaque_ennemi</a> (int nb_combattant, <a class="el" href="structcombat__s.html">combat_t</a> *combat)</td></tr>
+<tr class="memdesc:a5abe0330656d7653985248d140f74db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction d'attaque de l'ennemi  <br /></td></tr>
+<tr class="separator:a5abe0330656d7653985248d140f74db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af49ae13d77b9fd993ae63e147aa4ec6b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#af49ae13d77b9fd993ae63e147aa4ec6b">forme_attaque</a> (int nb_combattant, <a class="el" href="structcombat__s.html">combat_t</a> *combat)</td></tr>
+<tr class="memdesc:af49ae13d77b9fd993ae63e147aa4ec6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui donne l'indice de la personne attaque par rapport a la forme de l'ennemi  <br /></td></tr>
+<tr class="separator:af49ae13d77b9fd993ae63e147aa4ec6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a2ebe3dafdfa818fa29088616e163d5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a8a2ebe3dafdfa818fa29088616e163d5">affichage_combat</a> (int *we, int *he, SDL_Renderer *renderer, <a class="el" href="structcombat__s.html">combat_t</a> *combat, int etat, <a class="el" href="structpersonnage.html">p_mv</a> *<a class="el" href="structpersonnage.html">personnage</a>, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:a8a2ebe3dafdfa818fa29088616e163d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction d'affichage du combat  <br /></td></tr>
+<tr class="separator:a8a2ebe3dafdfa818fa29088616e163d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8396277c7ae5e01d0e8dedb019c61e29"><td class="memItemLeft" align="right" valign="top"><a id="a8396277c7ae5e01d0e8dedb019c61e29" name="a8396277c7ae5e01d0e8dedb019c61e29"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>attaque_allie</b> (int *we, int *he, SDL_Event event, SDL_Renderer *renderer, <a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi, <a class="el" href="structcombattant__s.html">combattant_t</a> *combattant, int Nbennemi, <a class="el" href="structcombat__s.html">combat_t</a> *combat, int allie, <a class="el" href="structpersonnage.html">p_mv</a> *<a class="el" href="structpersonnage.html">personnage</a>, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="separator:a8396277c7ae5e01d0e8dedb019c61e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab66e455ee98a4dfda8dcf23067525a6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#ab66e455ee98a4dfda8dcf23067525a6c">debut_combat</a> (SDL_Event event, <a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structcase__s.html">case_t</a> *c)</td></tr>
+<tr class="memdesc:ab66e455ee98a4dfda8dcf23067525a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui regarde si on a lancer un combat  <br /></td></tr>
+<tr class="separator:ab66e455ee98a4dfda8dcf23067525a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad29d54adab0bade541c5b73bd9bfbb91"><td class="memItemLeft" align="right" valign="top"><a id="ad29d54adab0bade541c5b73bd9bfbb91" name="ad29d54adab0bade541c5b73bd9bfbb91"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>boolMemeCase</b> (<a class="el" href="structcase__s.html">case_t</a> c1, <a class="el" href="structcase__s.html">case_t</a> c2)</td></tr>
+<tr class="separator:ad29d54adab0bade541c5b73bd9bfbb91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae33e0205ab126b5885d6d7118dbd74f6"><td class="memItemLeft" align="right" valign="top"><a id="ae33e0205ab126b5885d6d7118dbd74f6" name="ae33e0205ab126b5885d6d7118dbd74f6"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>boolDebutCombat</b> (<a class="el" href="structcarte__s.html">carte_t</a> *cartec, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structobj__s.html">obj_t</a> *ennemi)</td></tr>
+<tr class="separator:ae33e0205ab126b5885d6d7118dbd74f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14c2400b250f63a0567ea989e68f4254"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a14c2400b250f63a0567ea989e68f4254">debut_combat_carte</a> (<a class="el" href="structcarte__s.html">carte_t</a> *cartec, SDL_Event event, <a class="el" href="structpersonnage.html">p_mv</a> *pp)</td></tr>
+<tr class="memdesc:a14c2400b250f63a0567ea989e68f4254"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui appelle debut_combat avec tout les ennemis sur la map  <br /></td></tr>
+<tr class="separator:a14c2400b250f63a0567ea989e68f4254"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11a01ef94ed383d1247ddd96defd67d5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a11a01ef94ed383d1247ddd96defd67d5">compare_vitesse</a> (const <a class="el" href="structcombattant__s.html">combattant_t</a> *const combattant1, const <a class="el" href="structcombattant__s.html">combattant_t</a> *const combattant2)</td></tr>
+<tr class="memdesc:a11a01ef94ed383d1247ddd96defd67d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction pour comparer la vitesse des personnages  <br /></td></tr>
+<tr class="separator:a11a01ef94ed383d1247ddd96defd67d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa582399ffdb1627f31973984513f2d2b"><td class="memItemLeft" align="right" valign="top"><a id="aa582399ffdb1627f31973984513f2d2b" name="aa582399ffdb1627f31973984513f2d2b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>compare_vitesse_enc</b> (const void *const combattant1, const void *const combattant2)</td></tr>
+<tr class="separator:aa582399ffdb1627f31973984513f2d2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c96e4b113cdef70898987ec2643b58a"><td class="memItemLeft" align="right" valign="top"><a id="a4c96e4b113cdef70898987ec2643b58a" name="a4c96e4b113cdef70898987ec2643b58a"></a>
+<a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>init_combat</b> ()</td></tr>
+<tr class="memdesc:a4c96e4b113cdef70898987ec2643b58a"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction d'initialisation de la structure combat <br /></td></tr>
+<tr class="separator:a4c96e4b113cdef70898987ec2643b58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbf05a68ba26c8c9aa226a6fdbfd5457"><td class="memItemLeft" align="right" valign="top"><a id="acbf05a68ba26c8c9aa226a6fdbfd5457" name="acbf05a68ba26c8c9aa226a6fdbfd5457"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>boolTousMort</b> (<a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi)</td></tr>
+<tr class="separator:acbf05a68ba26c8c9aa226a6fdbfd5457"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe0ef3cd6f4ea09245e5a79c3d038384"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#afe0ef3cd6f4ea09245e5a79c3d038384">combat_carte</a> (<a class="el" href="structcarte__s.html">carte_t</a> *cartec, int *we, int *he, SDL_Event event, SDL_Renderer *renderer, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structmap__s.html">map_t</a> *map, int *etat_boss)</td></tr>
+<tr class="memdesc:afe0ef3cd6f4ea09245e5a79c3d038384"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui appelle combat avec tout les ennemis sur la map  <br /></td></tr>
+<tr class="separator:afe0ef3cd6f4ea09245e5a79c3d038384"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02d1c5b8743c54a45036d74d517fe01b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a02d1c5b8743c54a45036d74d517fe01b">combat</a> (int *we, int *he, SDL_Event event, SDL_Renderer *renderer, <a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structmap__s.html">map_t</a> *map, int *etat_boss)</td></tr>
+<tr class="memdesc:a02d1c5b8743c54a45036d74d517fe01b"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui s'occupe du combat avec un ennemi  <br /></td></tr>
+<tr class="separator:a02d1c5b8743c54a45036d74d517fe01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad99a3e5f895d581276a65237782c6f46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#ad99a3e5f895d581276a65237782c6f46">copier_combattant</a> (<a class="el" href="structcombattant__s.html">combattant_t</a> *combattant, <a class="el" href="structcombattant__s.html">combattant_t</a> *combattantcopie)</td></tr>
+<tr class="memdesc:ad99a3e5f895d581276a65237782c6f46"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui copie un combattant dans un autre  <br /></td></tr>
+<tr class="separator:ad99a3e5f895d581276a65237782c6f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62514ac450b1abb2c25b9e296abf75f0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a62514ac450b1abb2c25b9e296abf75f0">barreCauchemard</a> (<a class="el" href="structpersonnage.html">p_mv</a> *pmv, SDL_Renderer *renderer, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:a62514ac450b1abb2c25b9e296abf75f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui affiche la barre de cauchemar  <br /></td></tr>
+<tr class="separator:a62514ac450b1abb2c25b9e296abf75f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d87b5d37574da9e640d7e765a72a77a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a0d87b5d37574da9e640d7e765a72a77a">affVie</a> (SDL_Renderer *renderer, int he, int we, <a class="el" href="structcombattant__s.html">combattant_t</a> *combattant, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:a0d87b5d37574da9e640d7e765a72a77a"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui affiche la barre de vie  <br /></td></tr>
+<tr class="separator:a0d87b5d37574da9e640d7e765a72a77a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a699ed594a782ddb94670b35d996375"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a7a699ed594a782ddb94670b35d996375">soin</a> (<a class="el" href="structcombat__s.html">combat_t</a> *combat, SDL_Rect r_basEcran, SDL_Renderer *renderer, int *we, int *he, int allie, SDL_Event event, <a class="el" href="structpersonnage.html">p_mv</a> *<a class="el" href="structpersonnage.html">personnage</a>, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:a7a699ed594a782ddb94670b35d996375"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui s'accupe des soins des allies  <br /></td></tr>
+<tr class="separator:a7a699ed594a782ddb94670b35d996375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af24e4ba7ca53d2dd96986d2d4872f1cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#af24e4ba7ca53d2dd96986d2d4872f1cb">newCompagnon</a> (<a class="el" href="structpersonnage.html">p_mv</a> **Leader, <a class="el" href="structennemi__s.html">ennemi_t</a> *Boss)</td></tr>
+<tr class="memdesc:af24e4ba7ca53d2dd96986d2d4872f1cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui qui permet de recuperer un compagnon apres l'avoir sauvée  <br /></td></tr>
+<tr class="separator:af24e4ba7ca53d2dd96986d2d4872f1cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Programme qui s'occupe du combat. </p>
+<dl class="section author"><dt>Auteur</dt><dd>Pasquier Lina Moreau Enzo </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>15 Fevrier 2024 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a8a2ebe3dafdfa818fa29088616e163d5" name="a8a2ebe3dafdfa818fa29088616e163d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a2ebe3dafdfa818fa29088616e163d5">&#9670;&#160;</a></span>affichage_combat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int affichage_combat </td>
+          <td>(</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td>
+          <td class="paramname"><em>combat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>etat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>personnage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction d'affichage du combat </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">we</td><td>Largeur de l'ecran </td></tr>
+    <tr><td class="paramname">he</td><td>Hauteur de l'ecran </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de l'ecran </td></tr>
+    <tr><td class="paramname">combat</td><td>structure de combat </td></tr>
+    <tr><td class="paramname">etat</td><td>permet de savoir si c'est un alliee qui joue ou un ennemi pour afficher ce qu'il faut </td></tr>
+    <tr><td class="paramname">personnage</td><td>structure du personnage jouer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af904aa22a4c73018b89f20911c97023c" name="af904aa22a4c73018b89f20911c97023c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af904aa22a4c73018b89f20911c97023c">&#9670;&#160;</a></span>affiche_pv()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int affiche_pv </td>
+          <td>(</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Rect&#160;</td>
+          <td class="paramname"><em>r_GEcran</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Rect&#160;</td>
+          <td class="paramname"><em>r_DEcran</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td>
+          <td class="paramname"><em>combat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui affiche les allies et les ennemis sur les cotes </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">we</td><td>Largeur de l'ecran </td></tr>
+    <tr><td class="paramname">he</td><td>Hauteur de l'ecran </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">r_GEcran</td><td>renctangle gauche de l'ecran </td></tr>
+    <tr><td class="paramname">r_DEcran</td><td>renctangle droit de l'ecran </td></tr>
+    <tr><td class="paramname">combat</td><td>structure combat </td></tr>
+    <tr><td class="paramname">map</td><td>structure map </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0d87b5d37574da9e640d7e765a72a77a" name="a0d87b5d37574da9e640d7e765a72a77a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d87b5d37574da9e640d7e765a72a77a">&#9670;&#160;</a></span>affVie()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void affVie </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td>
+          <td class="paramname"><em>combattant</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui affiche la barre de vie </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">we</td><td>Largeur de la fenetre </td></tr>
+    <tr><td class="paramname">he</td><td>hauteur de la fenetre </td></tr>
+    <tr><td class="paramname">combattant</td><td>structure du combattant </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">map</td><td>structure de la map </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5abe0330656d7653985248d140f74db0" name="a5abe0330656d7653985248d140f74db0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5abe0330656d7653985248d140f74db0">&#9670;&#160;</a></span>attaque_ennemi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int attaque_ennemi </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nb_combattant</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td>
+          <td class="paramname"><em>combat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction d'attaque de l'ennemi </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nb_combattant</td><td>nombre de combattant </td></tr>
+    <tr><td class="paramname">combat</td><td>structure combat </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a62514ac450b1abb2c25b9e296abf75f0" name="a62514ac450b1abb2c25b9e296abf75f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62514ac450b1abb2c25b9e296abf75f0">&#9670;&#160;</a></span>barreCauchemard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void barreCauchemard </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>pmv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui affiche la barre de cauchemar </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pmv</td><td>structure du personnage jouer </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">map</td><td>structure de la map </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a02d1c5b8743c54a45036d74d517fe01b" name="a02d1c5b8743c54a45036d74d517fe01b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02d1c5b8743c54a45036d74d517fe01b">&#9670;&#160;</a></span>combat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int combat </td>
+          <td>(</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Event&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structennemi__s.html">ennemi_t</a> *&#160;</td>
+          <td class="paramname"><em>ennemi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>pp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>etat_boss</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui s'occupe du combat avec un ennemi </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">we</td><td>Largeur de la fenetre </td></tr>
+    <tr><td class="paramname">he</td><td>hauteur de la fenetre </td></tr>
+    <tr><td class="paramname">event</td><td>evenement </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">ennemi</td><td>structure d'un ennemi </td></tr>
+    <tr><td class="paramname">pp</td><td>structure du personnage jouer </td></tr>
+    <tr><td class="paramname">map</td><td>structure de la map </td></tr>
+    <tr><td class="paramname">etat_boss</td><td>pointeur sur l'etat du boss final </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afe0ef3cd6f4ea09245e5a79c3d038384" name="afe0ef3cd6f4ea09245e5a79c3d038384"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe0ef3cd6f4ea09245e5a79c3d038384">&#9670;&#160;</a></span>combat_carte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void combat_carte </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcarte__s.html">carte_t</a> *&#160;</td>
+          <td class="paramname"><em>cartec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Event&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>pp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>etat_boss</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui appelle combat avec tout les ennemis sur la map </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cartec</td><td>structure de la carte ou le personnage se trouve </td></tr>
+    <tr><td class="paramname">we</td><td>Largeur de la fenetre </td></tr>
+    <tr><td class="paramname">he</td><td>hauteur de la fenetre </td></tr>
+    <tr><td class="paramname">event</td><td>evenement </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">pp</td><td>structure du personnage jouer </td></tr>
+    <tr><td class="paramname">map</td><td>structure de la map </td></tr>
+    <tr><td class="paramname">etat_boss</td><td>pointeur sur l'etat du boss final </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a11a01ef94ed383d1247ddd96defd67d5" name="a11a01ef94ed383d1247ddd96defd67d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11a01ef94ed383d1247ddd96defd67d5">&#9670;&#160;</a></span>compare_vitesse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int compare_vitesse </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structcombattant__s.html">combattant_t</a> *const&#160;</td>
+          <td class="paramname"><em>combattant1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structcombattant__s.html">combattant_t</a> *const&#160;</td>
+          <td class="paramname"><em>combattant2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction pour comparer la vitesse des personnages </p>
+<p>fonction d'encapsulation de la fonction compare_vitesse</p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">combattant2</td><td>structure d'un combattant </td></tr>
+    <tr><td class="paramname">combattant1</td><td>structure du combattant jouer</td></tr>
+    <tr><td class="paramname">combattant2</td><td>structure d'un combattant </td></tr>
+    <tr><td class="paramname">combattant1</td><td>structure du pnj jouer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad99a3e5f895d581276a65237782c6f46" name="ad99a3e5f895d581276a65237782c6f46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad99a3e5f895d581276a65237782c6f46">&#9670;&#160;</a></span>copier_combattant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void copier_combattant </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td>
+          <td class="paramname"><em>combattant</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td>
+          <td class="paramname"><em>combattantcopie</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui copie un combattant dans un autre </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">combattant</td><td>structure combattant </td></tr>
+    <tr><td class="paramname">combattantcopie</td><td>structure combattant copier </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab66e455ee98a4dfda8dcf23067525a6c" name="ab66e455ee98a4dfda8dcf23067525a6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab66e455ee98a4dfda8dcf23067525a6c">&#9670;&#160;</a></span>debut_combat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int debut_combat </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Event&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structennemi__s.html">ennemi_t</a> *&#160;</td>
+          <td class="paramname"><em>ennemi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>pp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcase__s.html">case_t</a> *&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui regarde si on a lancer un combat </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ennemi</td><td>structure d'un pnj ennemi </td></tr>
+    <tr><td class="paramname">event</td><td>evenement </td></tr>
+    <tr><td class="paramname">pp</td><td>structure du personnage jouer </td></tr>
+    <tr><td class="paramname">c</td><td>structure de la case </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a14c2400b250f63a0567ea989e68f4254" name="a14c2400b250f63a0567ea989e68f4254"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14c2400b250f63a0567ea989e68f4254">&#9670;&#160;</a></span>debut_combat_carte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void debut_combat_carte </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcarte__s.html">carte_t</a> *&#160;</td>
+          <td class="paramname"><em>cartec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Event&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>pp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui appelle debut_combat avec tout les ennemis sur la map </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>evenement </td></tr>
+    <tr><td class="paramname">pp</td><td>structure du personnage jouer </td></tr>
+    <tr><td class="paramname">cartec</td><td>structure de la carte ou le personnage se trouve </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a5b21bda13ba257e7e0969b24b654f9f5" name="a5b21bda13ba257e7e0969b24b654f9f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b21bda13ba257e7e0969b24b654f9f5">&#9670;&#160;</a></span>desctruction_combat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void desctruction_combat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td>
+          <td class="paramname"><em>combat</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui detruit le combat </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">combat</td><td>strcuture du combat </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a86609479bf6edf9d746cb7c4aab0db66" name="a86609479bf6edf9d746cb7c4aab0db66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86609479bf6edf9d746cb7c4aab0db66">&#9670;&#160;</a></span>desctruction_combattant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void desctruction_combattant </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td>
+          <td class="paramname"><em>combattant</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui detruit un combattant </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">combattant</td><td>strcuture du combattant </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a800f73c2f9971267ab6c8ebca5e5c7cf" name="a800f73c2f9971267ab6c8ebca5e5c7cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a800f73c2f9971267ab6c8ebca5e5c7cf">&#9670;&#160;</a></span>erreur_sdl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void erreur_sdl </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Window *&#160;</td>
+          <td class="paramname"><em>fenetre</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Texture *&#160;</td>
+          <td class="paramname"><em>Texture</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Texture *&#160;</td>
+          <td class="paramname"><em>Texture2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui gere les erreurs de SDL </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>message a donner </td></tr>
+    <tr><td class="paramname">fenetre</td><td>fenetre du jeu </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">Texture</td><td>une texture </td></tr>
+    <tr><td class="paramname">Texture2</td><td>une deuxieme texture </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af49ae13d77b9fd993ae63e147aa4ec6b" name="af49ae13d77b9fd993ae63e147aa4ec6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af49ae13d77b9fd993ae63e147aa4ec6b">&#9670;&#160;</a></span>forme_attaque()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int forme_attaque </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nb_combattant</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td>
+          <td class="paramname"><em>combat</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui donne l'indice de la personne attaque par rapport a la forme de l'ennemi </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nb_combattant</td><td>nombre de combattant </td></tr>
+    <tr><td class="paramname">combat</td><td>structure combat </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af24e4ba7ca53d2dd96986d2d4872f1cb" name="af24e4ba7ca53d2dd96986d2d4872f1cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af24e4ba7ca53d2dd96986d2d4872f1cb">&#9670;&#160;</a></span>newCompagnon()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void newCompagnon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> **&#160;</td>
+          <td class="paramname"><em>Leader</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structennemi__s.html">ennemi_t</a> *&#160;</td>
+          <td class="paramname"><em>Boss</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui qui permet de recuperer un compagnon apres l'avoir sauvée </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">Leader</td><td>variable de sortie sur un pointeur d'entier </td></tr>
+    <tr><td class="paramname">Boss</td><td>ennemi affronté </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7a699ed594a782ddb94670b35d996375" name="a7a699ed594a782ddb94670b35d996375"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a699ed594a782ddb94670b35d996375">&#9670;&#160;</a></span>soin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void soin </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td>
+          <td class="paramname"><em>combat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Rect&#160;</td>
+          <td class="paramname"><em>r_basEcran</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>allie</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Event&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>personnage</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui s'accupe des soins des allies </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">combat</td><td>structure combat </td></tr>
+    <tr><td class="paramname">r_basEcran</td><td>renctangle bas de l'ecran </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">we</td><td>Largeur de la fenetre </td></tr>
+    <tr><td class="paramname">he</td><td>hauteur de la fenetre </td></tr>
+    <tr><td class="paramname">allie</td><td>nombre d'allie encore en vie </td></tr>
+    <tr><td class="paramname">envent</td><td>evenement </td></tr>
+    <tr><td class="paramname">personnage</td><td>structure du personnage jouer </td></tr>
+    <tr><td class="paramname">map</td><td>structure de la map </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

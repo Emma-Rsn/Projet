@@ -1,0 +1,89 @@
+\doxysection{Référence du fichier src/\+Pmov.c}
+\hypertarget{Pmov_8c}{}\label{Pmov_8c}\index{src/Pmov.c@{src/Pmov.c}}
+
+
+programme pour afficher les personnages  
+
+
+{\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
+Graphe des dépendances par inclusion de Pmov.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{Pmov_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{Pmov_8c_a11f97dbf9a9404850c6382e6cc7f4b8d}\label{Pmov_8c_a11f97dbf9a9404850c6382e6cc7f4b8d} 
+void {\bfseries lower} (char \texorpdfstring{$\ast$}{*}input, char \texorpdfstring{$\ast$}{*}output)
+\item 
+\Hypertarget{Pmov_8c_a53f87eef4f6e0f23359fcd3e345d26e6}\label{Pmov_8c_a53f87eef4f6e0f23359fcd3e345d26e6} 
+void {\bfseries pinput} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, SDL\+\_\+\+Event event, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}carte, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}transi, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music, int \texorpdfstring{$\ast$}{*}touche\+Deplacement)
+\item 
+\Hypertarget{Pmov_8c_a0ba0f881a8dbc5a994e5725ee2d16d71}\label{Pmov_8c_a0ba0f881a8dbc5a994e5725ee2d16d71} 
+int {\bfseries affp} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, SDL\+\_\+\+Event event)
+\item 
+void \mbox{\hyperlink{Pmov_8c_a222c38c868bcfbc249e0cb0e2581318b}{col\+\_\+p}} (SDL\+\_\+\+Rect \texorpdfstring{$\ast$}{*}obj\+\_\+r, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
+\begin{DoxyCompactList}\small\item\em fonction qui s\textquotesingle{}occupe des collisions \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{Pmov_8c_a222b0a34d28d3f5c69057e5f9f016234}{desctruction\+\_\+p\+\_\+eq}} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}p)
+\begin{DoxyCompactList}\small\item\em fonction qui detruit les personnages de l\textquotesingle{}equipe et le pointeur sur frame \end{DoxyCompactList}\item 
+\Hypertarget{Pmov_8c_ab233e299850dfbf68e32adb1e8684a6c}\label{Pmov_8c_ab233e299850dfbf68e32adb1e8684a6c} 
+\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*} {\bfseries initp} ()
+\item 
+\Hypertarget{Pmov_8c_a2edb5e81ffbdc30443046878c8a40420}\label{Pmov_8c_a2edb5e81ffbdc30443046878c8a40420} 
+void {\bfseries remplirp} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}p, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c, int leader)
+\item 
+\Hypertarget{Pmov_8c_a711d960e18495b6b58d8124f9f3b23a8}\label{Pmov_8c_a711d960e18495b6b58d8124f9f3b23a8} 
+void {\bfseries transition} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}transi, int we, int he)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+programme pour afficher les personnages 
+
+\begin{DoxyAuthor}{Auteur}
+Moreau Enzo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Janvier 2024 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{Pmov_8c_a222c38c868bcfbc249e0cb0e2581318b}\label{Pmov_8c_a222c38c868bcfbc249e0cb0e2581318b} 
+\index{Pmov.c@{Pmov.c}!col\_p@{col\_p}}
+\index{col\_p@{col\_p}!Pmov.c@{Pmov.c}}
+\doxysubsubsection{\texorpdfstring{col\_p()}{col\_p()}}
+{\footnotesize\ttfamily void col\+\_\+p (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Rect \texorpdfstring{$\ast$}{*}}]{obj\+\_\+r,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp }\end{DoxyParamCaption})}
+
+
+
+fonction qui s\textquotesingle{}occupe des collisions 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em pp} & structure d\textquotesingle{}un personnage \\
+\hline
+{\em obj\+\_\+r} & objet avec quoi il y a la collision \\
+\hline
+\end{DoxyParams}
+\Hypertarget{Pmov_8c_a222b0a34d28d3f5c69057e5f9f016234}\label{Pmov_8c_a222b0a34d28d3f5c69057e5f9f016234} 
+\index{Pmov.c@{Pmov.c}!desctruction\_p\_eq@{desctruction\_p\_eq}}
+\index{desctruction\_p\_eq@{desctruction\_p\_eq}!Pmov.c@{Pmov.c}}
+\doxysubsubsection{\texorpdfstring{desctruction\_p\_eq()}{desctruction\_p\_eq()}}
+{\footnotesize\ttfamily void desctruction\+\_\+p\+\_\+eq (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{p }\end{DoxyParamCaption})}
+
+
+
+fonction qui detruit les personnages de l\textquotesingle{}equipe et le pointeur sur frame 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em p} & strcuture du personnage \\
+\hline
+\end{DoxyParams}
