@@ -1,0 +1,422 @@
+\doxysection{Référence du fichier src/map.c}
+\hypertarget{map_8c}{}\label{map_8c}\index{src/map.c@{src/map.c}}
+
+
+Programme s\textquotesingle{}occupant de la création, l\textquotesingle{}initialisation et la gestion de la carte de jeu.  
+
+
+{\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
+Graphe des dépendances par inclusion de map.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{map_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \mbox{\hyperlink{map_8c_a062b71f5b3b36577d6c10530a284da3f}{creation\+\_\+case}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui crée et initialise une case correspondant à un carré de 64\texorpdfstring{$\ast$}{*}64 pixels. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structgrille__s}{grille\+\_\+t}} \mbox{\hyperlink{map_8c_ae16ca0e477b0c3789accd203c7478abe}{creation\+\_\+grille}} (int bord)
+\begin{DoxyCompactList}\small\item\em Fonction qui crée et initialise une grille de cases. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \mbox{\hyperlink{map_8c_a9b9d6b4b6df4e97e6fb5a797c7a398fb}{creation\+\_\+carte}} (int x, int y)
+\begin{DoxyCompactList}\small\item\em Fonction qui crée et initialise une carte. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \mbox{\hyperlink{map_8c_a371845d69cf19793b2ffda6a9cfff6bd}{creation\+\_\+map}} ()
+\begin{DoxyCompactList}\small\item\em Fonction qui crée et initialise une map avec une matrice de cartes. \end{DoxyCompactList}\item 
+\Hypertarget{map_8c_a1b3692771067ba94b020c3fced8713d9}\label{map_8c_a1b3692771067ba94b020c3fced8713d9} 
+int {\bfseries afficher\+\_\+grille} (\mbox{\hyperlink{structgrille__s}{grille\+\_\+t}} grille, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer)
+\item 
+\Hypertarget{map_8c_a49c2a1537219db40d83a6b5fe5301abc}\label{map_8c_a49c2a1537219db40d83a6b5fe5301abc} 
+int {\bfseries afficher\+\_\+carte} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec)
+\item 
+int \mbox{\hyperlink{map_8c_a3b830088159139c640bdfcab6ec2f78c}{creer\+\_\+map}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui initialise la map de jeu procéduralement. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_abb40b6cbc30b6570dccbe61399794b37}{sauvegarde\+\_\+map}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui sauvegarde le numéro de zone de chaque carte de la map dans un fichier. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_a8184bfc0eefea91f2eaecabeccbcaafa}{creer\+\_\+map\+\_\+layout}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui initialise les layouts carte par carte procéduralement. \end{DoxyCompactList}\item 
+\Hypertarget{map_8c_a53675df43af665584095d12cced4ee83}\label{map_8c_a53675df43af665584095d12cced4ee83} 
+int {\bfseries sauvegarde\+\_\+map\+\_\+brouillard} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\item 
+int \mbox{\hyperlink{map_8c_acbca9c046e5c09910b503fa40435ad71}{sauvegarde\+\_\+map\+\_\+layout}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui sauvegarde le numéro de layout de chaque carte de la map dans un fichier. \end{DoxyCompactList}\item 
+\Hypertarget{map_8c_acbff3981afe39adc26ac20b4a3c396fa}\label{map_8c_acbff3981afe39adc26ac20b4a3c396fa} 
+int {\bfseries load\+\_\+brouillard} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\item 
+int \mbox{\hyperlink{map_8c_ab5362b98d7760ec3e3ee588d482dc705}{remplir\+\_\+map}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui soit charge à partir d\textquotesingle{}un fichier, s\textquotesingle{}il existe, les numéros de zone dans chaque carte de la map soit appelle la fonction \doxylink{map_8c_a3b830088159139c640bdfcab6ec2f78c}{creer\+\_\+map()} \end{DoxyCompactList}\item 
+\Hypertarget{map_8c_ac64f340a5823a1a65b6e1950d05ccaf5}\label{map_8c_ac64f340a5823a1a65b6e1950d05ccaf5} 
+int {\bfseries load\+\_\+layout\+\_\+texture} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{map_8c_ab3b3572cf3ebcc870b3867b0124fe321}\label{map_8c_ab3b3572cf3ebcc870b3867b0124fe321} 
+int {\bfseries load\+\_\+layout\+\_\+obj} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\item 
+int \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\+\_\+layout}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}c, char \texorpdfstring{$\ast$}{*}namefile)
+\begin{DoxyCompactList}\small\item\em Fonction qui charge un layout à partir d\textquotesingle{}un fichier dans une carte. \end{DoxyCompactList}\item 
+float \mbox{\hyperlink{map_8c_a8ee42a5dd83886e7ad61d451d5a32956}{min}} (float a, float b)
+\begin{DoxyCompactList}\small\item\em Fonction qui retourne le plus petit float entre a et b. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_ae2ded2dc752db81be42ce0a41586d3fd}{afficher\+\_\+map}} (SDL\+\_\+\+Event event, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, int \texorpdfstring{$\ast$}{*}etat\+\_\+map, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec)
+\begin{DoxyCompactList}\small\item\em Fonction qui affiche en mode réduit l\textquotesingle{}entièreté de la map. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_ab23faed97470aabb06c4c61cc4d57fd8}{chargement\+\_\+\+Zone}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int n\+Zone, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music)
+\begin{DoxyCompactList}\small\item\em Fonction qui charge les textures et la musique d\textquotesingle{}une zone quand le joueur y rentre. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_aff1f7a6876fbc8025dd6b3a65a898ff9}{zone\+\_\+fini}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} map)
+\begin{DoxyCompactList}\small\item\em Fonction qui vérifie si le joueur peut sortir d\textquotesingle{}une zone s\textquotesingle{}il l\textquotesingle{}a fini ou non. \end{DoxyCompactList}\item 
+\Hypertarget{map_8c_a58f8419e89d9714819294480a9a0efde}\label{map_8c_a58f8419e89d9714819294480a9a0efde} 
+int {\bfseries zone\+\_\+bloquer} (int zone, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map)
+\item 
+void \mbox{\hyperlink{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94}{lumiere}} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c)
+\begin{DoxyCompactList}\small\item\em Fonction qui applique un filtre sur l\textquotesingle{}écran pour donner un effet d\textquotesingle{}obscurcissement. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_aeb3891e63f7a34fe19a3f63913858607}{nb\+\_\+texture\+\_\+chargement}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, char \texorpdfstring{$\ast$}{*}namefile)
+\begin{DoxyCompactList}\small\item\em Fonction qui affecte le nombre de texture d\textquotesingle{}une zone à la map. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_a3686b64c783a42361c5ef63c74dbb1d4}{detruire\+\_\+tab\+\_\+path}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui détruit le tableau de chemin des textures. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_a3078c3012db639786509be2fe3a882aa}{creation\+\_\+tab\+\_\+path}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, char \texorpdfstring{$\ast$}{*}namefile)
+\begin{DoxyCompactList}\small\item\em Fonction qui crée le tableau de chemin des textures. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{map_8c_a66541438dc7b27765976a096e380f315}{creation\+\_\+tab\+\_\+texture}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int nb\+Zone, int eop)
+\begin{DoxyCompactList}\small\item\em Fonction qui crée le tableau de textures SDL. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Programme s\textquotesingle{}occupant de la création, l\textquotesingle{}initialisation et la gestion de la carte de jeu. 
+
+\begin{DoxyAuthor}{Auteur}
+Moreau Enzo Rasson Emma 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Fevrier 2024 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{map_8c_ae2ded2dc752db81be42ce0a41586d3fd}\label{map_8c_ae2ded2dc752db81be42ce0a41586d3fd} 
+\index{map.c@{map.c}!afficher\_map@{afficher\_map}}
+\index{afficher\_map@{afficher\_map}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{afficher\_map()}{afficher\_map()}}
+{\footnotesize\ttfamily int afficher\+\_\+map (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Event}]{event,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}}}]{map,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etat\+\_\+map,  }\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cartec }\end{DoxyParamCaption})}
+
+
+
+Fonction qui affiche en mode réduit l\textquotesingle{}entièreté de la map. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em event} & Pile des évènements SDL \\
+\hline
+{\em map} & Map de jeu \\
+\hline
+{\em renderer} & Rendu de la fenetre SDL \\
+\hline
+{\em we} & Largeur de l\textquotesingle{}écran \\
+\hline
+{\em he} & Hauteur de l\textquotesingle{}écran \\
+\hline
+{\em etat\+\_\+map} & Indique si la carte a été explorée ou non \\
+\hline
+{\em cartec} & Carte où le joueur se situe au moment d\textquotesingle{}afficher la map \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_ab23faed97470aabb06c4c61cc4d57fd8}\label{map_8c_ab23faed97470aabb06c4c61cc4d57fd8} 
+\index{map.c@{map.c}!chargement\_Zone@{chargement\_Zone}}
+\index{chargement\_Zone@{chargement\_Zone}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{chargement\_Zone()}{chargement\_Zone()}}
+{\footnotesize\ttfamily int chargement\+\_\+\+Zone (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int}]{n\+Zone,  }\item[{Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}}]{g\+Music }\end{DoxyParamCaption})}
+
+
+
+Fonction qui charge les textures et la musique d\textquotesingle{}une zone quand le joueur y rentre. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+{\em renderer} & Rendu de la fenetre SDL \\
+\hline
+{\em n\+Zone} & Zone courante du joueur \\
+\hline
+{\em g\+Music} & Pointeur sur la musique courante \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a9b9d6b4b6df4e97e6fb5a797c7a398fb}\label{map_8c_a9b9d6b4b6df4e97e6fb5a797c7a398fb} 
+\index{map.c@{map.c}!creation\_carte@{creation\_carte}}
+\index{creation\_carte@{creation\_carte}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creation\_carte()}{creation\_carte()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} creation\+\_\+carte (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})}
+
+
+
+Fonction qui crée et initialise une carte. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em x} & Position x de la carte dans la matrice tab\+Map de la carte \\
+\hline
+{\em y} & Position y de la carte dans la matrice tab\+Map de la carte \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Une carte initialisée 
+\end{DoxyReturn}
+\Hypertarget{map_8c_a062b71f5b3b36577d6c10530a284da3f}\label{map_8c_a062b71f5b3b36577d6c10530a284da3f} 
+\index{map.c@{map.c}!creation\_case@{creation\_case}}
+\index{creation\_case@{creation\_case}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creation\_case()}{creation\_case()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcase__s}{case\+\_\+t}} creation\+\_\+case (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui crée et initialise une case correspondant à un carré de 64\texorpdfstring{$\ast$}{*}64 pixels. 
+
+\begin{DoxyReturn}{Renvoie}
+Une case de 64\texorpdfstring{$\ast$}{*}64 pixels 
+\end{DoxyReturn}
+\Hypertarget{map_8c_ae16ca0e477b0c3789accd203c7478abe}\label{map_8c_ae16ca0e477b0c3789accd203c7478abe} 
+\index{map.c@{map.c}!creation\_grille@{creation\_grille}}
+\index{creation\_grille@{creation\_grille}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creation\_grille()}{creation\_grille()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structgrille__s}{grille\+\_\+t}} creation\+\_\+grille (\begin{DoxyParamCaption}\item[{int}]{bord }\end{DoxyParamCaption})}
+
+
+
+Fonction qui crée et initialise une grille de cases. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em bord} & Indique les bords de maps bloqués (9 valeurs différentes) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Une grille de 30\texorpdfstring{$\ast$}{*}16 cases 
+\end{DoxyReturn}
+\Hypertarget{map_8c_a371845d69cf19793b2ffda6a9cfff6bd}\label{map_8c_a371845d69cf19793b2ffda6a9cfff6bd} 
+\index{map.c@{map.c}!creation\_map@{creation\_map}}
+\index{creation\_map@{creation\_map}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creation\_map()}{creation\_map()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structmap__s}{map\+\_\+t}} creation\+\_\+map (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fonction qui crée et initialise une map avec une matrice de cartes. 
+
+\begin{DoxyReturn}{Renvoie}
+Une map correspond à la carte de jeu entière 
+\end{DoxyReturn}
+\Hypertarget{map_8c_a3078c3012db639786509be2fe3a882aa}\label{map_8c_a3078c3012db639786509be2fe3a882aa} 
+\index{map.c@{map.c}!creation\_tab\_path@{creation\_tab\_path}}
+\index{creation\_tab\_path@{creation\_tab\_path}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creation\_tab\_path()}{creation\_tab\_path()}}
+{\footnotesize\ttfamily int creation\+\_\+tab\+\_\+path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{char \texorpdfstring{$\ast$}{*}}]{namefile }\end{DoxyParamCaption})}
+
+
+
+Fonction qui crée le tableau de chemin des textures. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map du jeu \\
+\hline
+{\em namefile} & Nom du fichier de texture \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a66541438dc7b27765976a096e380f315}\label{map_8c_a66541438dc7b27765976a096e380f315} 
+\index{map.c@{map.c}!creation\_tab\_texture@{creation\_tab\_texture}}
+\index{creation\_tab\_texture@{creation\_tab\_texture}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creation\_tab\_texture()}{creation\_tab\_texture()}}
+{\footnotesize\ttfamily int creation\+\_\+tab\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int}]{nb\+Zone,  }\item[{int}]{eop }\end{DoxyParamCaption})}
+
+
+
+Fonction qui crée le tableau de textures SDL. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map du jeu \\
+\hline
+{\em renderer} & Rendu de la fenêtre SDL \\
+\hline
+{\em nb\+Zone} & Zone courante du joueur \\
+\hline
+{\em eop} & Variable pour savoir si on est à la fin du programme ou non \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a3b830088159139c640bdfcab6ec2f78c}\label{map_8c_a3b830088159139c640bdfcab6ec2f78c} 
+\index{map.c@{map.c}!creer\_map@{creer\_map}}
+\index{creer\_map@{creer\_map}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creer\_map()}{creer\_map()}}
+{\footnotesize\ttfamily int creer\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui initialise la map de jeu procéduralement. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a8184bfc0eefea91f2eaecabeccbcaafa}\label{map_8c_a8184bfc0eefea91f2eaecabeccbcaafa} 
+\index{map.c@{map.c}!creer\_map\_layout@{creer\_map\_layout}}
+\index{creer\_map\_layout@{creer\_map\_layout}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{creer\_map\_layout()}{creer\_map\_layout()}}
+{\footnotesize\ttfamily int creer\+\_\+map\+\_\+layout (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui initialise les layouts carte par carte procéduralement. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a3686b64c783a42361c5ef63c74dbb1d4}\label{map_8c_a3686b64c783a42361c5ef63c74dbb1d4} 
+\index{map.c@{map.c}!detruire\_tab\_path@{detruire\_tab\_path}}
+\index{detruire\_tab\_path@{detruire\_tab\_path}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{detruire\_tab\_path()}{detruire\_tab\_path()}}
+{\footnotesize\ttfamily int detruire\+\_\+tab\+\_\+path (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui détruit le tableau de chemin des textures. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map du jeu \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}\label{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d} 
+\index{map.c@{map.c}!load\_layout@{load\_layout}}
+\index{load\_layout@{load\_layout}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{load\_layout()}{load\_layout()}}
+{\footnotesize\ttfamily int load\+\_\+layout (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c,  }\item[{char \texorpdfstring{$\ast$}{*}}]{namefile }\end{DoxyParamCaption})}
+
+
+
+Fonction qui charge un layout à partir d\textquotesingle{}un fichier dans une carte. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em c} & Carte dans laquelle on a chargé le layout \texorpdfstring{$\ast$}{*}\\
+\hline
+{\em namefile} & nom du fichier à charger \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94}\label{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94} 
+\index{map.c@{map.c}!lumiere@{lumiere}}
+\index{lumiere@{lumiere}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{lumiere()}{lumiere()}}
+{\footnotesize\ttfamily void lumiere (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cartec,  }\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c }\end{DoxyParamCaption})}
+
+
+
+Fonction qui applique un filtre sur l\textquotesingle{}écran pour donner un effet d\textquotesingle{}obscurcissement. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em renderer} & Rendu de la fenêtre SDL \\
+\hline
+{\em cartec} & Carte courante du joueur \\
+\hline
+{\em c} & Case qui sera la source de lumière \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a8ee42a5dd83886e7ad61d451d5a32956}\label{map_8c_a8ee42a5dd83886e7ad61d451d5a32956} 
+\index{map.c@{map.c}!min@{min}}
+\index{min@{min}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{min()}{min()}}
+{\footnotesize\ttfamily float min (\begin{DoxyParamCaption}\item[{float}]{a,  }\item[{float}]{b }\end{DoxyParamCaption})}
+
+
+
+Fonction qui retourne le plus petit float entre a et b. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em a} & Premier float \texorpdfstring{$\ast$}{*}\\
+\hline
+{\em b} & Deuxième float \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_aeb3891e63f7a34fe19a3f63913858607}\label{map_8c_aeb3891e63f7a34fe19a3f63913858607} 
+\index{map.c@{map.c}!nb\_texture\_chargement@{nb\_texture\_chargement}}
+\index{nb\_texture\_chargement@{nb\_texture\_chargement}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{nb\_texture\_chargement()}{nb\_texture\_chargement()}}
+{\footnotesize\ttfamily int nb\+\_\+texture\+\_\+chargement (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{char \texorpdfstring{$\ast$}{*}}]{namefile }\end{DoxyParamCaption})}
+
+
+
+Fonction qui affecte le nombre de texture d\textquotesingle{}une zone à la map. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map du jeu \\
+\hline
+{\em namefile} & Nom du fichier des textures \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_ab5362b98d7760ec3e3ee588d482dc705}\label{map_8c_ab5362b98d7760ec3e3ee588d482dc705} 
+\index{map.c@{map.c}!remplir\_map@{remplir\_map}}
+\index{remplir\_map@{remplir\_map}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{remplir\_map()}{remplir\_map()}}
+{\footnotesize\ttfamily int remplir\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui soit charge à partir d\textquotesingle{}un fichier, s\textquotesingle{}il existe, les numéros de zone dans chaque carte de la map soit appelle la fonction \doxylink{map_8c_a3b830088159139c640bdfcab6ec2f78c}{creer\+\_\+map()} 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_abb40b6cbc30b6570dccbe61399794b37}\label{map_8c_abb40b6cbc30b6570dccbe61399794b37} 
+\index{map.c@{map.c}!sauvegarde\_map@{sauvegarde\_map}}
+\index{sauvegarde\_map@{sauvegarde\_map}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{sauvegarde\_map()}{sauvegarde\_map()}}
+{\footnotesize\ttfamily int sauvegarde\+\_\+map (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui sauvegarde le numéro de zone de chaque carte de la map dans un fichier. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_acbca9c046e5c09910b503fa40435ad71}\label{map_8c_acbca9c046e5c09910b503fa40435ad71} 
+\index{map.c@{map.c}!sauvegarde\_map\_layout@{sauvegarde\_map\_layout}}
+\index{sauvegarde\_map\_layout@{sauvegarde\_map\_layout}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{sauvegarde\_map\_layout()}{sauvegarde\_map\_layout()}}
+{\footnotesize\ttfamily int sauvegarde\+\_\+map\+\_\+layout (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui sauvegarde le numéro de layout de chaque carte de la map dans un fichier. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_aff1f7a6876fbc8025dd6b3a65a898ff9}\label{map_8c_aff1f7a6876fbc8025dd6b3a65a898ff9} 
+\index{map.c@{map.c}!zone\_fini@{zone\_fini}}
+\index{zone\_fini@{zone\_fini}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{zone\_fini()}{zone\_fini()}}
+{\footnotesize\ttfamily int zone\+\_\+fini (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui vérifie si le joueur peut sortir d\textquotesingle{}une zone s\textquotesingle{}il l\textquotesingle{}a fini ou non. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+Booléen pour savoir si la zone est finie 
+\end{DoxyReturn}

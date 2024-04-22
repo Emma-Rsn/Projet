@@ -565,13 +565,23 @@ int creer_map_layout(map_t * map){
                     load_layout(&map->tabMap[4][2],"layout/layout4_6.txt"); //tout seul
                 }
             }else{
-                //Paire [4][3]/[5][3]
-                load_layout(&map->tabMap[5][3],"layout/layout2_7.txt");
-                load_layout(&map->tabMap[4][3],"layout/layout2_8.txt");
-                //zone 4
-                //Paire [5][2]/[4][2]
-                load_layout(&map->tabMap[5][2],"layout/layout4_7.txt");
-                load_layout(&map->tabMap[4][2],"layout/layout4_8.txt");
+                if(map->tabMap[4][2].nZone==2){
+                    //Paire [4][3]/[5][3]
+                    load_layout(&map->tabMap[5][3],"layout/layout2_7.txt");
+                    load_layout(&map->tabMap[4][3],"layout/layout2_8.txt");
+                    //zone 4
+                    load_layout(&map->tabMap[5][2],"layout/layout4_6.txt");
+                    load_layout(&map->tabMap[4][2],"layout/layout2_6.txt");
+                }
+                else{
+                    //Paire [4][3]/[5][3]
+                    load_layout(&map->tabMap[5][3],"layout/layout2_7.txt");
+                    load_layout(&map->tabMap[4][3],"layout/layout2_8.txt");
+                    //zone 4
+                    //Paire [5][2]/[4][2]
+                    load_layout(&map->tabMap[5][2],"layout/layout4_7.txt");
+                    load_layout(&map->tabMap[4][2],"layout/layout4_8.txt");
+                }
             }
         }else if(map->tabMap[5][2].nZone == 2){
             //Paire [5][2]/[5][3]
@@ -591,10 +601,17 @@ int creer_map_layout(map_t * map){
                 load_layout(&map->tabMap[4][3],"layout/layout4_4.txt");
                 load_layout(&map->tabMap[4][2],"layout/layout4_3.txt");
             }else{
-                //Paire [4][2]/[5][2]
-                load_layout(&map->tabMap[4][3],"layout/layout4_6.txt"); //tout seul
-                load_layout(&map->tabMap[4][2],"layout/layout4_8.txt");
-                load_layout(&map->tabMap[5][2],"layout/layout4_7.txt");
+                if(map->tabMap[4][2].nZone==2){
+                    load_layout(&map->tabMap[4][3],"layout/layout4_6.txt"); //tout seul
+                    load_layout(&map->tabMap[4][2],"layout/layout2_6.txt");
+                    load_layout(&map->tabMap[5][2],"layout/layout4_6.txt");
+                }
+                else{
+                    //Paire [4][2]/[5][2]
+                    load_layout(&map->tabMap[4][3],"layout/layout4_6.txt"); //tout seul
+                    load_layout(&map->tabMap[4][2],"layout/layout4_8.txt");
+                    load_layout(&map->tabMap[5][2],"layout/layout4_7.txt");
+                }
             }
         }
     }else{
@@ -698,6 +715,9 @@ int creer_map_layout(map_t * map){
         }
         load_layout(&map->tabMap[4][5],"layout/layout2_19.txt");  //Transition plage
         load_layout(&map->tabMap[4][4],"layout/layout2_5.txt"); //Carrefour
+        /*if(map->tabMap[3][2].nZone==1){
+            load_layout(&map->tabMap[3][3],"layout/layout2_13.txt"); //Transition zone 1
+        }*/
     }
     else{
         //Entrée de la zone sous-marine en [3][4]
@@ -712,6 +732,9 @@ int creer_map_layout(map_t * map){
         //Zone sous-marine transition
         load_layout(&map->tabMap[4][4],"layout/layout2_19.txt"); //Transition plage   -------> Vérifier bas et gauche pour les objets si gauche et gauche bas alors bloquer bas
         load_layout(&map->tabMap[4][5],"layout/layout2_6.txt"); //Cul de sac
+        /*if(map->tabMap[3][2].nZone==1){
+            load_layout(&map->tabMap[3][3],"layout/layout2_13.txt"); //Transition zone 1
+        }*/
     }
 
     //Layout zone plage 
@@ -738,7 +761,7 @@ int creer_map_layout(map_t * map){
         load_layout(&map->tabMap[0][5],"layout/layout2_18.txt"); //Bordure eau haut droite
 
         load_layout(&map->tabMap[3][2],"layout/layout1_1.txt"); //Spawn avec transition dans 3 zones, fermé en bas
-        load_layout(&map->tabMap[3][3],"layout/layout2_15.txt"); //Transition zone 1 de la plage
+        load_layout(&map->tabMap[3][3],"layout/layout2_13.txt"); //Transition zone 1 de la plage
         load_layout(&map->tabMap[2][3],"layout/layout2_17.txt"); //Full sable
 
     }

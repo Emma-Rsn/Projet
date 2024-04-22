@@ -1,0 +1,98 @@
+\doxysection{Référence du fichier src/texte.c}
+\hypertarget{texte_8c}{}\label{texte_8c}\index{src/texte.c@{src/texte.c}}
+
+
+Programme qui affiche un texte sur la fenetre.  
+
+
+{\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
+Graphe des dépendances par inclusion de texte.\+c\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{texte_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{texte_8c_ad70407e3b5c68d2c0e50ebd17cdf7c09}\label{texte_8c_ad70407e3b5c68d2c0e50ebd17cdf7c09} 
+int {\bfseries aff\+\_\+boite\+\_\+dia} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}rendu, int po, int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, char \texorpdfstring{$\ast$}{*}message, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\item 
+\Hypertarget{texte_8c_a21c66466a7fd5a384b07b5e1c8746e84}\label{texte_8c_a21c66466a7fd5a384b07b5e1c8746e84} 
+void {\bfseries debut\+\_\+dialogue\+\_\+carte} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec, SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue)
+\item 
+void \mbox{\hyperlink{texte_8c_ac60f4b8daa346ffdfe8bc6fd7f761b88}{debut\+\_\+dialogue}} (SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c)
+\begin{DoxyCompactList}\small\item\em fonction qui met le joueur en dialogue \end{DoxyCompactList}\item 
+\Hypertarget{texte_8c_aeddaee10916a928893e3207ed855303d}\label{texte_8c_aeddaee10916a928893e3207ed855303d} 
+void {\bfseries dialogue\+\_\+carte} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec, int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
+\item 
+void \mbox{\hyperlink{texte_8c_a40562e1ea5fc4731a5fdbdfce579427e}{pnj\+\_\+dialogue}} (SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}he, int \texorpdfstring{$\ast$}{*}we, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue, int num\+\_\+dialogue, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
+\begin{DoxyCompactList}\small\item\em fonction qui choisis le bon texte a afficher \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+Programme qui affiche un texte sur la fenetre. 
+
+\begin{DoxyAuthor}{Auteur}
+Pasquier Lina 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+28 janvier 2024 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+0.\+3 
+\end{DoxyVersion}
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{texte_8c_ac60f4b8daa346ffdfe8bc6fd7f761b88}\label{texte_8c_ac60f4b8daa346ffdfe8bc6fd7f761b88} 
+\index{texte.c@{texte.c}!debut\_dialogue@{debut\_dialogue}}
+\index{debut\_dialogue@{debut\_dialogue}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{debut\_dialogue()}{debut\_dialogue()}}
+{\footnotesize\ttfamily void debut\+\_\+dialogue (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Event}]{event,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etat\+\_\+dialogue,  }\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c }\end{DoxyParamCaption})}
+
+
+
+fonction qui met le joueur en dialogue 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em event} & pile d\textquotesingle{}evenement \\
+\hline
+{\em pp} & structure du personnage joue \\
+\hline
+{\em etat\+\_\+dialogue} & pointeur pour savoir si le joueur est en dialogue ou non \\
+\hline
+{\em c} & strcture de la case du joueur \\
+\hline
+\end{DoxyParams}
+\Hypertarget{texte_8c_a40562e1ea5fc4731a5fdbdfce579427e}\label{texte_8c_a40562e1ea5fc4731a5fdbdfce579427e} 
+\index{texte.c@{texte.c}!pnj\_dialogue@{pnj\_dialogue}}
+\index{pnj\_dialogue@{pnj\_dialogue}!texte.c@{texte.c}}
+\doxysubsubsection{\texorpdfstring{pnj\_dialogue()}{pnj\_dialogue()}}
+{\footnotesize\ttfamily void pnj\+\_\+dialogue (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etat\+\_\+dialogue,  }\item[{int}]{num\+\_\+dialogue,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp }\end{DoxyParamCaption})}
+
+
+
+fonction qui choisis le bon texte a afficher 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em event} & pile d\textquotesingle{}evenement \\
+\hline
+{\em rendu} & rendu de la fenetre \\
+\hline
+{\em we} & Largeur de l\textquotesingle{}ecran \\
+\hline
+{\em he} & Longueur de l\textquotesingle{}ecran \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em etat\+\_\+dialogue} & pointeur pour savoir si le joueur est en dialogue ou non \\
+\hline
+{\em num\+\_\+dialogue} & numero du dialogue a afficher \\
+\hline
+{\em pp} & structure du personnage joue \\
+\hline
+\end{DoxyParams}

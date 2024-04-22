@@ -1,0 +1,883 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Last Nightmare: Référence du fichier src/map.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logoTLN.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">The Last Nightmare
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier map.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Programme s'occupant de la création, l'initialisation et la gestion de la carte de jeu.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &quot;../libs/commun.h&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de map.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="map_8c__incl.png" border="0" usemap="#asrc_2map_8c" alt=""/></div>
+<map name="asrc_2map_8c" id="asrc_2map_8c">
+<area shape="rect" title="Programme s&#39;occupant de la création, l&#39;initialisation et la gestion de la carte de jeu." alt="" coords="1016,5,1101,31"/>
+<area shape="rect" href="commun_8h_source.html" title=" " alt="" coords="993,79,1124,104"/>
+<area shape="poly" title=" " alt="" coords="1061,31,1061,65,1056,65,1056,31"/>
+<area shape="rect" title=" " alt="" coords="5,152,101,177"/>
+<area shape="poly" title=" " alt="" coords="993,97,624,111,374,129,115,155,115,149,373,123,623,106,993,91"/>
+<area shape="rect" title=" " alt="" coords="125,152,243,177"/>
+<area shape="poly" title=" " alt="" coords="993,98,680,117,471,133,257,155,256,149,471,128,679,111,993,93"/>
+<area shape="rect" title=" " alt="" coords="267,152,411,177"/>
+<area shape="poly" title=" " alt="" coords="993,101,748,122,425,154,424,149,747,117,993,95"/>
+<area shape="rect" title=" " alt="" coords="435,152,573,177"/>
+<area shape="poly" title=" " alt="" coords="993,103,587,155,587,149,993,98"/>
+<area shape="rect" title=" " alt="" coords="598,152,669,177"/>
+<area shape="poly" title=" " alt="" coords="994,104,855,125,683,155,682,149,854,119,993,99"/>
+<area shape="rect" title=" " alt="" coords="693,152,760,177"/>
+<area shape="poly" title=" " alt="" coords="1002,107,774,155,774,155,772,149,773,149,1001,101"/>
+<area shape="rect" title=" " alt="" coords="785,152,853,177"/>
+<area shape="poly" title=" " alt="" coords="1021,107,867,152,865,147,1019,101"/>
+<area shape="rect" title=" " alt="" coords="877,152,941,177"/>
+<area shape="poly" title=" " alt="" coords="1036,106,947,148,945,144,1034,102"/>
+<area shape="rect" title=" " alt="" coords="965,152,1040,177"/>
+<area shape="poly" title=" " alt="" coords="1052,106,1022,143,1018,140,1047,103"/>
+<area shape="rect" href="save_8h_source.html" title=" " alt="" coords="1064,152,1168,177"/>
+<area shape="poly" title=" " alt="" coords="1070,103,1100,139,1096,143,1066,106"/>
+<area shape="rect" href="printImg_8h_source.html" title=" " alt="" coords="1192,152,1320,177"/>
+<area shape="poly" title=" " alt="" coords="1091,102,1212,145,1210,150,1089,107"/>
+<area shape="rect" href="texte_8h_source.html" title=" " alt="" coords="1344,152,1451,177"/>
+<area shape="poly" title=" " alt="" coords="1114,101,1331,147,1330,152,1113,107"/>
+<area shape="rect" href="map_8h_source.html" title=" " alt="" coords="1475,152,1578,177"/>
+<area shape="poly" title=" " alt="" coords="1125,99,1462,149,1461,155,1124,104"/>
+<area shape="rect" href="OBJ_8h_source.html" title=" " alt="" coords="1523,225,1619,251"/>
+<area shape="poly" title=" " alt="" coords="1124,93,1250,99,1397,110,1524,127,1568,137,1593,150,1600,165,1600,183,1588,215,1583,213,1595,182,1595,167,1589,154,1566,142,1523,132,1396,116,1250,104,1124,98"/>
+<area shape="rect" href="menu_8h_source.html" title=" " alt="" coords="1654,152,1765,177"/>
+<area shape="poly" title=" " alt="" coords="1124,96,1350,117,1635,149,1641,150,1640,155,1634,155,1350,123,1124,101"/>
+<area shape="rect" href="combat_8h_source.html" title=" " alt="" coords="1789,152,1912,177"/>
+<area shape="poly" title=" " alt="" coords="1124,94,1404,114,1776,149,1776,155,1403,119,1124,99"/>
+<area shape="rect" href="musique_8h_source.html" title=" " alt="" coords="1937,152,2066,177"/>
+<area shape="poly" title=" " alt="" coords="1125,93,1462,111,1689,128,1923,149,1923,155,1688,133,1462,117,1124,98"/>
+<area shape="rect" href="Pmov_8h_source.html" title=" " alt="" coords="2091,152,2200,177"/>
+<area shape="poly" title=" " alt="" coords="1125,91,1523,106,1796,123,2077,149,2077,155,1795,129,1523,112,1124,97"/>
+<area shape="poly" title=" " alt="" coords="1536,176,1559,212,1554,215,1532,179"/>
+</map>
+</div>
+</div>
+<p><a href="map_8c_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a062b71f5b3b36577d6c10530a284da3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcase__s.html">case_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a062b71f5b3b36577d6c10530a284da3f">creation_case</a> ()</td></tr>
+<tr class="memdesc:a062b71f5b3b36577d6c10530a284da3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui crée et initialise une case correspondant à un carré de 64*64 pixels.  <br /></td></tr>
+<tr class="separator:a062b71f5b3b36577d6c10530a284da3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae16ca0e477b0c3789accd203c7478abe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgrille__s.html">grille_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#ae16ca0e477b0c3789accd203c7478abe">creation_grille</a> (int bord)</td></tr>
+<tr class="memdesc:ae16ca0e477b0c3789accd203c7478abe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui crée et initialise une grille de cases.  <br /></td></tr>
+<tr class="separator:ae16ca0e477b0c3789accd203c7478abe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b9d6b4b6df4e97e6fb5a797c7a398fb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcarte__s.html">carte_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a9b9d6b4b6df4e97e6fb5a797c7a398fb">creation_carte</a> (int x, int y)</td></tr>
+<tr class="memdesc:a9b9d6b4b6df4e97e6fb5a797c7a398fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui crée et initialise une carte.  <br /></td></tr>
+<tr class="separator:a9b9d6b4b6df4e97e6fb5a797c7a398fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a371845d69cf19793b2ffda6a9cfff6bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmap__s.html">map_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a371845d69cf19793b2ffda6a9cfff6bd">creation_map</a> ()</td></tr>
+<tr class="memdesc:a371845d69cf19793b2ffda6a9cfff6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui crée et initialise une map avec une matrice de cartes.  <br /></td></tr>
+<tr class="separator:a371845d69cf19793b2ffda6a9cfff6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b3692771067ba94b020c3fced8713d9"><td class="memItemLeft" align="right" valign="top"><a id="a1b3692771067ba94b020c3fced8713d9" name="a1b3692771067ba94b020c3fced8713d9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>afficher_grille</b> (<a class="el" href="structgrille__s.html">grille_t</a> grille, SDL_Renderer *renderer)</td></tr>
+<tr class="separator:a1b3692771067ba94b020c3fced8713d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49c2a1537219db40d83a6b5fe5301abc"><td class="memItemLeft" align="right" valign="top"><a id="a49c2a1537219db40d83a6b5fe5301abc" name="a49c2a1537219db40d83a6b5fe5301abc"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>afficher_carte</b> (SDL_Renderer *renderer, <a class="el" href="structmap__s.html">map_t</a> *map, <a class="el" href="structcarte__s.html">carte_t</a> *cartec)</td></tr>
+<tr class="separator:a49c2a1537219db40d83a6b5fe5301abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b830088159139c640bdfcab6ec2f78c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a3b830088159139c640bdfcab6ec2f78c">creer_map</a> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:a3b830088159139c640bdfcab6ec2f78c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui initialise la map de jeu procéduralement.  <br /></td></tr>
+<tr class="separator:a3b830088159139c640bdfcab6ec2f78c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb40b6cbc30b6570dccbe61399794b37"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#abb40b6cbc30b6570dccbe61399794b37">sauvegarde_map</a> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:abb40b6cbc30b6570dccbe61399794b37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui sauvegarde le numéro de zone de chaque carte de la map dans un fichier.  <br /></td></tr>
+<tr class="separator:abb40b6cbc30b6570dccbe61399794b37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8184bfc0eefea91f2eaecabeccbcaafa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a8184bfc0eefea91f2eaecabeccbcaafa">creer_map_layout</a> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:a8184bfc0eefea91f2eaecabeccbcaafa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui initialise les layouts carte par carte procéduralement.  <br /></td></tr>
+<tr class="separator:a8184bfc0eefea91f2eaecabeccbcaafa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53675df43af665584095d12cced4ee83"><td class="memItemLeft" align="right" valign="top"><a id="a53675df43af665584095d12cced4ee83" name="a53675df43af665584095d12cced4ee83"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>sauvegarde_map_brouillard</b> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="separator:a53675df43af665584095d12cced4ee83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbca9c046e5c09910b503fa40435ad71"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#acbca9c046e5c09910b503fa40435ad71">sauvegarde_map_layout</a> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:acbca9c046e5c09910b503fa40435ad71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui sauvegarde le numéro de layout de chaque carte de la map dans un fichier.  <br /></td></tr>
+<tr class="separator:acbca9c046e5c09910b503fa40435ad71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbff3981afe39adc26ac20b4a3c396fa"><td class="memItemLeft" align="right" valign="top"><a id="acbff3981afe39adc26ac20b4a3c396fa" name="acbff3981afe39adc26ac20b4a3c396fa"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>load_brouillard</b> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="separator:acbff3981afe39adc26ac20b4a3c396fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5362b98d7760ec3e3ee588d482dc705"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#ab5362b98d7760ec3e3ee588d482dc705">remplir_map</a> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:ab5362b98d7760ec3e3ee588d482dc705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui soit charge à partir d'un fichier, s'il existe, les numéros de zone dans chaque carte de la map soit appelle la fonction <a class="el" href="map_8c.html#a3b830088159139c640bdfcab6ec2f78c" title="Fonction qui initialise la map de jeu procéduralement.">creer_map()</a>  <br /></td></tr>
+<tr class="separator:ab5362b98d7760ec3e3ee588d482dc705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac64f340a5823a1a65b6e1950d05ccaf5"><td class="memItemLeft" align="right" valign="top"><a id="ac64f340a5823a1a65b6e1950d05ccaf5" name="ac64f340a5823a1a65b6e1950d05ccaf5"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>load_layout_texture</b> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="separator:ac64f340a5823a1a65b6e1950d05ccaf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3b3572cf3ebcc870b3867b0124fe321"><td class="memItemLeft" align="right" valign="top"><a id="ab3b3572cf3ebcc870b3867b0124fe321" name="ab3b3572cf3ebcc870b3867b0124fe321"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>load_layout_obj</b> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="separator:ab3b3572cf3ebcc870b3867b0124fe321"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae59b6b3023d678aebf23ab08bdf8c3d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#aae59b6b3023d678aebf23ab08bdf8c3d">load_layout</a> (<a class="el" href="structcarte__s.html">carte_t</a> *c, char *namefile)</td></tr>
+<tr class="memdesc:aae59b6b3023d678aebf23ab08bdf8c3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui charge un layout à partir d'un fichier dans une carte.  <br /></td></tr>
+<tr class="separator:aae59b6b3023d678aebf23ab08bdf8c3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ee42a5dd83886e7ad61d451d5a32956"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a8ee42a5dd83886e7ad61d451d5a32956">min</a> (float a, float b)</td></tr>
+<tr class="memdesc:a8ee42a5dd83886e7ad61d451d5a32956"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui retourne le plus petit float entre a et b.  <br /></td></tr>
+<tr class="separator:a8ee42a5dd83886e7ad61d451d5a32956"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2ded2dc752db81be42ce0a41586d3fd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#ae2ded2dc752db81be42ce0a41586d3fd">afficher_map</a> (SDL_Event event, <a class="el" href="structmap__s.html">map_t</a> map, SDL_Renderer *renderer, int *we, int *he, int *etat_map, <a class="el" href="structcarte__s.html">carte_t</a> *cartec)</td></tr>
+<tr class="memdesc:ae2ded2dc752db81be42ce0a41586d3fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui affiche en mode réduit l'entièreté de la map.  <br /></td></tr>
+<tr class="separator:ae2ded2dc752db81be42ce0a41586d3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab23faed97470aabb06c4c61cc4d57fd8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#ab23faed97470aabb06c4c61cc4d57fd8">chargement_Zone</a> (<a class="el" href="structmap__s.html">map_t</a> *map, SDL_Renderer *renderer, int nZone, Mix_Music *gMusic)</td></tr>
+<tr class="memdesc:ab23faed97470aabb06c4c61cc4d57fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui charge les textures et la musique d'une zone quand le joueur y rentre.  <br /></td></tr>
+<tr class="separator:ab23faed97470aabb06c4c61cc4d57fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff1f7a6876fbc8025dd6b3a65a898ff9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#aff1f7a6876fbc8025dd6b3a65a898ff9">zone_fini</a> (<a class="el" href="structmap__s.html">map_t</a> map)</td></tr>
+<tr class="memdesc:aff1f7a6876fbc8025dd6b3a65a898ff9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui vérifie si le joueur peut sortir d'une zone s'il l'a fini ou non.  <br /></td></tr>
+<tr class="separator:aff1f7a6876fbc8025dd6b3a65a898ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58f8419e89d9714819294480a9a0efde"><td class="memItemLeft" align="right" valign="top"><a id="a58f8419e89d9714819294480a9a0efde" name="a58f8419e89d9714819294480a9a0efde"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>zone_bloquer</b> (int zone, <a class="el" href="structmap__s.html">map_t</a> map)</td></tr>
+<tr class="separator:a58f8419e89d9714819294480a9a0efde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78c5ac700803f3cc4fe6cc0352e1cb94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a78c5ac700803f3cc4fe6cc0352e1cb94">lumiere</a> (SDL_Renderer *renderer, <a class="el" href="structcarte__s.html">carte_t</a> *cartec, <a class="el" href="structcase__s.html">case_t</a> *c)</td></tr>
+<tr class="memdesc:a78c5ac700803f3cc4fe6cc0352e1cb94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui applique un filtre sur l'écran pour donner un effet d'obscurcissement.  <br /></td></tr>
+<tr class="separator:a78c5ac700803f3cc4fe6cc0352e1cb94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb3891e63f7a34fe19a3f63913858607"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#aeb3891e63f7a34fe19a3f63913858607">nb_texture_chargement</a> (<a class="el" href="structmap__s.html">map_t</a> *map, char *namefile)</td></tr>
+<tr class="memdesc:aeb3891e63f7a34fe19a3f63913858607"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui affecte le nombre de texture d'une zone à la map.  <br /></td></tr>
+<tr class="separator:aeb3891e63f7a34fe19a3f63913858607"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3686b64c783a42361c5ef63c74dbb1d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a3686b64c783a42361c5ef63c74dbb1d4">detruire_tab_path</a> (<a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
+<tr class="memdesc:a3686b64c783a42361c5ef63c74dbb1d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui détruit le tableau de chemin des textures.  <br /></td></tr>
+<tr class="separator:a3686b64c783a42361c5ef63c74dbb1d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3078c3012db639786509be2fe3a882aa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a3078c3012db639786509be2fe3a882aa">creation_tab_path</a> (<a class="el" href="structmap__s.html">map_t</a> *map, char *namefile)</td></tr>
+<tr class="memdesc:a3078c3012db639786509be2fe3a882aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui crée le tableau de chemin des textures.  <br /></td></tr>
+<tr class="separator:a3078c3012db639786509be2fe3a882aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66541438dc7b27765976a096e380f315"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="map_8c.html#a66541438dc7b27765976a096e380f315">creation_tab_texture</a> (<a class="el" href="structmap__s.html">map_t</a> *map, SDL_Renderer *renderer, int nbZone, int eop)</td></tr>
+<tr class="memdesc:a66541438dc7b27765976a096e380f315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fonction qui crée le tableau de textures SDL.  <br /></td></tr>
+<tr class="separator:a66541438dc7b27765976a096e380f315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Programme s'occupant de la création, l'initialisation et la gestion de la carte de jeu. </p>
+<dl class="section author"><dt>Auteur</dt><dd>Moreau Enzo Rasson Emma </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>Fevrier 2024 </dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="ae2ded2dc752db81be42ce0a41586d3fd" name="ae2ded2dc752db81be42ce0a41586d3fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2ded2dc752db81be42ce0a41586d3fd">&#9670;&#160;</a></span>afficher_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int afficher_map </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Event&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a>&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>etat_map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcarte__s.html">carte_t</a> *&#160;</td>
+          <td class="paramname"><em>cartec</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui affiche en mode réduit l'entièreté de la map. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">event</td><td>Pile des évènements SDL </td></tr>
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+    <tr><td class="paramname">renderer</td><td>Rendu de la fenetre SDL </td></tr>
+    <tr><td class="paramname">we</td><td>Largeur de l'écran </td></tr>
+    <tr><td class="paramname">he</td><td>Hauteur de l'écran </td></tr>
+    <tr><td class="paramname">etat_map</td><td>Indique si la carte a été explorée ou non </td></tr>
+    <tr><td class="paramname">cartec</td><td>Carte où le joueur se situe au moment d'afficher la map </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab23faed97470aabb06c4c61cc4d57fd8" name="ab23faed97470aabb06c4c61cc4d57fd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab23faed97470aabb06c4c61cc4d57fd8">&#9670;&#160;</a></span>chargement_Zone()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int chargement_Zone </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nZone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Mix_Music *&#160;</td>
+          <td class="paramname"><em>gMusic</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui charge les textures et la musique d'une zone quand le joueur y rentre. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+    <tr><td class="paramname">renderer</td><td>Rendu de la fenetre SDL </td></tr>
+    <tr><td class="paramname">nZone</td><td>Zone courante du joueur </td></tr>
+    <tr><td class="paramname">gMusic</td><td>Pointeur sur la musique courante </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a9b9d6b4b6df4e97e6fb5a797c7a398fb" name="a9b9d6b4b6df4e97e6fb5a797c7a398fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b9d6b4b6df4e97e6fb5a797c7a398fb">&#9670;&#160;</a></span>creation_carte()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structcarte__s.html">carte_t</a> creation_carte </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui crée et initialise une carte. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Position x de la carte dans la matrice tabMap de la carte </td></tr>
+    <tr><td class="paramname">y</td><td>Position y de la carte dans la matrice tabMap de la carte </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Une carte initialisée </dd></dl>
+
+</div>
+</div>
+<a id="a062b71f5b3b36577d6c10530a284da3f" name="a062b71f5b3b36577d6c10530a284da3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a062b71f5b3b36577d6c10530a284da3f">&#9670;&#160;</a></span>creation_case()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structcase__s.html">case_t</a> creation_case </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui crée et initialise une case correspondant à un carré de 64*64 pixels. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>Une case de 64*64 pixels </dd></dl>
+
+</div>
+</div>
+<a id="ae16ca0e477b0c3789accd203c7478abe" name="ae16ca0e477b0c3789accd203c7478abe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae16ca0e477b0c3789accd203c7478abe">&#9670;&#160;</a></span>creation_grille()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structgrille__s.html">grille_t</a> creation_grille </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>bord</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui crée et initialise une grille de cases. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bord</td><td>Indique les bords de maps bloqués (9 valeurs différentes) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Une grille de 30*16 cases </dd></dl>
+
+</div>
+</div>
+<a id="a371845d69cf19793b2ffda6a9cfff6bd" name="a371845d69cf19793b2ffda6a9cfff6bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a371845d69cf19793b2ffda6a9cfff6bd">&#9670;&#160;</a></span>creation_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmap__s.html">map_t</a> creation_map </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui crée et initialise une map avec une matrice de cartes. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>Une map correspond à la carte de jeu entière </dd></dl>
+
+</div>
+</div>
+<a id="a3078c3012db639786509be2fe3a882aa" name="a3078c3012db639786509be2fe3a882aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3078c3012db639786509be2fe3a882aa">&#9670;&#160;</a></span>creation_tab_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int creation_tab_path </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>namefile</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui crée le tableau de chemin des textures. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map du jeu </td></tr>
+    <tr><td class="paramname">namefile</td><td>Nom du fichier de texture </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a66541438dc7b27765976a096e380f315" name="a66541438dc7b27765976a096e380f315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66541438dc7b27765976a096e380f315">&#9670;&#160;</a></span>creation_tab_texture()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int creation_tab_texture </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>nbZone</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>eop</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui crée le tableau de textures SDL. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map du jeu </td></tr>
+    <tr><td class="paramname">renderer</td><td>Rendu de la fenêtre SDL </td></tr>
+    <tr><td class="paramname">nbZone</td><td>Zone courante du joueur </td></tr>
+    <tr><td class="paramname">eop</td><td>Variable pour savoir si on est à la fin du programme ou non </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3b830088159139c640bdfcab6ec2f78c" name="a3b830088159139c640bdfcab6ec2f78c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b830088159139c640bdfcab6ec2f78c">&#9670;&#160;</a></span>creer_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int creer_map </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui initialise la map de jeu procéduralement. </p>
+<p>*</p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8184bfc0eefea91f2eaecabeccbcaafa" name="a8184bfc0eefea91f2eaecabeccbcaafa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8184bfc0eefea91f2eaecabeccbcaafa">&#9670;&#160;</a></span>creer_map_layout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int creer_map_layout </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui initialise les layouts carte par carte procéduralement. </p>
+<p>*</p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3686b64c783a42361c5ef63c74dbb1d4" name="a3686b64c783a42361c5ef63c74dbb1d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3686b64c783a42361c5ef63c74dbb1d4">&#9670;&#160;</a></span>detruire_tab_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int detruire_tab_path </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui détruit le tableau de chemin des textures. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map du jeu </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aae59b6b3023d678aebf23ab08bdf8c3d" name="aae59b6b3023d678aebf23ab08bdf8c3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae59b6b3023d678aebf23ab08bdf8c3d">&#9670;&#160;</a></span>load_layout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int load_layout </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcarte__s.html">carte_t</a> *&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>namefile</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui charge un layout à partir d'un fichier dans une carte. </p>
+<p>*</p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c</td><td>Carte dans laquelle on a chargé le layout *</td></tr>
+    <tr><td class="paramname">namefile</td><td>nom du fichier à charger </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a78c5ac700803f3cc4fe6cc0352e1cb94" name="a78c5ac700803f3cc4fe6cc0352e1cb94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78c5ac700803f3cc4fe6cc0352e1cb94">&#9670;&#160;</a></span>lumiere()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void lumiere </td>
+          <td>(</td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcarte__s.html">carte_t</a> *&#160;</td>
+          <td class="paramname"><em>cartec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcase__s.html">case_t</a> *&#160;</td>
+          <td class="paramname"><em>c</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui applique un filtre sur l'écran pour donner un effet d'obscurcissement. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">renderer</td><td>Rendu de la fenêtre SDL </td></tr>
+    <tr><td class="paramname">cartec</td><td>Carte courante du joueur </td></tr>
+    <tr><td class="paramname">c</td><td>Case qui sera la source de lumière </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8ee42a5dd83886e7ad61d451d5a32956" name="a8ee42a5dd83886e7ad61d451d5a32956"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ee42a5dd83886e7ad61d451d5a32956">&#9670;&#160;</a></span>min()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float min </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui retourne le plus petit float entre a et b. </p>
+<p>*</p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">a</td><td>Premier float *</td></tr>
+    <tr><td class="paramname">b</td><td>Deuxième float </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb3891e63f7a34fe19a3f63913858607" name="aeb3891e63f7a34fe19a3f63913858607"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb3891e63f7a34fe19a3f63913858607">&#9670;&#160;</a></span>nb_texture_chargement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int nb_texture_chargement </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>namefile</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui affecte le nombre de texture d'une zone à la map. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map du jeu </td></tr>
+    <tr><td class="paramname">namefile</td><td>Nom du fichier des textures </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab5362b98d7760ec3e3ee588d482dc705" name="ab5362b98d7760ec3e3ee588d482dc705"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5362b98d7760ec3e3ee588d482dc705">&#9670;&#160;</a></span>remplir_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int remplir_map </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui soit charge à partir d'un fichier, s'il existe, les numéros de zone dans chaque carte de la map soit appelle la fonction <a class="el" href="map_8c.html#a3b830088159139c640bdfcab6ec2f78c" title="Fonction qui initialise la map de jeu procéduralement.">creer_map()</a> </p>
+<p>*</p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abb40b6cbc30b6570dccbe61399794b37" name="abb40b6cbc30b6570dccbe61399794b37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb40b6cbc30b6570dccbe61399794b37">&#9670;&#160;</a></span>sauvegarde_map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sauvegarde_map </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui sauvegarde le numéro de zone de chaque carte de la map dans un fichier. </p>
+<p>*</p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acbca9c046e5c09910b503fa40435ad71" name="acbca9c046e5c09910b503fa40435ad71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbca9c046e5c09910b503fa40435ad71">&#9670;&#160;</a></span>sauvegarde_map_layout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int sauvegarde_map_layout </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui sauvegarde le numéro de layout de chaque carte de la map dans un fichier. </p>
+<p>*</p><dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aff1f7a6876fbc8025dd6b3a65a898ff9" name="aff1f7a6876fbc8025dd6b3a65a898ff9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff1f7a6876fbc8025dd6b3a65a898ff9">&#9670;&#160;</a></span>zone_fini()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int zone_fini </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a>&#160;</td>
+          <td class="paramname"><em>map</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fonction qui vérifie si le joueur peut sortir d'une zone s'il l'a fini ou non. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>Map de jeu </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Booléen pour savoir si la zone est finie </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
+</small></address>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<map id="map_s" name="map_s">
+<area shape="rect" id="Node000001" title="Structure d&#39;une map." alt="" coords="94,269,159,295"/>
+<area shape="rect" id="Node000002" href="$structcarte__s.html" title="Structure d&#39;une carte." alt="" coords="41,181,111,207"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,219,98,244,117,267,113,271,94,247,82,221"/>
+<area shape="rect" id="Node000003" href="$structobj__s.html" title=" " alt="" coords="5,93,61,119"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="36,132,42,156,62,180,58,183,38,159,31,133"/>
+<area shape="rect" id="Node000004" href="$structcase__s.html" title="Structure d&#39;une case." alt="" coords="43,5,109,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="65,44,58,56,41,94,36,92,54,53,60,41"/>
+<area shape="rect" id="Node000005" href="$structgrille__s.html" title="Structure d&#39;une grille." alt="" coords="85,93,155,119"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="91,42,116,92,112,94,86,44"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="110,132,84,182,80,180,105,130"/>
+<area shape="rect" id="Node000006" href="$structartefact__s.html" title="structure d&#39;un artefact" alt="" coords="135,181,222,207"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="167,220,152,247,137,270,132,268,147,244,163,218"/>
+</map>
