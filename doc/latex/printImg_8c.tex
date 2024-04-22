@@ -16,8 +16,6 @@ Graphe des dépendances par inclusion de print\+Img.\+c\+:\nopagebreak
 \doxysubsubsection*{Fonctions}
 \begin{DoxyCompactItemize}
 \item 
-int \mbox{\hyperlink{printImg_8c_a3e5c960e6d993d3bcc1a6279572e9b84}{print\+\_\+bg}} (SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}background\+Texture, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}r, int LE, int lE)
-\begin{DoxyCompactList}\small\item\em fonction pour afficher le background \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{printImg_8c_acaf5114b88ec874b3664e7d24e06fb7d}{NB\+\_\+\+Fps}} (int \texorpdfstring{$\ast$}{*}nfps, Uint32 \texorpdfstring{$\ast$}{*}t0, Uint32 \texorpdfstring{$\ast$}{*}t1)
 \begin{DoxyCompactList}\small\item\em fonction pour calculer le nombre de FPS \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{printImg_8c_a8415a5c7f2569375daf20938c04dc5a1}{aff\+\_\+\+Fps}} (int cmpfps, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer)
@@ -118,31 +116,10 @@ fonction pour calculer le nombre de FPS
 
 
 \begin{DoxyParams}{Paramètres}
-{\em nfps} & ? \\
+{\em nfps} & nombre de fps actuelle \\
 \hline
-{\em t0} & ? \\
+{\em t0} & debut de la mesure des fps \\
 \hline
-{\em t1} & ?  \\
-\hline
-\end{DoxyParams}
-\Hypertarget{printImg_8c_a3e5c960e6d993d3bcc1a6279572e9b84}\label{printImg_8c_a3e5c960e6d993d3bcc1a6279572e9b84} 
-\index{printImg.c@{printImg.c}!print\_bg@{print\_bg}}
-\index{print\_bg@{print\_bg}!printImg.c@{printImg.c}}
-\doxysubsubsection{\texorpdfstring{print\_bg()}{print\_bg()}}
-{\footnotesize\ttfamily int print\+\_\+bg (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Texture \texorpdfstring{$\ast$}{*}}]{background\+Texture,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{r,  }\item[{int}]{LE,  }\item[{int}]{lE }\end{DoxyParamCaption})}
-
-
-
-fonction pour afficher le background 
-
-
-\begin{DoxyParams}{Paramètres}
-{\em background\+Texture} & texture \\
-\hline
-{\em r} & rendu de la fenetre \\
-\hline
-{\em LE} & Longueur de l\textquotesingle{}ecran \\
-\hline
-{\em lE} & Largeur de l\textquotesingle{}ecran  \\
+{\em t1} & quand la difference t1-\/t0 vaut 1s on a fini de mesurer les fps  \\
 \hline
 \end{DoxyParams}

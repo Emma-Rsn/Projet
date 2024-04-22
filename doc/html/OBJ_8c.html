@@ -178,7 +178,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>dest_ennemi</b> (<a c
 int&#160;</td><td class="memItemRight" valign="bottom"><b>boolcol</b> (<a class="el" href="structcase__s.html">case_t</a> *obj_c, <a class="el" href="structpersonnage.html">p_mv</a> *pp)</td></tr>
 <tr class="separator:a4211f8319756e4cf92807e54a6a83f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7db3392d374e07d5c5a4420c5e119a4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structartefact__s.html">artefact_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="OBJ_8c.html#a7db3392d374e07d5c5a4420c5e119a4c">init_artefact</a> (char *nom, int possession, char *descriptif, int indice, int prix, int indice_texture)</td></tr>
-<tr class="memdesc:a7db3392d374e07d5c5a4420c5e119a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui initialise un artefact  <br /></td></tr>
+<tr class="memdesc:a7db3392d374e07d5c5a4420c5e119a4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui initialise un ennemi  <br /></td></tr>
 <tr class="separator:a7db3392d374e07d5c5a4420c5e119a4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adba78300c4894968ad14c25bab9ec281"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="OBJ_8c.html#adba78300c4894968ad14c25bab9ec281">destruction_artefact</a> (<a class="el" href="structartefact__s.html">artefact_t</a> *artefact)</td></tr>
 <tr class="memdesc:adba78300c4894968ad14c25bab9ec281"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui detruit l'artefact  <br /></td></tr>
@@ -266,9 +266,20 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>boolcol</b> (<a class=
       </table>
 </div><div class="memdoc">
 
-<p>fonction qui initialise un artefact </p>
+<p>fonction qui initialise un ennemi </p>
+<p>fonction qui initialise un artefact</p>
 <dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
+    <tr><td class="paramname">nom</td><td>nom de l'ennemi </td></tr>
+    <tr><td class="paramname">pv</td><td>nombre de pv de l'ennemi </td></tr>
+    <tr><td class="paramname">vitesse</td><td>vitesse de l'ennemi </td></tr>
+    <tr><td class="paramname">camp</td><td>camp de l'ennemi (1) </td></tr>
+    <tr><td class="paramname">indice_portrait</td><td>indice du portrait de l'ennemi </td></tr>
+    <tr><td class="paramname">indice_sprite</td><td>l'indice du sprite de l'ennemi </td></tr>
+    <tr><td class="paramname">type</td><td>type de l'ennemi </td></tr>
+    <tr><td class="paramname">temps_recharge_max</td><td>temps de recharge de l'ennemi </td></tr>
+    <tr><td class="paramname">puissance</td><td>puissance de l'ennemi </td></tr>
+    <tr><td class="paramname">forme</td><td>forme de l'ennemi</td></tr>
     <tr><td class="paramname">nom</td><td>nom de l'artefact </td></tr>
     <tr><td class="paramname">possession</td><td>entier pour savoir si 'lon possede ou non l'artefact </td></tr>
     <tr><td class="paramname">descriptif</td><td>dexcription de l'artefact </td></tr>

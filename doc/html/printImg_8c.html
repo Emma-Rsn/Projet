@@ -133,9 +133,6 @@ Graphe des dépendances par inclusion de printImg.c:</div>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Fonctions</h2></td></tr>
-<tr class="memitem:a3e5c960e6d993d3bcc1a6279572e9b84"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="printImg_8c.html#a3e5c960e6d993d3bcc1a6279572e9b84">print_bg</a> (SDL_Texture *backgroundTexture, SDL_Renderer *r, int LE, int lE)</td></tr>
-<tr class="memdesc:a3e5c960e6d993d3bcc1a6279572e9b84"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction pour afficher le background  <br /></td></tr>
-<tr class="separator:a3e5c960e6d993d3bcc1a6279572e9b84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acaf5114b88ec874b3664e7d24e06fb7d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="printImg_8c.html#acaf5114b88ec874b3664e7d24e06fb7d">NB_Fps</a> (int *nfps, Uint32 *t0, Uint32 *t1)</td></tr>
 <tr class="memdesc:acaf5114b88ec874b3664e7d24e06fb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction pour calculer le nombre de FPS  <br /></td></tr>
 <tr class="separator:acaf5114b88ec874b3664e7d24e06fb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -343,60 +340,9 @@ Fonctions</h2></td></tr>
 <p>fonction pour calculer le nombre de FPS </p>
 <dl class="params"><dt>Paramètres</dt><dd>
   <table class="params">
-    <tr><td class="paramname">nfps</td><td>? </td></tr>
-    <tr><td class="paramname">t0</td><td>? </td></tr>
-    <tr><td class="paramname">t1</td><td>?  </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a3e5c960e6d993d3bcc1a6279572e9b84" name="a3e5c960e6d993d3bcc1a6279572e9b84"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e5c960e6d993d3bcc1a6279572e9b84">&#9670;&#160;</a></span>print_bg()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int print_bg </td>
-          <td>(</td>
-          <td class="paramtype">SDL_Texture *&#160;</td>
-          <td class="paramname"><em>backgroundTexture</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">SDL_Renderer *&#160;</td>
-          <td class="paramname"><em>r</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>LE</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>lE</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>fonction pour afficher le background </p>
-<dl class="params"><dt>Paramètres</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">backgroundTexture</td><td>texture </td></tr>
-    <tr><td class="paramname">r</td><td>rendu de la fenetre </td></tr>
-    <tr><td class="paramname">LE</td><td>Longueur de l'ecran </td></tr>
-    <tr><td class="paramname">lE</td><td>Largeur de l'ecran  </td></tr>
+    <tr><td class="paramname">nfps</td><td>nombre de fps actuelle </td></tr>
+    <tr><td class="paramname">t0</td><td>debut de la mesure des fps </td></tr>
+    <tr><td class="paramname">t1</td><td>quand la difference t1-t0 vaut 1s on a fini de mesurer les fps  </td></tr>
   </table>
   </dd>
 </dl>

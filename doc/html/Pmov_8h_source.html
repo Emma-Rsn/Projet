@@ -98,25 +98,26 @@ $(function() {
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">int</span> NightMax;</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">int</span> * frame;</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">int</span> lock;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>};</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keywordtype">void</span> pinput(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * pmv,SDL_Event event,<a class="code hl_struct" href="structcarte__s.html">carte_t</a> ** carte,<a class="code hl_struct" href="structmap__s.html">map_t</a> *map,SDL_Renderer * renderer,<span class="keywordtype">int</span> * transi,Mix_Music* gMusic,<span class="keywordtype">int</span> * toucheDeplacement);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keywordtype">int</span> affp(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * pmv,SDL_Renderer *renderer,SDL_Event event);</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keywordtype">void</span> col_p(SDL_Rect * obj_r,<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * pp);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keywordtype">void</span> lower(<span class="keywordtype">char</span> *input, <span class="keywordtype">char</span> *output);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><a class="code hl_struct" href="structpersonnage.html">p_mv</a> * initp();</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keywordtype">void</span> remplirp(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * p,<a class="code hl_struct" href="structcase__s.html">case_t</a> * c,<span class="keywordtype">int</span> leader);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keywordtype">void</span> desctruction_p_eq(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * p);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="keywordtype">void</span> transition(SDL_Renderer * renderer,<span class="keywordtype">int</span> * transi,<span class="keywordtype">int</span> we,<span class="keywordtype">int</span> he) ;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordtype">int</span> nb_allie;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>};</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">void</span> pinput(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * pmv,SDL_Event event,<a class="code hl_struct" href="structcarte__s.html">carte_t</a> ** carte,<a class="code hl_struct" href="structmap__s.html">map_t</a> *map,SDL_Renderer * renderer,<span class="keywordtype">int</span> * transi,Mix_Music* gMusic,<span class="keywordtype">int</span> * toucheDeplacement);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="keywordtype">int</span> affp(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * pmv,SDL_Renderer *renderer,SDL_Event event);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keywordtype">void</span> col_p(SDL_Rect * obj_r,<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * pp);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keywordtype">void</span> lower(<span class="keywordtype">char</span> *input, <span class="keywordtype">char</span> *output);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><a class="code hl_struct" href="structpersonnage.html">p_mv</a> * initp();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="keywordtype">void</span> remplirp(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * p,<a class="code hl_struct" href="structcase__s.html">case_t</a> * c,<span class="keywordtype">int</span> leader);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="keywordtype">void</span> desctruction_p_eq(<a class="code hl_struct" href="structpersonnage.html">p_mv</a> * p);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keywordtype">void</span> transition(SDL_Renderer * renderer,<span class="keywordtype">int</span> * transi,<span class="keywordtype">int</span> we,<span class="keywordtype">int</span> he) ;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="astructcarte__s_html"><div class="ttname"><a href="structcarte__s.html">carte_s</a></div><div class="ttdoc">Structure d'une carte.</div><div class="ttdef"><b>Definition</b> map.h:50</div></div>
 <div class="ttc" id="astructcase__s_html"><div class="ttname"><a href="structcase__s.html">case_s</a></div><div class="ttdoc">Structure d'une case.</div><div class="ttdef"><b>Definition</b> map.h:19</div></div>
 <div class="ttc" id="astructcombattant__s_html"><div class="ttname"><a href="structcombattant__s.html">combattant_s</a></div><div class="ttdoc">structure d'un combattant</div><div class="ttdef"><b>Definition</b> combat.h:26</div></div>

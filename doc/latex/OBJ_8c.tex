@@ -59,7 +59,7 @@ void {\bfseries dest\+\_\+ennemi} (\mbox{\hyperlink{structennemi__s}{ennemi\+\_\
 int {\bfseries boolcol} (\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}obj\+\_\+c, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
 \item 
 \mbox{\hyperlink{structartefact__s}{artefact\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{OBJ_8c_a7db3392d374e07d5c5a4420c5e119a4c}{init\+\_\+artefact}} (char \texorpdfstring{$\ast$}{*}nom, int possession, char \texorpdfstring{$\ast$}{*}descriptif, int indice, int prix, int indice\+\_\+texture)
-\begin{DoxyCompactList}\small\item\em fonction qui initialise un artefact \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em fonction qui initialise un ennemi \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{OBJ_8c_adba78300c4894968ad14c25bab9ec281}{destruction\+\_\+artefact}} (\mbox{\hyperlink{structartefact__s}{artefact\+\_\+t}} \texorpdfstring{$\ast$}{*}artefact)
 \begin{DoxyCompactList}\small\item\em fonction qui detruit l\textquotesingle{}artefact \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -102,10 +102,32 @@ fonction qui detruit l\textquotesingle{}artefact
 
 
 
-fonction qui initialise un artefact 
+fonction qui initialise un ennemi 
+
+fonction qui initialise un artefact
 
 
 \begin{DoxyParams}{Paramètres}
+{\em nom} & nom de l\textquotesingle{}ennemi \\
+\hline
+{\em pv} & nombre de pv de l\textquotesingle{}ennemi \\
+\hline
+{\em vitesse} & vitesse de l\textquotesingle{}ennemi \\
+\hline
+{\em camp} & camp de l\textquotesingle{}ennemi (1) \\
+\hline
+{\em indice\+\_\+portrait} & indice du portrait de l\textquotesingle{}ennemi \\
+\hline
+{\em indice\+\_\+sprite} & l\textquotesingle{}indice du sprite de l\textquotesingle{}ennemi \\
+\hline
+{\em type} & type de l\textquotesingle{}ennemi \\
+\hline
+{\em temps\+\_\+recharge\+\_\+max} & temps de recharge de l\textquotesingle{}ennemi \\
+\hline
+{\em puissance} & puissance de l\textquotesingle{}ennemi \\
+\hline
+{\em forme} & forme de l\textquotesingle{}ennemi\\
+\hline
 {\em nom} & nom de l\textquotesingle{}artefact \\
 \hline
 {\em possession} & entier pour savoir si \textquotesingle{}lon possede ou non l\textquotesingle{}artefact \\
