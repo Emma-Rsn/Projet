@@ -1089,7 +1089,6 @@ int boolDebutCombat(carte_t * cartec,p_mv * pp,obj_t * ennemi){
     }else if(boolMemeCase(cartec->grille.tabGrille[xp][yp],cartec->grille.tabGrille[xe+i][ye-2])){
         return 1;
     }
-
     return 0;
 }
 
@@ -1437,13 +1436,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                     //regarde si l'allie peut jouer
                     if(combat->combattant[combat->indice_combattant]->status==0){
                         attaque_allie(we,he,event,renderer,ennemi,combat->combattant[combat->indice_combattant],Nennemi,combat,allie,pp,map);
-
-                        //passif Ada en mode cauchemar, elle peut jouer 2 fois de suite (attente de 2 tour)
-                        if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3 && attenteAda==0){
-                            attaque_allie(we,he,event,renderer,ennemi,combat->combattant[combat->indice_combattant],Nennemi,combat,allie,pp,map);
-                            attenteAda=2;
-                        }
-                        else if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3){
+                        if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3 && attenteAda!=0){
                             attenteAda--;
                         }
                     }
@@ -1462,13 +1455,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                 else if(combat->combattant[combat->indice_combattant]->camp==1 && combat->combattant[combat->indice_combattant]->mort==0){
                     if(combat->combattant[combat->indice_combattant]->status==0){
                         attaque_ennemi(nb_combattant,combat);
-
-                        //passif Ada ennemi, elle peut jouer 2 fois de suite (attente de 2 tour)
-                        if((combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3) || (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1 && attenteAda==0)){
-                           attaque_ennemi(nb_combattant,combat);
-                           attenteAdaEnnemi=2;
-                        }
-                        else if(combat->combattant[combat->indice_combattant]->type==3 && combat->combattant[combat->indice_combattant]->forme==3){
+                        if(combat->combattant[combat->indice_combattant]->type==3 && combat->combattant[combat->indice_combattant]->forme==3 && attenteAdaEnnemi!=0){
                             attenteAdaEnnemi--;
                         }
                     }
@@ -1542,10 +1529,18 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         }
                         i++;
                     }
+                    }
+                //passif Ada en mode cauchemar, elle peut jouer 2 fois de suite (attente de 2 tour)
+                if(map->Nightmare && combat->combattant[combat->indice_combattant]->type==3 && attenteAda==0 && Nennemi!=0){
+                    combat->indice_combattant--;
+                    attenteAda=2;
+                }
+                //passif Ada ennemi, elle peut jouer 2 fois de suite (attente de 2 tour)
+                if((combat->combattant[combat->indice_combattant]->type==3 && attenteAdaEnnemi==0 && combat->combattant[combat->indice_combattant]->forme==3) || (combat->combattant[combat->indice_combattant]->forme==4 && map->Nightmare==1 && attenteAda==0)){
+                    combat->indice_combattant--;
+                    attenteAdaEnnemi=2;
                 }
 
-
-                
             }
             combat->indice_combattant=0;
             combat->num_tour++;
@@ -1571,6 +1566,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
 
             //Si les alliees on tuer tous les ennemis
             if(Nennemi==0){
+                
                 //cherche si dans les ennemis ils y avait un boss
                 if(ennemi->forme==3 || ennemi->forme==4){
                     //si il y avait un boss et qu'on etait en mode nightmare, met la barre de cauchemar de moitier
@@ -1578,37 +1574,48 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
                         map->Nightmare=0;
                         *pp->Nightmare=0;
                         *pp->NightP=(pp->NightMax)/2;
-                        map->argent+=10;
+                        map->bonusEquipeN=3;
+                        map->bonusZoneN=1;
+                        
                     }
                     //vide la barre de cauchemar
                     else{
                         *pp->NightP=0;
                     
                     }
-                //artefact qui augmente le nombre d'argent gagner
-                if(map->listeArtefact[8]->equipe==1){
-                        map -> argent += 15;
-                }else{
-                        map -> argent += 10;
+                    //artefact qui augmente le nombre d'argent gagner
+                    if(map->listeArtefact[8]->equipe==1){
+                            map -> argent += 15;
+                    }else{
+                            map -> argent += 10;
+                    }
+                    //artefact qui augmente le nombre de niveau gagner
+                    if(map->listeArtefact[9]->equipe==1){
+                            map -> nvEquipe += 2;
+                    }else{
+                            map -> nvEquipe += 1;
+                    }
                 }
-                //artefact qui augmente le nombre de niveau gagner
-                if(map->listeArtefact[9]->equipe==1){
-                        map -> nvEquipe += 2;
-                }else{
-                        map -> nvEquipe += 1;
+                if(ennemi->forme==4){
+                    * etat_boss=1;
                 }
-
-                
+                else if(ennemi->forme==3){
+                    newCompagnon(&pp,ennemi);
+                    switch(map->zoneChargee){
+                        case 2 : map->Zone2 = 2 ;map->cle = 1;break;
+                        case 3 : map->Zone3 = 2 ;map->talisman = 1;break;
+                        case 4 : map->Zone4 = 2 ;map->plongee = 1;break;
+                        case 5 : map->Zone5 = 2 ;break;
+                    default : return 1;
+                    }   
+                    pp->nb_allie++;
+                }
+                //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
+                if (map -> Nightmare) {
+                    map -> bonusEquipeN += 0.5;
+                    map -> bonusZoneN += 1;
+                }
             }
-            if(ennemi->forme==4){
-                * etat_boss=1;
-            }
-            //si on est en cauchemar sans avoir attaquer de boss augmente les bonus d'equipe et de zone en mode cauchemar
-            if (map -> Nightmare) {
-                map -> bonusEquipeN += 0.5;
-                map -> bonusZoneN += 1;
-            }
-        }
 
         //SDL_RenderPresent(renderer);
         *ennemi = copieEnnemi;
@@ -1627,16 +1634,7 @@ int combat(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi_t * en
         }
         desctruction_combat(combat);
 
-        if(ennemi->forme==3){
-            newCompagnon(&pp,ennemi);
-            switch(map->zoneChargee){
-                case 2 : map->Zone2 = 2 ;map->cle = 1;break;
-                case 3 : map->Zone3 = 2 ;map->talisman = 1;break;
-                case 4 : map->Zone4 = 2 ;map->plongee = 1;break;
-                case 5 : map->Zone5 = 2 ;break;
-            default : return 1;
-            }   
-        }
+
     }
     return 0;
 }
@@ -1869,15 +1867,15 @@ void newCompagnon(p_mv ** Leader,ennemi_t * Boss){
             break;
 
         case 1://Lou
-        (*Leader)->equipe[i]=init_combattant("Lou",180,75,0,137,136,1,3,23,0,180);
+        (*Leader)->equipe[i]=init_combattant("Lou",180,75,0,138,137,1,3,23,0,180);
             break;
 
         case 2://Finn
-        (*Leader)->equipe[i]=init_combattant("Finn",230,70,0,139,138,2,3,15,0,230);
+        (*Leader)->equipe[i]=init_combattant("Finn",230,70,0,140,139,2,3,15,0,230);
             break;
 
         case 3://Ada
-        (*Leader)->equipe[i]=init_combattant("Ada",135,65,0,141,140,3,2,36,0,135);
+        (*Leader)->equipe[i]=init_combattant("Ada",135,65,0,142,141,3,2,36,0,135);
             break;
         
         default:

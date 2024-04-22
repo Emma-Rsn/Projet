@@ -160,13 +160,13 @@ int main(){
                 Alex->equipe[jj]=init_combattant("Alex",*tabparam[28+ii],60,0,136,135,*tabparam[27+ii],2,27,0,190);
                 break;
             case 1 :
-                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],75,0,137,136,*tabparam[27+ii],3,23,0,180);
+                Alex->equipe[jj]=init_combattant("Lou",*tabparam[28+ii],75,0,138,137,*tabparam[27+ii],3,23,0,180);
                 break;
             case 2 :
-                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],70,0,139,138,*tabparam[27+ii],3,15,0,230);
+                Alex->equipe[jj]=init_combattant("Finn",*tabparam[28+ii],70,0,140,139,*tabparam[27+ii],3,15,0,230);
                 break;
             case 3 :
-                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],65,0,141,140,*tabparam[27+ii],2,36,0,135);
+                Alex->equipe[jj]=init_combattant("Ada",*tabparam[28+ii],65,0,142,141,*tabparam[27+ii],2,36,0,135);
                 break;
             default: break;
         }

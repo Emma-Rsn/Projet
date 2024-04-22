@@ -35,6 +35,7 @@ struct personnage{
     int NightMax;
     int * frame;
     int lock;
+    int nb_allie;
 };
 
 void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement);

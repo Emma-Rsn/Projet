@@ -15,42 +15,17 @@
 
 #include "../libs/commun.h"
 
-/**
-*
-*\fn int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE)
-*\param backgroundTexture texture 
-*\param r rendu de la fenetre
-*\param LE Longueur de l'ecran
-*\param lE Largeur de l'ecran
-*\brief fonction pour afficher le background
-*
-*/
 
-//fonction pour afficher le background
-int print_bg(SDL_Texture* backgroundTexture,SDL_Renderer* r,int LE, int lE){
-    SDL_Rect destRect = {0, 0, LE, lE};  // Taille de l'écran
-    SDL_Surface* backgroundSurface = IMG_Load("bg.jpeg");
-    if (backgroundSurface == NULL) {
-        fprintf(stderr, "Erreur lors du chargement de l'image de fond : %s\n", SDL_GetError());
-        return -1;
-    }
-    backgroundTexture = SDL_CreateTextureFromSurface(r, backgroundSurface);
-    SDL_FreeSurface(backgroundSurface);
-    SDL_RenderCopy(r, backgroundTexture, NULL, &destRect);
-    return 0;
-}
 
 /**
 *
 *\fn int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1)
-*\param nfps ?
-*\param t0 ?
-*\param t1 ?
+*\param nfps nombre de fps actuelle
+*\param t0 debut de la mesure des fps
+*\param t1 quand la difference t1-t0 vaut 1s on a fini de mesurer les fps
 *\brief fonction pour calculer le nombre de FPS 
 *
 */
-
-
 
 //fonction pour calculer le nombre de FPS 
 int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){

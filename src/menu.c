@@ -2886,11 +2886,7 @@ int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, ma
 
     SDL_Rect r_Ecran = {0,0,(*we),(*he)};
     int i =0;
-    int nb_allie=0;
-        for (i =0;i<4 && pp->equipe[i]!=NULL;i++){
-            nb_allie++;
-        }
-
+    int nb_allie=pp->nb_allie;
 
         i=0;
  

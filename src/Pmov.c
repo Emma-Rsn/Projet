@@ -517,54 +517,6 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     return 0;
 }
 
-/**
-*
-*\fn void col_p(SDL_Rect * obj_r,p_mv * pp)
-*\param pp structure d'un personnage
-*\param obj_r objet avec quoi il y a la collision
-*\brief fonction qui s'occupe des collisions
-*/
-
-//fonction qui s'occupe des collisions
-void col_p(SDL_Rect * obj_r,p_mv * pp){
-        //Collision entre la partie haute du personnage et la partie haute de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && pp->r.y == obj_r->y) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && pp->r.y == obj_r->y)){
-            pp->r.y += 1;
-        }
-        //Collision entre la partie haute du personnage et la partie basse de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && pp->r.y == (obj_r->y+obj_r->h)) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && pp->r.y == (obj_r->y+obj_r->h))){
-            pp->r.y += 1;
-        }
-
-        //Collision entre la partie droite du personnage et la partie droite de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == (obj_r->x+obj_r->w)) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == (obj_r->x+obj_r->w))){
-            pp->r.x -= 1;
-        }
-        //Collision entre la partie droite du personnage et la partie gauche de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == obj_r->x) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && (pp->r.x+pp->r.w) == obj_r->x)){
-            pp->r.x -= 1;
-        }
-        //Collision entre la partie basse du personnage et la partie basse de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == (obj_r->y+obj_r->h)) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == (obj_r->y+obj_r->h))){
-            pp->r.y -= 1;
-        }
-        //Collision entre la partie basse du personnage et la partie haute de l'obj
-        if((pp->r.x >= obj_r->x && pp->r.x <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == obj_r->y) || ((pp->r.x+pp->r.w) >= obj_r->x && (pp->r.x+pp->r.w) <= (obj_r->x+obj_r->w) && (pp->r.y+pp->r.h) == obj_r->y)){
-            pp->r.y -= 1;
-        }
-
-        //Collision entre la partie gauche du personnage et la partie droite de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && pp->r.x == (obj_r->x+obj_r->w)) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && pp->r.x == (obj_r->x+obj_r->w))){
-            pp->r.x += 1;
-        }
-        //Collision entre la partie gauche du personnage et la partie gauche de l'obj
-        if((pp->r.y >= obj_r->y && pp->r.y <= (obj_r->y+obj_r->h) && pp->r.x == obj_r->x) || ((pp->r.y+pp->r.h) >= obj_r->y && (pp->r.y+pp->r.h) <= (obj_r->y+obj_r->h) && pp->r.x == obj_r->x)){
-            pp->r.x += 1;
-        }
-}
-
-
-
 
 /**
 *
@@ -592,6 +544,11 @@ void desctruction_p_eq(p_mv * p){
     
 }
 
+/**
+*
+*\fn p_mv * initp()
+*\brief fonction qui creer le personnage joue
+*/
 p_mv * initp(){
     p_mv * p = malloc(sizeof(p_mv));
     p->d=malloc(sizeof(int));
@@ -605,10 +562,18 @@ p_mv * initp(){
     *p->NightP = 0;
     *(p->frame) = 0;
     p->lock = 0;
+    p->nb_allie=1;
     return p;
 }
 
-//construit un point
+/**
+*
+*\fn void remplirp(p_mv * p,case_t * c,int leader)
+*\param p structure personnage joue
+*\param c case du joueur
+*\param leader numero du personnage jouer (son type)
+*\brief fonction qui remplie le personnage joue
+*/
 void remplirp(p_mv * p,case_t * c,int leader){
     p->c = c;
     p->r = c->Rectangle;

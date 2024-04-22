@@ -211,6 +211,23 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     }
 }
 
+
+/**
+*
+*\fn artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture)
+*\param nom nom de l'ennemi
+*\param pv nombre de pv de l'ennemi
+*\param vitesse vitesse de l'ennemi
+*\param camp camp de l'ennemi (1)
+*\param indice_portrait indice du portrait de l'ennemi
+*\param indice_sprite l'indice du sprite de l'ennemi
+*\param type type de l'ennemi
+*\param temps_recharge_max temps de recharge de l'ennemi
+*\param puissance puissance de l'ennemi
+*\param forme forme de l'ennemi
+*\brief fonction qui initialise un ennemi
+*/
+//fonction qui initialise un ennemi
 ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     ennemi_t * en = malloc(sizeof(ennemi_t));
     en->nom = malloc(strlen(nom)+1);
@@ -275,17 +292,17 @@ void Boss(obj_t * boss,p_mv * Leader){
 
             case 1://Lou
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Lou",180,75,0,137,136,1,3,23,0);
+            boss->tabObj[0]=init_ennemi("Lou",180,75,0,138,137,1,3,23,0);
                 break;
 
             case 2://Finn
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Finn",230,70,0,139,138,2,3,15,0);
+            boss->tabObj[0]=init_ennemi("Finn",230,70,0,140,139,2,3,15,0);
                 break;
 
             case 3://Ada
             boss->indTexture = 0;
-            boss->tabObj[0]=init_ennemi("Ada",135,65,0,141,140,3,2,36,0);
+            boss->tabObj[0]=init_ennemi("Ada",135,65,0,142,141,3,2,36,0);
                 break;
             
             default:
