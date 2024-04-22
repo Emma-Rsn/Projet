@@ -8,7 +8,7 @@
 *\brief programme principale
 *\author Moreau Enzo Rasson Emma Pasquier Lina 
 *\date  janvier 2024
-*\version 0.0
+*\version 1.0
 *
 */
 
@@ -321,7 +321,7 @@ int main(){
         affp(Alex,renderer,event);
         affTabObj(renderer,map,cartec);
 
-        if(ouilumiere || map.zoneChargee == 5)lumiere(renderer,cartec,Alex->c);
+        //if(ouilumiere || map.zoneChargee == 5)lumiere(renderer,cartec,Alex->c);
 
         affHud(renderer,hEcran,wEcran,map,*Alex);
 

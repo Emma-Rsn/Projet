@@ -1,0 +1,1324 @@
+\doxysection{map.\+c}
+\hypertarget{map_8c_source}{}\label{map_8c_source}\index{src/map.c@{src/map.c}}
+\mbox{\hyperlink{map_8c}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//map.c}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//Created\ by\ Moreau\ Enzo\ Rasson\ Emma}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}../libs/commun.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00024\ \mbox{\hyperlink{structcase__s}{case\_t}}\ \mbox{\hyperlink{map_8c_a062b71f5b3b36577d6c10530a284da3f}{creation\_case}}()\{}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{structcase__s}{case\_t}}\ c;}
+\DoxyCodeLine{00026\ \ \ \ \ c.etat=1;}
+\DoxyCodeLine{00027\ \ \ \ \ c.Rectangle.x=0;}
+\DoxyCodeLine{00028\ \ \ \ \ c.Rectangle.y=0;}
+\DoxyCodeLine{00029\ \ \ \ \ c.Rectangle.w=64;}
+\DoxyCodeLine{00030\ \ \ \ \ c.Rectangle.h=64;}
+\DoxyCodeLine{00031\ \ \ \ \ c.ntexture\ =\ 0;}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{00033\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00042\ \mbox{\hyperlink{structgrille__s}{grille\_t}}\ \mbox{\hyperlink{map_8c_ae16ca0e477b0c3789accd203c7478abe}{creation\_grille}}(\textcolor{keywordtype}{int}\ bord)\{}
+\DoxyCodeLine{00043\ \ \ \ \ \mbox{\hyperlink{structgrille__s}{grille\_t}}\ g;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{int}\ taille=64;}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<LONG;i++)\{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<LARG;j++)\{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ g.tabGrille[i][j]=\mbox{\hyperlink{map_8c_a062b71f5b3b36577d6c10530a284da3f}{creation\_case}}();}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (bord)\{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0\ :\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1\ :\ \textcolor{keywordflow}{if}(j\ ==\ 0\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//N}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ \textcolor{keywordflow}{if}(i\ ==\ (LONG-\/1)\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//E}}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :\ \textcolor{keywordflow}{if}(j\ ==\ (LARG-\/1)\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//S}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :\ \textcolor{keywordflow}{if}(i\ ==\ 0\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//O}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5\ :\ \textcolor{keywordflow}{if}(j\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//NE}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 6\ :\ \textcolor{keywordflow}{if}(j\ ==\ (LARG-\/1)\ ||\ i\ ==\ (LONG-\/1)\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//SE}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 7\ :\ \textcolor{keywordflow}{if}(j\ ==\ (LARG-\/1)\ ||\ i\ ==\ 0\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//SO}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 8\ :\ \textcolor{keywordflow}{if}(j\ ==\ 0\ ||\ i\ ==\ 0\ )g.tabGrille[i][j].etat\ =\ 3;\ }
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(i\ ==\ 0\ ||\ i\ ==\ (LONG-\/1)\ ||\ j\ ==\ 0\ ||\ j\ ==\ (LARG-\/1))g.tabGrille[i][j].etat\ =\ 2;}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};\ \textcolor{comment}{//NO}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ g.tabGrille[i][j].Rectangle.x=taille*i;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ g.tabGrille[i][j].Rectangle.y=taille*j+56;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ g.tabGrille[i][j].x=i;}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ g.tabGrille[i][j].y=j;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordflow}{return}\ g;}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00095\ \mbox{\hyperlink{structcarte__s}{carte\_t}}\ \mbox{\hyperlink{map_8c_a9b9d6b4b6df4e97e6fb5a797c7a398fb}{creation\_carte}}(\textcolor{keywordtype}{int}\ x,\textcolor{keywordtype}{int}\ y)\{}
+\DoxyCodeLine{00096\ \ \ \ \ \mbox{\hyperlink{structcarte__s}{carte\_t}}\ carte;}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{int}\ bord\ =\ 0;\ \textcolor{comment}{//variable\ pour\ savoir\ si\ on\ est\ en\ bordure\ de\ map}}
+\DoxyCodeLine{00098\ \ \ \ \ carte.nZone=0;}
+\DoxyCodeLine{00099\ \ \ \ \ carte.xcarte=x;}
+\DoxyCodeLine{00100\ \ \ \ \ carte.ycarte=y;}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{if}(x\ ==\ 0)\ bord\ =\ 1;}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{if}(x\ ==\ (ROWS-\/1))\ bord\ =\ 3;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{if}(y\ ==\ 0)\ bord\ =\ 4;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{if}(y\ ==\ (COLUMNS-\/1))\ bord\ =\ 2;}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}(x\ ==\ 0\ \&\&\ y\ ==\ 0)\ bord\ =\ 8;}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{if}(x\ ==\ 0\ \&\&\ y\ ==\ (COLUMNS-\/1))\ bord\ =\ 5;}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{if}(x\ ==\ (ROWS-\/1)\ \&\&\ y\ ==\ 0)\ bord\ =\ 7;}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{if}(x\ ==\ (ROWS-\/1)\ \&\&\ y\ ==\ (COLUMNS-\/1))\ bord\ =\ 6;}
+\DoxyCodeLine{00109\ \ \ \ \ carte.grille=\mbox{\hyperlink{map_8c_ae16ca0e477b0c3789accd203c7478abe}{creation\_grille}}(bord);}
+\DoxyCodeLine{00110\ \ \ \ \ carte.etat\_brouillard=1;}
+\DoxyCodeLine{00111\ \ \ \ \ carte.nbObj\ =\ 0;}
+\DoxyCodeLine{00112\ \ \ \ \ carte.nrlayout\ =\ 0;}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ carte;}
+\DoxyCodeLine{00114\ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00123\ \mbox{\hyperlink{structmap__s}{map\_t}}\ \mbox{\hyperlink{map_8c_a371845d69cf19793b2ffda6a9cfff6bd}{creation\_map}}\ ()\{}
+\DoxyCodeLine{00124\ \ \ \ \ \mbox{\hyperlink{structmap__s}{map\_t}}\ m;}
+\DoxyCodeLine{00125\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{00126\ \ \ \ \ m.tabTexture\ =\ NULL;}
+\DoxyCodeLine{00127\ \ \ \ \ m.Nightmare\ =\ 0;}
+\DoxyCodeLine{00128\ \ \ \ \ m.nvEquipe=2;}
+\DoxyCodeLine{00129\ \ \ \ \ m.bonusEquipeN=BONUS\_EQUIPE\_N;}
+\DoxyCodeLine{00130\ \ \ \ \ m.bonusZoneN=BONUS\_ZONE\_N;}
+\DoxyCodeLine{00131\ \ \ \ \ m.argent=0;}
+\DoxyCodeLine{00132\ \ \ \ \ m.Zone2\ =\ 0;}
+\DoxyCodeLine{00133\ \ \ \ \ m.Zone3\ =\ 0;}
+\DoxyCodeLine{00134\ \ \ \ \ m.Zone4\ =\ 0;}
+\DoxyCodeLine{00135\ \ \ \ \ m.Zone5\ =\ 0;}
+\DoxyCodeLine{00136\ \ \ \ \ m.plongee\ =\ 0;}
+\DoxyCodeLine{00137\ \ \ \ \ m.talisman\ =\ 0;}
+\DoxyCodeLine{00138\ \ \ \ \ m.talisman\ =\ 0;}
+\DoxyCodeLine{00139\ \ \ \ \ m.nb\_emplacement=1;}
+\DoxyCodeLine{00140\ \ \ \ \ m.prix\_emplacement=20;}
+\DoxyCodeLine{00141\ \ \ \ \ m.plongee\ =\ 0;}
+\DoxyCodeLine{00142\ \ \ \ \ m.cle\ =\ 0;}
+\DoxyCodeLine{00143\ \ \ \ \ m.talisman\ =\ 0;}
+\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<ROWS;i++)\{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<COLUMNS;j++)\{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ m.tabMap[i][j]=\mbox{\hyperlink{map_8c_a9b9d6b4b6df4e97e6fb5a797c7a398fb}{creation\_carte}}(i,j);}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00148\ \ \ \ \ \}}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{return}\ m;}
+\DoxyCodeLine{00150\ \}}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \textcolor{comment}{//map\ pour\ test}}
+\DoxyCodeLine{00153\ \textcolor{keywordtype}{int}\ afficher\_grille(\mbox{\hyperlink{structgrille__s}{grille\_t}}\ grille,\ SDL\_Renderer\ *renderer)\{}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{00155\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,\ 0,\ 0,\ 255);}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<LONG;i++)\{}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<LARG;j++)\{}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderDrawRect(renderer,\ \&(grille.tabGrille[i][j].Rectangle));}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone\ de\ test}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(grille.tabGrille[i][j].etat\ ==\ 3)SDL\_RenderFillRect(renderer,\ \&(grille.tabGrille[i][j].Rectangle));}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00163\ \ \ \ \ \}}
+\DoxyCodeLine{00164\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00165\ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00175\ \textcolor{keywordtype}{int}\ afficher\_carte(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec)\{}
+\DoxyCodeLine{00176\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{00177\ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ 0;}
+\DoxyCodeLine{00178\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare)n=map-\/>nbN;}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<LONG;i++)\{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<LARG;j++)\{}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[cartec-\/>grille.tabGrille[i][j].ntexture\ +\ n],\ NULL,\&(cartec-\/>grille.tabGrille[i][j].Rectangle));}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00183\ \ \ \ \ \}}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00185\ \}}
+\DoxyCodeLine{00186\ }
+\DoxyCodeLine{00193\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_a3b830088159139c640bdfcab6ec2f78c}{creer\_map}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00194\ }
+\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordtype}{int}\ x,y;}
+\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordtype}{int}\ choix,choix2;}
+\DoxyCodeLine{00197\ \ \ \ \ srand(\ time(\ NULL\ )\ );}
+\DoxyCodeLine{00198\ }
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordtype}{int}\ xZone1\ =\ rand()\ \%\ 2\ +\ 2;}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordtype}{int}\ yZone1\ =\ rand()\ \%\ 2\ +\ 2;}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \ \ map-\/>tabMap[xZone1][yZone1].nZone=1;}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{comment}{//Initialisation\ des\ zones\ dans\ les\ coins\ de\ la\ map}}
+\DoxyCodeLine{00206\ \ \ \ \ map-\/>tabMap[0][0].nZone=5;}
+\DoxyCodeLine{00207\ \ \ \ \ map-\/>tabMap[0][1].nZone=5;}
+\DoxyCodeLine{00208\ \ \ \ \ map-\/>tabMap[1][0].nZone=5;}
+\DoxyCodeLine{00209\ \ \ \ \ map-\/>tabMap[1][1].nZone=5;}
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ \ \ \ \ map-\/>tabMap[4][0].nZone=4;}
+\DoxyCodeLine{00212\ \ \ \ \ map-\/>tabMap[4][1].nZone=4;}
+\DoxyCodeLine{00213\ \ \ \ \ map-\/>tabMap[5][0].nZone=4;}
+\DoxyCodeLine{00214\ \ \ \ \ map-\/>tabMap[5][1].nZone=4;}
+\DoxyCodeLine{00215\ }
+\DoxyCodeLine{00216\ \ \ \ \ map-\/>tabMap[0][4].nZone=3;}
+\DoxyCodeLine{00217\ \ \ \ \ map-\/>tabMap[0][5].nZone=3;}
+\DoxyCodeLine{00218\ \ \ \ \ map-\/>tabMap[1][4].nZone=3;}
+\DoxyCodeLine{00219\ \ \ \ \ map-\/>tabMap[1][5].nZone=3;}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ map-\/>tabMap[4][4].nZone=2;}
+\DoxyCodeLine{00222\ \ \ \ \ map-\/>tabMap[4][5].nZone=2;}
+\DoxyCodeLine{00223\ \ \ \ \ map-\/>tabMap[5][4].nZone=2;}
+\DoxyCodeLine{00224\ \ \ \ \ map-\/>tabMap[5][5].nZone=2;}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ map-\/>tabMap[3][0].nZone=4;}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ }
+\DoxyCodeLine{00229\ \ \ \ \ \textcolor{comment}{//Cas\ particulier\ de\ la\ génération\ où\ la\ zone\ 3\ du\ manoir\ n'est\ pas\ dans\ le\ coin\ en\ haut\ à\ droite}}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordflow}{if}(xZone1==3\&\&yZone1==2)\{}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Remplissage\ "{}logique"{}\ des\ zones\ en\ fonction\ du\ cas\ particulier}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ map-\/>tabMap[0][2].nZone=5;}
+\DoxyCodeLine{00234\ }
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ map-\/>tabMap[0][3].nZone=3;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ map-\/>tabMap[1][3].nZone=3;}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ map-\/>tabMap[2][2].nZone=3;}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ map-\/>tabMap[0][5].nZone=2;}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ map-\/>tabMap[1][5].nZone=2;\ }
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ map-\/>tabMap[2][4].nZone=2;}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ map-\/>tabMap[2][5].nZone=2;}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ map-\/>tabMap[3][3].nZone=2;}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ map-\/>tabMap[3][4].nZone=2;}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ map-\/>tabMap[3][5].nZone=2;}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ map-\/>tabMap[3][1].nZone=4;}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Choix\ pour\ les\ cartes\ du\ manoir\ (zone\ 3)}}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 2;}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!choix)\{}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[1][2].nZone=3;}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][3].nZone=2;}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[1][2].nZone=5;}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][3].nZone=3;}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Choix\ pour\ les\ cartes\ adjacentes\ de\ la\ plage\ ou\ de\ la\ foret\ (zone\ 2\ et\ zone\ 4)}}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 3;}
+\DoxyCodeLine{00261\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(choix)\{}
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Cas\ si\ on\ rempli\ 1\ case\ de\ la\ zone\ plage\ et\ 3\ de\ la\ zone\ foret}}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ \ \ \ \ choix2=rand()\ \%\ 2;}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Première\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix2==0)\{}
+\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=4;}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00271\ }
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Deuxième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=4;}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Cas\ si\ on\ rempli\ 2\ cases\ de\ la\ zone\ plage\ et\ 2\ de\ la\ zone\ foret}}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ choix2=rand()\ \%\ 3;}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Première\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix2==0)\{}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=4;}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=2;}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00292\ }
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Deuxième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(choix2==1)\{}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Troisième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=4;}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=2;}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Cas\ si\ on\ rempli\ 3\ cases\ de\ la\ zone\ plage\ et\ 1\ de\ la\ zone\ foret}}
+\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ choix2=rand()\ \%\ 2;}
+\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Première\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix2==0)\{}
+\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=2;}
+\DoxyCodeLine{00319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00320\ }
+\DoxyCodeLine{00321\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00322\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Deuxième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00323\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00324\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00325\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00326\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=2;}
+\DoxyCodeLine{00328\ \ }
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Choix\ pour\ les\ cartes\ adjacentes\ de\ la\ foret\ et\ de\ la\ grotte\ (zone\ 4\ et\ zone\ 5)}}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 2;}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][2].nZone==1)\{}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ choix=1;}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix==0)\{}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][1].nZone=5;}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][0].nZone=4;}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][1].nZone=4;}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][0].nZone=5;}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00345\ \ \ \ \ \}}
+\DoxyCodeLine{00346\ }
+\DoxyCodeLine{00347\ }
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ }
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{comment}{//Cas\ général}}
+\DoxyCodeLine{00352\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ map-\/>tabMap[xZone1-\/1][yZone1].nZone=3;}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ map-\/>tabMap[xZone1][yZone1-\/1].nZone=4;}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ map-\/>tabMap[xZone1][yZone1+1].nZone=2;}
+\DoxyCodeLine{00356\ }
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ map-\/>tabMap[3][1].nZone=4;}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 2;}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix==0)\{}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[xZone1+1][yZone1].nZone=2;}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[xZone1+1][yZone1].nZone=4;}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00366\ }
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(xZone1==2\&\&yZone1==2)\{}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[3][3].nZone=2;}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00370\ }
+\DoxyCodeLine{00371\ }
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Remplissage\ des\ cases\ adjacentes\ la\ zone\ manoir\ et\ grotte\ (zone\ 3\ et\ 5)}}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(xZone1==2\&\&yZone1==3)\{}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[0][3].nZone=3;}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[1][3].nZone=3;}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(x=2;x>=0;x-\/-\/)\{}
+\DoxyCodeLine{00380\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(y=3;y>=0;y-\/-\/)\{}
+\DoxyCodeLine{00381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[x][y].nZone==0)\{}
+\DoxyCodeLine{00382\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[x][y].nZone=5;}
+\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00384\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00385\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00386\ }
+\DoxyCodeLine{00387\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Remplissage\ des\ cases\ adjacentes\ la\ zone\ manoir\ et\ plage\ (zone\ 3\ et\ 2)}}
+\DoxyCodeLine{00388\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(x=2;x<=3;x++)\{}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(y=3;y<=5;y++)\{}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[x][y].nZone==0)\{}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[x][y].nZone=2;}
+\DoxyCodeLine{00392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Choix\ pour\ les\ cartes\ adjacentes\ de\ la\ plage\ ou\ de\ la\ foret\ (zone\ 2\ et\ zone\ 4)}}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 3;}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(choix)\{}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Cas\ si\ on\ rempli\ 1\ case\ de\ la\ zone\ plage\ et\ 3\ de\ la\ zone\ foret}}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ choix2=rand()\ \%\ 2;}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Première\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix2==0)\{}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=4;}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00407\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Deuxième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=4;}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00416\ }
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Cas\ si\ on\ rempli\ 2\ cases\ de\ la\ zone\ plage\ et\ 2\ de\ la\ zone\ foret}}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \ \ \ \ choix2=rand()\ \%\ 3;}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Première\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix2==0)\{}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=4;}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=2;}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00429\ }
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Deuxième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(choix2==1)\{}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00437\ }
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Troisième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=4;}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=2;}
+\DoxyCodeLine{00445\ }
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Cas\ si\ on\ rempli\ 3\ cases\ de\ la\ zone\ plage\ et\ 1\ de\ la\ zone\ foret}}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ choix2=rand()\ \%\ 2;}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Première\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix2==0)\{}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=2;}
+\DoxyCodeLine{00456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=4;}
+\DoxyCodeLine{00457\ }
+\DoxyCodeLine{00458\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00459\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Deuxième\ possibilité\ de\ remplissage}}
+\DoxyCodeLine{00460\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][3].nZone=2;}
+\DoxyCodeLine{00462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][3].nZone=2;}
+\DoxyCodeLine{00463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[4][2].nZone=4;}
+\DoxyCodeLine{00464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[5][2].nZone=2;}
+\DoxyCodeLine{00465\ \ }
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00469\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Choix\ pour\ les\ cartes\ adjacentes\ de\ la\ foret\ et\ de\ la\ grotte\ (zone\ 4\ et\ zone\ 5)}}
+\DoxyCodeLine{00470\ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 2;}
+\DoxyCodeLine{00471\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][2].nZone==1)choix=1;}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix==0)\{}
+\DoxyCodeLine{00473\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][1].nZone=5;}
+\DoxyCodeLine{00474\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][0].nZone=4;}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][1].nZone=4;}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[2][0].nZone=5;}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][3].nZone==1)\{}
+\DoxyCodeLine{00482\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[3][2].nZone=4;}
+\DoxyCodeLine{00483\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00484\ \ \ \ \ \}}
+\DoxyCodeLine{00485\ \ \ \ \ }
+\DoxyCodeLine{00486\ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{map_8c_abb40b6cbc30b6570dccbe61399794b37}{sauvegarde\_map}}(map));}
+\DoxyCodeLine{00487\ }
+\DoxyCodeLine{00488\ \}}
+\DoxyCodeLine{00489\ }
+\DoxyCodeLine{00496\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_abb40b6cbc30b6570dccbe61399794b37}{sauvegarde\_map}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00497\ \ \ \ \ \textcolor{comment}{//Sauvegarde\ de\ la\ map\ dans\ un\ fichier}}
+\DoxyCodeLine{00498\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{00499\ \ \ \ \ \textcolor{keywordtype}{int}\ x,y;}
+\DoxyCodeLine{00500\ }
+\DoxyCodeLine{00501\ \ \ \ \ file=fopen(\textcolor{stringliteral}{"{}save/map.txt"{}},\textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{00502\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(x=0;x<ROWS;x++)\{}
+\DoxyCodeLine{00504\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(y=0;y<COLUMNS;y++)\{}
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\%d"{}},map-\/>tabMap[x][y].nZone);}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y!=COLUMNS-\/1)\{}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00510\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00513\ }
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00515\ }
+\DoxyCodeLine{00516\ }
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00518\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00519\ \ \ \ \ \}}
+\DoxyCodeLine{00520\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00521\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Fichier\ inexistant\(\backslash\)n"{}});}
+\DoxyCodeLine{00522\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00523\ \ \ \ \ \}}
+\DoxyCodeLine{00524\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00525\ \}}
+\DoxyCodeLine{00526\ }
+\DoxyCodeLine{00533\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_a8184bfc0eefea91f2eaecabeccbcaafa}{creer\_map\_layout}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00534\ }
+\DoxyCodeLine{00535\ \ \ \ \ \textcolor{keywordflow}{if}(load\_layout\_texture(map))\{}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00537\ \ \ \ \ \}}
+\DoxyCodeLine{00538\ }
+\DoxyCodeLine{00539\ \ \ \ \ \textcolor{keywordtype}{int}\ choix;}
+\DoxyCodeLine{00540\ \ \ \ \ srand(\ time(\ NULL\ )\ );}
+\DoxyCodeLine{00541\ }
+\DoxyCodeLine{00542\ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][5],\textcolor{stringliteral}{"{}layout/layout2\_1.txt"{}});}
+\DoxyCodeLine{00543\ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][0],\textcolor{stringliteral}{"{}layout/layout4\_1.txt"{}});}
+\DoxyCodeLine{00544\ }
+\DoxyCodeLine{00545\ \ \ \ \ \textcolor{comment}{//Zone\ 2\ sous\ marine}}
+\DoxyCodeLine{00546\ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][4],\textcolor{stringliteral}{"{}layout/layout2\_2.txt"{}});\ \textcolor{comment}{//Entrée\ boss\ zone\ 2}}
+\DoxyCodeLine{00547\ }
+\DoxyCodeLine{00548\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[5][3].nZone\ ==\ 2)\{}
+\DoxyCodeLine{00549\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[4][3].nZone\ ==\ 2)\{}
+\DoxyCodeLine{00550\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[5][2].nZone\ ==\ 2)\{}
+\DoxyCodeLine{00551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 2;}
+\DoxyCodeLine{00552\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix\ ==\ 1)\{}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [5][2]/[5][3]}}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout2\_3.txt"{}});}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout2\_4.txt"{}});}
+\DoxyCodeLine{00556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout2\_5.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone\ 4}}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [4][3]/[5][3]}}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout2\_6.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout2\_7.txt"{}});}
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout2\_8.txt"{}});}
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone\ 4}}
+\DoxyCodeLine{00565\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[4][2].nZone==2)\{}
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [4][3]/[5][3]}}
+\DoxyCodeLine{00570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout2\_7.txt"{}});}
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout2\_8.txt"{}});}
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone\ 4}}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});}
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout2\_6.txt"{}});}
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [4][3]/[5][3]}}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout2\_7.txt"{}});}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout2\_8.txt"{}});}
+\DoxyCodeLine{00580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone\ 4}}
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [5][2]/[4][2]}}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_7.txt"{}});}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_8.txt"{}});}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00586\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(map-\/>tabMap[5][2].nZone\ ==\ 2)\{}
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [5][2]/[5][3]}}
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout2\_3.txt"{}});}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout2\_4.txt"{}});}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone\ 4}}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [4][2]/[4][3]}}
+\DoxyCodeLine{00592\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_3.txt"{}});}
+\DoxyCodeLine{00593\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout4\_4.txt"{}});}
+\DoxyCodeLine{00594\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00595\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout2\_5.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00596\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone\ 4}}
+\DoxyCodeLine{00597\ \ \ \ \ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 2;}
+\DoxyCodeLine{00598\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix\ ==\ 1)\{}
+\DoxyCodeLine{00599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [4][2]/[4][3]}}
+\DoxyCodeLine{00600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_5.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout4\_4.txt"{}});}
+\DoxyCodeLine{00602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_3.txt"{}});}
+\DoxyCodeLine{00603\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[4][2].nZone==2)\{}
+\DoxyCodeLine{00605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout2\_6.txt"{}});}
+\DoxyCodeLine{00607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});}
+\DoxyCodeLine{00608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [4][2]/[5][2]}}
+\DoxyCodeLine{00611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_8.txt"{}});}
+\DoxyCodeLine{00613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_7.txt"{}});}
+\DoxyCodeLine{00614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00615\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00616\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00617\ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00618\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[4][2].nZone\ ==\ 2)\{}
+\DoxyCodeLine{00619\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout2\_3.txt"{}});}
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout2\_4.txt"{}});}
+\DoxyCodeLine{00621\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone4}}
+\DoxyCodeLine{00622\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_3.txt"{}});}
+\DoxyCodeLine{00623\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout4\_4.txt"{}});}
+\DoxyCodeLine{00624\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00625\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][3],\textcolor{stringliteral}{"{}layout/layout2\_5.txt"{}});}
+\DoxyCodeLine{00626\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//zone4}}
+\DoxyCodeLine{00627\ \ \ \ \ \ \ \ \ \ \ \ \ choix=rand()\ \%\ 2;}
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(choix\ ==\ 1)\{}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [5][2]/[4][2]}}
+\DoxyCodeLine{00630\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_7.txt"{}});}
+\DoxyCodeLine{00632\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_8.txt"{}});}
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Paire\ [5][3]/[5][2]}}
+\DoxyCodeLine{00635\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][2],\textcolor{stringliteral}{"{}layout/layout4\_5.txt"{}});\ \textcolor{comment}{//tout\ seul}}
+\DoxyCodeLine{00636\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][3],\textcolor{stringliteral}{"{}layout/layout4\_4.txt"{}});}
+\DoxyCodeLine{00637\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][2],\textcolor{stringliteral}{"{}layout/layout4\_3.txt"{}});}
+\DoxyCodeLine{00638\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00640\ \ \ \ \ \}}
+\DoxyCodeLine{00641\ \ \ \ \ \textcolor{comment}{//Choix\ layout\ entrée\ boss}}
+\DoxyCodeLine{00642\ \ \ \ \ choix=rand()\%2;}
+\DoxyCodeLine{00643\ \ \ \ \ \textcolor{keywordflow}{if}(choix==0)\{}
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][0],\textcolor{stringliteral}{"{}layout/layout4\_2.txt"{}});}
+\DoxyCodeLine{00645\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][1],\textcolor{stringliteral}{"{}layout/layout4\_10.txt"{}});}
+\DoxyCodeLine{00646\ \ \ \ \ \}}
+\DoxyCodeLine{00647\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[5][1],\textcolor{stringliteral}{"{}layout/layout4\_9.txt"{}});}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][0],\textcolor{stringliteral}{"{}layout/layout4\_10.txt"{}});}
+\DoxyCodeLine{00650\ \ \ \ \ \}}
+\DoxyCodeLine{00651\ \ \ \ \ \textcolor{comment}{//Layout\ foret\ bloc}}
+\DoxyCodeLine{00652\ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][0],\textcolor{stringliteral}{"{}layout/layout4\_10.txt"{}});}
+\DoxyCodeLine{00653\ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][1],\textcolor{stringliteral}{"{}layout/layout4\_10.txt"{}});}
+\DoxyCodeLine{00654\ }
+\DoxyCodeLine{00655\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[3][2].nZone==1)\{}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][1],\textcolor{stringliteral}{"{}layout/layout4\_11.txt"{}});}
+\DoxyCodeLine{00657\ \ \ \ \ \}}
+\DoxyCodeLine{00658\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][1],\textcolor{stringliteral}{"{}layout/layout4\_10.txt"{}});}
+\DoxyCodeLine{00660\ \ \ \ \ \}}
+\DoxyCodeLine{00661\ }
+\DoxyCodeLine{00662\ \ \ \ \ \textcolor{comment}{//Layout\ transition\ foret\ grotte}}
+\DoxyCodeLine{00663\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][2].nZone==1)\{}
+\DoxyCodeLine{00664\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][0].nZone==4)\{}
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][1],\textcolor{stringliteral}{"{}layout/layout4\_11.txt"{}});\ \textcolor{comment}{//Transition\ zone\ spawn}}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][0],\textcolor{stringliteral}{"{}layout/layout4\_12.txt"{}});\ \textcolor{comment}{//Transition\ zone\ grotte}}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][0],\textcolor{stringliteral}{"{}layout/layout5\_4.txt"{}});\ \textcolor{comment}{//Transition\ zone\ foret}}
+\DoxyCodeLine{00668\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][1],\textcolor{stringliteral}{"{}layout/layout5\_3.txt"{}});\ \textcolor{comment}{//Carrefour}}
+\DoxyCodeLine{00669\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][1],\textcolor{stringliteral}{"{}layout/layout4\_13.txt"{}});\ \textcolor{comment}{//Transition\ zone\ grotte\ et\ zone\ spawn}}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][0],\textcolor{stringliteral}{"{}layout/layout5\_6.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac}}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][1],\textcolor{stringliteral}{"{}layout/layout5\_4.txt"{}});\ \textcolor{comment}{//Transition\ zone\ foret}}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][0],\textcolor{stringliteral}{"{}layout/layout5\_3.txt"{}});\ \textcolor{comment}{//Carrefour}}
+\DoxyCodeLine{00675\ }
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00678\ \ \ \ \ \}}
+\DoxyCodeLine{00679\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(map-\/>tabMap[2][1].nZone==4)\{}
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][1],\textcolor{stringliteral}{"{}layout/layout4\_12.txt"{}});\ \textcolor{comment}{//Transition\ zone\ grotte}}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][2],\textcolor{stringliteral}{"{}layout/layout5\_4.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac}}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][1],\textcolor{stringliteral}{"{}layout/layout5\_4.txt"{}});\ \textcolor{comment}{//Transition\ zone\ foret}}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][0],\textcolor{stringliteral}{"{}layout/layout5\_3.txt"{}});\ \textcolor{comment}{//Carrefour}}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][0].nZone==4)\{}
+\DoxyCodeLine{00685\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][0],\textcolor{stringliteral}{"{}layout/layout4\_10.txt"{}});}
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][0],\textcolor{stringliteral}{"{}layout/layout5\_4.txt"{}});}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00690\ \ \ \ \ \}}
+\DoxyCodeLine{00691\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00692\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][0],\textcolor{stringliteral}{"{}layout/layout4\_12.txt"{}});\ \textcolor{comment}{//Transition\ zone\ grotte}}
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][0],\textcolor{stringliteral}{"{}layout/layout5\_4.txt"{}});\ \textcolor{comment}{//Transition\ zone\ foret}}
+\DoxyCodeLine{00694\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][1],\textcolor{stringliteral}{"{}layout/layout5\_3.txt"{}});\ \textcolor{comment}{//Carrefour}}
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][2].nZone==5)\{}
+\DoxyCodeLine{00696\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][2],\textcolor{stringliteral}{"{}layout/layout5\_5.txt"{}});\ \textcolor{comment}{//Semi\ cul\ de\ sac}}
+\DoxyCodeLine{00697\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][1],\textcolor{stringliteral}{"{}layout/layout5\_5.txt"{}});\ \textcolor{comment}{//Semi\ cul\ de\ sac}}
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][1],\textcolor{stringliteral}{"{}layout/layout5\_6.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac}}
+\DoxyCodeLine{00701\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00702\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00703\ \ \ \ \ \}}
+\DoxyCodeLine{00704\ }
+\DoxyCodeLine{00705\ \ \ \ \ \textcolor{comment}{//Choix\ layout\ entrée\ sous-\/marine}}
+\DoxyCodeLine{00706\ \ \ \ \ choix=rand()\%2;}
+\DoxyCodeLine{00707\ \ \ \ \ \textcolor{keywordflow}{if}(choix==0)\{}
+\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Entrée\ de\ la\ zone\ sous-\/marine\ en\ [3][5]}}
+\DoxyCodeLine{00709\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][5],\textcolor{stringliteral}{"{}layout/layout2\_11.txt"{}});\ \textcolor{comment}{//Transition\ sous\ marine\ bordure\ bas\ droite}}
+\DoxyCodeLine{00710\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[3][3].nZone==1)\{}
+\DoxyCodeLine{00711\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][4],\textcolor{stringliteral}{"{}layout/layout2\_13.txt"{}});\ \textcolor{comment}{//Transition\ spawn\ zone\ plage\ bordure\ bas}}
+\DoxyCodeLine{00712\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00713\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][4],\textcolor{stringliteral}{"{}layout/layout2\_9.txt"{}});\ \textcolor{comment}{//Bordure\ eau\ bas}}
+\DoxyCodeLine{00715\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00716\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][5],\textcolor{stringliteral}{"{}layout/layout2\_19.txt"{}});\ \ \textcolor{comment}{//Transition\ plage}}
+\DoxyCodeLine{00717\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][4],\textcolor{stringliteral}{"{}layout/layout2\_5.txt"{}});\ \textcolor{comment}{//Carrefour}}
+\DoxyCodeLine{00718\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*if(map-\/>tabMap[3][2].nZone==1)\{}}
+\DoxyCodeLine{00719\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ load\_layout(\&map-\/>tabMap[3][3],"{}layout/layout2\_13.txt"{});\ //Transition\ zone\ 1}}
+\DoxyCodeLine{00720\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}*/}}
+\DoxyCodeLine{00721\ \ \ \ \ \}}
+\DoxyCodeLine{00722\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Entrée\ de\ la\ zone\ sous-\/marine\ en\ [3][4]}}
+\DoxyCodeLine{00724\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[3][3].nZone==1)\{}
+\DoxyCodeLine{00725\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][4],\textcolor{stringliteral}{"{}layout/layout2\_14.txt"{}});\ \textcolor{comment}{//Transition\ sous\ marine\ et\ transition\ spawn\ zone\ plage}}
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00727\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00728\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][4],\textcolor{stringliteral}{"{}layout/layout2\_12.txt"{}});\ \textcolor{comment}{//Transition\ sous\ marine}}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][5],\textcolor{stringliteral}{"{}layout/layout2\_10.txt"{}});\ \textcolor{comment}{//Bordure\ eau\ bas\ droite}}
+\DoxyCodeLine{00731\ }
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Zone\ sous-\/marine\ transition}}
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][4],\textcolor{stringliteral}{"{}layout/layout2\_19.txt"{}});\ \textcolor{comment}{//Transition\ plage\ \ \ -\/-\/-\/-\/-\/-\/-\/>\ Vérifier\ bas\ et\ gauche\ pour\ les\ objets\ si\ gauche\ et\ gauche\ bas\ alors\ bloquer\ bas}}
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[4][5],\textcolor{stringliteral}{"{}layout/layout2\_6.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac}}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*if(map-\/>tabMap[3][2].nZone==1)\{}}
+\DoxyCodeLine{00736\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ load\_layout(\&map-\/>tabMap[3][3],"{}layout/layout2\_13.txt"{});\ //Transition\ zone\ 1}}
+\DoxyCodeLine{00737\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}*/}}
+\DoxyCodeLine{00738\ \ \ \ \ \}}
+\DoxyCodeLine{00739\ }
+\DoxyCodeLine{00740\ \ \ \ \ \textcolor{comment}{//Layout\ zone\ plage\ }}
+\DoxyCodeLine{00741\ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][5],\textcolor{stringliteral}{"{}layout/layout2\_16.txt"{}});\ \textcolor{comment}{//Bordure\ eau\ à\ droite}}
+\DoxyCodeLine{00742\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][3].nZone==1)\{}
+\DoxyCodeLine{00743\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][4],\textcolor{stringliteral}{"{}layout/layout2\_15.txt"{}});\ \textcolor{comment}{//Transition\ spawn\ zone\ plage}}
+\DoxyCodeLine{00744\ \ \ \ \ \}}
+\DoxyCodeLine{00745\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00746\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][4],\textcolor{stringliteral}{"{}layout/layout2\_17.txt"{}});\ \textcolor{comment}{//Full\ sable}}
+\DoxyCodeLine{00747\ \ \ \ \ \}}
+\DoxyCodeLine{00748\ }
+\DoxyCodeLine{00749\ \ \ \ \ \textcolor{comment}{//Gestion\ bloc\ spawn\ et\ le\ cas\ particulier\ où\ le\ manoir\ n'est\ pas\ dans\ le\ coin\ haut\ droit}}
+\DoxyCodeLine{00750\ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][0],\textcolor{stringliteral}{"{}layout/layout5\_7.txt"{}});}
+\DoxyCodeLine{00751\ }
+\DoxyCodeLine{00752\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[3][2].nZone==1)\{}
+\DoxyCodeLine{00753\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][2],\textcolor{stringliteral}{"{}layout/layout3\_3.txt"{}});\ \textcolor{comment}{//Chemin\ vers\ le\ manoir\ transition\ haute\ et\ transition\ basse\ zone\ 1}}
+\DoxyCodeLine{00754\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][2],\textcolor{stringliteral}{"{}layout/layout3\_4.txt"{}});\ \textcolor{comment}{//Chemin\ transition\ basse\ et\ entrée\ vers\ le\ manoir\ transition\ droite}}
+\DoxyCodeLine{00755\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][3],\textcolor{stringliteral}{"{}layout/layout3\_5.txt"{}});\ \textcolor{comment}{//Manoir\ }}
+\DoxyCodeLine{00756\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][4],\textcolor{stringliteral}{"{}layout/layout3\_6.txt"{}});\ \textcolor{comment}{//Manoir\ cul\ sac}}
+\DoxyCodeLine{00757\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][3],\textcolor{stringliteral}{"{}layout/layout3\_2.txt"{}});\ \textcolor{comment}{//Entrée\ du\ boss}}
+\DoxyCodeLine{00758\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][4],\textcolor{stringliteral}{"{}layout/layout3\_1.txt"{}});\ \textcolor{comment}{//Boss}}
+\DoxyCodeLine{00759\ }
+\DoxyCodeLine{00760\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][5],\textcolor{stringliteral}{"{}layout/layout2\_16.txt"{}});\ \textcolor{comment}{//Bordure\ eau\ à\ droite}}
+\DoxyCodeLine{00761\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][5],\textcolor{stringliteral}{"{}layout/layout2\_18.txt"{}});\ \textcolor{comment}{//Bordure\ eau\ haut\ droite}}
+\DoxyCodeLine{00762\ }
+\DoxyCodeLine{00763\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][2],\textcolor{stringliteral}{"{}layout/layout1\_1.txt"{}});\ \textcolor{comment}{//Spawn\ avec\ transition\ dans\ 3\ zones,\ fermé\ en\ bas}}
+\DoxyCodeLine{00764\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][3],\textcolor{stringliteral}{"{}layout/layout2\_13.txt"{}});\ \textcolor{comment}{//Transition\ zone\ 1\ de\ la\ plage}}
+\DoxyCodeLine{00765\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][3],\textcolor{stringliteral}{"{}layout/layout2\_17.txt"{}});\ \textcolor{comment}{//Full\ sable}}
+\DoxyCodeLine{00766\ }
+\DoxyCodeLine{00767\ \ \ \ \ \}}
+\DoxyCodeLine{00768\ }
+\DoxyCodeLine{00769\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00770\ }
+\DoxyCodeLine{00771\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Layout\ manoir}}
+\DoxyCodeLine{00772\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][4],\textcolor{stringliteral}{"{}layout/layout3\_5.txt"{}});\ \textcolor{comment}{//Manoir\ }}
+\DoxyCodeLine{00773\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][5],\textcolor{stringliteral}{"{}layout/layout3\_6.txt"{}});\ \textcolor{comment}{//Manoir\ cul\ sac}}
+\DoxyCodeLine{00774\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][4],\textcolor{stringliteral}{"{}layout/layout3\_2.txt"{}});\ \textcolor{comment}{//Entrée\ du\ boss}}
+\DoxyCodeLine{00775\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][5],\textcolor{stringliteral}{"{}layout/layout3\_1.txt"{}});\ \textcolor{comment}{//Boss}}
+\DoxyCodeLine{00776\ }
+\DoxyCodeLine{00777\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Gestion\ layout\ zone\ chemin\ vers\ le\ manoir\ et\ bloc\ spawn\ pour\ un\ spawn\ en\ [2][2]}}
+\DoxyCodeLine{00778\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][2].nZone==1)\{}
+\DoxyCodeLine{00779\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][2],\textcolor{stringliteral}{"{}layout/layout3\_7.txt"{}});\ \textcolor{comment}{//Chemin\ vers\ le\ manoir\ transition\ droite\ et\ transition\ basse\ zone\ 1}}
+\DoxyCodeLine{00780\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][3],\textcolor{stringliteral}{"{}layout/layout3\_8.txt"{}});\ \textcolor{comment}{//Chemin\ transition\ gauche\ et\ entrée\ vers\ le\ manoir\ transition\ droite}}
+\DoxyCodeLine{00781\ }
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][2],\textcolor{stringliteral}{"{}layout/layout1\_1.txt"{}});\ \textcolor{comment}{//Spawn\ avec\ transition\ dans\ 3\ zones,\ fermé\ en\ bas}}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][3],\textcolor{stringliteral}{"{}layout/layout2\_15.txt"{}});\ \textcolor{comment}{//Transition\ zone\ 1\ de\ la\ plage}}
+\DoxyCodeLine{00784\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[3][2].nZone==2)\{}
+\DoxyCodeLine{00785\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][2],\textcolor{stringliteral}{"{}layout/layout2\_20.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac\ plage}}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][3],\textcolor{stringliteral}{"{}layout/layout2\_17.txt"{}});\ \textcolor{comment}{//Full\ plage}}
+\DoxyCodeLine{00787\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00788\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00789\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][2],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac\ foret}}
+\DoxyCodeLine{00790\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][3],\textcolor{stringliteral}{"{}layout/layout2\_20.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac\ plage}}
+\DoxyCodeLine{00791\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00792\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00793\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Gestion\ layout\ zone\ chemin\ vers\ le\ manoir\ et\ bloc\ spawn\ pour\ un\ spawn\ en\ [2][3]}}
+\DoxyCodeLine{00794\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(map-\/>tabMap[2][3].nZone==1)\{}
+\DoxyCodeLine{00795\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][3],\textcolor{stringliteral}{"{}layout/layout3\_3.txt"{}});\ \textcolor{comment}{//Chemin\ vers\ le\ manoir\ transition\ haute\ et\ transition\ basse\ zone\ 1}}
+\DoxyCodeLine{00796\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][3],\textcolor{stringliteral}{"{}layout/layout3\_4.txt"{}});\ \textcolor{comment}{//Chemin\ transition\ basse\ et\ entrée\ vers\ le\ manoir\ transition\ droite}}
+\DoxyCodeLine{00797\ }
+\DoxyCodeLine{00798\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][3],\textcolor{stringliteral}{"{}layout/layout1\_1.txt"{}});\ \textcolor{comment}{//Spawn\ avec\ transition\ dans\ 3\ zones,\ fermé\ en\ bas}}
+\DoxyCodeLine{00799\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][2],\textcolor{stringliteral}{"{}layout/layout4\_11.txt"{}});\ \textcolor{comment}{//Transition\ zone\ 1\ de\ la\ foret}}
+\DoxyCodeLine{00800\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][2],\textcolor{stringliteral}{"{}layout/layout4\_10.txt"{}});\ \textcolor{comment}{//Foret\ quelconque}}
+\DoxyCodeLine{00801\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[3][3].nZone==2)\{}
+\DoxyCodeLine{00802\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][3],\textcolor{stringliteral}{"{}layout/layout2\_20.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac\ plage}}
+\DoxyCodeLine{00803\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00804\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00805\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][3],\textcolor{stringliteral}{"{}layout/layout4\_6.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac\ foret}}
+\DoxyCodeLine{00806\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00807\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00808\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Gestion\ layout\ zone\ chemin\ vers\ le\ manoir\ et\ bloc\ spawn\ pour\ un\ spawn\ en\ [3][3]}}
+\DoxyCodeLine{00809\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(map-\/>tabMap[3][3].nZone==1)\{}
+\DoxyCodeLine{00810\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][3],\textcolor{stringliteral}{"{}layout/layout3\_3.txt"{}});\ \textcolor{comment}{//Chemin\ vers\ le\ manoir\ transition\ haute\ et\ transition\ basse\ zone\ 1}}
+\DoxyCodeLine{00811\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][3],\textcolor{stringliteral}{"{}layout/layout3\_4.txt"{}});\ \textcolor{comment}{//Chemin\ transition\ gauche\ et\ entrée\ vers\ le\ manoir\ transition\ droite}}
+\DoxyCodeLine{00812\ }
+\DoxyCodeLine{00813\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][3],\textcolor{stringliteral}{"{}layout/layout1\_1.txt"{}});\ \textcolor{comment}{//Spawn\ avec\ transition\ dans\ 3\ zones,\ fermé\ en\ bas}}
+\DoxyCodeLine{00814\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[3][2],\textcolor{stringliteral}{"{}layout/layout4\_11.txt"{}});\ \textcolor{comment}{//Transition\ zone\ 1\ de\ la\ foret}}
+\DoxyCodeLine{00815\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[2][2],\textcolor{stringliteral}{"{}layout/layout5\_6.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac}}
+\DoxyCodeLine{00816\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00817\ \ \ \ \ \}}
+\DoxyCodeLine{00818\ }
+\DoxyCodeLine{00819\ \ \ \ \ \textcolor{comment}{//Gestion\ transition\ manoir\ grotte\ en\ fonction\ du\ point\ de\ spawn}}
+\DoxyCodeLine{00820\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[0][3].nZone==5)\{}
+\DoxyCodeLine{00821\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][3],\textcolor{stringliteral}{"{}layout/layout5\_1.txt"{}});\ \textcolor{comment}{//Zone\ boss}}
+\DoxyCodeLine{00822\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][2],\textcolor{stringliteral}{"{}layout/layout5\_2.txt"{}});\ \textcolor{comment}{//Zone\ entrée\ boss}}
+\DoxyCodeLine{00823\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][1],\textcolor{stringliteral}{"{}layout/layout5\_3.txt"{}});\ \textcolor{comment}{//Carrefour}}
+\DoxyCodeLine{00824\ \ \ \ \ \}}
+\DoxyCodeLine{00825\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][2],\textcolor{stringliteral}{"{}layout/layout5\_1.txt"{}});\ \textcolor{comment}{//Zone\ boss}}
+\DoxyCodeLine{00827\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[0][1],\textcolor{stringliteral}{"{}layout/layout5\_2.txt"{}});\ \textcolor{comment}{//Zone\ entrée\ boss}}
+\DoxyCodeLine{00828\ \ \ \ \ \}}
+\DoxyCodeLine{00829\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[1][2].nZone==5)\{}
+\DoxyCodeLine{00830\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[2][2].nZone==5)\{}
+\DoxyCodeLine{00831\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[0][3].nZone==5)}
+\DoxyCodeLine{00832\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][2],\textcolor{stringliteral}{"{}layout/layout5\_3.txt"{}});\ \textcolor{comment}{//Carrefour}}
+\DoxyCodeLine{00833\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00834\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][2],\textcolor{stringliteral}{"{}layout/layout5\_8.txt"{}});\ \textcolor{comment}{//Coin\ haut\ droit}}
+\DoxyCodeLine{00835\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00836\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00837\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[1][2],\textcolor{stringliteral}{"{}layout/layout5\_6.txt"{}});\ \textcolor{comment}{//Cul\ de\ sac}}
+\DoxyCodeLine{00838\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00839\ \ \ \ \ \}\ }
+\DoxyCodeLine{00840\ \ \ \ \ \textcolor{keywordflow}{return}\ (\mbox{\hyperlink{map_8c_acbca9c046e5c09910b503fa40435ad71}{sauvegarde\_map\_layout}}(map));}
+\DoxyCodeLine{00841\ \}}
+\DoxyCodeLine{00842\ }
+\DoxyCodeLine{00843\ \textcolor{keywordtype}{int}\ sauvegarde\_map\_brouillard(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00844\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{00845\ \ \ \ \ \textcolor{keywordtype}{int}\ x,y;}
+\DoxyCodeLine{00846\ }
+\DoxyCodeLine{00847\ \ \ \ \ file=fopen(\textcolor{stringliteral}{"{}save/mapbrouillard.txt"{}},\textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{00848\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(x=0;x<ROWS;x++)\{}
+\DoxyCodeLine{00850\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(y=0;y<COLUMNS;y++)\{}
+\DoxyCodeLine{00851\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\%d"{}},map-\/>tabMap[x][y].etat\_brouillard);}
+\DoxyCodeLine{00852\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00853\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00854\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00855\ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00856\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00857\ \ \ \ \ \}}
+\DoxyCodeLine{00858\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00859\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Fichier\ inexistant\(\backslash\)n"{}});}
+\DoxyCodeLine{00860\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00861\ \ \ \ \ \}}
+\DoxyCodeLine{00862\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00863\ \}}
+\DoxyCodeLine{00864\ }
+\DoxyCodeLine{00871\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_acbca9c046e5c09910b503fa40435ad71}{sauvegarde\_map\_layout}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00872\ \ \ \ \ \textcolor{comment}{//Sauvegarde\ de\ la\ map\ des\ layouts\ dans\ un\ fichier}}
+\DoxyCodeLine{00873\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{00874\ \ \ \ \ \textcolor{keywordtype}{int}\ x,y;}
+\DoxyCodeLine{00875\ }
+\DoxyCodeLine{00876\ \ \ \ \ file=fopen(\textcolor{stringliteral}{"{}save/maplayout.txt"{}},\textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{00877\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{00878\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(x=0;x<ROWS;x++)\{}
+\DoxyCodeLine{00879\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(y=0;y<COLUMNS;y++)\{}
+\DoxyCodeLine{00880\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\%d"{}},map-\/>tabMap[x][y].nrlayout);}
+\DoxyCodeLine{00881\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y!=COLUMNS-\/1)\{}
+\DoxyCodeLine{00882\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\ "{}});}
+\DoxyCodeLine{00883\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00884\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00885\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00886\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(file,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00887\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00888\ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00889\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00890\ \ \ \ \ \}}
+\DoxyCodeLine{00891\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00892\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Fichier\ inexistant\(\backslash\)n"{}});}
+\DoxyCodeLine{00893\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00894\ \ \ \ \ \}}
+\DoxyCodeLine{00895\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00896\ \}}
+\DoxyCodeLine{00897\ }
+\DoxyCodeLine{00898\ \textcolor{keywordtype}{int}\ load\_brouillard(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map)\{}
+\DoxyCodeLine{00899\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{00900\ \ \ \ \ \textcolor{keywordtype}{int}\ x,y;}
+\DoxyCodeLine{00901\ }
+\DoxyCodeLine{00902\ \ \ \ \ file=fopen(\textcolor{stringliteral}{"{}save/mapbrouillard.txt"{}},\textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00903\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{00904\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (x\ =\ 0;\ x\ <\ ROWS;\ ++x)\ \{}
+\DoxyCodeLine{00905\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (y\ =\ 0;\ y\ <\ COLUMNS;\ ++y)\ \{}
+\DoxyCodeLine{00906\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ caractere;}
+\DoxyCodeLine{00907\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\ \textcolor{stringliteral}{"{}\%c"{}},\ \&caractere);}
+\DoxyCodeLine{00908\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[x][y].etat\_brouillard\ =\ caractere\ -\/\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00909\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00910\ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00911\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00912\ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00913\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00914\ \ \ \ \ \}}
+\DoxyCodeLine{00915\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00916\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00917\ \ \ \ \ \}}
+\DoxyCodeLine{00918\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00919\ \}}
+\DoxyCodeLine{00920\ }
+\DoxyCodeLine{00927\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_ab5362b98d7760ec3e3ee588d482dc705}{remplir\_map}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map)\{}
+\DoxyCodeLine{00928\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{00929\ }
+\DoxyCodeLine{00930\ \ \ \ \ \textcolor{keywordtype}{int}\ x=0;}
+\DoxyCodeLine{00931\ \ \ \ \ \textcolor{keywordtype}{int}\ y=0;}
+\DoxyCodeLine{00932\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{00933\ \ \ \ \ \textcolor{keywordtype}{char}\ numZone;}
+\DoxyCodeLine{00934\ }
+\DoxyCodeLine{00935\ \ \ \ \ file=fopen(\textcolor{stringliteral}{"{}save/map.txt"{}},\textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00936\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{00937\ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%c"{}},\&numZone);}
+\DoxyCodeLine{00938\ }
+\DoxyCodeLine{00939\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(!feof(file))\{}
+\DoxyCodeLine{00940\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(numZone==\textcolor{charliteral}{'\(\backslash\)n'})\{}
+\DoxyCodeLine{00941\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x++;}
+\DoxyCodeLine{00942\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y=0;}
+\DoxyCodeLine{00943\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00944\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(numZone>=\textcolor{charliteral}{'1'}\&\&numZone<=\textcolor{charliteral}{'5'})\{}
+\DoxyCodeLine{00945\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[x][y].nZone=numZone\ -\/\ \textcolor{charliteral}{'0'};}
+\DoxyCodeLine{00946\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//test}}
+\DoxyCodeLine{00947\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabMap[x][y].nZone==1\ ||\ map-\/>tabMap[x][y].nZone==2\ ||\ map-\/>tabMap[x][y].nZone==3)\{}
+\DoxyCodeLine{00948\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<LONG;i++)\{}
+\DoxyCodeLine{00949\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<LARG;j++)\{}
+\DoxyCodeLine{00950\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabMap[x][y].grille.tabGrille[i][j].ntexture\ =\ 0;\textcolor{comment}{//plus\ tard\ info\ dans\ un\ fichier}}
+\DoxyCodeLine{00951\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00952\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00953\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00954\ }
+\DoxyCodeLine{00955\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ y++;}
+\DoxyCodeLine{00956\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00957\ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%c"{}},\&numZone);}
+\DoxyCodeLine{00958\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00959\ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00960\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00961\ \ \ \ \ \}}
+\DoxyCodeLine{00962\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00963\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_a3b830088159139c640bdfcab6ec2f78c}{creer\_map}}(map);}
+\DoxyCodeLine{00964\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00965\ \ \ \ \ \}}
+\DoxyCodeLine{00966\ \}}
+\DoxyCodeLine{00967\ }
+\DoxyCodeLine{00968\ \textcolor{keywordtype}{int}\ load\_layout\_texture(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\ \{}
+\DoxyCodeLine{00969\ \ \ \ \ FILE\ *file;}
+\DoxyCodeLine{00970\ \ \ \ \ file\ =\ fopen(\textcolor{stringliteral}{"{}save/maplayout.txt"{}},\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00971\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0,\ j\ =\ 0,nr;}
+\DoxyCodeLine{00972\ \ \ \ \ \textcolor{keywordtype}{char}\ num[5];}
+\DoxyCodeLine{00973\ \ \ \ \ \textcolor{keywordtype}{char}\ res[50];}
+\DoxyCodeLine{00974\ \ \ \ \ \textcolor{keywordflow}{if}\ (file)\ \{}
+\DoxyCodeLine{00975\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ ROWS;\ i++)\ \{}
+\DoxyCodeLine{00976\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ COLUMNS;\ j++)\ \{}
+\DoxyCodeLine{00977\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fscanf(file,\ \textcolor{stringliteral}{"{}\%d"{}},\&nr)\ !=\ 1)\ \{}
+\DoxyCodeLine{00978\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Erreur\ à\ la\ ligne\ \%d,\ colonne\ \%d.\(\backslash\)n"{}},\ i,\ j);}
+\DoxyCodeLine{00979\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00980\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00981\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00982\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(res,\textcolor{stringliteral}{"{}layout/layout"{}});}
+\DoxyCodeLine{00983\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(num,\textcolor{stringliteral}{"{}\%d"{}},map-\/>tabMap[i][j].nZone);}
+\DoxyCodeLine{00984\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,num);}
+\DoxyCodeLine{00985\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,\textcolor{stringliteral}{"{}\_"{}});}
+\DoxyCodeLine{00986\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(num,\textcolor{stringliteral}{"{}\%d"{}},nr);}
+\DoxyCodeLine{00987\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,num);}
+\DoxyCodeLine{00988\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,\textcolor{stringliteral}{"{}.txt"{}});}
+\DoxyCodeLine{00989\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\&map-\/>tabMap[i][j],res);}
+\DoxyCodeLine{00990\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00991\ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00992\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00993\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00994\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00995\ \ \ \ \ \}}
+\DoxyCodeLine{00996\ }
+\DoxyCodeLine{00997\ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00998\ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00999\ \}}
+\DoxyCodeLine{01000\ }
+\DoxyCodeLine{01001\ \textcolor{keywordtype}{int}\ load\_layout\_obj(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\ \{}
+\DoxyCodeLine{01002\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0,\ j\ =\ 0,nr;}
+\DoxyCodeLine{01003\ \ \ \ \ \textcolor{keywordtype}{char}\ num[5];}
+\DoxyCodeLine{01004\ \ \ \ \ \textcolor{keywordtype}{char}\ res[50];}
+\DoxyCodeLine{01005\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ ROWS;\ i++)\ \{}
+\DoxyCodeLine{01006\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ COLUMNS;\ j++)\ \{}
+\DoxyCodeLine{01007\ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(res,\textcolor{stringliteral}{"{}layoutobj/layout"{}});}
+\DoxyCodeLine{01008\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(num,\textcolor{stringliteral}{"{}\%d"{}},map-\/>tabMap[i][j].nZone);}
+\DoxyCodeLine{01009\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,num);}
+\DoxyCodeLine{01010\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,\textcolor{stringliteral}{"{}\_"{}});}
+\DoxyCodeLine{01011\ \ \ \ \ \ \ \ \ \ \ \ \ nr\ =\ map-\/>tabMap[i][j].nrlayout;}
+\DoxyCodeLine{01012\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//cas\ particulier}}
+\DoxyCodeLine{01013\ \ \ \ \ \ \ \ \ \ \ \ \ sprintf(num,\textcolor{stringliteral}{"{}\%d"{}},nr);}
+\DoxyCodeLine{01014\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,num);}
+\DoxyCodeLine{01015\ \ \ \ \ \ \ \ \ \ \ \ \ strcat(res,\textcolor{stringliteral}{"{}.txt"{}});}
+\DoxyCodeLine{01016\ \ \ \ \ \ \ \ \ \ \ \ \ load\_obj(\&map-\/>tabMap[i][j],res);}
+\DoxyCodeLine{01017\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01018\ \ \ \ \ \}}
+\DoxyCodeLine{01019\ }
+\DoxyCodeLine{01020\ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01021\ \}}
+\DoxyCodeLine{01022\ \textcolor{comment}{/*}}
+\DoxyCodeLine{01030\ \textcolor{comment}{int\ load\_layout(carte\_t\ *c,\ char\ *namefile)\ \{}}
+\DoxyCodeLine{01031\ \textcolor{comment}{\ \ \ \ FILE\ *file;}}
+\DoxyCodeLine{01032\ \textcolor{comment}{\ \ \ \ file\ =\ fopen(namefile,\ "{}r"{});}}
+\DoxyCodeLine{01033\ \textcolor{comment}{\ \ \ \ char\ input;}}
+\DoxyCodeLine{01034\ \textcolor{comment}{\ \ \ \ int\ i\ =\ 0,\ j\ =\ 0;}}
+\DoxyCodeLine{01035\ \textcolor{comment}{\ \ \ \ int\ len\ =\ strlen(namefile);}}
+\DoxyCodeLine{01036\ \textcolor{comment}{\ \ \ \ char\ digit[2];}}
+\DoxyCodeLine{01037\ \textcolor{comment}{}}
+\DoxyCodeLine{01038\ \textcolor{comment}{\ \ \ \ if(namefile[len-\/6]=='\_')\{}}
+\DoxyCodeLine{01039\ \textcolor{comment}{\ \ \ \ \ \ \ \ c-\/>nrlayout\ =\ atoi(\&namefile[len-\/5]);}}
+\DoxyCodeLine{01040\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{01041\ \textcolor{comment}{\ \ \ \ else\{}}
+\DoxyCodeLine{01042\ \textcolor{comment}{\ \ \ \ \ \ \ \ digit[0]=namefile[len-\/6];}}
+\DoxyCodeLine{01043\ \textcolor{comment}{\ \ \ \ \ \ \ \ digit[1]=namefile[len-\/5];}}
+\DoxyCodeLine{01044\ \textcolor{comment}{\ \ \ \ \ \ \ \ c-\/>nrlayout\ =\ atoi(digit);}}
+\DoxyCodeLine{01045\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{01046\ \textcolor{comment}{}}
+\DoxyCodeLine{01047\ \textcolor{comment}{\ \ \ \ if\ (file)\ \{}}
+\DoxyCodeLine{01048\ \textcolor{comment}{\ \ \ \ \ \ \ \ while\ ((fscanf(file,\ "{}\%c"{},\ \&input))\ !=\ EOF)\ \{\ //\ Utilise\ le\ résultat\ de\ fscanf\ pour\ contrôler\ la\ boucle}}
+\DoxyCodeLine{01049\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ if\ (input\ !=\ '\(\backslash\)n')\ \{}}
+\DoxyCodeLine{01050\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (i\ <\ LONG\ \&\&\ j\ <\ LARG)\ \{\ }}
+\DoxyCodeLine{01051\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>grille.tabGrille[i][j].ntexture\ =\ input\ -\/\ '0';}}
+\DoxyCodeLine{01052\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}}
+\DoxyCodeLine{01053\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{01054\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}\ else\ \{}}
+\DoxyCodeLine{01055\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}}
+\DoxyCodeLine{01056\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ j++;}}
+\DoxyCodeLine{01057\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (j\ >=\ LARG)\ break;\ //\ Sort\ de\ la\ boucle\ si\ on\ dépasse\ la\ limite\ de\ lignes}}
+\DoxyCodeLine{01058\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{01059\ \textcolor{comment}{\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{01060\ \textcolor{comment}{\ \ \ \ \}\ else\ \{}}
+\DoxyCodeLine{01061\ \textcolor{comment}{\ \ \ \ \ \ \ \ printf("{}Fichier\ inexistant\(\backslash\)n"{});}}
+\DoxyCodeLine{01062\ \textcolor{comment}{\ \ \ \ \ \ \ \ return\ 1;}}
+\DoxyCodeLine{01063\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{01064\ \textcolor{comment}{\ \ \ \ fclose(file);}}
+\DoxyCodeLine{01065\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{01066\ \textcolor{comment}{\ \ \ \ return\ 0;}}
+\DoxyCodeLine{01067\ \textcolor{comment}{\}*/}}
+\DoxyCodeLine{01068\ }
+\DoxyCodeLine{01076\ \textcolor{comment}{//IMPORTANT\ !!!\ NE\ PAS\ SUPPRIMER\ !!!}}
+\DoxyCodeLine{01077\ }
+\DoxyCodeLine{01078\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}{load\_layout}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *c,\ \textcolor{keywordtype}{char}\ *namefile)\ \{}
+\DoxyCodeLine{01079\ \ \ \ \ FILE\ *file;}
+\DoxyCodeLine{01080\ \ \ \ \ file\ =\ fopen(namefile,\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{01081\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0,\ j\ =\ 0;}
+\DoxyCodeLine{01082\ \ \ \ \ \textcolor{keywordtype}{int}\ len\ =\ strlen(namefile);}
+\DoxyCodeLine{01083\ \ \ \ \ \textcolor{keywordtype}{char}\ digit[2];}
+\DoxyCodeLine{01084\ }
+\DoxyCodeLine{01085\ \ \ \ \ \textcolor{keywordflow}{if}(namefile[len-\/6]==\textcolor{charliteral}{'\_'})\{}
+\DoxyCodeLine{01086\ \ \ \ \ \ \ \ \ c-\/>nrlayout\ =\ atoi(\&namefile[len-\/5]);}
+\DoxyCodeLine{01087\ \ \ \ \ \}}
+\DoxyCodeLine{01088\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01089\ \ \ \ \ \ \ \ \ digit[0]=namefile[len-\/6];}
+\DoxyCodeLine{01090\ \ \ \ \ \ \ \ \ digit[1]=namefile[len-\/5];}
+\DoxyCodeLine{01091\ \ \ \ \ \ \ \ \ c-\/>nrlayout\ =\ atoi(digit);}
+\DoxyCodeLine{01092\ \ \ \ \ \}}
+\DoxyCodeLine{01093\ }
+\DoxyCodeLine{01094\ \ \ \ \ \textcolor{keywordflow}{if}\ (file)\ \{}
+\DoxyCodeLine{01095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ LARG;\ i++)\ \{}
+\DoxyCodeLine{01096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (j\ =\ 0;\ j\ <\ LONG;\ j++)\ \{}
+\DoxyCodeLine{01097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fscanf(file,\ \textcolor{stringliteral}{"{}\%d"{}},\ \&c-\/>grille.tabGrille[j][i].ntexture)\ !=\ 1)\ \{}
+\DoxyCodeLine{01098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Erreur\ à\ la\ ligne\ \%d,\ colonne\ \%d.\(\backslash\)n"{}},\ i,\ j);}
+\DoxyCodeLine{01099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fclose(file);}
+\DoxyCodeLine{01100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01102\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01103\ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{01104\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01105\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{01106\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Fichier\ inexistant\(\backslash\)n"{}});}
+\DoxyCodeLine{01107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01108\ \ \ \ \ \}}
+\DoxyCodeLine{01109\ }
+\DoxyCodeLine{01110\ \ \ \ \ fclose(file);}
+\DoxyCodeLine{01111\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01112\ \}}
+\DoxyCodeLine{01113\ }
+\DoxyCodeLine{01121\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{map_8c_a8ee42a5dd83886e7ad61d451d5a32956}{min}}(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b)\ \{}
+\DoxyCodeLine{01122\ \ \ \ \ \textcolor{keywordflow}{return}\ (a\ <\ b)\ ?\ a\ :\ b;}
+\DoxyCodeLine{01123\ \}}
+\DoxyCodeLine{01124\ }
+\DoxyCodeLine{01137\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_ae2ded2dc752db81be42ce0a41586d3fd}{afficher\_map}}(SDL\_Event\ event,\mbox{\hyperlink{structmap__s}{map\_t}}\ map,\ SDL\_Renderer\ *renderer,\ \textcolor{keywordtype}{int}\ *we,\ \textcolor{keywordtype}{int}\ *he,\ \textcolor{keywordtype}{int}\ *etat\_map,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec)\{}
+\DoxyCodeLine{01138\ \ \ \ \ \textcolor{keywordtype}{int}\ i,\ j;}
+\DoxyCodeLine{01139\ }
+\DoxyCodeLine{01140\ \ \ \ \ SDL\_Rect\ Rectangle;}
+\DoxyCodeLine{01141\ \ \ \ \ SDL\_Rect\ Rectanglep;}
+\DoxyCodeLine{01142\ }
+\DoxyCodeLine{01143\ \ \ \ \ \textcolor{comment}{//\ Marges}}
+\DoxyCodeLine{01144\ \ \ \ \ \textcolor{keywordtype}{float}\ margeX\ =\ (*we)\ *\ 0.1;}
+\DoxyCodeLine{01145\ \ \ \ \ \textcolor{keywordtype}{float}\ margeY\ =\ (*he)\ *\ 0.1;}
+\DoxyCodeLine{01146\ }
+\DoxyCodeLine{01147\ \ \ \ \ \textcolor{comment}{//\ Largeur\ et\ hauteur\ utilisables}}
+\DoxyCodeLine{01148\ \ \ \ \ \textcolor{keywordtype}{float}\ largeurUtilisable\ =\ (*we)\ -\/\ 2\ *\ margeX;}
+\DoxyCodeLine{01149\ \ \ \ \ \textcolor{keywordtype}{float}\ hauteurUtilisable\ =\ (*he)\ -\/\ 2\ *\ margeY;}
+\DoxyCodeLine{01150\ }
+\DoxyCodeLine{01151\ \ \ \ \ \textcolor{comment}{//\ Taille\ de\ chaque\ carré}}
+\DoxyCodeLine{01152\ \ \ \ \ \textcolor{keywordtype}{float}\ taille\_carre\ =\ \mbox{\hyperlink{map_8c_a8ee42a5dd83886e7ad61d451d5a32956}{min}}(largeurUtilisable,\ hauteurUtilisable)\ /\ 6;}
+\DoxyCodeLine{01153\ }
+\DoxyCodeLine{01154\ \ \ \ \ \textcolor{comment}{//Taille\ du\ petit\ carré\ de\ l'emplacement\ actuel}}
+\DoxyCodeLine{01155\ \ \ \ \ \textcolor{keywordtype}{float}\ taille\_pcarre\ =\ taille\_carre/3;}
+\DoxyCodeLine{01156\ }
+\DoxyCodeLine{01157\ \ \ \ \ \textcolor{comment}{//\ Coordonnées\ du\ premier\ carré}}
+\DoxyCodeLine{01158\ \ \ \ \ \textcolor{keywordtype}{float}\ firstX\ =\ margeX\ +\ ((*we)\ -\/\ 2\ *\ margeX\ -\/\ taille\_carre\ *\ 6)\ /\ 2;}
+\DoxyCodeLine{01159\ \ \ \ \ \textcolor{keywordtype}{float}\ firstY\ =\ margeY\ +\ ((*he)\ -\/\ 2\ *\ margeY\ -\/\ taille\_carre\ *\ 6)\ /\ 2;}
+\DoxyCodeLine{01160\ \ \ \ \ Rectangle.x\ =\ (int)firstX;}
+\DoxyCodeLine{01161\ \ \ \ \ Rectangle.y\ =\ (int)firstY;}
+\DoxyCodeLine{01162\ \ \ \ \ Rectangle.w\ =\ (int)taille\_carre;}
+\DoxyCodeLine{01163\ \ \ \ \ Rectangle.h\ =\ (int)taille\_carre;}
+\DoxyCodeLine{01164\ }
+\DoxyCodeLine{01165\ \ \ \ \ \textcolor{comment}{//Initialisation\ du\ petit\ carré\ de\ l'emplacement\ actuel}}
+\DoxyCodeLine{01166\ \ \ \ \ Rectanglep.x\ =\ (int)firstX\ +\ (taille\_pcarre);}
+\DoxyCodeLine{01167\ \ \ \ \ Rectanglep.y\ =\ (int)firstY\ +\ (taille\_pcarre);}
+\DoxyCodeLine{01168\ \ \ \ \ Rectanglep.w=(int)taille\_pcarre;}
+\DoxyCodeLine{01169\ \ \ \ \ Rectanglep.h=(int)taille\_pcarre;}
+\DoxyCodeLine{01170\ }
+\DoxyCodeLine{01171\ \ \ \ \ \textcolor{keywordflow}{if}((*etat\_map)\ ==\ 1)\{}
+\DoxyCodeLine{01172\ }
+\DoxyCodeLine{01173\ \ \ \ \ \ \ \ \ SDL\_Surface*\ surface\ =\ SDL\_CreateRGBSurface(0,\ *we,\ *he,\ 32,0xFF000000,\ 0x00FF0000,\ 0x0000FF00,\ 0x000000FF);}
+\DoxyCodeLine{01174\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Copie\ les\ pixels\ du\ rendu\ actuel\ dans\ la\ surface}}
+\DoxyCodeLine{01175\ \ \ \ \ \ \ \ \ SDL\_RenderReadPixels(renderer,\ NULL,\ surface-\/>format-\/>format,\ surface-\/>pixels,\ surface-\/>pitch);}
+\DoxyCodeLine{01176\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Créer\ une\ texture\ à\ partir\ de\ la\ surface}}
+\DoxyCodeLine{01177\ \ \ \ \ \ \ \ \ SDL\_Texture*\ targetTexture\ =\ SDL\_CreateTextureFromSurface(renderer,\ surface);}
+\DoxyCodeLine{01178\ \ \ \ \ \ \ \ \ SDL\_FreeSurface(surface);}
+\DoxyCodeLine{01179\ }
+\DoxyCodeLine{01180\ \ \ \ \ \ \ \ \ SDL\_Rect\ tecran\ =\ \{0,0,*we,*he\};}
+\DoxyCodeLine{01181\ }
+\DoxyCodeLine{01182\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}((*etat\_map)\ <\ 2)\{}
+\DoxyCodeLine{01183\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (SDL\_PollEvent(\&event)\ !=\ 0)\ \{}
+\DoxyCodeLine{01184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(event.type\ ==\ SDL\_KEYDOWN\ \&\&\ (event.key.keysym.sym\ ==\ SDLK\_x))\{}
+\DoxyCodeLine{01185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*etat\_map)=2;}
+\DoxyCodeLine{01186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01187\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01188\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderClear(renderer);}
+\DoxyCodeLine{01189\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ targetTexture,\ NULL,\ NULL);}
+\DoxyCodeLine{01190\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,0,0,0,100);}
+\DoxyCodeLine{01191\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&tecran);}
+\DoxyCodeLine{01192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<ROWS;i++)\{}
+\DoxyCodeLine{01193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Rectangle.y\ =\ (int)(firstY\ +\ i\ *\ taille\_carre);}
+\DoxyCodeLine{01194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<COLUMNS;j++)\{}
+\DoxyCodeLine{01195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map.tabMap[i][j].etat\_brouillard\ !=\ 1)\{}
+\DoxyCodeLine{01196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(map.tabMap[i][j].nZone)\{}
+\DoxyCodeLine{01197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\ SDL\_SetRenderDrawColor(renderer,\ 206,206,206,255);\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\ SDL\_SetRenderDrawColor(renderer,\ 86,115,154,255);\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\ SDL\_SetRenderDrawColor(renderer,\ 153,81,43,255);\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:\ SDL\_SetRenderDrawColor(renderer,\ 104,157,113,255);\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5:\ SDL\_SetRenderDrawColor(renderer,\ 115,8,0,255);\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,0,0,255);\ }
+\DoxyCodeLine{01206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Rectangle.x\ =\ (int)(firstX\ +\ j\ *\ taille\_carre);}
+\DoxyCodeLine{01208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&Rectangle);}
+\DoxyCodeLine{01209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(cartec-\/>ycarte\ ==\ j\ \&\&\ cartec-\/>xcarte\ ==\ i)\{}
+\DoxyCodeLine{01210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 255,255,0,255);}
+\DoxyCodeLine{01211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Rectanglep.x\ =\ Rectangle.x+taille\_pcarre;}
+\DoxyCodeLine{01212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Rectanglep.y\ =\ Rectangle.y+taille\_pcarre;;}
+\DoxyCodeLine{01213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&Rectanglep);\ }
+\DoxyCodeLine{01214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01216\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01217\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderPresent(renderer);}
+\DoxyCodeLine{01218\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Delay(100);}
+\DoxyCodeLine{01219\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01220\ \ \ \ \ \ \ \ \ (*etat\_map)\ =\ 0;}
+\DoxyCodeLine{01221\ \ \ \ \ \ \ \ \ SDL\_RenderClear(renderer);}
+\DoxyCodeLine{01222\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ targetTexture,\ NULL,\ NULL);}
+\DoxyCodeLine{01223\ \ \ \ \ \ \ \ \ SDL\_RenderPresent(renderer);}
+\DoxyCodeLine{01224\ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(targetTexture);}
+\DoxyCodeLine{01225\ \ \ \ \ \}}
+\DoxyCodeLine{01226\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01227\ \}}
+\DoxyCodeLine{01228\ }
+\DoxyCodeLine{01238\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_ab23faed97470aabb06c4c61cc4d57fd8}{chargement\_Zone}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,SDL\_Renderer\ *renderer,\textcolor{keywordtype}{int}\ nZone,Mix\_Music*\ gMusic)\{}
+\DoxyCodeLine{01239\ \ \ \ \ \textcolor{keywordtype}{int}\ m\ =\ nZone;}
+\DoxyCodeLine{01240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (nZone)}
+\DoxyCodeLine{01241\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{01243\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_a66541438dc7b27765976a096e380f315}{creation\_tab\_texture}}(map,renderer,1,0);}
+\DoxyCodeLine{01244\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nbN\ =\ 7;}
+\DoxyCodeLine{01245\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nvZone=1;}
+\DoxyCodeLine{01246\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01247\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{01248\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_a66541438dc7b27765976a096e380f315}{creation\_tab\_texture}}(map,renderer,2,0);}
+\DoxyCodeLine{01249\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nbN\ =\ 63;}
+\DoxyCodeLine{01250\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nvZone=2;}
+\DoxyCodeLine{01251\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Zone2\ ==\ 0)map-\/>Zone2\ =\ 1;}
+\DoxyCodeLine{01252\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01253\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{01254\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_a66541438dc7b27765976a096e380f315}{creation\_tab\_texture}}(map,renderer,3,0);}
+\DoxyCodeLine{01255\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nbN\ =\ 69;}
+\DoxyCodeLine{01256\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nvZone=4;}
+\DoxyCodeLine{01257\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Zone3\ ==\ 0)map-\/>Zone3\ =\ 1;}
+\DoxyCodeLine{01258\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01259\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:}
+\DoxyCodeLine{01260\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_a66541438dc7b27765976a096e380f315}{creation\_tab\_texture}}(map,renderer,4,0);}
+\DoxyCodeLine{01261\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nbN\ =\ 40;}
+\DoxyCodeLine{01262\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nvZone=1;}
+\DoxyCodeLine{01263\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Zone4\ ==\ 0)map-\/>Zone4\ =\ 1;}
+\DoxyCodeLine{01264\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01265\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5:}
+\DoxyCodeLine{01266\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{map_8c_a66541438dc7b27765976a096e380f315}{creation\_tab\_texture}}(map,renderer,5,0);}
+\DoxyCodeLine{01267\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nbN\ =\ 40;}
+\DoxyCodeLine{01268\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nvZone=6;}
+\DoxyCodeLine{01269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Zone5\ ==\ 0)map-\/>Zone5\ =\ 1;}
+\DoxyCodeLine{01270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01271\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{01273\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabTexture\ =\ NULL;}
+\DoxyCodeLine{01274\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01275\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01276\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!map-\/>Nightmare)newMusic(m,gMusic);}
+\DoxyCodeLine{01277\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01278\ \}}
+\DoxyCodeLine{01279\ }
+\DoxyCodeLine{01287\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_aff1f7a6876fbc8025dd6b3a65a898ff9}{zone\_fini}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ map)\{}
+\DoxyCodeLine{01288\ \ \ \ \ \textcolor{keywordflow}{switch}(map.zoneChargee)\{}
+\DoxyCodeLine{01289\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ \textcolor{keywordflow}{if}(map.Zone2\ !=\ 1\ ||\ map.plongee\ ==\ 0)\textcolor{keywordflow}{return}\ 1;\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ 0;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01290\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :\ \textcolor{keywordflow}{if}(map.Zone3\ !=\ 1\ ||\ map.cle\ ==\ 0)\textcolor{keywordflow}{return}\ 1;\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ 0;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01291\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :\ \textcolor{keywordflow}{if}(map.Zone4\ !=\ 1)\textcolor{keywordflow}{return}\ 1;\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ 0;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01292\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5\ :\ \textcolor{keywordflow}{if}(map.Zone5\ !=\ 1)\textcolor{keywordflow}{return}\ 1;\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ 0;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01293\ \ \ \ \ \ \ \ \ default\ :\ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01294\ \ \ \ \ \}}
+\DoxyCodeLine{01295\ \}}
+\DoxyCodeLine{01296\ }
+\DoxyCodeLine{01305\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94}{lumiere}}(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *cartec,\mbox{\hyperlink{structcase__s}{case\_t}}\ *c)\{}
+\DoxyCodeLine{01306\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{01307\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<LONG;i++)\{}
+\DoxyCodeLine{01308\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<LARG;j++)\{}
+\DoxyCodeLine{01309\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,0,0,255);\ }
+\DoxyCodeLine{01310\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x\ \&\&\ cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y)\{}
+\DoxyCodeLine{01311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,0,0,0);\ \ }
+\DoxyCodeLine{01312\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01313\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x+1\ ||\ cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x-\/1\ ||\ cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x)\ \&\&\ (cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y+1\ ||\ cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y-\/1\ ||\ cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y))\{}
+\DoxyCodeLine{01314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,0,0,100);\ }
+\DoxyCodeLine{01315\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x+2\ ||\ cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x-\/2\ ||\ cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y+2\ ||\ cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y-\/2)\ \&\&\ ((cartec-\/>grille.tabGrille[i][j].y\ >\ c-\/>y-\/2\ \&\&\ cartec-\/>grille.tabGrille[i][j].y\ <\ c-\/>y+2)\ ||\ (cartec-\/>grille.tabGrille[i][j].x\ >\ c-\/>x-\/2\ \&\&\ cartec-\/>grille.tabGrille[i][j].x\ <\ c-\/>x+2)))\{}
+\DoxyCodeLine{01316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,0,0,170);\ }
+\DoxyCodeLine{01317\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x+3\ ||\ cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x-\/3\ ||\ cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y+3\ ||\ cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y-\/3)\ \&\&\ (cartec-\/>grille.tabGrille[i][j].y\ ==\ c-\/>y\ ||\ cartec-\/>grille.tabGrille[i][j].x\ ==\ c-\/>x))\{}
+\DoxyCodeLine{01318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,0,0,220);}
+\DoxyCodeLine{01319\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01320\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&(cartec-\/>grille.tabGrille[i][j].Rectangle));}
+\DoxyCodeLine{01321\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01322\ \ \ \ \ \}}
+\DoxyCodeLine{01323\ \}}
+\DoxyCodeLine{01324\ }
+\DoxyCodeLine{01332\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_aeb3891e63f7a34fe19a3f63913858607}{nb\_texture\_chargement}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map,\ \textcolor{keywordtype}{char}*\ namefile)\{}
+\DoxyCodeLine{01333\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{01334\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_zone[5]\ =\ \{0,0,0,0,0\};}
+\DoxyCodeLine{01335\ \ \ \ \ \textcolor{keywordtype}{char}\ line[80];}
+\DoxyCodeLine{01336\ \ \ \ \ \textcolor{keywordtype}{int}\ i=-\/1;}
+\DoxyCodeLine{01337\ }
+\DoxyCodeLine{01338\ \ \ \ \ file=fopen(namefile,\textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{01339\ }
+\DoxyCodeLine{01340\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{01341\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (fgets(line,\ 80,\ file))\{}
+\DoxyCodeLine{01342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(line[0]>=\textcolor{charliteral}{'0'}\&\&line[0]<=\textcolor{charliteral}{'5'})\ \{}
+\DoxyCodeLine{01343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i=atoi(line)-\/1;}
+\DoxyCodeLine{01344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fgets(line,\ 80,\ file);}
+\DoxyCodeLine{01345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nb\_zone[i]=atoi(line);}
+\DoxyCodeLine{01346\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \ \ \ }
+\DoxyCodeLine{01347\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01348\ }
+\DoxyCodeLine{01349\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<5;i++)\{}
+\DoxyCodeLine{01350\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>nbTexture[i]=nb\_zone[i];}
+\DoxyCodeLine{01351\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01352\ \ \ \ \ \}}
+\DoxyCodeLine{01353\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01354\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Fichier\ inexistant\(\backslash\)n"{}});}
+\DoxyCodeLine{01355\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01356\ \ \ \ \ \}}
+\DoxyCodeLine{01357\ \ \ \ \ fclose(file);}
+\DoxyCodeLine{01358\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01359\ \}}
+\DoxyCodeLine{01360\ }
+\DoxyCodeLine{01367\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_a3686b64c783a42361c5ef63c74dbb1d4}{detruire\_tab\_path}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map)\{}
+\DoxyCodeLine{01368\ \ \ \ \ \textcolor{keywordtype}{int}\ i,k;}
+\DoxyCodeLine{01369\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabPath!=NULL)\{}
+\DoxyCodeLine{01370\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;i<NB\_ZONE;i++)\{}
+\DoxyCodeLine{01371\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(k=0;k<map-\/>nbTexture[i];k++)\{}
+\DoxyCodeLine{01372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(map-\/>tabPath[i][k]);}
+\DoxyCodeLine{01373\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01374\ \ \ \ \ \ \ \ \ \ \ \ \ free(map-\/>tabPath[i]);}
+\DoxyCodeLine{01375\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01376\ \ \ \ \ \ \ \ \ free(map-\/>tabPath);}
+\DoxyCodeLine{01377\ \ \ \ \ \ \ \ \ map-\/>tabPath=NULL;}
+\DoxyCodeLine{01378\ \ \ \ \ \}}
+\DoxyCodeLine{01379\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01380\ \}}
+\DoxyCodeLine{01381\ }
+\DoxyCodeLine{01389\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_a3078c3012db639786509be2fe3a882aa}{creation\_tab\_path}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map,\textcolor{keywordtype}{char}\ *\ namefile)\{}
+\DoxyCodeLine{01390\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{01391\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{01392\ \ \ \ \ \textcolor{keywordtype}{int}\ j,k=-\/1;}
+\DoxyCodeLine{01393\ \ \ \ \ \textcolor{keywordtype}{char}\ line[60];}
+\DoxyCodeLine{01394\ }
+\DoxyCodeLine{01395\ \ \ \ \ map-\/>tabPath\ =\ malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}\ **\ )*NB\_ZONE);}
+\DoxyCodeLine{01396\ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;i<NB\_ZONE;i++)\{}
+\DoxyCodeLine{01397\ \ \ \ \ \ \ \ \ map-\/>tabPath[i]\ =\ malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}\ *)*map-\/>nbTexture[i]);}
+\DoxyCodeLine{01398\ \ \ \ \ \}}
+\DoxyCodeLine{01399\ \ \ \ \ file=fopen(namefile,\textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{01400\ \ \ \ \ i=-\/1;}
+\DoxyCodeLine{01401\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{01402\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (fgets(line,\ 60,\ file))\{}
+\DoxyCodeLine{01403\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(line[0]>=\textcolor{charliteral}{'0'}\&\&line[0]<=\textcolor{charliteral}{'5'})\ \{}
+\DoxyCodeLine{01404\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i=atoi(line)-\/1;}
+\DoxyCodeLine{01405\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k=-\/1;}
+\DoxyCodeLine{01406\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fgets(line,\ 80,\ file);}
+\DoxyCodeLine{01407\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01408\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01409\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(i\ >=\ 0\ \&\&\ i\ <\ NB\_ZONE\ \&\&\ k\ <\ map-\/>nbTexture[i]\ -\/\ 1)\{}
+\DoxyCodeLine{01410\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ k++;}
+\DoxyCodeLine{01411\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;\ line[j]!=\textcolor{charliteral}{'\(\backslash\)n'}\ \&\&\ j\ <\ 59;\ j++)\{\}}
+\DoxyCodeLine{01412\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line[j]=\textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{01413\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabPath[i][k]=malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char})*strlen(line)+1);}
+\DoxyCodeLine{01414\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(map-\/>tabPath[i][k],line);}
+\DoxyCodeLine{01415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01416\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01417\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01418\ \ \ \ \ \}}
+\DoxyCodeLine{01419\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01420\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Fichier\ inexistant\(\backslash\)n"{}});}
+\DoxyCodeLine{01421\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01422\ \ \ \ \ \}}
+\DoxyCodeLine{01423\ \ \ \ \ fclose(file);}
+\DoxyCodeLine{01424\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01425\ }
+\DoxyCodeLine{01426\ }
+\DoxyCodeLine{01427\ \}}
+\DoxyCodeLine{01428\ }
+\DoxyCodeLine{01438\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{map_8c_a66541438dc7b27765976a096e380f315}{creation\_tab\_texture}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map,\ SDL\_Renderer\ *renderer,\ \textcolor{keywordtype}{int}\ nbZone,\ \textcolor{keywordtype}{int}\ eop)\ \{}
+\DoxyCodeLine{01439\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{01440\ \ \ \ \ SDL\_Surface\ *surf;}
+\DoxyCodeLine{01441\ }
+\DoxyCodeLine{01442\ \ \ \ \ \textcolor{keywordflow}{if}(nbZone\ <\ 1\ ||\ nbZone\ >\ NB\_ZONE)\ \{}
+\DoxyCodeLine{01443\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Erreur\ :\ nbZone\ hors\ limites\(\backslash\)n"{}});}
+\DoxyCodeLine{01444\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01445\ \ \ \ \ \}}
+\DoxyCodeLine{01446\ }
+\DoxyCodeLine{01447\ \ \ \ \ \textcolor{comment}{//\ Libération\ des\ textures\ précédentes\ si\ elles\ existent}}
+\DoxyCodeLine{01448\ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabTexture\ !=\ NULL)\ \{}
+\DoxyCodeLine{01449\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nbTexturesToDestroy\ =\ eop\ ==\ 1\ ?\ NB\_ZONE\ :\ map-\/>nbTexture[map-\/>zoneChargee-\/1];}
+\DoxyCodeLine{01450\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;\ i\ <\ nbTexturesToDestroy;\ i++)\ \{}
+\DoxyCodeLine{01451\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabTexture[i]\ !=\ NULL)\ \{}
+\DoxyCodeLine{01452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(map-\/>tabTexture[i]);}
+\DoxyCodeLine{01453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabTexture[i]\ =\ NULL;}
+\DoxyCodeLine{01454\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01455\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01456\ \ \ \ \ \ \ \ \ free(map-\/>tabTexture);}
+\DoxyCodeLine{01457\ \ \ \ \ \ \ \ \ map-\/>tabTexture\ =\ NULL;}
+\DoxyCodeLine{01458\ \ \ \ \ \}}
+\DoxyCodeLine{01459\ }
+\DoxyCodeLine{01460\ \ \ \ \ \textcolor{keywordflow}{if}(eop\ !=\ 1)\ \{}
+\DoxyCodeLine{01461\ \ \ \ \ \ \ \ \ map-\/>zoneChargee\ =\ nbZone;}
+\DoxyCodeLine{01462\ \ \ \ \ \ \ \ \ map-\/>tabTexture\ =\ (SDL\_Texture\ **)malloc(\textcolor{keyword}{sizeof}(SDL\_Texture\ *)\ *\ map-\/>nbTexture[nbZone-\/1]);}
+\DoxyCodeLine{01463\ }
+\DoxyCodeLine{01464\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>tabTexture\ ==\ NULL)\ \{}
+\DoxyCodeLine{01465\ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Erreur\ d'allocation\ mémoire\ pour\ map-\/>tabTexture\(\backslash\)n"{}});}
+\DoxyCodeLine{01466\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01467\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01468\ }
+\DoxyCodeLine{01469\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;\ i\ <\ map-\/>nbTexture[map-\/>zoneChargee-\/1];\ i++)\ \{}
+\DoxyCodeLine{01470\ \ \ \ \ \ \ \ \ \ \ \ \ surf\ =\ IMG\_Load(map-\/>tabPath[map-\/>zoneChargee-\/1][i]);}
+\DoxyCodeLine{01471\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (surf\ ==\ NULL)\ \{}
+\DoxyCodeLine{01472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}Erreur\ de\ chargement\ de\ l'image\ :\ \%s\(\backslash\)n"{}},\ SDL\_GetError());}
+\DoxyCodeLine{01473\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01474\ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>tabTexture[i]\ =\ SDL\_CreateTextureFromSurface(renderer,\ surf);}
+\DoxyCodeLine{01475\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_FreeSurface(surf);}
+\DoxyCodeLine{01476\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01477\ \ \ \ \ \}}
+\DoxyCodeLine{01478\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01479\ \}}
+
+\end{DoxyCode}

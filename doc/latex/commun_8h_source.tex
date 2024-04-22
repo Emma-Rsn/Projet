@@ -1,0 +1,71 @@
+\doxysection{commun.\+h}
+\hypertarget{commun_8h_source}{}\label{commun_8h_source}\index{libs/commun.h@{libs/commun.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_COMMUN\_H\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_COMMUN\_H\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ TaillePo\ 300}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ LONG\ 30\ }\textcolor{comment}{//grille\ }}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#define\ LARG\ 16\ }\textcolor{comment}{//grille}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ ROWS\ 6\ }\textcolor{comment}{//map}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ COLUMNS\ 6\ }\textcolor{comment}{//map}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ NB\_ZONE\ 5}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ TAILLE\_CASE\ 64}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{comment}{//nombre\ de\ frame\ par\ secondes\ voulu}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ FPS\ 60}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ BONUS\_EQUIPE\_N\ 3}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#define\ BONUS\_ZONE\_N\ 1}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#define\ PLUS\_BONUS\_EQUIPE\ 0.5}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ PLUS\_BONUS\_ZONE\ 1}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ NB\_PARAM\ 37}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structobj__s}{obj\_s}}\ \mbox{\hyperlink{structobj__s}{obj\_t}};}
+\DoxyCodeLine{00026\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcombat__s}{combat\_s}}\ \mbox{\hyperlink{structcombat__s}{combat\_t}};}
+\DoxyCodeLine{00027\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcombattant__s}{combattant\_s}}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}};}
+\DoxyCodeLine{00028\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structennemi__s}{ennemi\_s}}\ \mbox{\hyperlink{structennemi__s}{ennemi\_t}};}
+\DoxyCodeLine{00029\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }pnj\_s\ pnj\_t;}
+\DoxyCodeLine{00030\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structpersonnage}{personnage}}\ \mbox{\hyperlink{structpersonnage}{p\_mv}};}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structartefact__s}{artefact\_s}}\ \mbox{\hyperlink{structartefact__s}{artefact\_t}};}
+\DoxyCodeLine{00033\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcase__s}{case\_s}}\ \mbox{\hyperlink{structcase__s}{case\_t}};}
+\DoxyCodeLine{00034\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structgrille__s}{grille\_s}}\ \mbox{\hyperlink{structgrille__s}{grille\_t}};}
+\DoxyCodeLine{00035\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcarte__s}{carte\_s}}\ \mbox{\hyperlink{structcarte__s}{carte\_t}};}
+\DoxyCodeLine{00036\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmap__s}{map\_s}}\ \mbox{\hyperlink{structmap__s}{map\_t}};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }mess\_t\ mess\_s;}
+\DoxyCodeLine{00039\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }Liste\ Liste;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#include\ <SDL2/SDL.h>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#include\ <SDL2/SDL\_ttf.h>}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#include\ <SDL2/SDL\_image.h>}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ <SDL2/SDL\_mixer.h>}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ <math.h>}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ <time.h>}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ <unistd.h>}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ "{}../libs/save.h"{}}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#include\ "{}../libs/printImg.h"{}}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ "{}../libs/texte.h"{}}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#include\ "{}../libs/map.h"{}}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#include\ "{}../libs/printImg.h"{}}}
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ "{}../libs/save.h"{}}}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#include\ "{}../libs/menu.h"{}}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#include\ "{}../libs/OBJ.h"{}}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#include\ "{}../libs/combat.h"{}}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#include\ "{}../libs/musique.h"{}}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#include\ "{}../libs/Pmov.h"{}}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

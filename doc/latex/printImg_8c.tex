@@ -1,0 +1,126 @@
+\doxysection{Référence du fichier src/print\+Img.c}
+\hypertarget{printImg_8c}{}\label{printImg_8c}\index{src/printImg.c@{src/printImg.c}}
+
+
+programme pour afficher les FPS et le background  
+
+
+{\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
+Graphe des dépendances par inclusion de print\+Img.\+c\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{printImg_8c__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{printImg_8c_acaf5114b88ec874b3664e7d24e06fb7d}{NB\+\_\+\+Fps}} (int \texorpdfstring{$\ast$}{*}nfps, Uint32 \texorpdfstring{$\ast$}{*}t0, Uint32 \texorpdfstring{$\ast$}{*}t1)
+\begin{DoxyCompactList}\small\item\em fonction pour calculer le nombre de FPS \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{printImg_8c_a8415a5c7f2569375daf20938c04dc5a1}{aff\+\_\+\+Fps}} (int cmpfps, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer)
+\begin{DoxyCompactList}\small\item\em fonction pour afficher le nombre de FPS \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{printImg_8c_a72bc1205cac8c2b5413141e06759fd00}{aj\+DFPS}} (int \texorpdfstring{$\ast$}{*}dfps, int \texorpdfstring{$\ast$}{*}cmpfps, int \texorpdfstring{$\ast$}{*}nfps, Uint32 \texorpdfstring{$\ast$}{*}t0, Uint32 \texorpdfstring{$\ast$}{*}t1)
+\begin{DoxyCompactList}\small\item\em fonction qui ajuste les fps \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{printImg_8c_a857d20dd92a4f67bb80411427a0ed2bc}{aff\+Hud}} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}he, int \texorpdfstring{$\ast$}{*}we, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} pmv)
+\begin{DoxyCompactList}\small\item\em fonction qui affiche le hud \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+programme pour afficher les FPS et le background 
+
+\begin{DoxyAuthor}{Auteur}
+Moreau Enzo 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+Janvier 2024 
+\end{DoxyDate}
+\begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{printImg_8c_a8415a5c7f2569375daf20938c04dc5a1}\label{printImg_8c_a8415a5c7f2569375daf20938c04dc5a1} 
+\index{printImg.c@{printImg.c}!aff\_Fps@{aff\_Fps}}
+\index{aff\_Fps@{aff\_Fps}!printImg.c@{printImg.c}}
+\doxysubsubsection{\texorpdfstring{aff\_Fps()}{aff\_Fps()}}
+{\footnotesize\ttfamily int aff\+\_\+\+Fps (\begin{DoxyParamCaption}\item[{int}]{cmpfps,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer }\end{DoxyParamCaption})}
+
+
+
+fonction pour afficher le nombre de FPS 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em cmpfps} & nombre de FPS \\
+\hline
+{\em renderer} & rendu de la fenetre  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{printImg_8c_a857d20dd92a4f67bb80411427a0ed2bc}\label{printImg_8c_a857d20dd92a4f67bb80411427a0ed2bc} 
+\index{printImg.c@{printImg.c}!affHud@{affHud}}
+\index{affHud@{affHud}!printImg.c@{printImg.c}}
+\doxysubsubsection{\texorpdfstring{affHud()}{affHud()}}
+{\footnotesize\ttfamily void aff\+Hud (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}}}]{map,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}}}]{pmv }\end{DoxyParamCaption})}
+
+
+
+fonction qui affiche le hud 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em renderer} & rendu SDL \\
+\hline
+{\em he} & pointeur sur la longeur de l\textquotesingle{}écran \\
+\hline
+{\em we} & pointeur sur la hauteur de l\textquotesingle{}écran \\
+\hline
+{\em map} & structure map du jeu \\
+\hline
+{\em pmv} & personnage jouable \\
+\hline
+\end{DoxyParams}
+\Hypertarget{printImg_8c_a72bc1205cac8c2b5413141e06759fd00}\label{printImg_8c_a72bc1205cac8c2b5413141e06759fd00} 
+\index{printImg.c@{printImg.c}!ajDFPS@{ajDFPS}}
+\index{ajDFPS@{ajDFPS}!printImg.c@{printImg.c}}
+\doxysubsubsection{\texorpdfstring{ajDFPS()}{ajDFPS()}}
+{\footnotesize\ttfamily void aj\+DFPS (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{dfps,  }\item[{int \texorpdfstring{$\ast$}{*}}]{cmpfps,  }\item[{int \texorpdfstring{$\ast$}{*}}]{nfps,  }\item[{Uint32 \texorpdfstring{$\ast$}{*}}]{t0,  }\item[{Uint32 \texorpdfstring{$\ast$}{*}}]{t1 }\end{DoxyParamCaption})}
+
+
+
+fonction qui ajuste les fps 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em dfps} & diviseur des fps pour s\textquotesingle{}approcher de la limite de 60 FPS \\
+\hline
+{\em cmpfps} & max de fps en 1s \\
+\hline
+{\em nfps} & nombre de fps actuelle \\
+\hline
+{\em t0} & debut de la mesure des fps \\
+\hline
+{\em t1} & quand la difference t1-\/t0 vaut 1s on a fini de mesurer les fps \\
+\hline
+\end{DoxyParams}
+\Hypertarget{printImg_8c_acaf5114b88ec874b3664e7d24e06fb7d}\label{printImg_8c_acaf5114b88ec874b3664e7d24e06fb7d} 
+\index{printImg.c@{printImg.c}!NB\_Fps@{NB\_Fps}}
+\index{NB\_Fps@{NB\_Fps}!printImg.c@{printImg.c}}
+\doxysubsubsection{\texorpdfstring{NB\_Fps()}{NB\_Fps()}}
+{\footnotesize\ttfamily int NB\+\_\+\+Fps (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{nfps,  }\item[{Uint32 \texorpdfstring{$\ast$}{*}}]{t0,  }\item[{Uint32 \texorpdfstring{$\ast$}{*}}]{t1 }\end{DoxyParamCaption})}
+
+
+
+fonction pour calculer le nombre de FPS 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em nfps} & nombre de fps actuelle \\
+\hline
+{\em t0} & debut de la mesure des fps \\
+\hline
+{\em t1} & quand la difference t1-\/t0 vaut 1s on a fini de mesurer les fps  \\
+\hline
+\end{DoxyParams}

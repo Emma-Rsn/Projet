@@ -1,0 +1,93 @@
+\doxysection{Référence de la structure personnage}
+\hypertarget{structpersonnage}{}\label{structpersonnage}\index{personnage@{personnage}}
+
+
+structure de personnage  
+
+
+
+
+{\ttfamily \#include $<$Pmov.\+h$>$}
+
+
+
+Graphe de collaboration de personnage\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=232pt]{structpersonnage__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{structpersonnage_af8c54f9180fd11b40cfbe7bb81991556}\label{structpersonnage_af8c54f9180fd11b40cfbe7bb81991556} 
+\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries c}
+\item 
+\Hypertarget{structpersonnage_aaf9cd078d27dc7090d281530455fdda1}\label{structpersonnage_aaf9cd078d27dc7090d281530455fdda1} 
+SDL\+\_\+\+Rect {\bfseries r}
+\item 
+\Hypertarget{structpersonnage_ae6da3d9f75531f4e359b099e07f5728d}\label{structpersonnage_ae6da3d9f75531f4e359b099e07f5728d} 
+int \texorpdfstring{$\ast$}{*} {\bfseries d}
+\item 
+\Hypertarget{structpersonnage_aac7f4bfb4c35faa957f368daed678d37}\label{structpersonnage_aac7f4bfb4c35faa957f368daed678d37} 
+int {\bfseries e}
+\item 
+\Hypertarget{structpersonnage_af10329552a21214314fafd195c1571ae}\label{structpersonnage_af10329552a21214314fafd195c1571ae} 
+char \texorpdfstring{$\ast$}{*} {\bfseries nom}
+\item 
+\Hypertarget{structpersonnage_a6412da39ecef2e8566efe7a0a6d6a952}\label{structpersonnage_a6412da39ecef2e8566efe7a0a6d6a952} 
+\mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries equipe} \mbox{[}4\mbox{]}
+\item 
+\Hypertarget{structpersonnage_aa78a9ec267da78f220db1ae206e2fea9}\label{structpersonnage_aa78a9ec267da78f220db1ae206e2fea9} 
+int \texorpdfstring{$\ast$}{*} {\bfseries Nightmare}
+\item 
+\Hypertarget{structpersonnage_ad58d265443fd1802ac401b096b6fa94d}\label{structpersonnage_ad58d265443fd1802ac401b096b6fa94d} 
+int \texorpdfstring{$\ast$}{*} {\bfseries NightP}
+\item 
+\Hypertarget{structpersonnage_aafa456494492756fa4f29ae15832ed83}\label{structpersonnage_aafa456494492756fa4f29ae15832ed83} 
+int {\bfseries Night\+Max}
+\item 
+\Hypertarget{structpersonnage_a2bfdc8a24c271c608d085035a9f4f2e1}\label{structpersonnage_a2bfdc8a24c271c608d085035a9f4f2e1} 
+int \texorpdfstring{$\ast$}{*} {\bfseries frame}
+\item 
+\Hypertarget{structpersonnage_a7d8dfd2e35a81fbf387237a97e503745}\label{structpersonnage_a7d8dfd2e35a81fbf387237a97e503745} 
+int {\bfseries lock}
+\item 
+\Hypertarget{structpersonnage_a6e679b38ba32b976248f8522dcc4f221}\label{structpersonnage_a6e679b38ba32b976248f8522dcc4f221} 
+int {\bfseries nb\+\_\+allie}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+structure de personnage 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em r} & taille du personnage \\
+\hline
+{\em d} & direction orienté\{N,E,S,O\}\{0,1,2,3\} \\
+\hline
+{\em e} & etat du personnage \\
+\hline
+{\em nom} & prenom du personnage \\
+\hline
+{\em equipe} & tableau de structure de combattant \\
+\hline
+{\em Nightmare} & variable pour savoir si le personnage est en cauchemar ou non (0=pas en cauchemar,1=en cauchemar) \\
+\hline
+{\em NightP} & point de cauchemar dans la barre de cauchemar \\
+\hline
+{\em Night\+Max} & maximum de la barre de cauchemar \\
+\hline
+{\em frame} & indiquateur du nombre de frame ecouler depuis le debut du deplacement du personnage \\
+\hline
+{\em lock} & variable pour bloquer le personnage (0=peut se deplacer,1=peut pas se deplacer) \\
+\hline
+\end{DoxyParams}
+
+
+La documentation de cette structure a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+\item 
+libs/Pmov.\+h\end{DoxyCompactItemize}

@@ -562,7 +562,6 @@ p_mv * initp(){
     *p->NightP = 0;
     *(p->frame) = 0;
     p->lock = 0;
-    p->nb_allie=1;
     return p;
 }
 

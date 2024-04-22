@@ -1,0 +1,1668 @@
+\doxysection{combat.\+c}
+\hypertarget{combat_8c_source}{}\label{combat_8c_source}\index{src/combat.c@{src/combat.c}}
+\mbox{\hyperlink{combat_8c}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00002\ \textcolor{comment}{//}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//combat.c}}
+\DoxyCodeLine{00004\ \textcolor{comment}{//Created\ by\ Pasquier\ Lina\ }}
+\DoxyCodeLine{00005\ \textcolor{comment}{//}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ "{}../libs/commun.h"{}}}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00028\ \textcolor{comment}{//fonction\ qui\ gere\ les\ erreurs\ de\ SDL}}
+\DoxyCodeLine{00029\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\ message,SDL\_Window\ *\ fenetre,SDL\_Renderer\ *renderer,SDL\_Texture\ *Texture,SDL\_Texture\ *Texture2)\{}
+\DoxyCodeLine{00030\ \ \ \ \ SDL\_Log(\textcolor{stringliteral}{"{}Erreur\ \%s\ >\ \%s"{}},message,SDL\_GetError());}
+\DoxyCodeLine{00031\ \ \ \ \ }
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{if}(Texture2!=NULL)\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(Texture2);}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{if}(Texture!=NULL)\{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(Texture);}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{if}(renderer!=NULL)\{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ SDL\_DestroyRenderer(renderer);}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{if}(fenetre!=NULL)\{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ SDL\_DestroyWindow(fenetre);}
+\DoxyCodeLine{00044\ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ SDL\_Quit();}
+\DoxyCodeLine{00046\ \ \ \ \ exit(EXIT\_FAILURE);}
+\DoxyCodeLine{00047\ \}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ pre\_init\_combattant()\{}
+\DoxyCodeLine{00050\ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant=malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}));}
+\DoxyCodeLine{00051\ \ \ \ \ combattant-\/>nom=malloc(5);}
+\DoxyCodeLine{00052\ \ \ \ \ combattant-\/>pv=malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordflow}{return}\ combattant;}
+\DoxyCodeLine{00054\ \}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keywordtype}{void}\ remplir\_combattant(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant,\textcolor{keywordtype}{char}*\ nom,\textcolor{keywordtype}{int}\ pv,\textcolor{keywordtype}{int}\ vitesse,\textcolor{keywordtype}{int}\ camp,\textcolor{keywordtype}{int}\ indice\_portrait,\textcolor{keywordtype}{int}\ indice\_sprite,\textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{int}\ temps\_recharge\_max,\textcolor{keywordtype}{int}\ puissance,\textcolor{keywordtype}{int}\ forme)\{}
+\DoxyCodeLine{00057\ \ \ \ \ strcpy(combattant-\/>nom,nom);}
+\DoxyCodeLine{00058\ \ \ \ \ *combattant-\/>pv=pv;}
+\DoxyCodeLine{00059\ \ \ \ \ combattant-\/>pvMax=pv;}
+\DoxyCodeLine{00060\ \ \ \ \ combattant-\/>vitesse=vitesse;}
+\DoxyCodeLine{00061\ \ \ \ \ combattant-\/>puissance=puissance;}
+\DoxyCodeLine{00062\ \ \ \ \ combattant-\/>mort=0;}
+\DoxyCodeLine{00063\ \ \ \ \ combattant-\/>camp=camp;}
+\DoxyCodeLine{00064\ \ \ \ \ combattant-\/>temps\_recharge=0;}
+\DoxyCodeLine{00065\ \ \ \ \ combattant-\/>temps\_recharge\_max=temps\_recharge\_max;}
+\DoxyCodeLine{00066\ \ \ \ \ combattant-\/>indice\_portrait=indice\_portrait;}
+\DoxyCodeLine{00067\ \ \ \ \ combattant-\/>indice\_sprite=indice\_sprite;}
+\DoxyCodeLine{00068\ \ \ \ \ combattant-\/>type=type;}
+\DoxyCodeLine{00069\ \ \ \ \ combattant-\/>status=0;}
+\DoxyCodeLine{00070\ \ \ \ \ combattant-\/>forme=forme;}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00088\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *init\_combattant(\textcolor{keywordtype}{char}*\ nom,\textcolor{keywordtype}{int}\ pv,\textcolor{keywordtype}{int}\ vitesse,\textcolor{keywordtype}{int}\ camp,\textcolor{keywordtype}{int}\ indice\_portrait,\textcolor{keywordtype}{int}\ indice\_sprite,\textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{int}\ temps\_recharge\_max,\textcolor{keywordtype}{int}\ puissance,\textcolor{keywordtype}{int}\ forme,\textcolor{keywordtype}{int}\ pvMax)\{}
+\DoxyCodeLine{00089\ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant=malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}));}
+\DoxyCodeLine{00090\ \ \ \ \ combattant-\/>nom=malloc(strlen(nom)+1);}
+\DoxyCodeLine{00091\ \ \ \ \ strcpy(combattant-\/>nom,nom);}
+\DoxyCodeLine{00092\ \ \ \ \ combattant-\/>pv=malloc(\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{int}));}
+\DoxyCodeLine{00093\ \ \ \ \ *combattant-\/>pv=pv;}
+\DoxyCodeLine{00094\ \ \ \ \ combattant-\/>pvMax=pvMax;}
+\DoxyCodeLine{00095\ \ \ \ \ combattant-\/>vitesse=vitesse;}
+\DoxyCodeLine{00096\ \ \ \ \ combattant-\/>puissance=puissance;}
+\DoxyCodeLine{00097\ \ \ \ \ combattant-\/>mort=0;}
+\DoxyCodeLine{00098\ \ \ \ \ combattant-\/>camp=camp;}
+\DoxyCodeLine{00099\ \ \ \ \ combattant-\/>temps\_recharge=0;}
+\DoxyCodeLine{00100\ \ \ \ \ combattant-\/>temps\_recharge\_max=temps\_recharge\_max;}
+\DoxyCodeLine{00101\ \ \ \ \ combattant-\/>indice\_portrait=indice\_portrait;}
+\DoxyCodeLine{00102\ \ \ \ \ combattant-\/>indice\_sprite=indice\_sprite;}
+\DoxyCodeLine{00103\ \ \ \ \ combattant-\/>type=type;}
+\DoxyCodeLine{00104\ \ \ \ \ combattant-\/>status=0;}
+\DoxyCodeLine{00105\ \ \ \ \ combattant-\/>forme=forme;}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{return}\ combattant;}
+\DoxyCodeLine{00107\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00114\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a86609479bf6edf9d746cb7c4aab0db66}{desctruction\_combattant}}(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant)\{}
+\DoxyCodeLine{00115\ \ \ \ \ free(combattant-\/>nom);}
+\DoxyCodeLine{00116\ \ \ \ \ free(combattant-\/>pv);}
+\DoxyCodeLine{00117\ \ \ \ \ free(combattant);}
+\DoxyCodeLine{00118\ \}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00125\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a5b21bda13ba257e7e0969b24b654f9f5}{desctruction\_combat}}(\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}})\{}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]=NULL;}
+\DoxyCodeLine{00130\ \ \ \ \ \}}
+\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi;i++)\{}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]=NULL;}
+\DoxyCodeLine{00133\ \ \ \ \ \}}
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi+\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[i]=NULL;}
+\DoxyCodeLine{00136\ \ \ \ \ \}}
+\DoxyCodeLine{00137\ \ \ \ \ free(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}});}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ }
+\DoxyCodeLine{00143\ }
+\DoxyCodeLine{00154\ \textcolor{comment}{//fonction\ qui\ affiche\ les\ points\ de\ la\ personne\ et\ le\ multiplicateur\ de\ degat}}
+\DoxyCodeLine{00155\ \textcolor{keywordtype}{int}\ affiche\_point(\textcolor{keywordtype}{int}\ *we,\ \textcolor{keywordtype}{int}\ *he,\ SDL\_Renderer\ *renderer,\ SDL\_Rect\ r\_basEcran,\ \mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map\ )}
+\DoxyCodeLine{00156\ \{}
+\DoxyCodeLine{00157\ \ \ \ \ TTF\_Font\ *font\ =\ TTF\_OpenFont(\textcolor{stringliteral}{"{}fonts/alagard.ttf"{}},\ 50);}
+\DoxyCodeLine{00158\ \ \ \ \ \textcolor{keywordflow}{if}\ (!font)}
+\DoxyCodeLine{00159\ \ \ \ \ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\ \textcolor{stringliteral}{"{}Erreur\ lors\ du\ chargement\ de\ la\ police\ \(\backslash\)n"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00162\ \ \ \ \ \}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \ \ \ \ SDL\_Color\ textColor\ =\ \{\ 255,\ 255,\ 255\ \};}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \ \ \ \ \textcolor{comment}{//creation\ du\ texte\ du\ multiplicateur}}
+\DoxyCodeLine{00167\ \ \ \ \ \textcolor{keywordtype}{char}\ *textemult\ =\ malloc(20);}
+\DoxyCodeLine{00168\ \ \ \ \ sprintf(textemult,\ \textcolor{stringliteral}{"{}mult\ :\ \%.1f"{}},\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult);}
+\DoxyCodeLine{00169\ \ \ \ \ SDL\_Surface\ *textSurfacemult\ =\ TTF\_RenderText\_Solid(font,\ textemult,\ textColor);}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \ \ \textcolor{keywordflow}{if}\ (!textSurfacemult)}
+\DoxyCodeLine{00172\ \ \ \ \ \{}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}\ (\textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte\(\backslash\)n"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00176\ \ \ \ \ \}}
+\DoxyCodeLine{00177\ }
+\DoxyCodeLine{00178\ \ \ \ \ SDL\_Texture\ *textTexturemult\ =\ SDL\_CreateTextureFromSurface(renderer,\ textSurfacemult);}
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \ \ \ \ \textcolor{comment}{//\ Position\ du\ texte}}
+\DoxyCodeLine{00181\ \ \ \ \ SDL\_Rect\ r\_mult\ =\ \{\ 50,\ ((*he)-\/(r\_basEcran.h/2))-\/\ textSurfacemult-\/>h/2,\ textSurfacemult-\/>w,\ textSurfacemult-\/>h\};}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordtype}{int}\ i\ ;}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_point;i++)\{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_point\ =\ \{r\_mult.x+((r\_basEcran.w/3)/20)*i,\ r\_mult.h+r\_mult.y,\ (r\_basEcran.w/3)/20,\ (r\_basEcran.w/3)/20\};}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[195],\ NULL,\ \&\ r\_point);}
+\DoxyCodeLine{00187\ }
+\DoxyCodeLine{00188\ \ \ \ \ \}}
+\DoxyCodeLine{00189\ \ \ \ \ }
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \textcolor{comment}{//\ Afficher\ la\ texture\ sur\ le\ rendu}}
+\DoxyCodeLine{00192\ \ \ \ \ SDL\_RenderCopy(renderer,\ textTexturemult,\ NULL,\ \&r\_mult);}
+\DoxyCodeLine{00193\ \ \ \ \ SDL\_FreeSurface(textSurfacemult);}
+\DoxyCodeLine{00194\ \ \ \ \ SDL\_DestroyTexture(textTexturemult);}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ free(textemult);}
+\DoxyCodeLine{00197\ \ \ \ \ textemult\ =\ NULL;}
+\DoxyCodeLine{00198\ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \}}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00217\ \textcolor{comment}{//fonction\ qui\ affiche\ les\ allies\ et\ les\ ennemis\ sur\ les\ cotes}}
+\DoxyCodeLine{00218\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_af904aa22a4c73018b89f20911c97023c}{affiche\_pv}}(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Renderer\ *\ renderer,SDL\_Rect\ r\_GEcran,SDL\_Rect\ r\_DEcran,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordtype}{int}\ i=0;}
+\DoxyCodeLine{00220\ }
+\DoxyCodeLine{00221\ \ \ \ \ TTF\_Font*\ font\ =\ TTF\_OpenFont(\textcolor{stringliteral}{"{}fonts/alagard.ttf"{}},\ 50);}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordflow}{if}\ (!font)\ \{}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \textcolor{comment}{//fprintf(stderr,\ "{}Erreur\ lors\ du\ chargement\ de\ la\ police\ :\ \%s\(\backslash\)n"{},\ TTF\_GetError());}}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00225\ \ \ \ \ \}}
+\DoxyCodeLine{00226\ \ \ \ \ SDL\_Color\ textColorvivant\ =\ \{255,\ 255,\ 255\};}
+\DoxyCodeLine{00227\ \ \ \ \ SDL\_Color\ textColormort\ =\ \{200,\ 200,\ 200\};}
+\DoxyCodeLine{00228\ \ \ \ \ SDL\_Color\ couleuractuel=textColorvivant;}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00231\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00232\ \textcolor{comment}{\ \ \ \ *AFFICHAGE\ ENNEMI}}
+\DoxyCodeLine{00233\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00234\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00235\ }
+\DoxyCodeLine{00236\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi;i++)\{}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>mort==1)\{}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ couleuractuel=textColormort;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ couleuractuel=textColorvivant;}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ SDL\_Surface*\ textSurface\ =\ TTF\_RenderText\_Blended(font,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>nom,\ couleuractuel);}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!textSurface)\ \{}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte\(\backslash\)n"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00248\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00249\ }
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ SDL\_Texture*\ textTexture\ =\ SDL\_CreateTextureFromSurface(renderer,\ textSurface);}
+\DoxyCodeLine{00253\ \ \ \ \ \ \ \ \ SDL\_Rect\ textRect\ =\ \{10+(*we*2/100),\ (r\_GEcran.y+i*(r\_GEcran.h/4))+(*he*4/100),\ textSurface-\/>w,\ textSurface-\/>h\};}
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(strcmp(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>nom,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>nom)==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>mort==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>status==0)\{}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \ \ \ \ textRect.x\ =\ (r\_GEcran.x+(100)+(*we*4/100));}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>status==1)\{}
+\DoxyCodeLine{00258\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_effet\ =\ \{(textRect.x+textRect.w)+(*we)*2/100,\ textRect.y,\ (*we)*2/100,\ (*we)*2/100\};}
+\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[169],\ NULL,\ \&\ r\_effet);}
+\DoxyCodeLine{00260\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00261\ }
+\DoxyCodeLine{00262\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a0d87b5d37574da9e640d7e765a72a77a}{affVie}}(renderer,(r\_GEcran.y+i*(r\_GEcran.h/4))+textRect.h+(*he*4/100),10+(*we*2/100),\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i],map);}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ textTexture,\ NULL,\ \&textRect);}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \ \ SDL\_FreeSurface(textSurface);}
+\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(textTexture);}
+\DoxyCodeLine{00267\ \ \ \ \ \}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00270\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00271\ \textcolor{comment}{\ \ \ \ *AFFICHAGE\ ALLIE}}
+\DoxyCodeLine{00272\ \textcolor{comment}{\ \ \ \ *}}
+\DoxyCodeLine{00273\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>mort==1)\{}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \ couleuractuel=textColormort;}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ couleuractuel=textColorvivant;}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00283\ }
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ SDL\_Surface*\ textSurface\ =\ TTF\_RenderText\_Blended(font,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>nom,\ couleuractuel);}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!textSurface)\ \{}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte\(\backslash\)n"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ SDL\_Texture*\ textTexture\ =\ SDL\_CreateTextureFromSurface(renderer,\ textSurface);}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ SDL\_Rect\ textRect\ =\ \{r\_DEcran.x+(*we*2/100),\ (r\_DEcran.y+i*(r\_GEcran.h/4))+(*he*4/100),\ textSurface-\/>w,\ textSurface-\/>h\};}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(strcmp(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>nom,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>nom)==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>mort==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>status==0)\{}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ textRect.x\ =\ (r\_DEcran.x+(r\_DEcran.w/50)+(*we*4/100));}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>status==1)\{}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_effet\ =\ \{(textRect.x+textRect.w)+(*we)*2/100,\ textRect.y,\ (*we)*2/100,\ (*we)*2/100\};}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[169],\ NULL,\ \&\ r\_effet);}
+\DoxyCodeLine{00300\ }
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a0d87b5d37574da9e640d7e765a72a77a}{affVie}}(renderer,(r\_DEcran.y+i*(r\_GEcran.h/4))+textRect.h+(*he*4/100),r\_DEcran.x+(*we*2/100),\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i],map);}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ textTexture,\ NULL,\ \&textRect);}
+\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ SDL\_FreeSurface(textSurface);}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(textTexture);}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \ \ \ \ \}}
+\DoxyCodeLine{00308\ }
+\DoxyCodeLine{00309\ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00311\ }
+\DoxyCodeLine{00312\ \}}
+\DoxyCodeLine{00313\ }
+\DoxyCodeLine{00321\ \textcolor{comment}{//fonction\ d'attaque\ de\ l'ennemi\ }}
+\DoxyCodeLine{00322\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a5abe0330656d7653985248d140f74db0}{attaque\_ennemi}}(\textcolor{keywordtype}{int}\ nb\_combattant,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}})\{}
+\DoxyCodeLine{00323\ }
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{keywordtype}{int}\ indice=0;}
+\DoxyCodeLine{00325\ \ \ \ \ \textcolor{comment}{//indice=forme\_attaque(nb\_combattant,combat);}}
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//combat-\/>allie[indice]-\/>pv-\/=100000;}}
+\DoxyCodeLine{00327\ \ \ }
+\DoxyCodeLine{00328\ }
+\DoxyCodeLine{00329\ \ \ \ \ \textcolor{comment}{//attaque\ special\ des\ ennemis}}
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>temps\_recharge==\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>temps\_recharge\_max)\{}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Attaque\ puissante\ sur\ un\ allie}}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==0)\{}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ indice=\mbox{\hyperlink{combat_8c_af49ae13d77b9fd993ae63e147aa4ec6b}{forme\_attaque}}(nb\_combattant,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}});}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[indice]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>puissance*2;}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \textcolor{comment}{//soigne\ un\ ennemi\ au\ hasard}}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==2)\{}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//recupere\ l'indice\ d'un\ ennemi\ pour\ le\ soigner}}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i=0;}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ min=*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>pv);}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=1;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi;i++)\{}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((min>*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>pv)\ \&\&\ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>pv)>0)\ ||\ min==0)\{}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ min=*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>pv);}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indice=i;}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00348\ }
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[indice]-\/>pv)+=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>pvMax*0.1;}
+\DoxyCodeLine{00350\ }
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Fait\ passer\ le\ tour\ d'un\ allie}}
+\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==1)\{}
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ indice=\mbox{\hyperlink{combat_8c_af49ae13d77b9fd993ae63e147aa4ec6b}{forme\_attaque}}(nb\_combattant,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}});}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[indice]-\/>status=1;}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \textcolor{comment}{//fait\ des\ degats\ a\ tous\ les\ allies}}
+\DoxyCodeLine{00358\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==3)\{}
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>puissance;}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00363\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>temps\_recharge=0;}
+\DoxyCodeLine{00365\ \ \ \ \ \textcolor{comment}{//attaque\ de\ base\ des\ ennemis}}
+\DoxyCodeLine{00366\ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ indice=\mbox{\hyperlink{combat_8c_af49ae13d77b9fd993ae63e147aa4ec6b}{forme\_attaque}}(nb\_combattant,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}});}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[indice]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>puissance;}
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>temps\_recharge++;}
+\DoxyCodeLine{00370\ \ \ \ \ \}}
+\DoxyCodeLine{00371\ }
+\DoxyCodeLine{00372\ \ \ \ \ \textcolor{comment}{//passif\ de\ ennemi\ Finn,\ soigne\ un\ peu\ tout\ les\ ennemis\ a\ son\ tour}}
+\DoxyCodeLine{00373\ \ \ \ \ \textcolor{keywordflow}{if}((\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==2\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==3)\ ||\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==4)\{}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k=0;}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(k=0;k<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi;k++)\{}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[k]-\/>mort==0)}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[k]-\/>pv)+=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>pvMax*5/100;}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00379\ \ \ \ \ \}}
+\DoxyCodeLine{00380\ \ \ \ \ }
+\DoxyCodeLine{00381\ \ \ \ \ }
+\DoxyCodeLine{00382\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00383\ \}}
+\DoxyCodeLine{00391\ \textcolor{comment}{//fonction\ qui\ donne\ l'indice\ de\ la\ personne\ attaque\ par\ rapport\ a\ la\ forme\ de\ l'ennemi}}
+\DoxyCodeLine{00392\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_af49ae13d77b9fd993ae63e147aa4ec6b}{forme\_attaque}}(\textcolor{keywordtype}{int}\ nb\_combattant,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}})\{}
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{comment}{//ennemi\ de\ petite\ taille\ (slime)\ attaque\ l'allie\ qui\ a\ le\ moins\ de\ pv}}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==0)\{}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//recupere\ l'allie\ qui\ a\ le\ moins\ de\ pv}}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i=0;}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ indice=0;}
+\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ min=*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv);}
+\DoxyCodeLine{00399\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=1;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((min>*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv)\ \&\&\ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv)>0)\ ||\ min==0)\{}
+\DoxyCodeLine{00401\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ min=*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv);}
+\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indice=i;}
+\DoxyCodeLine{00403\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00404\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00405\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ indice;}
+\DoxyCodeLine{00406\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00407\ }
+\DoxyCodeLine{00408\ \ \ \ \ \ \ \ \ \textcolor{comment}{//ennemi\ de\ moyenne\ taille\ (?)\ attaque\ l'allie\ qui\ a\ le\ moins\ de\ pv\ max}}
+\DoxyCodeLine{00409\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==1)\{}
+\DoxyCodeLine{00410\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//recupere\ l'allie\ qui\ a\ le\ moins\ de\ pv\ max}}
+\DoxyCodeLine{00411\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i=0;}
+\DoxyCodeLine{00412\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ indice=0;}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ min=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pvMax;}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=1;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((min>\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pvMax\ \&\&\ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv)>0)\ ||\ min==0)\{}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ min=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pvMax;}
+\DoxyCodeLine{00417\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indice=i;}
+\DoxyCodeLine{00418\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00420\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ indice;}
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00422\ }
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \textcolor{comment}{//ennemi\ de\ grande\ taille\ (?)\ attaque\ l'allie\ qui\ a\ le\ plus\ de\ PV}}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==2)\{}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//recupere\ l'allie\ qui\ a\ le\ plus\ de\ pv\ }}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i=0;}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ indice=0;}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max=*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv);}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=1;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(max<*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv)\ \&\&\ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv)>0)\{}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max=*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv);}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indice=i;}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00434\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00435\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ indice;}
+\DoxyCodeLine{00436\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00437\ }
+\DoxyCodeLine{00438\ \ \ \ \ \ \ \ \ \textcolor{comment}{//ennemi\ de\ boss\ taille\ (?)\ attaque\ l'allie\ qui\ a\ le\ plus\ de\ pv\ max}}
+\DoxyCodeLine{00439\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==3\ ||\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==4)\{}
+\DoxyCodeLine{00440\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//recupere\ l'allie\ qui\ a\ le\ plus\ de\ pv\ max}}
+\DoxyCodeLine{00441\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i=0;}
+\DoxyCodeLine{00442\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ indice=0;}
+\DoxyCodeLine{00443\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pvMax;}
+\DoxyCodeLine{00444\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=1;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{00445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(max<combat-\/>allie[i]-\/>pvMax\ \&\&\ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pv)>0)\{}
+\DoxyCodeLine{00446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ max=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]-\/>pvMax;}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ indice=i;}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ indice;}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00452\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00453\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00454\ }
+\DoxyCodeLine{00455\ \}}
+\DoxyCodeLine{00456\ }
+\DoxyCodeLine{00469\ \textcolor{comment}{//fonction\ d'affichage\ du\ combat}}
+\DoxyCodeLine{00470\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a8a2ebe3dafdfa818fa29088616e163d5}{affichage\_combat}}(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},\textcolor{keywordtype}{int}\ etat,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ \mbox{\hyperlink{structpersonnage}{personnage}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00471\ \ \ \ \ }
+\DoxyCodeLine{00472\ \ \ \ \ \textcolor{keywordtype}{int}\ j=0;}
+\DoxyCodeLine{00473\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,0,0,0,255);}
+\DoxyCodeLine{00474\ \ \ \ \ \textcolor{comment}{//chargement\ de\ la\ police\ d'écriture}}
+\DoxyCodeLine{00475\ \ \ \ \ \ \ \ \ \ \ \ \ TTF\_Font*\ font\ =\ TTF\_OpenFont(\textcolor{stringliteral}{"{}fonts/alagard.ttf"{}},\ 50);}
+\DoxyCodeLine{00476\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!font)\ \{}
+\DoxyCodeLine{00477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Erreur\ lors\ du\ chargement\ de\ la\ police"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00479\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00481\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00482\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00483\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *\ \ BAS\ DE\ L'ECRAN}}
+\DoxyCodeLine{00484\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00485\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00486\ }
+\DoxyCodeLine{00487\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_basEcran=\{0,(*he)-\/(*he)/4,(*we),(*he)/4\};}
+\DoxyCodeLine{00488\ }
+\DoxyCodeLine{00489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Color\ textColor\ =\ \{255,\ 255,\ 255\};}
+\DoxyCodeLine{00490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Color\ textColorGris\ =\ \{50,\ 50,\ 50\};}
+\DoxyCodeLine{00491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Color\ couleuractuel=textColor;}
+\DoxyCodeLine{00492\ }
+\DoxyCodeLine{00493\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>temps\_recharge<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>temps\_recharge\_max\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>camp==0)\{}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ couleuractuel=textColorGris;}
+\DoxyCodeLine{00495\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00497\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *\ texte1;}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *\ texte2;}
+\DoxyCodeLine{00499\ }
+\DoxyCodeLine{00500\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(etat==0)\{}
+\DoxyCodeLine{00501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ texte1=\textcolor{stringliteral}{"{}Attaque"{}};}
+\DoxyCodeLine{00502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ texte2=\textcolor{stringliteral}{"{}Attaque\ speciale"{}};}
+\DoxyCodeLine{00503\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00504\ }
+\DoxyCodeLine{00505\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00506\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00507\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ texte1=\textcolor{stringliteral}{"{}Soigner"{}};}
+\DoxyCodeLine{00508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ texte2=\textcolor{stringliteral}{"{}\ "{}};}
+\DoxyCodeLine{00509\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00510\ }
+\DoxyCodeLine{00511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//creation\ du\ premier\ texte\ (Attaque)}}
+\DoxyCodeLine{00512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Surface\ *\ textSurfaceATQ1\ =\ TTF\_RenderText\_Solid(font,texte1,\ textColor);}
+\DoxyCodeLine{00513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!textSurfaceATQ1)\ \{}
+\DoxyCodeLine{00514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte\(\backslash\)n"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00518\ }
+\DoxyCodeLine{00519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Texture\ *\ \ textTextureATQ1=\ SDL\_CreateTextureFromSurface(renderer,\ textSurfaceATQ1);}
+\DoxyCodeLine{00520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ \ r\_ATQ1=\ \{(r\_basEcran.w*40/100),(r\_basEcran.h*3)+r\_basEcran.h/2,textSurfaceATQ1-\/>w,textSurfaceATQ1-\/>h\};}
+\DoxyCodeLine{00521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_FreeSurface(textSurfaceATQ1);}
+\DoxyCodeLine{00522\ }
+\DoxyCodeLine{00523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(SDL\_QueryTexture(textTextureATQ1,NULL,NULL,\&r\_ATQ1.w,\&r\_ATQ1.h)!=0)\{}
+\DoxyCodeLine{00524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Impossible\ de\ charger\ le\ texte"{}},NULL,renderer,textTextureATQ1,NULL);}
+\DoxyCodeLine{00525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00527\ }
+\DoxyCodeLine{00528\ }
+\DoxyCodeLine{00529\ }
+\DoxyCodeLine{00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//creation\ du\ troisieme\ texte\ (Attaque\ speciale)}}
+\DoxyCodeLine{00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Surface\ *\ textSurfaceATQ3\ =\ TTF\_RenderText\_Solid(font,texte2,\ couleuractuel);}
+\DoxyCodeLine{00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!textSurfaceATQ3)\ \{}
+\DoxyCodeLine{00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte"{}},NULL,renderer,textTextureATQ1,NULL);}
+\DoxyCodeLine{00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Texture\ *\ textTextureATQ3\ =\ SDL\_CreateTextureFromSurface(renderer,\ textSurfaceATQ3);}
+\DoxyCodeLine{00539\ }
+\DoxyCodeLine{00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_ATQ3=\{(r\_basEcran.w*40/100)+(r\_basEcran.w*30/100),(r\_basEcran.h*3)+r\_basEcran.h/2,textSurfaceATQ3-\/>w,textSurfaceATQ3-\/>h\};}
+\DoxyCodeLine{00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_FreeSurface(textSurfaceATQ3);}
+\DoxyCodeLine{00542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(SDL\_QueryTexture(textTextureATQ3,NULL,NULL,\&r\_ATQ3.w,\&r\_ATQ3.h)!=0)\{}
+\DoxyCodeLine{00543\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Impossible\ de\ charger\ le\ texte"{}},NULL,renderer,textTextureATQ3,NULL);}
+\DoxyCodeLine{00544\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00545\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00546\ }
+\DoxyCodeLine{00547\ }
+\DoxyCodeLine{00548\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00549\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00550\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *ECRAN\ HAUT}}
+\DoxyCodeLine{00551\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00552\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00553\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_hautEcran\ =\ \{0,0,(\ *\ we),56\};}
+\DoxyCodeLine{00554\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_hautEcran\_cadre\ =\ \{(\ *\ we)\ /\ 4,r\_hautEcran.h-\/r\_hautEcran.h*5/100,((\ *\ we)\ -\/\ (\ *\ we)\ /\ 4)-\/(\ *\ we)\ /\ 4,r\_hautEcran.h*5/100\};}
+\DoxyCodeLine{00555\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Surface\ *\ NomSurface;}
+\DoxyCodeLine{00556\ }
+\DoxyCodeLine{00557\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(etat==0)\{}
+\DoxyCodeLine{00558\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Nom\ du\ personnage\ selectionne}}
+\DoxyCodeLine{00559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ NomSurface\ =\ TTF\_RenderText\_Blended(font,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>nom,\ textColor);}
+\DoxyCodeLine{00560\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00561\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ NomSurface\ =\ TTF\_RenderText\_Blended(font,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>nom,\ textColor);}
+\DoxyCodeLine{00563\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00564\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00565\ }
+\DoxyCodeLine{00566\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!NomSurface)\ \{}
+\DoxyCodeLine{00567\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte\(\backslash\)n"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00568\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00569\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00570\ }
+\DoxyCodeLine{00571\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00572\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00573\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Texture*\ NomTexture\ =\ SDL\_CreateTextureFromSurface(renderer,\ NomSurface);}
+\DoxyCodeLine{00574\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ NomRect\ =\ \{r\_hautEcran.w/2-\/NomSurface-\/>w/2,\ r\_hautEcran.h/2-\/NomSurface-\/>h/2,\ NomSurface-\/>w,\ NomSurface-\/>h\};}
+\DoxyCodeLine{00575\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_FreeSurface(NomSurface);}
+\DoxyCodeLine{00576\ }
+\DoxyCodeLine{00577\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//numero\ du\ tour\ }}
+\DoxyCodeLine{00578\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *NumTour\ =\ malloc(12);}
+\DoxyCodeLine{00579\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(NumTour,\ 12,\ \textcolor{stringliteral}{"{}Tour\ :\ \%d"{}},\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>num\_tour);}
+\DoxyCodeLine{00580\ }
+\DoxyCodeLine{00581\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Surface*\ NumTourSurface\ =\ TTF\_RenderText\_Blended(font,NumTour,\ textColor);}
+\DoxyCodeLine{00582\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!NumTourSurface)\ \{}
+\DoxyCodeLine{00583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\_sdl}}(\textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte\(\backslash\)n"{}},NULL,renderer,NULL,NULL);}
+\DoxyCodeLine{00584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{00585\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{00586\ }
+\DoxyCodeLine{00587\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00588\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00589\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Texture*\ NumTourTexture\ =\ SDL\_CreateTextureFromSurface(renderer,\ NumTourSurface);}
+\DoxyCodeLine{00590\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ NumTourRect\ =\ \{(r\_hautEcran.w/4)*3+NumTourSurface-\/>w,\ r\_hautEcran.y/2+NumTourSurface-\/>h/4,\ NumTourSurface-\/>w,\ NumTourSurface-\/>h\};}
+\DoxyCodeLine{00591\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_FreeSurface(NumTourSurface);}
+\DoxyCodeLine{00592\ \ \ \ \ SDL\_Rect\ r\_ecran=\{0,0,(\ *\ we)\ ,(\ *\ he)\};}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00594\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00595\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00596\ \textcolor{comment}{\ \ \ \ \ *ECRAN\ GAUCHE}}
+\DoxyCodeLine{00597\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00598\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00599\ }
+\DoxyCodeLine{00600\ \ \ \ \ SDL\_Rect\ r\_GEcran\ =\ \{0,r\_hautEcran.h,(\ *\ we)\ /\ 4,(r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{00601\ }
+\DoxyCodeLine{00602\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00603\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00604\ \textcolor{comment}{\ \ \ \ \ *ECRAN\ DROIT}}
+\DoxyCodeLine{00605\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00606\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00607\ \ \ \ \ SDL\_Rect\ r\_DEcran\ =\ \{(\ *\ we)\ -\/\ (\ *\ we)\ /\ 4,r\_hautEcran.h,(\ *\ we)-\/(((\ *\ we)\ -\/\ (\ *\ we)\ /\ 4)),\ (r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{00608\ }
+\DoxyCodeLine{00609\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00610\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00611\ \textcolor{comment}{\ \ \ \ \ *ECRAN\ FOND}}
+\DoxyCodeLine{00612\ \textcolor{comment}{\ \ \ \ \ *}}
+\DoxyCodeLine{00613\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{00614\ \ \ \ \ SDL\_Rect\ r\_MEcran\ =\ \{r\_GEcran.w,r\_hautEcran.h,r\_DEcran.x\ -\/\ r\_GEcran.w,(r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{00615\ \ \ \ \ SDL\_Rect\ r\_Fleches\_GEcran=\{r\_GEcran.w,r\_MEcran.h/2+r\_hautEcran.h-\/(r\_MEcran.h/6)/2,r\_MEcran.h/6,r\_MEcran.h/6\};}
+\DoxyCodeLine{00616\ \ \ \ \ SDL\_Rect\ r\_Fleches\_DEcran=\{r\_DEcran.x-\/r\_MEcran.h/6,r\_MEcran.h/2+r\_hautEcran.h-\/(r\_MEcran.h/6)/2,r\_MEcran.h/6,r\_MEcran.h/6\};}
+\DoxyCodeLine{00617\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00618\ }
+\DoxyCodeLine{00619\ }
+\DoxyCodeLine{00620\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00621\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00622\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *AFFICHAGE\ ENNEMI}}
+\DoxyCodeLine{00623\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00624\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00625\ }
+\DoxyCodeLine{00626\ }
+\DoxyCodeLine{00627\ }
+\DoxyCodeLine{00628\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//creation\ des\ rectangles\ pour\ l'affichage}}
+\DoxyCodeLine{00629\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ \ r\_ennemi=\ \{r\_GEcran.w+((r\_DEcran.x-\/r\_GEcran.w)/2)-\/300,r\_basEcran.y-\/600,600,600\};}
+\DoxyCodeLine{00630\ }
+\DoxyCodeLine{00631\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00632\ }
+\DoxyCodeLine{00633\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00634\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{00635\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00636\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *AFFICHAGE\ TOUR}}
+\DoxyCodeLine{00637\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ *}}
+\DoxyCodeLine{00638\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ */}}
+\DoxyCodeLine{00639\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i,nbMort=0;}
+\DoxyCodeLine{00640\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_combattant=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie+\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi;}
+\DoxyCodeLine{00641\ \ \ \ \ }
+\DoxyCodeLine{00642\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<(nb\_combattant);j++)\{}
+\DoxyCodeLine{00643\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pv)<=0)\{}
+\DoxyCodeLine{00644\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ nbMort++;}
+\DoxyCodeLine{00645\ }
+\DoxyCodeLine{00646\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00647\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00648\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00649\ \ \ \ \ \ \ \ \ \ \ \ \ j=0;}
+\DoxyCodeLine{00650\ }
+\DoxyCodeLine{00651\ }
+\DoxyCodeLine{00652\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderClear(renderer);}
+\DoxyCodeLine{00653\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00654\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare==1)\{}
+\DoxyCodeLine{00655\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[170],\ NULL,\ \&\ r\_ecran);}
+\DoxyCodeLine{00656\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00657\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[184],\ NULL,\ \&\ r\_ecran);}
+\DoxyCodeLine{00658\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00659\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00660\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[198],\ NULL,\ \&\ r\_MEcran);}
+\DoxyCodeLine{00661\ }
+\DoxyCodeLine{00662\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,50,50,50,255);}
+\DoxyCodeLine{00663\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00664\ }
+\DoxyCodeLine{00665\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((nb\_combattant-\/nbMort)\%2==0)\{}
+\DoxyCodeLine{00666\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//affichage\ des\ combattant\ en\ haut\ pour\ savoir\ qui\ joue\ dans\ le\ cas\ paire}}
+\DoxyCodeLine{00667\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0,j=0;i<nb\_combattant-\/nbMort;i++,j++)\{}
+\DoxyCodeLine{00668\ }
+\DoxyCodeLine{00669\ }
+\DoxyCodeLine{00670\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passe\ au\ combattant\ suivant\ si\ il\ est\ mort}}
+\DoxyCodeLine{00671\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>mort==1)\{}
+\DoxyCodeLine{00672\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ j++;}
+\DoxyCodeLine{00673\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00674\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00675\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r1=\ \{r\_GEcran.w+((r\_DEcran.x-\/r\_GEcran.w)/8)*i+(((r\_DEcran.x-\/r\_GEcran.w)/8))*((8-\/(nb\_combattant-\/nbMort))/2),r\_hautEcran.h,(r\_DEcran.x-\/r\_GEcran.w)/8,100\};}
+\DoxyCodeLine{00676\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(j==\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant)\{}
+\DoxyCodeLine{00677\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==1.0)\{}
+\DoxyCodeLine{00678\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[159],\ NULL,\ \&r1);}
+\DoxyCodeLine{00679\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00680\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==1.5)\{}
+\DoxyCodeLine{00681\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[158],\ NULL,\ \&r1);}
+\DoxyCodeLine{00682\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00683\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==2)\{}
+\DoxyCodeLine{00684\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[157],\ NULL,\ \&r1);}
+\DoxyCodeLine{00685\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00686\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==2.5)\{}
+\DoxyCodeLine{00687\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[156],\ NULL,\ \&r1);}
+\DoxyCodeLine{00688\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00689\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==3.0)\{}
+\DoxyCodeLine{00690\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[155],\ NULL,\ \&r1);}
+\DoxyCodeLine{00691\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00692\ }
+\DoxyCodeLine{00693\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00694\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00695\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>forme!=3\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==1)\{}
+\DoxyCodeLine{00696\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>indice\_sprite+map-\/>nbN],\ NULL,\ \&r1);}
+\DoxyCodeLine{00697\ }
+\DoxyCodeLine{00698\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00699\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==0)\{}
+\DoxyCodeLine{00700\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>indice\_sprite+8],\ NULL,\ \&r1);}
+\DoxyCodeLine{00701\ }
+\DoxyCodeLine{00702\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00703\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00704\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>indice\_sprite],\ NULL,\ \&r1);}
+\DoxyCodeLine{00705\ }
+\DoxyCodeLine{00706\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00707\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00708\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00709\ }
+\DoxyCodeLine{00710\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00711\ }
+\DoxyCodeLine{00712\ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00713\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//affichage\ des\ combattant\ en\ haut\ pour\ savoir\ qui\ joue\ dans\ le\ cas\ impaire}}
+\DoxyCodeLine{00714\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0,j=0;i<nb\_combattant-\/nbMort;i++,j++)\{}
+\DoxyCodeLine{00715\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>mort==1)\{}
+\DoxyCodeLine{00716\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ j++;}
+\DoxyCodeLine{00717\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00718\ \ }
+\DoxyCodeLine{00719\ }
+\DoxyCodeLine{00720\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r1=\ \{r\_GEcran.w+((r\_DEcran.x-\/r\_GEcran.w)/8)*i+(((r\_DEcran.x-\/r\_GEcran.w)/8))*((8-\/(nb\_combattant-\/nbMort))/2)+(((r\_DEcran.x-\/r\_GEcran.w)/8)/2),r\_hautEcran.h,(r\_DEcran.x-\/r\_GEcran.w)/8,100\};}
+\DoxyCodeLine{00721\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(j==\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant)\{}
+\DoxyCodeLine{00722\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==1.0)\{}
+\DoxyCodeLine{00723\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[159],\ NULL,\ \&r1);}
+\DoxyCodeLine{00724\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00725\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==1.5)\{}
+\DoxyCodeLine{00726\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[158],\ NULL,\ \&r1);}
+\DoxyCodeLine{00727\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00728\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==2)\{}
+\DoxyCodeLine{00729\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[157],\ NULL,\ \&r1);}
+\DoxyCodeLine{00730\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00731\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==2.5)\{}
+\DoxyCodeLine{00732\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[156],\ NULL,\ \&r1);}
+\DoxyCodeLine{00733\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00734\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==3.0)\{}
+\DoxyCodeLine{00735\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[155],\ NULL,\ \&r1);}
+\DoxyCodeLine{00736\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00737\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00738\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00739\ }
+\DoxyCodeLine{00740\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>forme!=3\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==1)\{}
+\DoxyCodeLine{00741\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>indice\_sprite+map-\/>nbN],\ NULL,\ \&r1);}
+\DoxyCodeLine{00742\ }
+\DoxyCodeLine{00743\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00744\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==0)\{}
+\DoxyCodeLine{00745\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>indice\_sprite+8],\ NULL,\ \&r1);}
+\DoxyCodeLine{00746\ }
+\DoxyCodeLine{00747\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00748\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00749\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>indice\_sprite],\ NULL,\ \&r1);}
+\DoxyCodeLine{00750\ }
+\DoxyCodeLine{00751\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00752\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00753\ }
+\DoxyCodeLine{00754\ }
+\DoxyCodeLine{00755\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00756\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00757\ }
+\DoxyCodeLine{00758\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00759\ }
+\DoxyCodeLine{00760\ }
+\DoxyCodeLine{00761\ }
+\DoxyCodeLine{00762\ }
+\DoxyCodeLine{00763\ }
+\DoxyCodeLine{00764\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 150,\ 150,\ 150,\ 255);}
+\DoxyCodeLine{00765\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==1)\{}
+\DoxyCodeLine{00766\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[183],\ NULL,\ \&\ r\_GEcran);}
+\DoxyCodeLine{00767\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[183],\ NULL,\ \&\ r\_DEcran);}
+\DoxyCodeLine{00768\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[196],\ NULL,\ \&\ r\_basEcran);}
+\DoxyCodeLine{00769\ \ \ \ \ \}}
+\DoxyCodeLine{00770\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==1.5)\{}
+\DoxyCodeLine{00771\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[167],\ NULL,\ \&\ r\_GEcran);}
+\DoxyCodeLine{00772\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[167],\ NULL,\ \&\ r\_DEcran);}
+\DoxyCodeLine{00773\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[168],\ NULL,\ \&\ r\_basEcran);}
+\DoxyCodeLine{00774\ \ \ \ \ \}}
+\DoxyCodeLine{00775\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==2)\{}
+\DoxyCodeLine{00776\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[165],\ NULL,\ \&\ r\_GEcran);}
+\DoxyCodeLine{00777\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[165],\ NULL,\ \&\ r\_DEcran);}
+\DoxyCodeLine{00778\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[166],\ NULL,\ \&\ r\_basEcran);}
+\DoxyCodeLine{00779\ \ \ \ \ \}}
+\DoxyCodeLine{00780\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==2.5)\{}
+\DoxyCodeLine{00781\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[163],\ NULL,\ \&\ r\_GEcran);}
+\DoxyCodeLine{00782\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[163],\ NULL,\ \&\ r\_DEcran);}
+\DoxyCodeLine{00783\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[164],\ NULL,\ \&\ r\_basEcran);}
+\DoxyCodeLine{00784\ \ \ \ \ \}}
+\DoxyCodeLine{00785\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==3)\{}
+\DoxyCodeLine{00786\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[161],\ NULL,\ \&\ r\_GEcran);}
+\DoxyCodeLine{00787\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[161],\ NULL,\ \&\ r\_DEcran);}
+\DoxyCodeLine{00788\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[162],\ NULL,\ \&\ r\_basEcran);}
+\DoxyCodeLine{00789\ \ \ \ \ \}}
+\DoxyCodeLine{00790\ }
+\DoxyCodeLine{00791\ }
+\DoxyCodeLine{00792\ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[182],\ NULL,\ \&\ r\_Fleches\_DEcran);}
+\DoxyCodeLine{00793\ \ \ \ \ SDL\_RenderCopy(renderer,\ map\ -\/>\ tabTexture[181],\ NULL,\ \&\ r\_Fleches\_GEcran);}
+\DoxyCodeLine{00794\ }
+\DoxyCodeLine{00795\ }
+\DoxyCodeLine{00796\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 100,\ 100,\ 100,\ 255);}
+\DoxyCodeLine{00797\ \ \ \ \ }
+\DoxyCodeLine{00798\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 255,\ 255,\ 255,\ 255);}
+\DoxyCodeLine{00799\ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&\ r\_hautEcran\_cadre);}
+\DoxyCodeLine{00800\ }
+\DoxyCodeLine{00801\ \ \ \ \ SDL\_RenderCopy(renderer,\ textTextureATQ1,\ NULL,\ \&r\_ATQ1);\ \ \ \ \ \ }
+\DoxyCodeLine{00802\ \ \ \ \ SDL\_RenderCopy(renderer,\ textTextureATQ3,\ NULL,\ \&r\_ATQ3);}
+\DoxyCodeLine{00803\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00804\ }
+\DoxyCodeLine{00805\ \ \ \ \ SDL\_RenderCopy(renderer,\ NomTexture,\ NULL,\ \&NomRect);}
+\DoxyCodeLine{00806\ \ \ \ \ SDL\_RenderCopy(renderer,\ NumTourTexture,\ NULL,\ \&NumTourRect);}
+\DoxyCodeLine{00807\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00808\ }
+\DoxyCodeLine{00809\ \ \ \ \ affiche\_point(we,he,renderer,r\_basEcran,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},map);}
+\DoxyCodeLine{00810\ \ \ \ \ \mbox{\hyperlink{combat_8c_af904aa22a4c73018b89f20911c97023c}{affiche\_pv}}(we,he,renderer,r\_GEcran,r\_DEcran,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},map);}
+\DoxyCodeLine{00811\ \ \ \ \ \mbox{\hyperlink{combat_8c_a62514ac450b1abb2c25b9e296abf75f0}{barreCauchemard}}(\mbox{\hyperlink{structpersonnage}{personnage}},renderer,map);}
+\DoxyCodeLine{00812\ }
+\DoxyCodeLine{00813\ }
+\DoxyCodeLine{00814\ }
+\DoxyCodeLine{00815\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(etat==0\ \&\&\ map-\/>Nightmare==0)\{}
+\DoxyCodeLine{00816\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//creation\ texture\ de\ l'ennemi}}
+\DoxyCodeLine{00817\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>indice\_portrait],\ NULL,\ \&r\_ennemi);}
+\DoxyCodeLine{00818\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00819\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(etat==0\ \&\&\ map-\/>Nightmare==1)\{}
+\DoxyCodeLine{00820\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>indice\_portrait+map-\/>nbN],\ NULL,\ \&r\_ennemi);}
+\DoxyCodeLine{00821\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00822\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (etat==1\ \&\&\ map-\/>Nightmare==0)\{}
+\DoxyCodeLine{00823\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//creation\ texture\ de\ l'allie}}
+\DoxyCodeLine{00824\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>indice\_portrait],\ NULL,\ \&r\_ennemi);}
+\DoxyCodeLine{00825\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00826\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(etat==1\ \&\&\ map-\/>Nightmare==1)\{}
+\DoxyCodeLine{00827\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>indice\_portrait+8],\ NULL,\ \&r\_ennemi);}
+\DoxyCodeLine{00828\ }
+\DoxyCodeLine{00829\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00830\ \ }
+\DoxyCodeLine{00831\ }
+\DoxyCodeLine{00832\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00833\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderPresent(renderer);}
+\DoxyCodeLine{00834\ }
+\DoxyCodeLine{00835\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>camp==1\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>mort==0\ )\{}
+\DoxyCodeLine{00836\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Delay(250);}
+\DoxyCodeLine{00837\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00838\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>camp==0)\{}
+\DoxyCodeLine{00839\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Delay(100);}
+\DoxyCodeLine{00840\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00841\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00842\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00843\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00844\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//destruction\ des\ textures}}
+\DoxyCodeLine{00845\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(textTextureATQ1);}
+\DoxyCodeLine{00846\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(textTextureATQ3);}
+\DoxyCodeLine{00847\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(NomTexture);}
+\DoxyCodeLine{00848\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_DestroyTexture(NumTourTexture);}
+\DoxyCodeLine{00849\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(NumTour);}
+\DoxyCodeLine{00850\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00851\ \}}
+\DoxyCodeLine{00852\ }
+\DoxyCodeLine{00853\ }
+\DoxyCodeLine{00868\ \textcolor{comment}{//fonction\ d'attaque\ d'un\ allie}}
+\DoxyCodeLine{00869\ \textcolor{keywordtype}{int}\ attaque\_allie(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Event\ event,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ ennemi,\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *combattant,\textcolor{keywordtype}{int}\ Nbennemi,\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},\textcolor{keywordtype}{int}\ allie,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ \mbox{\hyperlink{structpersonnage}{personnage}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{00870\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (SDL\_PollEvent(\&event)\ !=\ 0\ );}
+\DoxyCodeLine{00871\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(combattant-\/>mort==0)\{}
+\DoxyCodeLine{00872\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_hautEcran\ =\ \{0,0,(\ *\ we),56\};}
+\DoxyCodeLine{00873\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_basEcran=\{0,(*he)-\/(*he)/4,(*we),(*he)/4\};}
+\DoxyCodeLine{00874\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_GEcran\ =\ \{0,r\_hautEcran.h,(\ *\ we)\ /\ 4,(r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{00875\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_DEcran\ =\ \{(\ *\ we)\ -\/\ (\ *\ we)\ /\ 4,r\_hautEcran.h,(\ *\ we)-\/(((\ *\ we)\ -\/\ (\ *\ we)\ /\ 4)),\ (r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{00876\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_MEcran\ =\ \{r\_GEcran.w,r\_hautEcran.h,r\_DEcran.x\ -\/\ r\_GEcran.w,(r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{00877\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_Fleches\_GEcran=\{r\_GEcran.w,r\_MEcran.h/2+r\_hautEcran.h-\/(r\_MEcran.h/6)/2,r\_MEcran.h/6,r\_MEcran.h/6\};}
+\DoxyCodeLine{00878\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_Fleches\_DEcran=\{r\_DEcran.x-\/r\_MEcran.h/6,r\_MEcran.h/2+r\_hautEcran.h-\/(r\_MEcran.h/6)/2,r\_MEcran.h/6,r\_MEcran.h/6\};}
+\DoxyCodeLine{00879\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ \ r\_ATQ1=\ \{(r\_basEcran.w*40/100),(r\_basEcran.h*3)+r\_basEcran.h/2,175,48\};}
+\DoxyCodeLine{00880\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ \ r\_ATQ3=\ \{(r\_basEcran.w*40/100)+(r\_basEcran.w*30/100),(r\_basEcran.h*3)+r\_basEcran.h/2,373,48\};}
+\DoxyCodeLine{00881\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ r\_mult\ =\ \{\ 50,\ ((*he)-\/(r\_basEcran.h/2))-\/47/2,\ 206,\ 47\};}
+\DoxyCodeLine{00882\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ jouer=1;}
+\DoxyCodeLine{00883\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_point\_deb=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_point;}
+\DoxyCodeLine{00884\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ Nightmare\_deb=*\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightP;}
+\DoxyCodeLine{00885\ }
+\DoxyCodeLine{00886\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passif\ de\ Finn,\ soigne\ un\ peu\ tout\ les\ allies\ a\ son\ tour}}
+\DoxyCodeLine{00887\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==2)\{}
+\DoxyCodeLine{00888\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k=0;}
+\DoxyCodeLine{00889\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(k=0;k<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;k++)\{}
+\DoxyCodeLine{00890\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>mort==0)}
+\DoxyCodeLine{00891\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>pv)+=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>pvMax*15/100;}
+\DoxyCodeLine{00892\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00893\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00894\ }
+\DoxyCodeLine{00895\ }
+\DoxyCodeLine{00896\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(jouer)\{}
+\DoxyCodeLine{00897\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00898\ }
+\DoxyCodeLine{00899\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(ennemi-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>mort==1)\{}
+\DoxyCodeLine{00900\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi)\{}
+\DoxyCodeLine{00901\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi++;}
+\DoxyCodeLine{00902\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00903\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00904\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi=0;}
+\DoxyCodeLine{00905\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00906\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00907\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00908\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a8a2ebe3dafdfa818fa29088616e163d5}{affichage\_combat}}(we,he,renderer,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},0,\mbox{\hyperlink{structpersonnage}{personnage}},map);}
+\DoxyCodeLine{00909\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (SDL\_PollEvent(\&event)\ !=\ 0\ )\ \{}
+\DoxyCodeLine{00910\ }
+\DoxyCodeLine{00911\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//enleve\ des\ pv\ au\ monstre\ avec\ les\ attaques}}
+\DoxyCodeLine{00912\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(event.type\ ==\ SDL\_MOUSEBUTTONDOWN\ )\{}
+\DoxyCodeLine{00913\ }
+\DoxyCodeLine{00914\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((r\_ATQ1.x<=event.button.x)\ \&\&\ (r\_ATQ1.x+r\_ATQ1.w>=event.button.x)\ \&\&\ ((r\_ATQ1.y+r\_ATQ1.h)>=event.button.y)\ \&\&\ (r\_ATQ1.y<=event.button.y))\{}
+\DoxyCodeLine{00915\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(ennemi-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>puissance*\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult;}
+\DoxyCodeLine{00916\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jouer=0;}
+\DoxyCodeLine{00917\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00918\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(((r\_ATQ3.x<=event.button.x)\ \&\&\ ((r\_ATQ3.x+r\_ATQ3.w)>=event.button.x)\ \&\&\ ((r\_ATQ3.y+r\_ATQ3.h)>=event.button.y)\ \&\&\ (r\_ATQ3.y<=event.button.y))\ \&\&\ (combattant-\/>temps\_recharge>=combattant-\/>temps\_recharge\_max))\{}
+\DoxyCodeLine{00919\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(combattant-\/>type==0)\{}
+\DoxyCodeLine{00920\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(ennemi-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>puissance*3*\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult;}
+\DoxyCodeLine{00921\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00922\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(combattant-\/>type==1)\{}
+\DoxyCodeLine{00923\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>status=1;}
+\DoxyCodeLine{00924\ }
+\DoxyCodeLine{00925\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00926\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(combattant-\/>type==2)\{}
+\DoxyCodeLine{00927\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00928\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a7a699ed594a782ddb94670b35d996375}{soin}}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},r\_basEcran,renderer,we,he,allie,event,\mbox{\hyperlink{structpersonnage}{personnage}},map);}
+\DoxyCodeLine{00929\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00930\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(combattant-\/>type==3)\{}
+\DoxyCodeLine{00931\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k=0;}
+\DoxyCodeLine{00932\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(k=0;k<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi;k++)\{}
+\DoxyCodeLine{00933\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(ennemi-\/>combattant[k]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>puissance*2*\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult;}
+\DoxyCodeLine{00934\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00935\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00936\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00937\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jouer=0;}
+\DoxyCodeLine{00938\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ combattant-\/>temps\_recharge=0;}
+\DoxyCodeLine{00939\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00940\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((r\_Fleches\_GEcran.x<=event.button.x)\ \&\&\ (r\_Fleches\_GEcran.x+r\_Fleches\_GEcran.w>=event.button.x)\ \&\&\ ((r\_Fleches\_GEcran.y+r\_Fleches\_GEcran.h)>=event.button.y)\ \&\&\ (r\_Fleches\_GEcran.y<=event.button.y))\{}
+\DoxyCodeLine{00941\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi<=0)\{}
+\DoxyCodeLine{00942\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi-\/1;}
+\DoxyCodeLine{00943\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00944\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00945\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00946\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi-\/-\/;}
+\DoxyCodeLine{00947\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00948\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00949\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00950\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((r\_Fleches\_DEcran.x<=event.button.x)\ \&\&\ (r\_Fleches\_DEcran.x+r\_Fleches\_DEcran.w>=event.button.x)\ \&\&\ ((r\_Fleches\_DEcran.y+r\_Fleches\_DEcran.h)>=event.button.y)\ \&\&\ (r\_Fleches\_DEcran.y<=event.button.y))\{}
+\DoxyCodeLine{00951\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi>=(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi-\/1))\{}
+\DoxyCodeLine{00952\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi=0;}
+\DoxyCodeLine{00953\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00954\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00955\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi++;}
+\DoxyCodeLine{00956\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00957\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00958\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((r\_mult.x<=event.button.x)\ \&\&\ ((r\_mult.x+r\_mult.w)>=event.button.x)\ \&\&\ ((r\_mult.y+r\_mult.h)>=event.button.y)\ \&\&\ (r\_mult.y<=event.button.y))\{}
+\DoxyCodeLine{00959\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ <\ 2.5\ \&\&\ combat\ -\/>\ nb\_point\ >\ 0)\ \{}
+\DoxyCodeLine{00960\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ +=\ 0.5;}
+\DoxyCodeLine{00961\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//augmentation\ barre\ de\ cauchemar}}
+\DoxyCodeLine{00962\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult==1.5)\{}
+\DoxyCodeLine{00963\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightP)\ =\ *(\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightP)\ +\ 1;}
+\DoxyCodeLine{00964\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(*\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightP>\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightMax)\{}
+\DoxyCodeLine{00965\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightP=\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightMax;}
+\DoxyCodeLine{00966\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00967\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ ==\ 2.0)\ \{}
+\DoxyCodeLine{00968\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ diminu\ l'augmentation\ du\ cauchemar}}
+\DoxyCodeLine{00969\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[6]-\/>equipe==1)\{}
+\DoxyCodeLine{00970\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ +=\ 2;}
+\DoxyCodeLine{00971\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00972\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ +=\ 3;}
+\DoxyCodeLine{00973\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00974\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ >\ \mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightMax)\ \{}
+\DoxyCodeLine{00975\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ =\ \mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightMax;}
+\DoxyCodeLine{00976\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00977\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ ==\ 2.5)\ \{}
+\DoxyCodeLine{00978\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[6]-\/>equipe==1)\{}
+\DoxyCodeLine{00979\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ +=\ 5;}
+\DoxyCodeLine{00980\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00981\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ +=\ 6;}
+\DoxyCodeLine{00982\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00983\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ >\ \mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightMax)\ \{}
+\DoxyCodeLine{00984\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ =\ \mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightMax;}
+\DoxyCodeLine{00985\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00986\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00987\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ nb\_point)\ -\/-\/;}
+\DoxyCodeLine{00988\ }
+\DoxyCodeLine{00989\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ }
+\DoxyCodeLine{00990\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ ajoute\ la\ possibilite\ d'augmenter\ 1\ de\ plus\ le\ multiplicateur}}
+\DoxyCodeLine{00991\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ <\ 3.0\ \&\&\ combat\ -\/>\ nb\_point\ >\ 0\ \&\&\ map-\/>listeArtefact[5]-\/>equipe==1)\{}
+\DoxyCodeLine{00992\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ +=\ 0.5;}
+\DoxyCodeLine{00993\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//augmentation\ barre\ de\ cauchemar}}
+\DoxyCodeLine{00994\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ ==\ 3.0)\ \{}
+\DoxyCodeLine{00995\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[6]-\/>equipe==1)\{}
+\DoxyCodeLine{00996\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ +=\ 9;}
+\DoxyCodeLine{00997\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00998\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ +=\ 10;}
+\DoxyCodeLine{00999\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01000\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01001\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (*\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ >\ \mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightMax)\ \{}
+\DoxyCodeLine{01002\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ =\ \mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightMax;}
+\DoxyCodeLine{01003\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01004\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ nb\_point)\ -\/-\/;}
+\DoxyCodeLine{01005\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01006\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01007\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01008\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}\ -\/>\ NightP\ =\ Nightmare\_deb;}
+\DoxyCodeLine{01009\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ nb\_point\ =\ nb\_point\_deb;}
+\DoxyCodeLine{01010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ mult\ =\ 1;}
+\DoxyCodeLine{01011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01018\ }
+\DoxyCodeLine{01019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01020\ }
+\DoxyCodeLine{01021\ }
+\DoxyCodeLine{01022\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//met\ le\ monde\ et\ alex\ en\ cauchemar}}
+\DoxyCodeLine{01024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(*\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightP>=\mbox{\hyperlink{structpersonnage}{personnage}}-\/>NightMax)\{}
+\DoxyCodeLine{01025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>Nightmare=1;}
+\DoxyCodeLine{01026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{structpersonnage}{personnage}}-\/>Nightmare=1;}
+\DoxyCodeLine{01027\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01028\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01029\ }
+\DoxyCodeLine{01030\ }
+\DoxyCodeLine{01031\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//passe\ les\ ennemis\ si\ ils\ sont\ mort}}
+\DoxyCodeLine{01033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi=0;}
+\DoxyCodeLine{01034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi]-\/>mort==1)\{}
+\DoxyCodeLine{01035\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi++;}
+\DoxyCodeLine{01036\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01037\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01038\ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01039\ \}}
+\DoxyCodeLine{01040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01041\ \ \ \ }
+\DoxyCodeLine{01042\ }
+\DoxyCodeLine{01043\ }
+\DoxyCodeLine{01054\ \textcolor{comment}{//fonction\ qui\ regarde\ si\ on\ a\ lancer\ un\ combat}}
+\DoxyCodeLine{01055\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_ab66e455ee98a4dfda8dcf23067525a6c}{debut\_combat}}(SDL\_Event\ event,\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ ennemi,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c)\{}
+\DoxyCodeLine{01056\ \ \ \ \ }
+\DoxyCodeLine{01057\ \ \ \ \ \textcolor{keywordflow}{if}(\ boolcol(c,pp)\ \&\&\ event.type\ ==\ SDL\_KEYDOWN\ \&\&\ event.key.keysym.sym==SDLK\_p\ \&\&\ *(ennemi-\/>combattant[0]-\/>pv)>0)\{}
+\DoxyCodeLine{01058\ \ \ \ \ \ \ \ \ ennemi-\/>combat=1;}
+\DoxyCodeLine{01059\ \ \ \ \ \}\ }
+\DoxyCodeLine{01060\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01061\ \}}
+\DoxyCodeLine{01062\ }
+\DoxyCodeLine{01063\ }
+\DoxyCodeLine{01064\ \textcolor{keywordtype}{int}\ boolMemeCase(\mbox{\hyperlink{structcase__s}{case\_t}}\ c1,\ \mbox{\hyperlink{structcase__s}{case\_t}}\ c2)\{}
+\DoxyCodeLine{01065\ \ \ \ \ \textcolor{keywordflow}{if}(c1.x\ ==\ c2.x\ \&\&\ c1.y\ ==\ c2.y)\{}
+\DoxyCodeLine{01066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01067\ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01069\ \ \ \ \ \}}
+\DoxyCodeLine{01070\ \}}
+\DoxyCodeLine{01071\ }
+\DoxyCodeLine{01072\ \textcolor{keywordtype}{int}\ boolDebutCombat(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ ennemi)\{}
+\DoxyCodeLine{01073\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{01074\ \ \ \ \ \textcolor{keywordtype}{int}\ xp\ =\ pp-\/>c-\/>x,yp\ =\ pp-\/>c-\/>y;}
+\DoxyCodeLine{01075\ \ \ \ \ \textcolor{keywordtype}{int}\ xe\ =\ ennemi-\/>cas-\/>x,ye\ =\ ennemi-\/>cas-\/>y;}
+\DoxyCodeLine{01076\ \ \ \ \ \textcolor{keywordflow}{for}(i=-\/1;i<2;i++)\{}
+\DoxyCodeLine{01077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=-\/1;j<2;j++)\{}
+\DoxyCodeLine{01078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boolMemeCase(cartec-\/>grille.tabGrille[xp][yp],cartec-\/>grille.tabGrille[xe+i][ye+j]))\{}
+\DoxyCodeLine{01079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01080\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01082\ \ \ \ \ \}}
+\DoxyCodeLine{01083\ \ \ \ \ \textcolor{keywordflow}{if}(boolMemeCase(cartec-\/>grille.tabGrille[xp][yp],cartec-\/>grille.tabGrille[xe+2][ye]))\{}
+\DoxyCodeLine{01084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01085\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(boolMemeCase(cartec-\/>grille.tabGrille[xp][yp],cartec-\/>grille.tabGrille[xe-\/2][ye]))\{}
+\DoxyCodeLine{01086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01087\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(boolMemeCase(cartec-\/>grille.tabGrille[xp][yp],cartec-\/>grille.tabGrille[xe][ye+2]))\{}
+\DoxyCodeLine{01088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01089\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(boolMemeCase(cartec-\/>grille.tabGrille[xp][yp],cartec-\/>grille.tabGrille[xe+i][ye-\/2]))\{}
+\DoxyCodeLine{01090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01091\ \ \ \ \ \}}
+\DoxyCodeLine{01092\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01093\ \}}
+\DoxyCodeLine{01094\ }
+\DoxyCodeLine{01103\ \textcolor{comment}{//fonction\ qui\ appelle\ debut\_combat\ avec\ tout\ les\ ennemis\ sur\ la\ map}}
+\DoxyCodeLine{01104\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a14c2400b250f63a0567ea989e68f4254}{debut\_combat\_carte}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec,SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp)\{}
+\DoxyCodeLine{01105\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{01106\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<cartec-\/>nbObj;i++)\{}
+\DoxyCodeLine{01107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(cartec-\/>tabObj[i]-\/>typeObj==2)\{}
+\DoxyCodeLine{01108\ \ \ \ \ \ \ \ \ \ \ \ \ Boss(cartec-\/>tabObj[i],pp);}
+\DoxyCodeLine{01109\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boolDebutCombat(cartec,pp,cartec-\/>tabObj[i]))\{}
+\DoxyCodeLine{01110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)cartec-\/>tabObj[i]-\/>tabObj[0])-\/>combat=1;}
+\DoxyCodeLine{01111\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01113\ \ \ \ \ \}}
+\DoxyCodeLine{01114\ \}}
+\DoxyCodeLine{01115\ }
+\DoxyCodeLine{01124\ \textcolor{comment}{//fonction\ pour\ comparer\ la\ vitesse\ des\ personnages}}
+\DoxyCodeLine{01125\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a11a01ef94ed383d1247ddd96defd67d5}{compare\_vitesse}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ \textcolor{keyword}{const}\ combattant1,\textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ \textcolor{keyword}{const}\ combattant2)\{}
+\DoxyCodeLine{01126\ }
+\DoxyCodeLine{01127\ \ \ \textcolor{keywordflow}{if}(\ combattant1-\/>vitesse\ ==\ combattant2-\/>vitesse\ )\ \{}
+\DoxyCodeLine{01128\ \ \ \ \ \textcolor{keywordflow}{return}(0)\ ;\ }
+\DoxyCodeLine{01129\ \ \ \}}
+\DoxyCodeLine{01130\ \ \ \textcolor{keywordflow}{if}(\ combattant1-\/>vitesse\ >\ combattant2-\/>vitesse)\{}
+\DoxyCodeLine{01131\ \ \ \ \ \textcolor{keywordflow}{return}(-\/1)\ ;\ }
+\DoxyCodeLine{01132\ \ \ \}\ \ }
+\DoxyCodeLine{01133\ \ \ \textcolor{keywordflow}{return}(1)\ ;\ \ \ }
+\DoxyCodeLine{01134\ \}}
+\DoxyCodeLine{01135\ }
+\DoxyCodeLine{01144\ \textcolor{comment}{//encapsulation\ de\ la\ fonction\ compare\_vitesse}}
+\DoxyCodeLine{01145\ \textcolor{keywordtype}{int}\ compare\_vitesse\_enc(\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ \textcolor{keyword}{const}\ combattant1\ ,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{void}\ *\ \textcolor{keyword}{const}\ combattant2\ )\ \{}
+\DoxyCodeLine{01146\ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *comb1e\ =\ *(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}**)combattant1;}
+\DoxyCodeLine{01147\ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *comb2e\ =\ *(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}**)combattant2;}
+\DoxyCodeLine{01148\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{combat_8c_a11a01ef94ed383d1247ddd96defd67d5}{compare\_vitesse}}(\ \ \ comb1e\ ,comb2e\ );}
+\DoxyCodeLine{01149\ \}}
+\DoxyCodeLine{01150\ }
+\DoxyCodeLine{01157\ \textcolor{comment}{//fonction\ d'initialisation\ de\ la\ structure\ combat}}
+\DoxyCodeLine{01158\ \mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a4c96e4b113cdef70898987ec2643b58a}{init\_combat}}()\{}
+\DoxyCodeLine{01159\ \ \ \ \ \mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}=malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structcombat__s}{combat\_t}}));}
+\DoxyCodeLine{01160\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie=0;}
+\DoxyCodeLine{01161\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi=0;}
+\DoxyCodeLine{01162\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult=0;}
+\DoxyCodeLine{01163\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_point=0;}
+\DoxyCodeLine{01164\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi=0;}
+\DoxyCodeLine{01165\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant=0;}
+\DoxyCodeLine{01166\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>num\_tour=0;}
+\DoxyCodeLine{01167\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}};}
+\DoxyCodeLine{01168\ }
+\DoxyCodeLine{01169\ \}}
+\DoxyCodeLine{01170\ }
+\DoxyCodeLine{01171\ }
+\DoxyCodeLine{01172\ }
+\DoxyCodeLine{01173\ \textcolor{keywordtype}{int}\ boolTousMort(\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ ennemi)\{}
+\DoxyCodeLine{01174\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{01175\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;ennemi-\/>combattant[i];i++)\{}
+\DoxyCodeLine{01176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!ennemi-\/>combattant[i]-\/>mort)\textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01177\ \ \ \ \ \}}
+\DoxyCodeLine{01178\ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01179\ \}}
+\DoxyCodeLine{01180\ }
+\DoxyCodeLine{01194\ \textcolor{comment}{//fonction\ qui\ appelle\ combat\ avec\ tout\ les\ ennemis\ sur\ la\ map}}
+\DoxyCodeLine{01195\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_afe0ef3cd6f4ea09245e5a79c3d038384}{combat\_carte}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec,\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Event\ event,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\textcolor{keywordtype}{int}\ *\ etat\_boss)\{}
+\DoxyCodeLine{01196\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{01197\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<cartec-\/>nbObj;i++)\{}
+\DoxyCodeLine{01198\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(cartec-\/>tabObj[i]-\/>typeObj==2\ )\{}
+\DoxyCodeLine{01199\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}(we,he,event,renderer,cartec-\/>tabObj[i]-\/>tabObj[0],pp,map,etat\_boss);}
+\DoxyCodeLine{01200\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boolTousMort((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)cartec-\/>tabObj[i]-\/>tabObj[0]))\{}
+\DoxyCodeLine{01201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)cartec-\/>tabObj[i]-\/>tabObj[0])-\/>forme\ ==\ 3)\{}
+\DoxyCodeLine{01202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (map-\/>zoneChargee)}
+\DoxyCodeLine{01203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :}
+\DoxyCodeLine{01205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cartec-\/>tabObj[cartec-\/>nbObj]=init\_obj(cartec-\/>tabObj[i]-\/>cas,197,5,2);}
+\DoxyCodeLine{01206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cartec-\/>nbObj++;\ }
+\DoxyCodeLine{01207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :}
+\DoxyCodeLine{01209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cartec-\/>tabObj[cartec-\/>nbObj]=init\_obj(cartec-\/>tabObj[i]-\/>cas,197,5,1);}
+\DoxyCodeLine{01210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cartec-\/>nbObj++;\ }
+\DoxyCodeLine{01211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :}
+\DoxyCodeLine{01213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cartec-\/>tabObj[cartec-\/>nbObj]=init\_obj(cartec-\/>tabObj[i]-\/>cas,197,5,3);}
+\DoxyCodeLine{01214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cartec-\/>nbObj++;\ }
+\DoxyCodeLine{01215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{01217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ save\_ennemi(*cartec,*cartec-\/>tabObj[i]);}
+\DoxyCodeLine{01221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dest\_obj(cartec,i);}
+\DoxyCodeLine{01222\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01223\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01224\ \ \ \ \ \}}
+\DoxyCodeLine{01225\ \}}
+\DoxyCodeLine{01226\ }
+\DoxyCodeLine{01241\ \textcolor{comment}{//fonction\ qui\ s'occupe\ du\ combat\ avec\ un\ ennemi}}
+\DoxyCodeLine{01242\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}(\textcolor{keywordtype}{int}\ *we,\textcolor{keywordtype}{int}\ *he,SDL\_Event\ event,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ ennemi,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\textcolor{keywordtype}{int}\ *\ etat\_boss)\{}
+\DoxyCodeLine{01243\ \ \ \ \ \textcolor{keywordflow}{if}(ennemi-\/>combat)\{}
+\DoxyCodeLine{01244\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01245\ }
+\DoxyCodeLine{01246\ }
+\DoxyCodeLine{01247\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i=0,allie=0;}
+\DoxyCodeLine{01248\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_combattant=0;}
+\DoxyCodeLine{01249\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ j;}
+\DoxyCodeLine{01250\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ Nennemi=0;}
+\DoxyCodeLine{01251\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ alexMort=0;}
+\DoxyCodeLine{01252\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ attenteAda=0;}
+\DoxyCodeLine{01253\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ DejaNight=0;}
+\DoxyCodeLine{01254\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ alexMortEnnemi=0;}
+\DoxyCodeLine{01255\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ attenteAdaEnnemi=0;}
+\DoxyCodeLine{01256\ }
+\DoxyCodeLine{01257\ }
+\DoxyCodeLine{01258\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ copieEnnemi;}
+\DoxyCodeLine{01259\ \ \ \ \ \ \ \ \ copieEnnemi=*ennemi;}
+\DoxyCodeLine{01260\ }
+\DoxyCodeLine{01261\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01262\ }
+\DoxyCodeLine{01263\ \ \ \ \ \ \ \ \ \textcolor{comment}{//compte\ le\ nombre\ d'allie\ dans\ l'equipe}}
+\DoxyCodeLine{01264\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;i<4;i++)\{}
+\DoxyCodeLine{01265\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(pp-\/>equipe[i]!=NULL)\{}
+\DoxyCodeLine{01266\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allie++;}
+\DoxyCodeLine{01267\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01268\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01269\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *tabAllie[allie];}
+\DoxyCodeLine{01270\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *copieAllie1;}
+\DoxyCodeLine{01271\ }
+\DoxyCodeLine{01272\ \ \ \ \ \ \ \ \ \textcolor{comment}{//copie\ des\ allies\ pour\ pouvoir\ changer\ ses\ statistiques\ pendant\ le\ combat}}
+\DoxyCodeLine{01273\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<allie;i++)\{}
+\DoxyCodeLine{01274\ \ \ \ \ \ \ \ \ \ \ \ \ copieAllie1=init\_combattant(pp-\/>equipe[i]-\/>nom,*(pp-\/>equipe[i]-\/>pv),pp-\/>equipe[i]-\/>vitesse,pp-\/>equipe[i]-\/>camp,pp-\/>equipe[i]-\/>indice\_portrait,pp-\/>equipe[i]-\/>indice\_sprite,pp-\/>equipe[i]-\/>type,pp-\/>equipe[i]-\/>temps\_recharge\_max,pp-\/>equipe[i]-\/>puissance,pp-\/>equipe[i]-\/>forme,pp-\/>equipe[i]-\/>pvMax);}
+\DoxyCodeLine{01275\ \ \ \ \ \ \ \ \ \ \ \ \ tabAllie[i]=copieAllie1;}
+\DoxyCodeLine{01276\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01277\ }
+\DoxyCodeLine{01278\ }
+\DoxyCodeLine{01279\ }
+\DoxyCodeLine{01280\ }
+\DoxyCodeLine{01281\ \ \ \ \ \ \ \ \ \textcolor{comment}{//dans\ le\ mode\ Nightmare}}
+\DoxyCodeLine{01282\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare)\{}
+\DoxyCodeLine{01283\ \ \ \ \ \ \ \ \ \ \ \ \ i=0;}
+\DoxyCodeLine{01284\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(ennemi-\/>combattant[i]!=NULL\ \&\&\ i<4)\{}
+\DoxyCodeLine{01285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ennemi-\/>combattant[i]-\/>mort==0)\{}
+\DoxyCodeLine{01286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ennemi-\/>combattant[i]-\/>pvMax\ =\ ennemi-\/>combattant[i]-\/>pvMax*(map-\/>nvZone+map-\/>bonusZoneN);}
+\DoxyCodeLine{01287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ennemi-\/>combattant[i]-\/>puissance\ =\ ennemi-\/>combattant[i]-\/>puissance*(map-\/>nvZone+map-\/>bonusZoneN);}
+\DoxyCodeLine{01288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(ennemi-\/>combattant[i]-\/>pv)\ =\ *(ennemi-\/>combattant[i]-\/>pv)*(map-\/>nvZone+map-\/>bonusZoneN);}
+\DoxyCodeLine{01289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{01291\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01292\ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{01293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (pp\ -\/>\ equipe[i]\ !=\ NULL\ \&\&\ i\ <\ 4)\ \{}
+\DoxyCodeLine{01294\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pp\ -\/>\ equipe[i]\ -\/>\ mort\ ==\ 0)\ \{}
+\DoxyCodeLine{01295\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ les\ pv\ max}}
+\DoxyCodeLine{01296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[2]-\/>equipe==1)\{}
+\DoxyCodeLine{01297\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ =\ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ *\ (map\ -\/>\ nvEquipe\ +\ map\ -\/>\ bonusEquipeN+1);}
+\DoxyCodeLine{01298\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ =\ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ *\ (map\ -\/>\ nvEquipe\ +\ map\ -\/>\ bonusEquipeN+1);}
+\DoxyCodeLine{01299\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ =\ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ *\ (map\ -\/>\ nvEquipe\ +\ map\ -\/>\ bonusEquipeN);}
+\DoxyCodeLine{01302\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ =\ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ *\ (map\ -\/>\ nvEquipe\ +\ map\ -\/>\ bonusEquipeN);}
+\DoxyCodeLine{01303\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01304\ }
+\DoxyCodeLine{01305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ l'attaque}}
+\DoxyCodeLine{01306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[0]-\/>equipe==1)\{}
+\DoxyCodeLine{01307\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ =\ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ *\ (map\ -\/>\ nvEquipe\ +\ map\ -\/>\ bonusEquipeN+1);}
+\DoxyCodeLine{01308\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01310\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ =\ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ *\ (map\ -\/>\ nvEquipe\ +\ map\ -\/>\ bonusEquipeN);}
+\DoxyCodeLine{01311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01312\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ la\ vitesse}}
+\DoxyCodeLine{01313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[1]-\/>equipe==1)\{}
+\DoxyCodeLine{01314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ vitesse\ =\ pp\ -\/>\ equipe[i]\ -\/>\ vitesse\ *\ 1.5;}
+\DoxyCodeLine{01315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01316\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ diminue\ le\ temps\ de\ recharge\ de\ l'attaque\ special}}
+\DoxyCodeLine{01317\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[7]-\/>equipe==1)\{}
+\DoxyCodeLine{01318\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ temps\_recharge\_max\ =pp\ -\/>\ equipe[i]\ -\/>\ temps\_recharge\_max-\/1;}
+\DoxyCodeLine{01319\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01320\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01321\ }
+\DoxyCodeLine{01322\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01323\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{01324\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01325\ \ \ \ \ \ \ \ \ \ \ \ \ DejaNight=1;}
+\DoxyCodeLine{01326\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01327\ \ \ \ \ \ \ \ \ \textcolor{comment}{//dans\ le\ mode\ normal}}
+\DoxyCodeLine{01328\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01329\ \ \ \ \ \ \ \ \ \ \ \ \ i=0;}
+\DoxyCodeLine{01330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(ennemi-\/>combattant[i]!=NULL\ \&\&\ i<4)\{}
+\DoxyCodeLine{01331\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(ennemi-\/>combattant[i]-\/>pv)\ =\ *(ennemi-\/>combattant[i]-\/>pv)*map-\/>nvZone;}
+\DoxyCodeLine{01332\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ennemi-\/>combattant[i]-\/>pvMax\ =\ ennemi-\/>combattant[i]-\/>pvMax*map-\/>nvZone;}
+\DoxyCodeLine{01333\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ennemi-\/>combattant[i]-\/>puissance\ =\ ennemi-\/>combattant[i]-\/>puissance*map-\/>nvZone;}
+\DoxyCodeLine{01334\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{01335\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01336\ \ \ \ \ \ \ \ \ \ \ \ \ i\ =\ 0;}
+\DoxyCodeLine{01337\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (pp\ -\/>\ equipe[i]\ !=\ NULL\ \&\&\ i\ <\ 4)\ \{}
+\DoxyCodeLine{01338\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ les\ pv\ max}}
+\DoxyCodeLine{01339\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[2]-\/>equipe==1)\{}
+\DoxyCodeLine{01340\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ =\ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ *(\ map\ -\/>\ nvEquipe+1);}
+\DoxyCodeLine{01341\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ =\ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ *\ (map\ -\/>\ nvEquipe+1);}
+\DoxyCodeLine{01342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ =\ *pp\ -\/>\ equipe[i]\ -\/>\ pv\ *\ map\ -\/>\ nvEquipe;}
+\DoxyCodeLine{01345\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ =\ pp\ -\/>\ equipe[i]\ -\/>\ pvMax\ *\ map\ -\/>\ nvEquipe;}
+\DoxyCodeLine{01346\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01347\ }
+\DoxyCodeLine{01348\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ l'attaque}}
+\DoxyCodeLine{01349\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[0]-\/>equipe==1)\{}
+\DoxyCodeLine{01350\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ =\ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ *\ (map\ -\/>\ nvEquipe+1);}
+\DoxyCodeLine{01351\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01353\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ =\ pp\ -\/>\ equipe[i]\ -\/>\ puissance\ *\ map\ -\/>\ nvEquipe;}
+\DoxyCodeLine{01354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01355\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ la\ vitesse}}
+\DoxyCodeLine{01356\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[1]-\/>equipe==1)\{}
+\DoxyCodeLine{01357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ vitesse\ =\ pp\ -\/>\ equipe[i]\ -\/>\ vitesse\ *\ 1.5;}
+\DoxyCodeLine{01358\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01359\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ diminue\ le\ temps\ de\ recharge\ de\ l'attaque\ special}}
+\DoxyCodeLine{01360\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[7]-\/>equipe==1)\{}
+\DoxyCodeLine{01361\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp\ -\/>\ equipe[i]\ -\/>\ temps\_recharge\_max\ =pp\ -\/>\ equipe[i]\ -\/>\ temps\_recharge\_max-\/1;}
+\DoxyCodeLine{01362\ }
+\DoxyCodeLine{01363\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01364\ }
+\DoxyCodeLine{01365\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01366\ }
+\DoxyCodeLine{01367\ }
+\DoxyCodeLine{01368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{01369\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01370\ }
+\DoxyCodeLine{01371\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01372\ \ \ \ \ }
+\DoxyCodeLine{01373\ }
+\DoxyCodeLine{01374\ }
+\DoxyCodeLine{01375\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}=\mbox{\hyperlink{combat_8c_a4c96e4b113cdef70898987ec2643b58a}{init\_combat}}();}
+\DoxyCodeLine{01376\ }
+\DoxyCodeLine{01377\ \ \ \ \ \ \ \ \ \textcolor{comment}{//compte\ le\ nombre\ d'allie\ dans\ l'equipe}}
+\DoxyCodeLine{01378\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;i<4;i++)\{}
+\DoxyCodeLine{01379\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(pp-\/>equipe[i]!=NULL)\{}
+\DoxyCodeLine{01380\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie++;}
+\DoxyCodeLine{01381\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[i]=pp-\/>equipe[i];}
+\DoxyCodeLine{01382\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01383\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01384\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01385\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_ennemi=0;}
+\DoxyCodeLine{01386\ }
+\DoxyCodeLine{01387\ \ \ \ \ \ \ \ \ \textcolor{comment}{//compte\ le\ nombre\ d'ennemi}}
+\DoxyCodeLine{01388\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;i<4;i++)\{}
+\DoxyCodeLine{01389\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ennemi-\/>combattant[i]!=NULL)\{}
+\DoxyCodeLine{01390\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi++;}
+\DoxyCodeLine{01391\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Nennemi++;}
+\DoxyCodeLine{01392\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]=ennemi-\/>combattant[i];}
+\DoxyCodeLine{01393\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01394\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01395\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01396\ \ \ \ \ \ \ \ \ nb\_combattant=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi+\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;}
+\DoxyCodeLine{01397\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<8;i++)\{}
+\DoxyCodeLine{01398\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[i]=NULL;}
+\DoxyCodeLine{01399\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01400\ }
+\DoxyCodeLine{01401\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{01402\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[i]=pp-\/>equipe[i];}
+\DoxyCodeLine{01403\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01404\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01405\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie,j=0;i<nb\_combattant;i++,j++)\{}
+\DoxyCodeLine{01406\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[i]=ennemi-\/>combattant[j];}
+\DoxyCodeLine{01407\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01408\ }
+\DoxyCodeLine{01409\ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ le\ nombre\ de\ point\ au\ debut}}
+\DoxyCodeLine{01410\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[4]-\/>equipe==1)\{}
+\DoxyCodeLine{01411\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ nb\_point\ =\ 3;}
+\DoxyCodeLine{01412\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01413\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01414\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ nb\_point\ =\ 2;}
+\DoxyCodeLine{01415\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01416\ }
+\DoxyCodeLine{01417\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01418\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}\ -\/>\ num\_tour\ =\ 1;}
+\DoxyCodeLine{01419\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01420\ }
+\DoxyCodeLine{01421\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(Nennemi>0\ \&\&\ allie>0)\{}
+\DoxyCodeLine{01422\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//trie\ vitesse}}
+\DoxyCodeLine{01423\ }
+\DoxyCodeLine{01424\ \ \ \ \ \ \ \ \ \ \ \ \ qsort(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant,nb\_combattant,\textcolor{keyword}{sizeof}(\textcolor{keywordtype}{void}\ *),compare\_vitesse\_enc);}
+\DoxyCodeLine{01425\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01426\ }
+\DoxyCodeLine{01427\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant=0;\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant<nb\_combattant\ \&\&\ Nennemi>0\ \&\&\ allie>0;\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant++)\{}
+\DoxyCodeLine{01428\ }
+\DoxyCodeLine{01429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult=1;}
+\DoxyCodeLine{01430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(allie\ !=\ 0)\{}
+\DoxyCodeLine{01431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a8a2ebe3dafdfa818fa29088616e163d5}{affichage\_combat}}(we,he,renderer,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},0,pp,map);}
+\DoxyCodeLine{01432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Delay(500);}
+\DoxyCodeLine{01434\ }
+\DoxyCodeLine{01435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>camp==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>mort==0)\{}
+\DoxyCodeLine{01436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//regarde\ si\ l'allie\ peut\ jouer}}
+\DoxyCodeLine{01437\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>status==0)\{}
+\DoxyCodeLine{01438\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attaque\_allie(we,he,event,renderer,ennemi,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant],Nennemi,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},allie,pp,map);}
+\DoxyCodeLine{01439\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==3\ \&\&\ attenteAda!=0)\{}
+\DoxyCodeLine{01440\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attenteAda-\/-\/;}
+\DoxyCodeLine{01441\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01442\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01443\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01444\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passif\ de\ Lou\ ennemi,si\ l'allie\ doit\ passer\ son\ tour,\ il\ perd\ aussi\ des\ pv}}
+\DoxyCodeLine{01445\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_ennemi;i++)\{}
+\DoxyCodeLine{01446\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>forme==3\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>type==1)\ ||\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==4\ \&\&\ map-\/>Nightmare==1)\ )\{}
+\DoxyCodeLine{01447\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>ennemi[i]-\/>puissance*1.5;}
+\DoxyCodeLine{01448\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01450\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>status=0;}
+\DoxyCodeLine{01451\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01452\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>temps\_recharge++;}
+\DoxyCodeLine{01453\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01454\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01455\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>camp==1\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>mort==0)\{}
+\DoxyCodeLine{01456\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>status==0)\{}
+\DoxyCodeLine{01457\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a5abe0330656d7653985248d140f74db0}{attaque\_ennemi}}(nb\_combattant,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}});}
+\DoxyCodeLine{01458\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==3\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==3\ \&\&\ attenteAdaEnnemi!=0)\{}
+\DoxyCodeLine{01459\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attenteAdaEnnemi-\/-\/;}
+\DoxyCodeLine{01460\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01461\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01462\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passif\ Lou\ en\ mode\ cauchemar,\ si\ l'ennemi\ doit\ passer\ son\ tour,\ il\ perd\ aussi\ des\ pv}}
+\DoxyCodeLine{01463\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01464\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare)\{}
+\DoxyCodeLine{01465\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k=0;}
+\DoxyCodeLine{01466\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(k=0;k<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;k++)\{}
+\DoxyCodeLine{01467\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>type==1\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>mort==0\ )\{}
+\DoxyCodeLine{01468\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>pv)-\/=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>puissance*1.5;}
+\DoxyCodeLine{01469\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01470\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01471\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01472\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>status=0;}
+\DoxyCodeLine{01473\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01474\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01475\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<nb\_combattant;j++)\{}
+\DoxyCodeLine{01476\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passif\ d'Alex\ en\ mode\ cauchemar,\ si\ il\ meurt\ il\ peut\ ressuciter\ une\ fois}}
+\DoxyCodeLine{01477\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==0\ \&\&\ alexMort==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>type==0\ \&\&\ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pv)<=0\ \ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>mort==0\ \&\&\ map-\/>Nightmare\ )\{}
+\DoxyCodeLine{01478\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pv)=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pvMax;}
+\DoxyCodeLine{01479\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alexMort=1;}
+\DoxyCodeLine{01480\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01481\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01482\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passif\ d'Alex\ ennemi,\ si\ il\ meurt\ il\ peut\ ressuciter\ une\ fois}}
+\DoxyCodeLine{01483\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==1\ \&\&\ alexMortEnnemi==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>type==0\ \&\&\ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pv)<=0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>forme==3)\ \&\&\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==4\ \&\&\ map-\/>Nightmare==1\ \&\&\ alexMortEnnemi==0)\ )\{}
+\DoxyCodeLine{01484\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pv)=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pvMax;}
+\DoxyCodeLine{01485\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ alexMortEnnemi=1;}
+\DoxyCodeLine{01486\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01487\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01488\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//compte\ le\ nombre\ d'allie\ dans\ l'equipe}}
+\DoxyCodeLine{01489\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=0;j<nb\_combattant;j++)\{}
+\DoxyCodeLine{01490\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>pv)<=0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>mort==0)\{}
+\DoxyCodeLine{01491\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>mort=1;}
+\DoxyCodeLine{01492\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==0\ \ )\{}
+\DoxyCodeLine{01493\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allie-\/-\/;}
+\DoxyCodeLine{01494\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01495\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[j]-\/>camp==1)\{}
+\DoxyCodeLine{01496\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Nennemi-\/-\/;}
+\DoxyCodeLine{01497\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01498\ }
+\DoxyCodeLine{01499\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(Nennemi==0\ ||\ allie==0)\{}
+\DoxyCodeLine{01500\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderClear(renderer);}
+\DoxyCodeLine{01501\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Rect\ rect=\{0,0,*we,*he\};}
+\DoxyCodeLine{01502\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,0,0,0,255);}
+\DoxyCodeLine{01503\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderFillRect(renderer,\&rect);}
+\DoxyCodeLine{01504\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderPresent(renderer);}
+\DoxyCodeLine{01505\ }
+\DoxyCodeLine{01506\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01507\ }
+\DoxyCodeLine{01508\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01509\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01510\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01511\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ DejaNight==0)\{}
+\DoxyCodeLine{01512\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DejaNight=1;}
+\DoxyCodeLine{01513\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i=0;}
+\DoxyCodeLine{01514\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(ennemi-\/>combattant[i]!=NULL\ \&\&\ i<4)\{}
+\DoxyCodeLine{01515\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ennemi-\/>combattant[i]-\/>mort==0)\{}
+\DoxyCodeLine{01516\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ennemi-\/>combattant[i]-\/>pvMax\ =\ ennemi-\/>combattant[i]-\/>pvMax*(map-\/>nvZone+map-\/>bonusZoneN);}
+\DoxyCodeLine{01517\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ennemi-\/>combattant[i]-\/>puissance\ =\ ennemi-\/>combattant[i]-\/>puissance*(map-\/>nvZone+map-\/>bonusZoneN);}
+\DoxyCodeLine{01518\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(ennemi-\/>combattant[i]-\/>pv)\ =\ *(ennemi-\/>combattant[i]-\/>pv)*(map-\/>nvZone+map-\/>bonusZoneN);}
+\DoxyCodeLine{01519\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01520\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{01521\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01522\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i=0;}
+\DoxyCodeLine{01523\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(pp-\/>equipe[i]!=NULL\ \&\&\ i<4)\{}
+\DoxyCodeLine{01524\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(pp-\/>equipe[i]-\/>mort==0)\{}
+\DoxyCodeLine{01525\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>equipe[i]-\/>pvMax\ =\ pp-\/>equipe[i]-\/>pvMax*(map-\/>nvEquipe+map-\/>bonusEquipeN);}
+\DoxyCodeLine{01526\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(pp-\/>equipe[i]-\/>pv)\ =pp-\/>equipe[i]-\/>pvMax\ ;}
+\DoxyCodeLine{01527\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>equipe[i]-\/>puissance\ =\ pp-\/>equipe[i]-\/>puissance*(map-\/>nvEquipe+map-\/>bonusEquipeN);}
+\DoxyCodeLine{01528\ }
+\DoxyCodeLine{01529\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{01531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passif\ Ada\ en\ mode\ cauchemar,\ elle\ peut\ jouer\ 2\ fois\ de\ suite\ (attente\ de\ 2\ tour)}}
+\DoxyCodeLine{01534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==3\ \&\&\ attenteAda==0\ \&\&\ Nennemi!=0)\{}
+\DoxyCodeLine{01535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant-\/-\/;}
+\DoxyCodeLine{01536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attenteAda=2;}
+\DoxyCodeLine{01537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//passif\ Ada\ ennemi,\ elle\ peut\ jouer\ 2\ fois\ de\ suite\ (attente\ de\ 2\ tour)}}
+\DoxyCodeLine{01539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>type==3\ \&\&\ attenteAdaEnnemi==0\ \&\&\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==3)\ ||\ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>forme==4\ \&\&\ map-\/>Nightmare==1\ \&\&\ attenteAda==0))\{}
+\DoxyCodeLine{01540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant-\/-\/;}
+\DoxyCodeLine{01541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ attenteAdaEnnemi=2;}
+\DoxyCodeLine{01542\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01543\ }
+\DoxyCodeLine{01544\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01545\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant=0;}
+\DoxyCodeLine{01546\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>num\_tour++;}
+\DoxyCodeLine{01547\ }
+\DoxyCodeLine{01548\ }
+\DoxyCodeLine{01549\ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_Delay(100);}
+\DoxyCodeLine{01550\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_point<6)\{}
+\DoxyCodeLine{01551\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_point)++;}
+\DoxyCodeLine{01552\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01553\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ ressusite\ les\ allies}}
+\DoxyCodeLine{01554\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(allie==0\ \&\&\ map-\/>listeArtefact[3]-\/>equipe==1)\{}
+\DoxyCodeLine{01555\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k;}
+\DoxyCodeLine{01556\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(k=0;k<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;k++)\{}
+\DoxyCodeLine{01557\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>pv=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>pvMax/2;}
+\DoxyCodeLine{01558\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[k]-\/>mort=0;}
+\DoxyCodeLine{01559\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ allie++;}
+\DoxyCodeLine{01560\ }
+\DoxyCodeLine{01561\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01562\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>listeArtefact[3]-\/>equipe=0;}
+\DoxyCodeLine{01563\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>listeArtefact[3]-\/>possession=0;}
+\DoxyCodeLine{01564\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01565\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01566\ }
+\DoxyCodeLine{01567\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Si\ les\ alliees\ on\ tuer\ tous\ les\ ennemis}}
+\DoxyCodeLine{01568\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(Nennemi==0)\{}
+\DoxyCodeLine{01569\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01570\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//cherche\ si\ dans\ les\ ennemis\ ils\ y\ avait\ un\ boss}}
+\DoxyCodeLine{01571\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ennemi-\/>forme==3\ ||\ ennemi-\/>forme==4)\{}
+\DoxyCodeLine{01572\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//si\ il\ y\ avait\ un\ boss\ et\ qu'on\ etait\ en\ mode\ nightmare,\ met\ la\ barre\ de\ cauchemar\ de\ moitier}}
+\DoxyCodeLine{01573\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>Nightmare)\{}
+\DoxyCodeLine{01574\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>Nightmare=0;}
+\DoxyCodeLine{01575\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *pp-\/>Nightmare=0;}
+\DoxyCodeLine{01576\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *pp-\/>NightP=(pp-\/>NightMax)/2;}
+\DoxyCodeLine{01577\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>bonusEquipeN=3;}
+\DoxyCodeLine{01578\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map-\/>bonusZoneN=1;}
+\DoxyCodeLine{01579\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01580\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01581\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//vide\ la\ barre\ de\ cauchemar}}
+\DoxyCodeLine{01582\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01583\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *pp-\/>NightP=0;}
+\DoxyCodeLine{01584\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01585\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01586\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ le\ nombre\ d'argent\ gagner}}
+\DoxyCodeLine{01587\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[8]-\/>equipe==1)\{}
+\DoxyCodeLine{01588\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map\ -\/>\ argent\ +=\ 15;}
+\DoxyCodeLine{01589\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01590\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map\ -\/>\ argent\ +=\ 10;}
+\DoxyCodeLine{01591\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01592\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//artefact\ qui\ augmente\ le\ nombre\ de\ niveau\ gagner}}
+\DoxyCodeLine{01593\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map-\/>listeArtefact[9]-\/>equipe==1)\{}
+\DoxyCodeLine{01594\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map\ -\/>\ nvEquipe\ +=\ 2;}
+\DoxyCodeLine{01595\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01596\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map\ -\/>\ nvEquipe\ +=\ 1;}
+\DoxyCodeLine{01597\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01598\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01599\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(ennemi-\/>forme==4)\{}
+\DoxyCodeLine{01600\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *\ etat\_boss=1;}
+\DoxyCodeLine{01601\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01602\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(ennemi-\/>forme==3)\{}
+\DoxyCodeLine{01603\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_af24e4ba7ca53d2dd96986d2d4872f1cb}{newCompagnon}}(\&pp,ennemi);}
+\DoxyCodeLine{01604\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(map-\/>zoneChargee)\{}
+\DoxyCodeLine{01605\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ map-\/>Zone2\ =\ 2\ ;map-\/>cle\ =\ 1;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01606\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :\ map-\/>Zone3\ =\ 2\ ;map-\/>talisman\ =\ 1;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01607\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :\ map-\/>Zone4\ =\ 2\ ;map-\/>plongee\ =\ 1;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01608\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5\ :\ map-\/>Zone5\ =\ 2\ ;\textcolor{keywordflow}{break};}
+\DoxyCodeLine{01609\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ default\ :\ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{01610\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \ \ }
+\DoxyCodeLine{01611\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>nb\_allie++;}
+\DoxyCodeLine{01612\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01613\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//si\ on\ est\ en\ cauchemar\ sans\ avoir\ attaquer\ de\ boss\ augmente\ les\ bonus\ d'equipe\ et\ de\ zone\ en\ mode\ cauchemar}}
+\DoxyCodeLine{01614\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (map\ -\/>\ Nightmare)\ \{}
+\DoxyCodeLine{01615\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map\ -\/>\ bonusEquipeN\ +=\ 0.5;}
+\DoxyCodeLine{01616\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ map\ -\/>\ bonusZoneN\ +=\ 1;}
+\DoxyCodeLine{01617\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01618\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01619\ }
+\DoxyCodeLine{01620\ \ \ \ \ \ \ \ \ \textcolor{comment}{//SDL\_RenderPresent(renderer);}}
+\DoxyCodeLine{01621\ \ \ \ \ \ \ \ \ *ennemi\ =\ copieEnnemi;}
+\DoxyCodeLine{01622\ }
+\DoxyCodeLine{01623\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{01624\ }
+\DoxyCodeLine{01625\ }
+\DoxyCodeLine{01626\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_ad99a3e5f895d581276a65237782c6f46}{copier\_combattant}}(pp-\/>equipe[i],\ tabAllie[i]);}
+\DoxyCodeLine{01627\ \ \ \ \ \ \ \ \ \ \ \ \ strcpy(pp-\/>equipe[i]-\/>nom,tabAllie[i]-\/>nom);}
+\DoxyCodeLine{01628\ }
+\DoxyCodeLine{01629\ }
+\DoxyCodeLine{01630\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01631\ \ \ \ \ \ \ \ \ ennemi-\/>combat=0;}
+\DoxyCodeLine{01632\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie;i++)\{}
+\DoxyCodeLine{01633\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a86609479bf6edf9d746cb7c4aab0db66}{desctruction\_combattant}}(tabAllie[i]);}
+\DoxyCodeLine{01634\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01635\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a5b21bda13ba257e7e0969b24b654f9f5}{desctruction\_combat}}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}});}
+\DoxyCodeLine{01636\ }
+\DoxyCodeLine{01637\ }
+\DoxyCodeLine{01638\ \ \ \ \ \}}
+\DoxyCodeLine{01639\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{01640\ \}}
+\DoxyCodeLine{01649\ \textcolor{comment}{//fonction\ qui\ copie\ un\ combattant\ dans\ un\ autre}}
+\DoxyCodeLine{01650\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_ad99a3e5f895d581276a65237782c6f46}{copier\_combattant}}(\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant,\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattantcopie)\{}
+\DoxyCodeLine{01651\ \ \ \ \ combattantcopie-\/>mort=combattant-\/>mort\ ;}
+\DoxyCodeLine{01652\ \ \ \ \ *(combattantcopie-\/>pv)=*(combattant-\/>pv)\ ;}
+\DoxyCodeLine{01653\ \ \ \ \ \textcolor{keywordflow}{if}(*(combattantcopie-\/>pv)>combattantcopie-\/>pvMax)\{}
+\DoxyCodeLine{01654\ \ \ \ \ \ \ \ \ *(combattantcopie-\/>pv)\ =\ combattantcopie-\/>pvMax;}
+\DoxyCodeLine{01655\ \ \ \ \ \}}
+\DoxyCodeLine{01656\ \ \ \ \ strcpy(combattant-\/>nom,combattantcopie-\/>nom);}
+\DoxyCodeLine{01657\ \ \ \ \ combattant-\/>pvMax=combattantcopie-\/>pvMax;}
+\DoxyCodeLine{01658\ \ \ \ \ combattant-\/>vitesse=combattantcopie-\/>vitesse;}
+\DoxyCodeLine{01659\ \ \ \ \ combattant-\/>mort=combattantcopie-\/>mort;}
+\DoxyCodeLine{01660\ \ \ \ \ combattant-\/>camp=combattantcopie-\/>camp;}
+\DoxyCodeLine{01661\ \ \ \ \ combattant-\/>temps\_recharge=combattantcopie-\/>temps\_recharge;}
+\DoxyCodeLine{01662\ \ \ \ \ combattant-\/>temps\_recharge\_max=combattantcopie-\/>temps\_recharge\_max;}
+\DoxyCodeLine{01663\ \ \ \ \ combattant-\/>indice\_portrait=combattantcopie-\/>indice\_portrait;}
+\DoxyCodeLine{01664\ \ \ \ \ combattant-\/>indice\_sprite=combattantcopie-\/>indice\_sprite;}
+\DoxyCodeLine{01665\ \ \ \ \ combattant-\/>type=combattantcopie-\/>type;}
+\DoxyCodeLine{01666\ \ \ \ \ combattant-\/>status=combattantcopie-\/>status;}
+\DoxyCodeLine{01667\ \ \ \ \ combattant-\/>puissance=combattantcopie-\/>puissance;}
+\DoxyCodeLine{01668\ \ \ \ \ combattant-\/>forme=combattantcopie-\/>forme;}
+\DoxyCodeLine{01669\ \}}
+\DoxyCodeLine{01679\ \textcolor{comment}{//fonction\ qui\ affiche\ la\ barre\ de\ cauchemar}}
+\DoxyCodeLine{01680\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a62514ac450b1abb2c25b9e296abf75f0}{barreCauchemard}}(\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pmv,SDL\_Renderer\ *\ renderer,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{01681\ \ \ \ \ \ \ \ \ \textcolor{comment}{//Variable\ Night}}
+\DoxyCodeLine{01682\ \ \ \ \ \textcolor{keywordtype}{int}\ xn\ =\ 10;}
+\DoxyCodeLine{01683\ \ \ \ \ \textcolor{keywordtype}{int}\ yn\ =\ -\/5;}
+\DoxyCodeLine{01684\ \ \ \ \ \textcolor{keywordtype}{int}\ pn\ =\ (144*(*pmv-\/>NightP))/pmv-\/>NightMax;}
+\DoxyCodeLine{01685\ }
+\DoxyCodeLine{01686\ \ \ \ \ SDL\_Rect\ Night\_bar=\ \{xn,yn,256,64\};}
+\DoxyCodeLine{01687\ \ \ \ \ SDL\_Rect\ Night\_barVide\ =\ \{xn+81,yn+19,144,26\};}
+\DoxyCodeLine{01688\ \ \ \ \ SDL\_Rect\ Night\_barPleine=\ \{xn+81,yn+19,pn,26\};\ \textcolor{comment}{//144\ =\ pleine}}
+\DoxyCodeLine{01689\ }
+\DoxyCodeLine{01690\ }
+\DoxyCodeLine{01691\ }
+\DoxyCodeLine{01692\ \ \ \ \ \textcolor{comment}{//affichage\ bar\ de\ cauchemar}}
+\DoxyCodeLine{01693\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,\ 0,\ 0,\ 255);}
+\DoxyCodeLine{01694\ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&Night\_barVide);}
+\DoxyCodeLine{01695\ }
+\DoxyCodeLine{01696\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 43,27,85,255);}
+\DoxyCodeLine{01697\ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&Night\_barPleine);}
+\DoxyCodeLine{01698\ }
+\DoxyCodeLine{01699\ \ \ \ \ SDL\_RenderCopy(renderer,\ \ map-\/>tabTexture[170],\ NULL,\ \&Night\_bar);}
+\DoxyCodeLine{01700\ }
+\DoxyCodeLine{01701\ }
+\DoxyCodeLine{01702\ \}}
+\DoxyCodeLine{01703\ }
+\DoxyCodeLine{01715\ \textcolor{comment}{//fonction\ qui\ affiche\ la\ barre\ de\ vie}}
+\DoxyCodeLine{01716\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a0d87b5d37574da9e640d7e765a72a77a}{affVie}}(SDL\_Renderer\ *\ renderer,\textcolor{keywordtype}{int}\ \ he,\textcolor{keywordtype}{int}\ we,\mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ combattant,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{01717\ \ \ \ \ \textcolor{comment}{//Variable\ PV}}
+\DoxyCodeLine{01718\ }
+\DoxyCodeLine{01719\ \ \ \ \ \textcolor{keywordflow}{if}(*(combattant-\/>pv)<0)\{}
+\DoxyCodeLine{01720\ \ \ \ \ \ \ \ \ *(combattant-\/>pv)=0;}
+\DoxyCodeLine{01721\ \ \ \ \ \}}
+\DoxyCodeLine{01722\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (*(combattant-\/>pv)>combattant-\/>pvMax)\{}
+\DoxyCodeLine{01723\ \ \ \ \ \ \ \ \ *(combattant-\/>pv)=combattant-\/>pvMax;}
+\DoxyCodeLine{01724\ \ \ \ \ \}}
+\DoxyCodeLine{01725\ \ \ \ \ \textcolor{keywordtype}{int}\ p\ =\ (144*(*(combattant-\/>pv)))/combattant-\/>pvMax;}
+\DoxyCodeLine{01726\ }
+\DoxyCodeLine{01727\ \ \ \ \ \textcolor{comment}{//chargement\ de\ la\ police\ d'écriture}}
+\DoxyCodeLine{01728\ \ \ \ \ TTF\_Font*\ font\ =\ TTF\_OpenFont(\textcolor{stringliteral}{"{}fonts/alagard.ttf"{}},\ 10);}
+\DoxyCodeLine{01729\ \ \ \ \ \textcolor{keywordflow}{if}\ (!font)\ \{}
+\DoxyCodeLine{01730\ \ \ \ \ \ \ \ \ \textcolor{comment}{//fprintf(stderr,\ "{}Erreur\ lors\ du\ chargement\ de\ la\ police\ :\ \%s\(\backslash\)n"{},\ TTF\_GetError());}}
+\DoxyCodeLine{01731\ \ \ \ \ \ \ \ \ return\ ;}
+\DoxyCodeLine{01732\ \ \ \ \ \}}
+\DoxyCodeLine{01733\ }
+\DoxyCodeLine{01734\ \ \ \ \ SDL\_Color\ textColor\ =\ \{255,\ 255,\ 255\};}
+\DoxyCodeLine{01735\ \ \ \ \ \textcolor{keywordtype}{char}\ *texte\ =\ malloc(15);}
+\DoxyCodeLine{01736\ \ \ \ \ snprintf(texte,\ 15,\ \textcolor{stringliteral}{"{}PV\ :\ \%d/\%d"{}},\ *(combattant-\/>pv),combattant-\/>pvMax);}
+\DoxyCodeLine{01737\ }
+\DoxyCodeLine{01738\ \ \ \ \ SDL\_Surface*\ textSurface\ =\ TTF\_RenderText\_Blended(font,texte,\ textColor);}
+\DoxyCodeLine{01739\ \ \ \ \ \textcolor{keywordflow}{if}\ (!textSurface)\ \{}
+\DoxyCodeLine{01740\ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}Erreur\ lors\ de\ la\ création\ de\ la\ surface\ de\ texte\ :\ \%s\(\backslash\)n"{}},\ TTF\_GetError());}
+\DoxyCodeLine{01741\ \ \ \ \ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{01742\ \ \ \ \ \ \ \ \ return\ ;}
+\DoxyCodeLine{01743\ \ \ \ \ \}}
+\DoxyCodeLine{01744\ }
+\DoxyCodeLine{01745\ \ \ \ \ SDL\_Texture*\ textTexture\ =\ SDL\_CreateTextureFromSurface(renderer,\ textSurface);}
+\DoxyCodeLine{01746\ }
+\DoxyCodeLine{01747\ \ \ \ \ \textcolor{comment}{//\ Position\ du\ texte}}
+\DoxyCodeLine{01748\ }
+\DoxyCodeLine{01749\ }
+\DoxyCodeLine{01750\ }
+\DoxyCodeLine{01751\ \ \ \ \ SDL\_Rect\ PV\_bar=\ \{we,he-\/5,256,64\};}
+\DoxyCodeLine{01752\ \ \ \ \ SDL\_Rect\ PV\_barVide=\ \{we+81,he-\/5+19,144,26\};}
+\DoxyCodeLine{01753\ \ \ \ \ SDL\_Rect\ PV\_barPleine=\ \{we+81,he-\/5+19,p,26\};\ \textcolor{comment}{//144\ =\ pleine}}
+\DoxyCodeLine{01754\ }
+\DoxyCodeLine{01755\ \ \ \ \ SDL\_Rect\ textRect\ =\ \{(PV\_barVide.x)+(PV\_barVide.w/2)-\/(textSurface-\/>w/2),\ (PV\_barVide.y)+(PV\_barVide.h/2)-\/(textSurface-\/>h/2),\ textSurface-\/>w,\ textSurface-\/>h\};}
+\DoxyCodeLine{01756\ }
+\DoxyCodeLine{01757\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 0,\ 0,\ 0,\ 255);}
+\DoxyCodeLine{01758\ }
+\DoxyCodeLine{01759\ \ \ \ \ \textcolor{comment}{//affichage\ bar\ de\ vie}}
+\DoxyCodeLine{01760\ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&PV\_barVide);}
+\DoxyCodeLine{01761\ }
+\DoxyCodeLine{01762\ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ 150,\ 0,\ 0,\ 255);}
+\DoxyCodeLine{01763\ \ \ \ \ SDL\_RenderFillRect(renderer,\ \&PV\_barPleine);}
+\DoxyCodeLine{01764\ }
+\DoxyCodeLine{01765\ \ \ \ \ \ \ \textcolor{comment}{//\ Afficher\ la\ texture\ sur\ le\ rendu}}
+\DoxyCodeLine{01766\ \ \ \ \ SDL\_RenderCopy(renderer,\ textTexture,\ NULL,\ \&textRect);}
+\DoxyCodeLine{01767\ \ \ \ \ SDL\_RenderCopy(renderer,\ map-\/>tabTexture[199],\ NULL,\ \&PV\_bar);}
+\DoxyCodeLine{01768\ }
+\DoxyCodeLine{01769\ }
+\DoxyCodeLine{01770\ \ \ \ \ SDL\_FreeSurface(textSurface);}
+\DoxyCodeLine{01771\ \ \ \ \ SDL\_DestroyTexture(textTexture);}
+\DoxyCodeLine{01772\ \ \ \ \ free(texte);}
+\DoxyCodeLine{01773\ \ \ \ \ texte=NULL;}
+\DoxyCodeLine{01774\ \ \ \ \ TTF\_CloseFont(font);}
+\DoxyCodeLine{01775\ }
+\DoxyCodeLine{01776\ \}}
+\DoxyCodeLine{01777\ }
+\DoxyCodeLine{01793\ \textcolor{comment}{//fonction\ qui\ s'accupe\ des\ soins\ des\ allies}}
+\DoxyCodeLine{01794\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_a7a699ed594a782ddb94670b35d996375}{soin}}(\mbox{\hyperlink{structcombat__s}{combat\_t}}\ *\ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},SDL\_Rect\ r\_basEcran,SDL\_Renderer\ *\ renderer,\textcolor{keywordtype}{int}\ *\ we,\textcolor{keywordtype}{int}\ *\ he,\textcolor{keywordtype}{int}\ allie,SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ \mbox{\hyperlink{structpersonnage}{personnage}},\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map)\{}
+\DoxyCodeLine{01795\ \ \ \ \ SDL\_Rect\ r\_hautEcran\ =\ \{0,0,(\ *\ we),56\};}
+\DoxyCodeLine{01796\ \ \ \ \ SDL\_Rect\ r\_GEcran\ =\ \{0,r\_hautEcran.h,(\ *\ we)\ /\ 4,(r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{01797\ \ \ \ \ SDL\_Rect\ r\_DEcran\ =\ \{(\ *\ we)\ -\/\ (\ *\ we)\ /\ 4,r\_hautEcran.h,(\ *\ we)-\/(((\ *\ we)\ -\/\ (\ *\ we)\ /\ 4)),\ (r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{01798\ \ \ \ \ SDL\_Rect\ r\_MEcran\ =\ \{r\_GEcran.w,r\_hautEcran.h,r\_DEcran.x\ -\/\ r\_GEcran.w,(r\_basEcran.y\ -\/\ r\_hautEcran.y)\ -\/\ r\_hautEcran.h\};}
+\DoxyCodeLine{01799\ \ \ \ \ SDL\_Rect\ r\_Fleches\_GEcran=\{r\_GEcran.w,r\_MEcran.h/2+r\_hautEcran.h-\/(r\_MEcran.h/6)/2,r\_MEcran.h/6,r\_MEcran.h/6\};}
+\DoxyCodeLine{01800\ \ \ \ \ SDL\_Rect\ r\_Fleches\_DEcran=\{r\_DEcran.x-\/r\_MEcran.h/6,r\_MEcran.h/2+r\_hautEcran.h-\/(r\_MEcran.h/6)/2,r\_MEcran.h/6,r\_MEcran.h/6\};}
+\DoxyCodeLine{01801\ \ \ \ \ \textcolor{keywordtype}{int}\ jouer=1;}
+\DoxyCodeLine{01802\ \ \ \ \ SDL\_Rect\ \ r\_ATQ1=\ \{(r\_basEcran.w*40/100),(r\_basEcran.h*3)+r\_basEcran.h/2,175,48\};}
+\DoxyCodeLine{01803\ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie=0;}
+\DoxyCodeLine{01804\ \ \ \ \ \textcolor{keywordflow}{while}(jouer)\{}
+\DoxyCodeLine{01805\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>mort==1)\{}
+\DoxyCodeLine{01806\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie<\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie)\{}
+\DoxyCodeLine{01807\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie++;}
+\DoxyCodeLine{01808\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01809\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01810\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie=0;}
+\DoxyCodeLine{01811\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01812\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01813\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01814\ }
+\DoxyCodeLine{01815\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a8a2ebe3dafdfa818fa29088616e163d5}{affichage\_combat}}(we,he,renderer,\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}},1,\mbox{\hyperlink{structpersonnage}{personnage}},map);}
+\DoxyCodeLine{01816\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (SDL\_PollEvent(\&event)\ !=\ 0\ )\ \{}
+\DoxyCodeLine{01817\ }
+\DoxyCodeLine{01818\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(event.type\ ==\ SDL\_MOUSEBUTTONDOWN\ )\{}
+\DoxyCodeLine{01819\ }
+\DoxyCodeLine{01820\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((r\_ATQ1.x<=event.button.x)\ \&\&\ (r\_ATQ1.x+r\_ATQ1.w>=event.button.x)\ \&\&\ ((r\_ATQ1.y+r\_ATQ1.h)>=event.button.y)\ \&\&\ (r\_ATQ1.y<=event.button.y))\{}
+\DoxyCodeLine{01821\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>pv)+=20*\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>combattant[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_combattant]-\/>pvMax/100*\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>mult;}
+\DoxyCodeLine{01822\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(*(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>pv)>\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>pvMax)\{}
+\DoxyCodeLine{01823\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>pv)=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>allie[\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie]-\/>pvMax;}
+\DoxyCodeLine{01824\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01825\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jouer=0;}
+\DoxyCodeLine{01826\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01827\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((r\_Fleches\_GEcran.x<=event.button.x)\ \&\&\ (r\_Fleches\_GEcran.x+r\_Fleches\_GEcran.w>=event.button.x)\ \&\&\ ((r\_Fleches\_GEcran.y+r\_Fleches\_GEcran.h)>=event.button.y)\ \&\&\ (r\_Fleches\_GEcran.y<=event.button.y))\{}
+\DoxyCodeLine{01828\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie<=0)\{}
+\DoxyCodeLine{01829\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie=\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie-\/1;}
+\DoxyCodeLine{01830\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01831\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01832\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie-\/-\/;}
+\DoxyCodeLine{01833\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01834\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01835\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((r\_Fleches\_DEcran.x<=event.button.x)\ \&\&\ (r\_Fleches\_DEcran.x+r\_Fleches\_DEcran.w>=event.button.x)\ \&\&\ ((r\_Fleches\_DEcran.y+r\_Fleches\_DEcran.h)>=event.button.y)\ \&\&\ (r\_Fleches\_DEcran.y<=event.button.y))\{}
+\DoxyCodeLine{01836\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie>=(\mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>nb\_allie-\/1))\{}
+\DoxyCodeLine{01837\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie=0;}
+\DoxyCodeLine{01838\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01839\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{01840\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}}-\/>indice\_allie++;}
+\DoxyCodeLine{01841\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01842\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01843\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01844\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01845\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01846\ }
+\DoxyCodeLine{01847\ \ \ \ \ \}}
+\DoxyCodeLine{01848\ \}}
+\DoxyCodeLine{01849\ }
+\DoxyCodeLine{01858\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{combat_8c_af24e4ba7ca53d2dd96986d2d4872f1cb}{newCompagnon}}(\mbox{\hyperlink{structpersonnage}{p\_mv}}\ **\ Leader,\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ Boss)\{}
+\DoxyCodeLine{01859\ \ \ \ \ \textcolor{keywordflow}{if}(Boss-\/>forme\ ==\ 3)\{}
+\DoxyCodeLine{01860\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{01861\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=0;(*Leader)-\/>equipe[i]\ \&\&\ i\ <\ 4;i++);}
+\DoxyCodeLine{01862\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((*Leader)-\/>equipe[i])\textcolor{keywordflow}{return};}
+\DoxyCodeLine{01863\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (Boss-\/>type)}
+\DoxyCodeLine{01864\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{01865\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\textcolor{comment}{//Alex}}
+\DoxyCodeLine{01866\ \ \ \ \ \ \ \ \ (*Leader)-\/>equipe[i]=init\_combattant(\textcolor{stringliteral}{"{}Alex"{}},190,60,0,136,135,0,2,27,0,190);}
+\DoxyCodeLine{01867\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01868\ }
+\DoxyCodeLine{01869\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\textcolor{comment}{//Lou}}
+\DoxyCodeLine{01870\ \ \ \ \ \ \ \ \ (*Leader)-\/>equipe[i]=init\_combattant(\textcolor{stringliteral}{"{}Lou"{}},180,75,0,138,137,1,3,23,0,180);}
+\DoxyCodeLine{01871\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01872\ }
+\DoxyCodeLine{01873\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\textcolor{comment}{//Finn}}
+\DoxyCodeLine{01874\ \ \ \ \ \ \ \ \ (*Leader)-\/>equipe[i]=init\_combattant(\textcolor{stringliteral}{"{}Finn"{}},230,70,0,140,139,2,3,15,0,230);}
+\DoxyCodeLine{01875\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01876\ }
+\DoxyCodeLine{01877\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\textcolor{comment}{//Ada}}
+\DoxyCodeLine{01878\ \ \ \ \ \ \ \ \ (*Leader)-\/>equipe[i]=init\_combattant(\textcolor{stringliteral}{"{}Ada"{}},135,65,0,142,141,3,2,36,0,135);}
+\DoxyCodeLine{01879\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01880\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{01881\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{01882\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{01883\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{01884\ \ \ \ \ \}}
+\DoxyCodeLine{01885\ \}}
+\DoxyCodeLine{01886\ }
+
+\end{DoxyCode}

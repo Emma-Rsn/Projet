@@ -1,0 +1,5 @@
+<map id="grille_s" name="grille_s">
+<area shape="rect" id="Node000001" title="Structure d&#39;une grille." alt="" coords="5,93,75,119"/>
+<area shape="rect" id="Node000002" href="$structcase__s.html" title="Structure d&#39;une case." alt="" coords="7,5,73,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="43,45,43,93,37,93,37,45"/>
+</map>

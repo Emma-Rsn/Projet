@@ -1,0 +1,89 @@
+\doxysection{map.\+h}
+\hypertarget{map_8h_source}{}\label{map_8h_source}\index{libs/map.h@{libs/map.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ \_\_MAP2\_H\_\_}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ \_\_MAP2\_H\_\_}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{comment}{//\#include\ "{}../libs/commun.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}../libs/OBJ.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcase__s}{case\_s}}\{}
+\DoxyCodeLine{00020\ \ \ \ \ SDL\_Rect\ Rectangle;}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{int}\ x;}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{int}\ y;}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{int}\ etat;\textcolor{comment}{//\ si\ 0\ alors\ obstacle\ dans\ la\ case\ 1\ case\ libre\ 2\ case\ libre\ mais\ en\ bordure\ 3\ case\ libre\ mais\ en\ bordure\ finale}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{int}\ ntexture;}
+\DoxyCodeLine{00025\ \};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structgrille__s}{grille\_s}}\{}
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{structcase__s}{case\_t}}\ tabGrille[LONG][LARG];}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcarte__s}{carte\_s}}\{}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordtype}{int}\ xcarte;}
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keywordtype}{int}\ ycarte;}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{int}\ etat\_brouillard;\ \textcolor{comment}{//\ si\ 1\ alors\ la\ carte\ est\ couverte\ de\ brouillard(pas\ encore\ explorée),\ si\ 0\ alors\ la\ carte\ a\ été\ explorée}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordtype}{int}\ nZone;}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keywordtype}{int}\ nbObj;}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{int}\ nrlayout;\ \textcolor{comment}{//numero\ du\ layout\ chargé}}
+\DoxyCodeLine{00057\ \ \ \ \ \mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ tabObj[50];}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{structgrille__s}{grille\_t}}\ grille;\ \textcolor{comment}{//quadrillage\ des\ cases\ dans\ une\ seule\ carte}}
+\DoxyCodeLine{00059\ \};}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00085\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structmap__s}{map\_s}}\{}
+\DoxyCodeLine{00086\ \ \ \ \ \mbox{\hyperlink{structcarte__s}{carte\_t}}\ tabMap[ROWS][COLUMNS];}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keywordtype}{char}\ ***\ tabPath;}
+\DoxyCodeLine{00088\ \ \ \ \ \textcolor{keywordtype}{int}\ nbTexture[10];}
+\DoxyCodeLine{00089\ \ \ \ \ SDL\_Texture\ **\ tabTexture;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{int}\ zoneChargee;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordtype}{int}\ Nightmare;}
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordtype}{int}\ nbN;}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{int}\ nvZone;}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{int}\ nvEquipe;}
+\DoxyCodeLine{00095\ \ \ \ \ \textcolor{keywordtype}{float}\ bonusEquipeN;}
+\DoxyCodeLine{00096\ \ \ \ \ \textcolor{keywordtype}{int}\ bonusZoneN;}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordtype}{int}\ argent;}
+\DoxyCodeLine{00098\ \ \ \ \ \mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ listeArtefact[10];}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_emplacement;}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordtype}{int}\ prix\_emplacement;}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{comment}{//0\ si\ pas\ rentrer\ dans\ la\ zone\ 1\ si\ rentrer\ mais\ que\ le\ boss\ est\ vivant\ et\ 2\ si\ le\ boss\ est\ mort}}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordtype}{int}\ Zone2;}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordtype}{int}\ Zone3;}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{int}\ Zone4;}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordtype}{int}\ Zone5;}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{int}\ cle;}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{int}\ plongee;}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{int}\ talisman;}
+\DoxyCodeLine{00109\ \};}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \textcolor{keywordtype}{int}\ load\_layout\_texture(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00112\ \mbox{\hyperlink{structcase__s}{case\_t}}\ creation\_case();}
+\DoxyCodeLine{00113\ \mbox{\hyperlink{structgrille__s}{grille\_t}}\ creation\_grille(\textcolor{keywordtype}{int}\ bord);}
+\DoxyCodeLine{00114\ \mbox{\hyperlink{structcarte__s}{carte\_t}}\ creation\_carte(\textcolor{keywordtype}{int}\ x,\textcolor{keywordtype}{int}\ y);}
+\DoxyCodeLine{00115\ \mbox{\hyperlink{structmap__s}{map\_t}}\ creation\_map\ ();}
+\DoxyCodeLine{00116\ \textcolor{keywordtype}{int}\ afficher\_grille(\mbox{\hyperlink{structgrille__s}{grille\_t}}\ grille,\ SDL\_Renderer\ *renderer);}
+\DoxyCodeLine{00117\ \textcolor{keywordtype}{int}\ afficher\_carte(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec);}
+\DoxyCodeLine{00118\ \textcolor{keywordtype}{int}\ creer\_map(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00119\ \textcolor{keywordtype}{int}\ sauvegarde\_map(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00120\ \textcolor{keywordtype}{int}\ creer\_map\_layout(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00121\ \textcolor{keywordtype}{int}\ sauvegarde\_map\_layout(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00122\ \textcolor{keywordtype}{int}\ remplir\_map(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map);}
+\DoxyCodeLine{00123\ \textcolor{keywordtype}{float}\ min(\textcolor{keywordtype}{float}\ a,\ \textcolor{keywordtype}{float}\ b);}
+\DoxyCodeLine{00124\ \textcolor{keywordtype}{int}\ zone\_fini(\mbox{\hyperlink{structmap__s}{map\_t}}\ map);}
+\DoxyCodeLine{00125\ \textcolor{keywordtype}{int}\ afficher\_map(SDL\_Event\ event,\mbox{\hyperlink{structmap__s}{map\_t}}\ map,\ SDL\_Renderer\ *renderer,\ \textcolor{keywordtype}{int}\ *we,\ \textcolor{keywordtype}{int}\ *he,\ \textcolor{keywordtype}{int}\ *etat\_map,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ cartec);}
+\DoxyCodeLine{00126\ \textcolor{keywordtype}{int}\ chargement\_Zone(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,SDL\_Renderer\ *renderer,\textcolor{keywordtype}{int}\ nZone,Mix\_Music*\ gMusic);}
+\DoxyCodeLine{00127\ \textcolor{keywordtype}{void}\ lumiere(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *cartec,\mbox{\hyperlink{structcase__s}{case\_t}}\ *c);}
+\DoxyCodeLine{00128\ \textcolor{keywordtype}{int}\ load\_layout(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ c,\textcolor{keywordtype}{char}\ *\ namefile);}
+\DoxyCodeLine{00129\ \textcolor{keywordtype}{int}\ detruire\_tab\_path(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map);}
+\DoxyCodeLine{00130\ \textcolor{keywordtype}{int}\ nb\_texture\_chargement(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map,\ \textcolor{keywordtype}{char}*\ namefile);}
+\DoxyCodeLine{00131\ \textcolor{keywordtype}{int}\ creation\_tab\_path(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map,\textcolor{keywordtype}{char}\ *\ namefile);}
+\DoxyCodeLine{00132\ \textcolor{keywordtype}{int}\ creation\_tab\_texture(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map,SDL\_Renderer\ *renderer,\textcolor{keywordtype}{int}\ nbZone,\textcolor{keywordtype}{int}\ free);}
+\DoxyCodeLine{00133\ \textcolor{keywordtype}{int}\ sauvegarde\_map\_brouillard(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00134\ \textcolor{keywordtype}{int}\ load\_brouillard(\mbox{\hyperlink{structmap__s}{map\_t}}\ *map);}
+\DoxyCodeLine{00135\ \textcolor{keywordtype}{int}\ load\_layout\_obj(\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map);}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

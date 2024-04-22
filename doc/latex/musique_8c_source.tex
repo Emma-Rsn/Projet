@@ -1,0 +1,72 @@
+\doxysection{musique.\+c}
+\hypertarget{musique_8c_source}{}\label{musique_8c_source}\index{src/musique.c@{src/musique.c}}
+\mbox{\hyperlink{musique_8c}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}../libs/commun.h"{}}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{void}\ pause\_SDL(SDL\_Event\ event,Mix\_Music*\ gMusic)\{}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keywordflow}{if}(event.type\ ==\ SDL\_KEYDOWN\ \&\&\ (event.key.keysym.sym\ ==\ SDLK\_9))\{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ Mix\_PlayingMusic()\ ==\ 0\ )\{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ Mix\_PlayMusic(\ gMusic,\ -\/1\ );}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//If\ the\ music\ is\ paused}}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\ Mix\_PausedMusic()\ ==\ 1\ )}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Resume\ the\ music}}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Mix\_ResumeMusic();}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//If\ the\ music\ is\ playing}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Pause\ the\ music}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Mix\_PauseMusic();}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \}}
+\DoxyCodeLine{00032\ \textcolor{keywordtype}{void}\ newMusic(\textcolor{keywordtype}{int}\ nZone,\ Mix\_Music\ *\ gMusic)\{}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{comment}{//\ Libérer\ la\ mémoire\ si\ une\ musique\ est\ déjà\ chargée}}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{if}\ (gMusic\ !=\ NULL)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ Mix\_FreeMusic(gMusic);}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ gMusic\ =\ NULL;}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{comment}{//\ Charger\ la\ nouvelle\ musique}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordflow}{switch}\ (nZone)\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/Game-\/Over.mp3"{}});}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/creepy-\/devil-\/dance.mp3"{}});}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/18-\/Prairie4.mp3"{}});}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/16-\/Havoc.mp3"{}});}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4:}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/1-\/BattleField.mp3"{}});}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5:}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/Game-\/Over.mp3"{}});}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 6:}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/9-\/EpicBattle.mp3"{}});}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ gMusic\ =\ Mix\_LoadMUS(\textcolor{stringliteral}{"{}musique/creepy-\/devil-\/dance.mp3"{}});}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00065\ \ \ \ \ \}}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{comment}{//\ Vérifier\ si\ le\ chargement\ a\ réussi}}
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordflow}{if}\ (gMusic\ ==\ NULL)\ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}Failed\ to\ load\ music!\ SDL\_mixer\ Error:\ \%s\(\backslash\)n"{}},\ Mix\_GetError());}
+\DoxyCodeLine{00070\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Jouer\ la\ musique\ en\ boucle\ (-\/1\ indique\ la\ lecture\ en\ boucle)}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ Mix\_PlayMusic(gMusic,\ -\/1);}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \}}
+
+\end{DoxyCode}
