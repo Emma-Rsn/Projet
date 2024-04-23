@@ -84,6 +84,7 @@ void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int
                 (*cartec)->etat_brouillard = 0;
                 pp->c = &((*cartec)->grille.tabGrille[14][1]);
                 pp->r = pp->c->Rectangle;
+                pp->plongee = 1;
             }
         }else if((*cartec)->tabObj[i]->typeObj==8){
             if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
@@ -98,6 +99,7 @@ void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int
                 (*cartec)->etat_brouillard = 0;
                 pp->c = &((*cartec)->grille.tabGrille[14][9]);
                 pp->r = pp->c->Rectangle;
+                pp->plongee = 0;
             }
         }
     }

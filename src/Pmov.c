@@ -258,7 +258,15 @@ int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     int x = pmv->c->Rectangle.x;
     int y = pmv->c->Rectangle.y;
     char * name = malloc(sizeof(pmv->nom)+1);
-    lower(pmv->nom,name);
+    if(pmv->plongee == 1){
+        if(pmv->equipe[0]->type == 1 || pmv->equipe[0]->type == 3){
+            strcpy(name,"plongeef");
+        }else{
+            strcpy(name,"plongeem");
+        }
+    }else{
+        lower(pmv->nom,name);
+    }
     int nbMaxFrame = (FPS/10)*4;
     if(*(pmv->frame) != 0){
         pmv->lock = 1;
@@ -562,6 +570,7 @@ p_mv * initp(){
     *p->NightP = 0;
     *(p->frame) = 0;
     p->lock = 0;
+    p->plongee = 0;
     return p;
 }
 
