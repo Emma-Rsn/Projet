@@ -85,7 +85,7 @@ doc:
 	@$(DOXYGEN) Doxyfile
 	@browse $(DOC_DIR)/html/index.html
 
-clean_doc:
+docclean:
 	@rm -rf $(DOC_DIR)/html
 
 

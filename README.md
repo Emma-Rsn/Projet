@@ -19,7 +19,28 @@ Vous commencerez votre aventure au camp de base. Pour vous déplacer dans la car
 
 La carte étant générée procéduralement (c-à-d de manière plus ou moins aléatoire), chaque partie sera différente.
 
+**Commandes MAKEFILE :**
 
+    all
+compile le programme
+
+    clean
+nettoie tous les nouveautés créées avec la commande _all_
+
+    restart 
+pareil que la commande _clean_ mais laisse le fichier save intact
+
+    test
+compile le fichier de test
+
+    testclean
+nettoie l'éxécutable et le .o dans le dossier test
+
+    doc
+produit la documentation doxygen et l'ouvre
+
+    docclean
+nettoie le dossier doc/html
 
 
 
@@ -28,5 +49,7 @@ Projet réalisé par MOREAU Enzo / PASQUIER Lina / RASSON Emma
 Date de création du projet : 23 janvier 2024
 
 Date de fin de projet : 25 avril 2024
+
+Temps de travail estimé : + 350 heures
 
 [Lien Gantt](https://docs.google.com/spreadsheets/d/1ztj0WcCh9m7Oyz1d7LtRVNm7JXvxKlheRPS5YPnYCNk/edit?usp=sharing)

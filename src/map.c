@@ -1039,7 +1039,7 @@ int load_layout_obj(map_t * map) {
             if(map->tabMap[5][3].nZone==2 && nr==2){
                 strcat(res,"_1");
             }
-            if(map->tabMap[i][j].nZone==3 && (nr==5 || nr==2) && (map->tabMap[i][j-1].nrlayout ==6 || map->tabMap[i][j-1].nrlayout == 8) ){
+            else if(map->tabMap[i][j].nZone==3 && (nr==5 || nr==2) && (map->tabMap[i][j-1].nrlayout ==6 || map->tabMap[i][j-1].nrlayout == 8) ){
                 strcat(res,"_1");
             }
             strcat(res,".txt");
