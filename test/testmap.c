@@ -1,9 +1,12 @@
 #include <CUnit/CUnit.h>
 #include <CUnit/Basic.h>
-#include "src/combat.c"
-#include "src/musique.c"
-#include "src/map.c"
-#include "src/OBJ.c"
+#include "../src/musique.c"
+#include "../src/map.c"
+#include "../src/combat.c"
+#include "../src/OBJ.c"
+#include "../src/printImg.c"
+#include "../src/save.c"
+#include "../src/Pmov.c"
 
 
 int init_suite(void) {return 0;}
@@ -128,7 +131,7 @@ void test_remplir_combattant(void) {
 void test_init_combattant(void) {
     combattant_t *comb;
     char *nom="alex";
-    comb=init_combattant(nom,100,10,1,15,14,1,5,20,0);
+    comb=init_combattant(nom,100,10,1,15,14,1,5,20,0,100);
 
     //verifie si le combattant est bien initialise
     CU_ASSERT(strcmp(nom,comb->nom)==0);
@@ -146,8 +149,8 @@ void test_init_combattant(void) {
 // Tests pour la fonction init_combattant()
 void test_attaque_ennemi(void) {
     int test;
-    combattant_t * comb=init_combattant("alex",100,10,1,15,14,1,5,20,0);
-    combattant_t * en=init_combattant("alex",100,10,1,15,14,1,5,20,0);
+    combattant_t * comb=init_combattant("alex",100,10,1,15,14,1,5,20,0,100);
+    combattant_t * en=init_combattant("alex",100,10,1,15,14,1,5,20,0,100);
     combat_t * combat=init_combat();
     combat->combattant[0]=comb;
     combat->combattant[1]=en;
@@ -162,8 +165,8 @@ void test_attaque_ennemi(void) {
 // Tests pour la fonction compare_vitesse()
 void test_compare_vitesse(void) {
     int test;
-    combattant_t * comb=init_combattant("alex",100,10,1,15,14,1,5,20,0);
-    combattant_t * en=init_combattant("alex",100,15,1,15,14,1,5,20,0);
+    combattant_t * comb=init_combattant("alex",100,10,1,15,14,1,5,20,0,100);
+    combattant_t * en=init_combattant("alex",100,15,1,15,14,1,5,20,0,100);
     test=compare_vitesse(comb,en);
     //verifie si l'ennemi est plus rapide que le combattant
     CU_ASSERT(test==1);
@@ -186,8 +189,8 @@ void test_init_combat(void) {
 
 // Tests pour la fonction copier_combattant()
 void test_copier_combattant(void) {
-    combattant_t * comb=init_combattant("alex",100,10,0,12,13,0,1,15,1);
-    combattant_t * en=init_combattant("test",100,15,1,15,14,1,5,20,0);
+    combattant_t * comb=init_combattant("alex",100,10,0,12,13,0,1,15,1,100);
+    combattant_t * en=init_combattant("test",100,15,1,15,14,1,5,20,0,100);
     copier_combattant(comb,en);
     //verifie si l'ennemi est plus rapide que le combattant
     CU_ASSERT_STRING_EQUAL(comb->nom,en->nom);
@@ -206,13 +209,18 @@ void test_copier_combattant(void) {
 // Tests pour la fonction copier_combattant()
 void test_BoolTypein(void) {
     case_t c = creation_case();
-    pm_v * Leader = initp();
-    remplirp(Leader,c,0);
-    int test = BoolTypein(1,Leader);
+    p_mv * Leader = initp();
+    remplirp(Leader,&c,0);
+    int test = BoolTypein(0,Leader);
     //verifie si l'ennemi est plus rapide que le combattant
     CU_ASSERT(test==1);
+    remplirp(Leader,&c,1);
+    test = BoolTypein(0,Leader);
+    CU_ASSERT(test==0);
+    remplirp(Leader,&c,0);
+    test = BoolTypein(4,Leader);
+    CU_ASSERT(test==-1);
 }
-
 
 int main() {
     CU_initialize_registry();
@@ -234,6 +242,7 @@ int main() {
     CU_add_test(suite, "test test_compare_vitesse()", test_compare_vitesse);
     CU_add_test(suite, "test test_init_combat()", test_init_combat);
     CU_add_test(suite, "test test_copier_combattant()", test_copier_combattant);
+
     printf("\n TEST OBJ : \n");
     CU_add_test(suite, "test test_BoolTypein()", test_BoolTypein);
 

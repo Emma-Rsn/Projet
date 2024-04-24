@@ -325,6 +325,7 @@ void Boss(obj_t * boss,p_mv * Leader){
 
 
 int BoolTypein(int type,p_mv * Leader){
+    if(type < 0 || type > 3)return -1;
     int nballie,i;
     for(nballie=0;Leader->equipe[nballie] && nballie < 4;nballie++);
     for(i =0;i<nballie;i++){
