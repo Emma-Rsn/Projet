@@ -82,7 +82,7 @@ int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, in
     //chargement de la police d'écriture
     TTF_Font * font = TTF_OpenFont("fonts/alagard.ttf", 50);
     if (!font) {
-        //fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
+        fprintf(stderr, "Erreur lors du chargement de la police : %s\n", TTF_GetError());
         return -1;
     }
 

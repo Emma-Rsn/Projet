@@ -1009,9 +1009,12 @@ int load_layout_obj(map_t * map) {
             strcat(res,num);
             strcat(res,"_");
             nr = map->tabMap[i][j].nrlayout;
-            //cas particulier
             sprintf(num,"%d",nr);
             strcat(res,num);
+            //cas particulier
+            if(map->tabMap[5][3].nZone==2 && nr==2){
+                strcat(res,"_1");
+            }
             strcat(res,".txt");
             load_obj(&map->tabMap[i][j],res);
         }
@@ -1252,13 +1255,13 @@ int chargement_Zone(map_t * map,SDL_Renderer *renderer,int nZone,Mix_Music* gMus
             break;
         case 3:
             creation_tab_texture(map,renderer,3,0);
-            map->nbN = 69;
+            map->nbN = 70;
             map->nvZone=4;
             if(map->Zone3 == 0)map->Zone3 = 1;
             break;
         case 4:
             creation_tab_texture(map,renderer,4,0);
-            map->nbN = 40;
+            map->nbN = 41;
             map->nvZone=1;
             if(map->Zone4 == 0)map->Zone4 = 1;
             break;

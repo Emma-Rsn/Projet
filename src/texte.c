@@ -176,7 +176,7 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
                             num_dialogue=-1;
                             break;
                         case 2: 
-                            texte1="Il me faudrait une combianaison de plonger pour aller sous l'eau.";
+                            texte1="Il me faudrait une combinaison de plongee pour aller sous l'eau.";
                             portrait=pp->equipe[0]->indice_portrait;
                             num_dialogue=-1;
                             break;
@@ -211,7 +211,7 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
                             num_dialogue=-1;
                             break;
                         case 9: 
-                            texte1="J'ai recupere une tenue de plonge !";
+                            texte1="J'ai recupere une tenue de plongee !";
                             portrait=pp->equipe[0]->indice_portrait;
                             num_dialogue=-1;
                             break;

@@ -54,7 +54,7 @@ struct carte_s{
     int nZone;
     int nbObj;
     int nrlayout; //numero du layout chargé
-    obj_t * tabObj[50];
+    obj_t * tabObj[100];
     grille_t grille; //quadrillage des cases dans une seule carte
 };
 
