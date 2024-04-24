@@ -45,7 +45,11 @@ void erreur_sdl(const char * message,SDL_Window * fenetre,SDL_Renderer *renderer
     SDL_Quit();
     exit(EXIT_FAILURE);
 }
-
+/**
+*
+*\fn combattant_t * pre_init_combattant()
+*\brief alloue la mémoire pour un combattant
+*/
 combattant_t * pre_init_combattant(){
     combattant_t * combattant=malloc(sizeof(combattant_t));
     combattant->nom=malloc(5);
@@ -53,6 +57,22 @@ combattant_t * pre_init_combattant(){
     return combattant;
 }
 
+/**
+*
+*\fn void remplir_combattant(combattant_t * combattant,char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme)
+*\param combattant combattant a initialiser
+*\param nom nom du combattant
+*\param pv pv du combattant
+*\param vitesse vitesse du combattant
+*\param camp camp du combattant
+*\param indice_portrait indice dans le tableau de texture du portrait du combattant
+*\param indice_sprite indice dans le tableau de texture du sprite du combattant
+*\param type type du combattant
+*\param temps_recharge_max temps de recharge de la competence du combattant
+*\param puissance puissance du combattant
+*\param forme forme du combattant
+*\brief fonction qui initialise un combattant
+*/
 void remplir_combattant(combattant_t * combattant,char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme){
     strcpy(combattant->nom,nom);
     *combattant->pv=pv;
@@ -1055,29 +1075,6 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
         
      return 0;
 }
-                
-   
-
-
-/**
-*
-*\fn int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c)
-*\param ennemi structure d'un pnj ennemi
-*\param event evenement 
-*\param pp structure du personnage jouer
-*\param c structure de la case
-*\brief fonction qui regarde si on a lancer un combat
-*/
-
-//fonction qui regarde si on a lancer un combat
-int debut_combat(SDL_Event event,ennemi_t * ennemi,p_mv * pp,case_t * c){
-    
-    if( boolcol(c,pp) && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_p && *(ennemi->combattant[0]->pv)>0){
-        ennemi->combat=1;
-    } 
-    return 0;
-}
-
 
 int boolMemeCase(case_t c1, case_t c2){
     if(c1.x == c2.x && c1.y == c2.y){
@@ -1124,7 +1121,7 @@ void debut_combat_carte(carte_t * cartec,SDL_Event event,p_mv * pp){
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==2){
             Boss(cartec->tabObj[i],pp);
-            if(boolDebutCombat(cartec,pp,cartec->tabObj[i])){
+            if(pp->equipe[0]->pv > 0 && boolDebutCombat(cartec,pp,cartec->tabObj[i])){
                 ((ennemi_t *)cartec->tabObj[i]->tabObj[0])->combat=1;
             }
         }
@@ -1187,7 +1184,12 @@ combat_t * init_combat(){
 }
 
 
-
+/**
+*
+*\fn int boolTousMort(ennemi_t * ennemi)
+*\param ennemi un ennemi et son equipe
+*\brief fonction qui verifie si tout les membres de l'equipe de l'ennemi sont mort
+*/
 int boolTousMort(ennemi_t * ennemi){
     int i;
     for(i=0;ennemi->combattant[i] && i < 4;i++){
