@@ -221,7 +221,7 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
                 }
                 }
             //deplacement statique
-            if(((temp != (*carte)->nZone) && !zone_fini(*map))){
+            if((((*carte)->nZone > 1 && (*carte)->nZone < 5) && (temp != (*carte)->nZone) && (temp != 1 && !(temp ==5 && (*carte)->nZone == 4))) || ((temp != (*carte)->nZone) && !zone_fini(*map))){
                 *carte = dcartec;
                 pmv->c = &((*carte)->grille.tabGrille[xdep][ydep]);
                 pmv->r = pmv->c->Rectangle;
