@@ -252,7 +252,7 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     int i;
     int n = 0;
     for(i = 0; i < carte->nbObj;i++){
-        if(map.Nightmare == 1 && carte->tabObj[i]->typeObj < 3)n=map.nbN;
+        if(map.Nightmare == 1 && carte->tabObj[i]->typeObj < 3 && !(carte->tabObj[i]->typeObj==2 && ((ennemi_t *)carte->tabObj[i]->tabObj[0])->forme >=3 ))n=map.nbN;
         else n=0;
         SDL_RenderCopy(renderer, map.tabTexture[(carte->tabObj[i]->indTexture)+n], NULL, &(carte->tabObj[i]->cas->Rectangle));
     }

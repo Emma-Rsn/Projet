@@ -473,7 +473,6 @@ texture/objet/zone3/fence2.png
 texture/objet/zone3/meuble2manoir.png
 texture/objet/zone3/meuble3manoir.png
 texture/objet/zone3/meublemanoir.png
-texture/objet/zone3/arbremanoirbas.png
 texture/zone3/1chemincorrup.png
 texture/zone3/2chemingauchecorrup.png
 texture/zone3/3chemindroitcorrup.png
@@ -540,6 +539,7 @@ texture/objet/zone3/fence1corrup.png
 texture/objet/zone3/fence2corrup.png
 texture/objet/zone3/meuble2manoircorrup.png
 texture/objet/zone3/meuble3manoircorrup.png
+texture/objet/zone3/meublemanoircorrup.png
 texture/objet/zone3/meublemanoircorrup.png
 sprite/alexface2.png
 sprite/alexdial.png
