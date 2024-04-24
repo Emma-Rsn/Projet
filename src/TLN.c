@@ -139,9 +139,9 @@ int main(){
                     break;
             }
         }
-        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0, *tabparam[33] = 0,*tabparam[34] = 0,*tabparam[35] = 0,*tabparam[36] = 1;
+        xp = 12,yp=5,*tabparam[0] = 0,*tabparam[1] = 0,*tabparam[2] = 0,*tabparam[3] = 0, *tabparam[33] = 0,*tabparam[34] = 0,*tabparam[35] = 0,*tabparam[36] = 1,*tabparam[37] = 0;
         if(last != 2)*tabparam[4] = 0,*tabparam[5] = 1;
-        for(ii = 6;ii<NB_PARAM && last != 2;ii++){
+        for(ii = 6;ii<36 && last != 2;ii++){
             *tabparam[ii] = 0;
         }
     }
@@ -193,8 +193,8 @@ int main(){
     map.cle  = *tabparam[34];
     map.talisman = *tabparam[35];
     map.nb_emplacement = *tabparam[36];
-
     map.zoneChargee = cartec->nZone;
+    Alex->plongee = *tabparam[37];
     free(pv);
     free(leader);
     for(ii = 0;ii<NB_PARAM;ii++){

@@ -110,7 +110,7 @@ int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche,int leader)
                 fprintf(fichier," %d %d",pmv.equipe[y]->type,*pmv.equipe[y]->pv);
             }
             fprintf(fichier,"\n");
-            fprintf(fichier,"%d %d %d %d\n",map.plongee,map.cle,map.talisman,map.nb_emplacement);
+            fprintf(fichier,"%d %d %d %d %d\n",map.plongee,map.cle,map.talisman,map.nb_emplacement,pmv.plongee);
 
         }
         
@@ -156,7 +156,7 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
         for(y = 0;y<((*tabparam[26]-1)*2);y=y+2){//32 max
             fscanf(fichier," %d %d",tabparam[27+y],tabparam[28+y]);
         }
-        fscanf(fichier,"\n%d %d %d %d\n",tabparam[33],tabparam[34],tabparam[35],tabparam[36]);
+        fscanf(fichier,"\n%d %d %d %d %d\n",tabparam[33],tabparam[34],tabparam[35],tabparam[36],tabparam[37]);
     }if(last == 2){
         fscanf(fichier, "%d %d %d %d\n", tabparam[4], tabparam[5],touche,leader);
         fscanf(fichier, "%d %d %d %d %d %d %d %d %d %d\n", tabparam[6], tabparam[7], tabparam[8], tabparam[9], tabparam[10], tabparam[11], tabparam[12], tabparam[13], tabparam[14], tabparam[15]);
