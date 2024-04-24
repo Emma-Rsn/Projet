@@ -6,8 +6,7 @@ programme qui gere les objets du jeu
 
 
 {\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
-Graphe des dépendances par inclusion de OBJ.\+c\+:
-\nopagebreak
+Graphe des dépendances par inclusion de OBJ.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -17,50 +16,34 @@ Graphe des dépendances par inclusion de OBJ.\+c\+:
 \doxysubsubsection*{Fonctions}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{OBJ_8c_a4820e96378f414782406bda749dfedce}\label{OBJ_8c_a4820e96378f414782406bda749dfedce} 
-\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries init\+\_\+obj} (\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c, int ind\+Text, int type,...)
-\item 
-\Hypertarget{OBJ_8c_aa379ddbc4e37eecb76f262c615079cb2}\label{OBJ_8c_aa379ddbc4e37eecb76f262c615079cb2} 
-void {\bfseries debut\+\_\+loot\+\_\+carte} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}cartec, SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue)
-\item 
-\Hypertarget{OBJ_8c_a609cf6e62230117bec1d04ec225eb142}\label{OBJ_8c_a609cf6e62230117bec1d04ec225eb142} 
-void {\bfseries debut\+\_\+loot} (SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}obj, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue, int num\+\_\+dialogue)
-\item 
-\Hypertarget{OBJ_8c_a61e316e7d18a45229d43566278d49a90}\label{OBJ_8c_a61e316e7d18a45229d43566278d49a90} 
-int {\bfseries load\+\_\+obj} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}c, char \texorpdfstring{$\ast$}{*}namefile)
-\item 
-\Hypertarget{OBJ_8c_afa63faa903c0d92fbc24b9decabdb575}\label{OBJ_8c_afa63faa903c0d92fbc24b9decabdb575} 
-void {\bfseries aff\+Obj} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}o, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map)
-\item 
-\Hypertarget{OBJ_8c_ad0cd93c5d2d702e51ae366cc806d56e0}\label{OBJ_8c_ad0cd93c5d2d702e51ae366cc806d56e0} 
-void {\bfseries aff\+Tab\+Obj} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}carte)
-\item 
-\Hypertarget{OBJ_8c_a97b8760f68ddb78a257083a820a71198}\label{OBJ_8c_a97b8760f68ddb78a257083a820a71198} 
-\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries init\+\_\+ennemi} (char \texorpdfstring{$\ast$}{*}nom, int pv, int vitesse, int camp, int indice\+\_\+portrait, int indice\+\_\+sprite, int type, int temps\+\_\+recharge\+\_\+max, int puissance, int forme)
-\item 
-\Hypertarget{OBJ_8c_ab546105738139ac915d3b7733c565071}\label{OBJ_8c_ab546105738139ac915d3b7733c565071} 
-int {\bfseries new\+Leader} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} pp)
-\item 
-\Hypertarget{OBJ_8c_ad426cf8397c694cf9b1b5b5a1f0498b9}\label{OBJ_8c_ad426cf8397c694cf9b1b5b5a1f0498b9} 
-void {\bfseries Boss} (\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}boss, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}Leader)
-\item 
-\Hypertarget{OBJ_8c_aec8b4c827119268888c4704ce53f4209}\label{OBJ_8c_aec8b4c827119268888c4704ce53f4209} 
-int {\bfseries Bool\+Typein} (int type, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}Leader)
-\item 
-\Hypertarget{OBJ_8c_a71c8e3e0e50b7ca6ff2c3f7509e38c0b}\label{OBJ_8c_a71c8e3e0e50b7ca6ff2c3f7509e38c0b} 
-void {\bfseries dest\+\_\+obj} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}c, int ind)
-\item 
-\Hypertarget{OBJ_8c_a9cf282411fe5582c1466e14b263517c6}\label{OBJ_8c_a9cf282411fe5582c1466e14b263517c6} 
-void {\bfseries dest\+\_\+all\+\_\+obj} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}m)
-\item 
-\Hypertarget{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73}\label{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73} 
-void {\bfseries dest\+\_\+ennemi} (\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}en)
-\item 
-\Hypertarget{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}\label{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38} 
-int {\bfseries boolcol} (\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}obj\+\_\+c, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
-\item 
-\mbox{\hyperlink{structartefact__s}{artefact\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{OBJ_8c_a7db3392d374e07d5c5a4420c5e119a4c}{init\+\_\+artefact}} (char \texorpdfstring{$\ast$}{*}nom, int possession, char \texorpdfstring{$\ast$}{*}descriptif, int indice, int prix, int indice\+\_\+texture)
+\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\+\_\+obj}} (\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c, int ind\+Text, int type,...)
+\begin{DoxyCompactList}\small\item\em fonction qui permet de creer un objet \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_aa379ddbc4e37eecb76f262c615079cb2}{debut\+\_\+loot\+\_\+carte}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}cartec, SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue)
+\begin{DoxyCompactList}\small\item\em fonction qui permet de faire les interaction entre le personnage et les objets \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_a455cd685c89376eb662404886a09c933}{debut\+\_\+loot\+\_\+encaps}} (SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}obj, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue, void \texorpdfstring{$\ast$}{*}num\+\_\+dialogue)
+\begin{DoxyCompactList}\small\item\em fonction qui encapsule \"{}debut\+\_\+loot\"{} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_a86a7dfe3abc02f7c9a550208ada0d4df}{debut\+\_\+loot}} (SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}obj, int \texorpdfstring{$\ast$}{*}etat\+\_\+dialogue, int \texorpdfstring{$\ast$}{*}num\+\_\+dialogue)
+\begin{DoxyCompactList}\small\item\em fonction qui permet l\textquotesingle{}affichage du dialogue lors de la recuperation de l\textquotesingle{}objet \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{OBJ_8c_a61e316e7d18a45229d43566278d49a90}{load\+\_\+obj}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}c, char \texorpdfstring{$\ast$}{*}namefile)
+\begin{DoxyCompactList}\small\item\em fonction qui charge les objets lu dans un fichier \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_ad0cd93c5d2d702e51ae366cc806d56e0}{aff\+Tab\+Obj}} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}carte)
+\begin{DoxyCompactList}\small\item\em fonction qui affiche les objets de la carte \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{OBJ_8c_a97b8760f68ddb78a257083a820a71198}{init\+\_\+ennemi}} (char \texorpdfstring{$\ast$}{*}nom, int pv, int vitesse, int camp, int indice\+\_\+portrait, int indice\+\_\+sprite, int type, int temps\+\_\+recharge\+\_\+max, int puissance, int forme)
 \begin{DoxyCompactList}\small\item\em fonction qui initialise un ennemi \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_ad426cf8397c694cf9b1b5b5a1f0498b9}{Boss}} (\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}boss, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}Leader)
+\begin{DoxyCompactList}\small\item\em fonction qui choisis le boss a affronter pour ne pas que l\textquotesingle{}on affronte le joueur que l\textquotesingle{}on joue \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{OBJ_8c_aec8b4c827119268888c4704ce53f4209}{Bool\+Typein}} (int type, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}Leader)
+\begin{DoxyCompactList}\small\item\em fonction qui permet de verifier si le type en parametre et le meme que celui du joueur \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_a71c8e3e0e50b7ca6ff2c3f7509e38c0b}{dest\+\_\+obj}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}c, int ind)
+\begin{DoxyCompactList}\small\item\em fonction qui detruit un objet sur la carte \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_a9cf282411fe5582c1466e14b263517c6}{dest\+\_\+all\+\_\+obj}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}m)
+\begin{DoxyCompactList}\small\item\em fonction qui detruit les objets sur la carte \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73}{dest\+\_\+ennemi}} (\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}en)
+\begin{DoxyCompactList}\small\item\em fonction qui detruit un ennemi et ses combattants \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}{boolcol}} (\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}obj\+\_\+c, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
+\begin{DoxyCompactList}\small\item\em fonction qui regarde si le joueur a des collisions avec l\textquotesingle{}objet \end{DoxyCompactList}\item 
+\mbox{\hyperlink{structartefact__s}{artefact\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{OBJ_8c_a7db3392d374e07d5c5a4420c5e119a4c}{init\+\_\+artefact}} (char \texorpdfstring{$\ast$}{*}nom, int possession, char \texorpdfstring{$\ast$}{*}descriptif, int indice, int prix, int indice\+\_\+texture)
+\begin{DoxyCompactList}\small\item\em fonction qui initialise un artefact \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{OBJ_8c_adba78300c4894968ad14c25bab9ec281}{destruction\+\_\+artefact}} (\mbox{\hyperlink{structartefact__s}{artefact\+\_\+t}} \texorpdfstring{$\ast$}{*}artefact)
 \begin{DoxyCompactList}\small\item\em fonction qui detruit l\textquotesingle{}artefact \end{DoxyCompactList}\end{DoxyCompactItemize}
 
@@ -80,6 +63,200 @@ Avril 2024
 
 
 \doxysubsection{Documentation des fonctions}
+\Hypertarget{OBJ_8c_ad0cd93c5d2d702e51ae366cc806d56e0}\label{OBJ_8c_ad0cd93c5d2d702e51ae366cc806d56e0} 
+\index{OBJ.c@{OBJ.c}!affTabObj@{affTabObj}}
+\index{affTabObj@{affTabObj}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{affTabObj()}{affTabObj()}}
+{\footnotesize\ttfamily void aff\+Tab\+Obj (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}}}]{map,  }\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{carte }\end{DoxyParamCaption})}
+
+
+
+fonction qui affiche les objets de la carte 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em renderer} & rendu de la fenetre \\
+\hline
+{\em carte} & structure de la carte \\
+\hline
+{\em map} & structure de la map \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}\label{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38} 
+\index{OBJ.c@{OBJ.c}!boolcol@{boolcol}}
+\index{boolcol@{boolcol}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{boolcol()}{boolcol()}}
+{\footnotesize\ttfamily int boolcol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{obj\+\_\+c,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp }\end{DoxyParamCaption})}
+
+
+
+fonction qui regarde si le joueur a des collisions avec l\textquotesingle{}objet 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em obj\+\_\+c} & structure de l\textquotesingle{}objet \\
+\hline
+{\em pp} & structure du personnage jouer \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_aec8b4c827119268888c4704ce53f4209}\label{OBJ_8c_aec8b4c827119268888c4704ce53f4209} 
+\index{OBJ.c@{OBJ.c}!BoolTypein@{BoolTypein}}
+\index{BoolTypein@{BoolTypein}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{BoolTypein()}{BoolTypein()}}
+{\footnotesize\ttfamily int Bool\+Typein (\begin{DoxyParamCaption}\item[{int}]{type,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{Leader }\end{DoxyParamCaption})}
+
+
+
+fonction qui permet de verifier si le type en parametre et le meme que celui du joueur 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em type} & type \\
+\hline
+{\em Leader} & structure du personnage que le joueur joue \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_ad426cf8397c694cf9b1b5b5a1f0498b9}\label{OBJ_8c_ad426cf8397c694cf9b1b5b5a1f0498b9} 
+\index{OBJ.c@{OBJ.c}!Boss@{Boss}}
+\index{Boss@{Boss}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{Boss()}{Boss()}}
+{\footnotesize\ttfamily void Boss (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{boss,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{Leader }\end{DoxyParamCaption})}
+
+
+
+fonction qui choisis le boss a affronter pour ne pas que l\textquotesingle{}on affronte le joueur que l\textquotesingle{}on joue 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em boss} & structure de l\textquotesingle{}objet qui sert comme boss \\
+\hline
+{\em Leader} & structure du personnage que le joueur joue \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a86a7dfe3abc02f7c9a550208ada0d4df}\label{OBJ_8c_a86a7dfe3abc02f7c9a550208ada0d4df} 
+\index{OBJ.c@{OBJ.c}!debut\_loot@{debut\_loot}}
+\index{debut\_loot@{debut\_loot}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{debut\_loot()}{debut\_loot()}}
+{\footnotesize\ttfamily void debut\+\_\+loot (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Event}]{event,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp,  }\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{obj,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etat\+\_\+dialogue,  }\item[{int \texorpdfstring{$\ast$}{*}}]{num\+\_\+dialogue }\end{DoxyParamCaption})}
+
+
+
+fonction qui permet l\textquotesingle{}affichage du dialogue lors de la recuperation de l\textquotesingle{}objet 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em c} & structure d\textquotesingle{}une case \\
+\hline
+{\em event} & pile d\textquotesingle{}evenement \\
+\hline
+{\em pp} & structure du personnage \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em etat\+\_\+dialogue} & variable d\textquotesingle{}etat du dialogue \\
+\hline
+{\em obj} & structure de l\textquotesingle{}objet \\
+\hline
+{\em num\+\_\+dialogue} & numero du dialogue a afficher \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_aa379ddbc4e37eecb76f262c615079cb2}\label{OBJ_8c_aa379ddbc4e37eecb76f262c615079cb2} 
+\index{OBJ.c@{OBJ.c}!debut\_loot\_carte@{debut\_loot\_carte}}
+\index{debut\_loot\_carte@{debut\_loot\_carte}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{debut\_loot\_carte()}{debut\_loot\_carte()}}
+{\footnotesize\ttfamily void debut\+\_\+loot\+\_\+carte (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{cartec,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etat\+\_\+dialogue }\end{DoxyParamCaption})}
+
+
+
+fonction qui permet de faire les interaction entre le personnage et les objets 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em cartec} & structure de la case ou se trouve le personnage \\
+\hline
+{\em event} & pile d\textquotesingle{}evenement \\
+\hline
+{\em pp} & structure du personnage \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em etat\+\_\+dialogue} & variable d\textquotesingle{}etat du dialogue \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a455cd685c89376eb662404886a09c933}\label{OBJ_8c_a455cd685c89376eb662404886a09c933} 
+\index{OBJ.c@{OBJ.c}!debut\_loot\_encaps@{debut\_loot\_encaps}}
+\index{debut\_loot\_encaps@{debut\_loot\_encaps}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{debut\_loot\_encaps()}{debut\_loot\_encaps()}}
+{\footnotesize\ttfamily void debut\+\_\+loot\+\_\+encaps (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Event}]{event,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp,  }\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{obj,  }\item[{int \texorpdfstring{$\ast$}{*}}]{etat\+\_\+dialogue,  }\item[{void \texorpdfstring{$\ast$}{*}}]{num\+\_\+dialogue }\end{DoxyParamCaption})}
+
+
+
+fonction qui encapsule \"{}debut\+\_\+loot\"{} 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em c} & structure d\textquotesingle{}une case \\
+\hline
+{\em event} & pile d\textquotesingle{}evenement \\
+\hline
+{\em pp} & structure du personnage \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em etat\+\_\+dialogue} & variable d\textquotesingle{}etat du dialogue \\
+\hline
+{\em obj} & structure de l\textquotesingle{}objet \\
+\hline
+{\em num\+\_\+dialogue} & numero du dialogue a afficher \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a9cf282411fe5582c1466e14b263517c6}\label{OBJ_8c_a9cf282411fe5582c1466e14b263517c6} 
+\index{OBJ.c@{OBJ.c}!dest\_all\_obj@{dest\_all\_obj}}
+\index{dest\_all\_obj@{dest\_all\_obj}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{dest\_all\_obj()}{dest\_all\_obj()}}
+{\footnotesize\ttfamily void dest\+\_\+all\+\_\+obj (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{m }\end{DoxyParamCaption})}
+
+
+
+fonction qui detruit les objets sur la carte 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em m} & structure de la map \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73}\label{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73} 
+\index{OBJ.c@{OBJ.c}!dest\_ennemi@{dest\_ennemi}}
+\index{dest\_ennemi@{dest\_ennemi}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{dest\_ennemi()}{dest\_ennemi()}}
+{\footnotesize\ttfamily void dest\+\_\+ennemi (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{en }\end{DoxyParamCaption})}
+
+
+
+fonction qui detruit un ennemi et ses combattants 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em en} & structure de l\textquotesingle{}ennemi \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a71c8e3e0e50b7ca6ff2c3f7509e38c0b}\label{OBJ_8c_a71c8e3e0e50b7ca6ff2c3f7509e38c0b} 
+\index{OBJ.c@{OBJ.c}!dest\_obj@{dest\_obj}}
+\index{dest\_obj@{dest\_obj}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{dest\_obj()}{dest\_obj()}}
+{\footnotesize\ttfamily void dest\+\_\+obj (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c,  }\item[{int}]{ind }\end{DoxyParamCaption})}
+
+
+
+fonction qui detruit un objet sur la carte 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em c} & structure de la carte \\
+\hline
+{\em ind} & indice de l\textquotesingle{}objet a detruire dans le tableau \\
+\hline
+\end{DoxyParams}
 \Hypertarget{OBJ_8c_adba78300c4894968ad14c25bab9ec281}\label{OBJ_8c_adba78300c4894968ad14c25bab9ec281} 
 \index{OBJ.c@{OBJ.c}!destruction\_artefact@{destruction\_artefact}}
 \index{destruction\_artefact@{destruction\_artefact}!OBJ.c@{OBJ.c}}
@@ -103,9 +280,32 @@ fonction qui detruit l\textquotesingle{}artefact
 
 
 
-fonction qui initialise un ennemi 
+fonction qui initialise un artefact 
 
-fonction qui initialise un artefact
+
+\begin{DoxyParams}{Paramètres}
+{\em nom} & nom de l\textquotesingle{}artefact \\
+\hline
+{\em possession} & entier pour savoir si \textquotesingle{}lon possede ou non l\textquotesingle{}artefact \\
+\hline
+{\em descriptif} & dexcription de l\textquotesingle{}artefact \\
+\hline
+{\em indice} & indice de l\textquotesingle{}artefact dans le tableau dans la structure map \\
+\hline
+{\em prix} & prix de l\textquotesingle{}artefact \\
+\hline
+{\em indice\+\_\+texture} & l\textquotesingle{}indice de la texture de l\textquotesingle{}artefact pour le lire dans le fichier \\
+\hline
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a97b8760f68ddb78a257083a820a71198}\label{OBJ_8c_a97b8760f68ddb78a257083a820a71198} 
+\index{OBJ.c@{OBJ.c}!init\_ennemi@{init\_ennemi}}
+\index{init\_ennemi@{init\_ennemi}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{init\_ennemi()}{init\_ennemi()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*} init\+\_\+ennemi (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{nom,  }\item[{int}]{pv,  }\item[{int}]{vitesse,  }\item[{int}]{camp,  }\item[{int}]{indice\+\_\+portrait,  }\item[{int}]{indice\+\_\+sprite,  }\item[{int}]{type,  }\item[{int}]{temps\+\_\+recharge\+\_\+max,  }\item[{int}]{puissance,  }\item[{int}]{forme }\end{DoxyParamCaption})}
+
+
+
+fonction qui initialise un ennemi 
 
 
 \begin{DoxyParams}{Paramètres}
@@ -127,18 +327,42 @@ fonction qui initialise un artefact
 \hline
 {\em puissance} & puissance de l\textquotesingle{}ennemi \\
 \hline
-{\em forme} & forme de l\textquotesingle{}ennemi\\
+{\em forme} & forme de l\textquotesingle{}ennemi \\
 \hline
-{\em nom} & nom de l\textquotesingle{}artefact \\
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a4820e96378f414782406bda749dfedce}\label{OBJ_8c_a4820e96378f414782406bda749dfedce} 
+\index{OBJ.c@{OBJ.c}!init\_obj@{init\_obj}}
+\index{init\_obj@{init\_obj}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{init\_obj()}{init\_obj()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*} init\+\_\+obj (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c,  }\item[{int}]{ind\+Text,  }\item[{int}]{type,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+
+
+fonction qui permet de creer un objet 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em c} & structure de la case ou se trouve le personnage \\
 \hline
-{\em possession} & entier pour savoir si \textquotesingle{}lon possede ou non l\textquotesingle{}artefact \\
+{\em ind\+Text} & indice de la texture de l\textquotesingle{}objet dans le tableau \\
 \hline
-{\em descriptif} & dexcription de l\textquotesingle{}artefact \\
+{\em type} & type de l\textquotesingle{}objet \\
 \hline
-{\em indice} & indice de l\textquotesingle{}artefact dans le tableau dans la structure map \\
+\end{DoxyParams}
+\Hypertarget{OBJ_8c_a61e316e7d18a45229d43566278d49a90}\label{OBJ_8c_a61e316e7d18a45229d43566278d49a90} 
+\index{OBJ.c@{OBJ.c}!load\_obj@{load\_obj}}
+\index{load\_obj@{load\_obj}!OBJ.c@{OBJ.c}}
+\doxysubsubsection{\texorpdfstring{load\_obj()}{load\_obj()}}
+{\footnotesize\ttfamily int load\+\_\+obj (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c,  }\item[{char \texorpdfstring{$\ast$}{*}}]{namefile }\end{DoxyParamCaption})}
+
+
+
+fonction qui charge les objets lu dans un fichier 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em c} & structure d\textquotesingle{}une case \\
 \hline
-{\em prix} & prix de l\textquotesingle{}artefact \\
-\hline
-{\em indice\+\_\+texture} & l\textquotesingle{}indice de la texture de l\textquotesingle{}artefact pour le lire dans le fichier \\
+{\em namefile} & nom du fichier \\
 \hline
 \end{DoxyParams}

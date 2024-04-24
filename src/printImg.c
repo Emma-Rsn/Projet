@@ -52,11 +52,7 @@ int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){
 *
 */
 
-
-
 //fonction pour afficher le nombre de FPS 
-
-//optimiser le chargement du font
 int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     //chargement de la police d'écriture
     TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 20);

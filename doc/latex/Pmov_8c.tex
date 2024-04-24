@@ -6,8 +6,7 @@ programme pour afficher les personnages
 
 
 {\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
-Graphe des dépendances par inclusion de Pmov.\+c\+:
-\nopagebreak
+Graphe des dépendances par inclusion de Pmov.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -20,12 +19,10 @@ Graphe des dépendances par inclusion de Pmov.\+c\+:
 \Hypertarget{Pmov_8c_a11f97dbf9a9404850c6382e6cc7f4b8d}\label{Pmov_8c_a11f97dbf9a9404850c6382e6cc7f4b8d} 
 void {\bfseries lower} (char \texorpdfstring{$\ast$}{*}input, char \texorpdfstring{$\ast$}{*}output)
 \item 
-\Hypertarget{Pmov_8c_a53f87eef4f6e0f23359fcd3e345d26e6}\label{Pmov_8c_a53f87eef4f6e0f23359fcd3e345d26e6} 
-void {\bfseries pinput} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, SDL\+\_\+\+Event event, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}carte, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}transi, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music, int \texorpdfstring{$\ast$}{*}touche\+Deplacement)
-\item 
-\Hypertarget{Pmov_8c_a0ba0f881a8dbc5a994e5725ee2d16d71}\label{Pmov_8c_a0ba0f881a8dbc5a994e5725ee2d16d71} 
-int {\bfseries affp} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, SDL\+\_\+\+Event event)
-\item 
+void \mbox{\hyperlink{Pmov_8c_a53f87eef4f6e0f23359fcd3e345d26e6}{pinput}} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, SDL\+\_\+\+Event event, \mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}carte, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}transi, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music, int \texorpdfstring{$\ast$}{*}touche\+Deplacement)
+\begin{DoxyCompactList}\small\item\em fonction qui permet de deplacer le personnage \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{Pmov_8c_a0ba0f881a8dbc5a994e5725ee2d16d71}{affp}} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, SDL\+\_\+\+Event event)
+\begin{DoxyCompactList}\small\item\em fonction qui affiche le personnage jouer \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{Pmov_8c_a222b0a34d28d3f5c69057e5f9f016234}{desctruction\+\_\+p\+\_\+eq}} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}p)
 \begin{DoxyCompactList}\small\item\em fonction qui detruit les personnages de l\textquotesingle{}equipe et le pointeur sur frame \end{DoxyCompactList}\item 
 \Hypertarget{Pmov_8c_ab233e299850dfbf68e32adb1e8684a6c}\label{Pmov_8c_ab233e299850dfbf68e32adb1e8684a6c} 
@@ -33,9 +30,8 @@ void \mbox{\hyperlink{Pmov_8c_a222b0a34d28d3f5c69057e5f9f016234}{desctruction\+\
 \begin{DoxyCompactList}\small\item\em fonction qui creer le personnage joue \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{Pmov_8c_a2edb5e81ffbdc30443046878c8a40420}{remplirp}} (\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}p, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c, int leader)
 \begin{DoxyCompactList}\small\item\em fonction qui remplie le personnage joue \end{DoxyCompactList}\item 
-\Hypertarget{Pmov_8c_a711d960e18495b6b58d8124f9f3b23a8}\label{Pmov_8c_a711d960e18495b6b58d8124f9f3b23a8} 
-void {\bfseries transition} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}transi, int we, int he)
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{Pmov_8c_a711d960e18495b6b58d8124f9f3b23a8}{transition}} (SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}transi, int we, int he)
+\begin{DoxyCompactList}\small\item\em fonction qui affiche la transition \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Description détaillée}
@@ -53,6 +49,25 @@ Janvier 2024
 
 
 \doxysubsection{Documentation des fonctions}
+\Hypertarget{Pmov_8c_a0ba0f881a8dbc5a994e5725ee2d16d71}\label{Pmov_8c_a0ba0f881a8dbc5a994e5725ee2d16d71} 
+\index{Pmov.c@{Pmov.c}!affp@{affp}}
+\index{affp@{affp}!Pmov.c@{Pmov.c}}
+\doxysubsubsection{\texorpdfstring{affp()}{affp()}}
+{\footnotesize\ttfamily int affp (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pmv,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{SDL\+\_\+\+Event}]{event }\end{DoxyParamCaption})}
+
+
+
+fonction qui affiche le personnage jouer 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em event} & permet de savoir si il y a un evenement \\
+\hline
+{\em pmv} & structure du personnage \\
+\hline
+{\em renderer} & rendu de la fenetre \\
+\hline
+\end{DoxyParams}
 \Hypertarget{Pmov_8c_a222b0a34d28d3f5c69057e5f9f016234}\label{Pmov_8c_a222b0a34d28d3f5c69057e5f9f016234} 
 \index{Pmov.c@{Pmov.c}!desctruction\_p\_eq@{desctruction\_p\_eq}}
 \index{desctruction\_p\_eq@{desctruction\_p\_eq}!Pmov.c@{Pmov.c}}
@@ -66,6 +81,35 @@ fonction qui detruit les personnages de l\textquotesingle{}equipe et le pointeur
 
 \begin{DoxyParams}{Paramètres}
 {\em p} & strcuture du personnage \\
+\hline
+\end{DoxyParams}
+\Hypertarget{Pmov_8c_a53f87eef4f6e0f23359fcd3e345d26e6}\label{Pmov_8c_a53f87eef4f6e0f23359fcd3e345d26e6} 
+\index{Pmov.c@{Pmov.c}!pinput@{pinput}}
+\index{pinput@{pinput}!Pmov.c@{Pmov.c}}
+\doxysubsubsection{\texorpdfstring{pinput()}{pinput()}}
+{\footnotesize\ttfamily void pinput (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pmv,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{carte,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{transi,  }\item[{Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}}]{g\+Music,  }\item[{int \texorpdfstring{$\ast$}{*}}]{touche\+Deplacement }\end{DoxyParamCaption})}
+
+
+
+fonction qui permet de deplacer le personnage 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em event} & permet de savoir si il y a un evenement \\
+\hline
+{\em pmv} & structure du personnage \\
+\hline
+{\em carte} & structure de la carte \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em renderer} & rendu de la fenetre \\
+\hline
+{\em transi} & etat de la transition \\
+\hline
+{\em g\+Music} & pointeur sur la musique \\
+\hline
+{\em touche\+Deplacement} & entier de la touche de deplacement \\
 \hline
 \end{DoxyParams}
 \Hypertarget{Pmov_8c_a2edb5e81ffbdc30443046878c8a40420}\label{Pmov_8c_a2edb5e81ffbdc30443046878c8a40420} 
@@ -85,5 +129,26 @@ fonction qui remplie le personnage joue
 {\em c} & case du joueur \\
 \hline
 {\em leader} & numero du personnage jouer (son type) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{Pmov_8c_a711d960e18495b6b58d8124f9f3b23a8}\label{Pmov_8c_a711d960e18495b6b58d8124f9f3b23a8} 
+\index{Pmov.c@{Pmov.c}!transition@{transition}}
+\index{transition@{transition}!Pmov.c@{Pmov.c}}
+\doxysubsubsection{\texorpdfstring{transition()}{transition()}}
+{\footnotesize\ttfamily void transition (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{int \texorpdfstring{$\ast$}{*}}]{transi,  }\item[{int}]{we,  }\item[{int}]{he }\end{DoxyParamCaption})}
+
+
+
+fonction qui affiche la transition 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em we} & Largeur de l\textquotesingle{}ecran \\
+\hline
+{\em he} & Longueur de l\textquotesingle{}ecran \\
+\hline
+{\em transi} & pointeur sur l\textquotesingle{}etat de la transition \\
+\hline
+{\em renderer} & rendu de la fenetre \\
 \hline
 \end{DoxyParams}

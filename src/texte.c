@@ -5,7 +5,7 @@
 
 /**
 *\file texte.c
-*\brief Programme qui affiche un texte sur la fenetre
+*\brief Programme qui gere les menus
 *\author Pasquier Lina 
 *\date 28 janvier 2024
 *\version 1.0

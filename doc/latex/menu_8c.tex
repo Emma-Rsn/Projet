@@ -6,8 +6,7 @@ programme pour afficher tous les menus
 
 
 {\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
-Graphe des dépendances par inclusion de menu.\+c\+:
-\nopagebreak
+Graphe des dépendances par inclusion de menu.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,9 +33,8 @@ int \mbox{\hyperlink{menu_8c_aa0dea1e510b75502550a28de7982a1b4}{inventaire}} (in
 \begin{DoxyCompactList}\small\item\em fonction qui affiche et gere l\textquotesingle{}inventaire \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{menu_8c_a24cf63a3608aa158ae1bd76266022026}{menu\+\_\+\+Fin\+Partie}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, int \texorpdfstring{$\ast$}{*}run, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structpersonnage}{personnage}}, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}etat\+\_\+boss)
 \begin{DoxyCompactList}\small\item\em fonction qui affiche l\textquotesingle{}ecran de fin de partie lorsque le joueur a gagne \end{DoxyCompactList}\item 
-\Hypertarget{menu_8c_aa1f49f3d4b9a046a6ca6df19e1821536}\label{menu_8c_aa1f49f3d4b9a046a6ca6df19e1821536} 
-int {\bfseries choix\+\_\+perso} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}leader, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
-\end{DoxyCompactItemize}
+int \mbox{\hyperlink{menu_8c_aa1f49f3d4b9a046a6ca6df19e1821536}{choix\+\_\+perso}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}leader, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
+\begin{DoxyCompactList}\small\item\em fonction qui affiche et permet de choisir le personnage a jouer \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Description détaillée}
@@ -49,11 +47,38 @@ Moreau Enzo Pasquier Lina
 Janvier 2024 
 \end{DoxyDate}
 \begin{DoxyVersion}{Version}
-
+1.\+0 
 \end{DoxyVersion}
 
 
 \doxysubsection{Documentation des fonctions}
+\Hypertarget{menu_8c_aa1f49f3d4b9a046a6ca6df19e1821536}\label{menu_8c_aa1f49f3d4b9a046a6ca6df19e1821536} 
+\index{menu.c@{menu.c}!choix\_perso@{choix\_perso}}
+\index{choix\_perso@{choix\_perso}!menu.c@{menu.c}}
+\doxysubsubsection{\texorpdfstring{choix\_perso()}{choix\_perso()}}
+{\footnotesize\ttfamily int choix\+\_\+perso (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{we,  }\item[{int \texorpdfstring{$\ast$}{*}}]{he,  }\item[{SDL\+\_\+\+Event}]{event,  }\item[{SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}}]{renderer,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{int \texorpdfstring{$\ast$}{*}}]{leader,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp }\end{DoxyParamCaption})}
+
+
+
+fonction qui affiche et permet de choisir le personnage a jouer 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em we} & Largeur de l\textquotesingle{}ecran \\
+\hline
+{\em he} & Longueur de l\textquotesingle{}ecran \\
+\hline
+{\em event} & permet de savoir si il y a un evenement \\
+\hline
+{\em renderer} & rendu de la fenetre \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em leader} & variable qui permet de savoir qui est le personnage joue \\
+\hline
+{\em pp} & structure du personnage jouer \\
+\hline
+\end{DoxyParams}
 \Hypertarget{menu_8c_aa0dea1e510b75502550a28de7982a1b4}\label{menu_8c_aa0dea1e510b75502550a28de7982a1b4} 
 \index{menu.c@{menu.c}!inventaire@{inventaire}}
 \index{inventaire@{inventaire}!menu.c@{menu.c}}

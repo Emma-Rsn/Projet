@@ -5,408 +5,407 @@
 \DoxyCodeLine{00001\ }
 \DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}../libs/commun.h"{}}}
 \DoxyCodeLine{00011\ }
-\DoxyCodeLine{00012\ \mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ init\_obj(\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c,\textcolor{keywordtype}{int}\ indText,\textcolor{keywordtype}{int}\ type,...)\{}
-\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ newObj\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structobj__s}{obj\_t}}));}
-\DoxyCodeLine{00014\ \ \ \ \ newObj-\/>cas\ =\ c;}
-\DoxyCodeLine{00015\ \ \ \ \ newObj-\/>indTexture\ =\ indText;}
-\DoxyCodeLine{00016\ \ \ \ \ newObj-\/>typeObj\ =\ type;}
-\DoxyCodeLine{00017\ \ \ \ \ va\_list\ args;}
-\DoxyCodeLine{00018\ \ \ \ \ va\_start(args,\ type);}
-\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{int}\ n;\ \textcolor{comment}{//nombre\ d'éléments\ propre\ a\ l'objets}}
-\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
-\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordflow}{switch}(type)\{}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0\ :\ \textcolor{comment}{//cas\ d'un\ objet\ de\ décors\ avec\ collision}}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1\ :\ \textcolor{comment}{//cas\ d'un\ objet\ de\ décors\ sans\ collision}}
-\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 1;}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ \textcolor{comment}{//cas\ d'un\ ennemi}}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :\ \textcolor{comment}{//cas\ d'un\ objet\ avec\ dialogue\ avec\ collision}}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :\ \textcolor{comment}{//cas\ d'un\ objet\ avec\ dialogue\ sans\ collision}}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 1;}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5\ :\ \textcolor{comment}{//cas\ d'un\ loot\ apres\ boss}}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 6\ :\ \textcolor{comment}{//cas\ d'une\ porte\ nécessitant\ la\ clé}}
-\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
-\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 7\ :\ \textcolor{comment}{//cas\ de\ la\ zone\ de\ plongée}}
-\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
-\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 8\ :\ \textcolor{comment}{//cas\ d'une\ porte\ nécessitant\ la\ clé}}
-\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
-\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 9\ :\ \textcolor{comment}{//cas\ de\ la\ zone\ de\ plongée}}
+\DoxyCodeLine{00020\ \textcolor{comment}{//fonction\ qui\ permet\ de\ creer\ un\ objet\ }}
+\DoxyCodeLine{00021\ \mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ \mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c,\textcolor{keywordtype}{int}\ indText,\textcolor{keywordtype}{int}\ type,...)\{}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ newObj\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structobj__s}{obj\_t}}));}
+\DoxyCodeLine{00023\ \ \ \ \ newObj-\/>cas\ =\ c;}
+\DoxyCodeLine{00024\ \ \ \ \ newObj-\/>indTexture\ =\ indText;}
+\DoxyCodeLine{00025\ \ \ \ \ newObj-\/>typeObj\ =\ type;}
+\DoxyCodeLine{00026\ \ \ \ \ va\_list\ args;}
+\DoxyCodeLine{00027\ \ \ \ \ va\_start(args,\ type);}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordtype}{int}\ n;\ \textcolor{comment}{//nombre\ d'éléments\ propre\ a\ l'objets}}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0\ :\ \textcolor{comment}{//cas\ d'un\ objet\ de\ décors\ avec\ collision}}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1\ :\ \textcolor{comment}{//cas\ d'un\ objet\ de\ décors\ sans\ collision}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 1;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ \textcolor{comment}{//cas\ d'un\ ennemi}}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :\ \textcolor{comment}{//cas\ d'un\ objet\ avec\ dialogue\ avec\ collision}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :\ \textcolor{comment}{//cas\ d'un\ objet\ avec\ dialogue\ sans\ collision}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 1;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5\ :\ \textcolor{comment}{//cas\ d'un\ loot\ apres\ boss}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 1;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 6\ :\ \textcolor{comment}{//cas\ d'une\ porte\ nécessitant\ la\ clé}}
 \DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
 \DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
-\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\textcolor{comment}{//cas\ d'un\ objet\ inconnu}}
-\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ -\/1;}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00061\ \ \ \ \ \}}
-\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ n;\ i++)\ \{}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ newObj-\/>tabObj[i]\ =\ va\_arg(args,\ \textcolor{keywordtype}{void}\ *);}
-\DoxyCodeLine{00064\ \ \ \ \ \}}
-\DoxyCodeLine{00065\ \ \ \ \ va\_end(args);}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordflow}{return}\ newObj;}
-\DoxyCodeLine{00067\ \}}
-\DoxyCodeLine{00068\ }
-\DoxyCodeLine{00069\ \textcolor{keywordtype}{void}\ debut\_loot\_carte(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ **cartec,SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\textcolor{keywordtype}{int}\ *\ etat\_dialogue)\{}
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
-\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<(*cartec)-\/>nbObj;i++)\{}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==5)\{}
-\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ debut\_loot(event,pp,(*cartec)-\/>tabObj[i]-\/>cas,map,(*cartec)-\/>tabObj[i],etat\_dialogue,(*cartec)-\/>tabObj[i]-\/>tabObj[0]);}
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==6)\{}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boolcol((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ event.type\ ==\ SDL\_KEYDOWN\ \&\&\ event.key.keysym.sym==SDLK\_e\ \&\&\ map-\/>cle\ ==\ 1)\{}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte][(*cartec)-\/>ycarte+1];}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
-\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[0][5]);}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==7)\{}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boolcol((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ \textcolor{keyword}{event}.type\ ==\ SDL\_KEYDOWN\ \&\&\ \textcolor{keyword}{event}.key.keysym.sym==SDLK\_e\ \&\&\ map-\/>plongee\ ==\ 1)\{}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte+1][(*cartec)-\/>ycarte];}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[14][1]);}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==8)\{}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boolcol((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ \textcolor{keyword}{event}.type\ ==\ SDL\_KEYDOWN\ \&\&\ \textcolor{keyword}{event}.key.keysym.sym==SDLK\_e)\{}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte][(*cartec)-\/>ycarte-\/1];}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
-\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[15][0]);}
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
-\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==9)\{}
-\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(boolcol((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ \textcolor{keyword}{event}.type\ ==\ SDL\_KEYDOWN\ \&\&\ \textcolor{keyword}{event}.key.keysym.sym==SDLK\_e)\{}
-\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte-\/1][(*cartec)-\/>ycarte];}
-\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[14][9]);}
-\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
-\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00103\ \ \ \ \ \}}
-\DoxyCodeLine{00104\ \}}
-\DoxyCodeLine{00105\ }
-\DoxyCodeLine{00106\ }
-\DoxyCodeLine{00107\ }
-\DoxyCodeLine{00108\ \textcolor{keywordtype}{void}\ debut\_loot(SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ obj,\textcolor{keywordtype}{int}\ *\ etat\_dialogue,\textcolor{keywordtype}{int}\ num\_dialogue)\{}
-\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{if}(boolcol(c,pp)\ \ \&\&\ event.type\ ==\ SDL\_KEYDOWN\ \&\&\ event.key.keysym.sym==SDLK\_e)\{}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(num\_dialogue)\{}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0\ :\ map-\/>plongee\ =\ 1;}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1\ :\ map-\/>cle\ =\ 1;}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ map-\/>talisman\ =\ 1;}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ *etat\_dialogue=1;}
-\DoxyCodeLine{00119\ \ \ \ \ \}\ }
-\DoxyCodeLine{00120\ \}}
-\DoxyCodeLine{00121\ }
-\DoxyCodeLine{00122\ }
-\DoxyCodeLine{00123\ \textcolor{keywordtype}{int}\ load\_obj(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *c,\ \textcolor{keywordtype}{char}\ *namefile)\{}
-\DoxyCodeLine{00124\ \ \ \ \ \textcolor{keywordtype}{int}\ x,y,indText,type;}
-\DoxyCodeLine{00125\ \ \ \ \ FILE\ *\ file;}
-\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 7\ :\ \textcolor{comment}{//cas\ de\ la\ zone\ de\ plongée}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 8\ :\ \textcolor{comment}{//cas\ d'une\ porte\ nécessitant\ la\ clé}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 9\ :\ \textcolor{comment}{//cas\ de\ la\ zone\ de\ plongée}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ 0;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ newObj-\/>cas-\/>etat\ =\ 0;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:\textcolor{comment}{//cas\ d'un\ objet\ inconnu}}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ n\ =\ -\/1;}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ n;\ i++)\ \{}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ newObj-\/>tabObj[i]\ =\ va\_arg(args,\ \textcolor{keywordtype}{void}\ *);}
+\DoxyCodeLine{00073\ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ va\_end(args);}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return}\ newObj;}
+\DoxyCodeLine{00076\ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00088\ \textcolor{comment}{//fonction\ qui\ permet\ de\ faire\ les\ interaction\ entre\ le\ personnage\ et\ les\ objets}}
+\DoxyCodeLine{00089\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_aa379ddbc4e37eecb76f262c615079cb2}{debut\_loot\_carte}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ **cartec,SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\textcolor{keywordtype}{int}\ *\ etat\_dialogue)\{}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00091\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<(*cartec)-\/>nbObj;i++)\{}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==5)\{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{OBJ_8c_a455cd685c89376eb662404886a09c933}{debut\_loot\_encaps}}(event,pp,(*cartec)-\/>tabObj[i]-\/>cas,map,(*cartec)-\/>tabObj[i],etat\_dialogue,(*cartec)-\/>tabObj[i]-\/>tabObj[0]);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==6)\{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}{boolcol}}((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ event.type\ ==\ SDL\_KEYDOWN\ \&\&\ event.key.keysym.sym==SDLK\_e\ \&\&\ map-\/>cle\ ==\ 1)\{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte][(*cartec)-\/>ycarte+1];}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[0][5]);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==7)\{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}{boolcol}}((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ \textcolor{keyword}{event}.type\ ==\ SDL\_KEYDOWN\ \&\&\ \textcolor{keyword}{event}.key.keysym.sym==SDLK\_e\ \&\&\ map-\/>plongee\ ==\ 1)\{}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte+1][(*cartec)-\/>ycarte];}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[14][1]);}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>plongee\ =\ 1;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==8)\{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}{boolcol}}((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ \textcolor{keyword}{event}.type\ ==\ SDL\_KEYDOWN\ \&\&\ \textcolor{keyword}{event}.key.keysym.sym==SDLK\_e)\{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte][(*cartec)-\/>ycarte-\/1];}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[15][0]);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}((*cartec)-\/>tabObj[i]-\/>typeObj==9)\{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}{boolcol}}((*cartec)-\/>tabObj[i]-\/>cas,pp)\ \ \&\&\ \textcolor{keyword}{event}.type\ ==\ SDL\_KEYDOWN\ \&\&\ \textcolor{keyword}{event}.key.keysym.sym==SDLK\_e)\{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)\ =\ \&map-\/>tabMap[(*cartec)-\/>xcarte-\/1][(*cartec)-\/>ycarte];}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*cartec)-\/>etat\_brouillard\ =\ 0;}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>c\ =\ \&((*cartec)-\/>grille.tabGrille[14][9]);}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>r\ =\ pp-\/>c-\/>Rectangle;}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pp-\/>plongee\ =\ 0;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00125\ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \}}
 \DoxyCodeLine{00127\ }
-\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keywordtype}{char}\ nom[20];}
-\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keywordtype}{int}\ pv,vitesse,camp,indice\_portait,indice\_sprite,typeE,temps\_recharge\_max,puissance,forme;}
-\DoxyCodeLine{00130\ \ \ \ \ \textcolor{keywordtype}{int}\ nbCombattant;}
-\DoxyCodeLine{00131\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_dialogue;}
-\DoxyCodeLine{00132\ }
-\DoxyCodeLine{00133\ \ \ \ \ file=fopen(namefile,\textcolor{stringliteral}{"{}r"{}});}
-\DoxyCodeLine{00134\ }
-\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
-\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(fscanf(file,\textcolor{stringliteral}{"{}\%d\ \%d\ \%d\ \%d\ "{}},\&x,\&y,\&indText,\&type)!=\ EOF)\{}
-\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(type)\{}
-\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0\ :}
-\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type);}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1\ :}
-\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type);}
-\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :}
-\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%s\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ "{}},nom,\&pv,\&vitesse,\&camp,\&indice\_portait,\&indice\_sprite,\&typeE,\&temps\_recharge\_max,\&puissance,\&forme,\&nbCombattant);}
-\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ newEnnemi=init\_ennemi(nom,pv,vitesse,camp,indice\_portait,indice\_sprite,typeE,temps\_recharge\_max,puissance,forme);}
-\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=1;i<=nbCombattant;i++)\{}
-\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%s\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d"{}},nom,\&pv,\&vitesse,\&camp,\&indice\_portait,\&indice\_sprite,\&typeE,\&temps\_recharge\_max,\&puissance,\&forme);}
-\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newEnnemi-\/>combattant[i]=init\_combattant(nom,pv,vitesse,camp,indice\_portait,indice\_sprite,typeE,temps\_recharge\_max,puissance,forme,pv);}
-\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type,newEnnemi);}
-\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;}
-\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :}
-\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%d"{}},\&num\_dialogue);}
-\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type,num\_dialogue);}
-\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :}
-\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%d"{}},\&num\_dialogue);}
-\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type,num\_dialogue);}
-\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5\ :}
-\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%d"{}},\&num\_dialogue);}
-\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type,num\_dialogue);}
-\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 6\ :}
-\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type);}
-\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 7\ :}
-\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type);}
-\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 8\ :}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type);}
-\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 9\ :}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=init\_obj(\&c-\/>grille.tabGrille[x][y],indText,type);}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
-\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
-\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00190\ \ \ \ \ \}}
-\DoxyCodeLine{00191\ \ \ \ \ \textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00193\ \ \ \ \ \}}
-\DoxyCodeLine{00194\ \ \ \ \ fclose(file);}
-\DoxyCodeLine{00195\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{00196\ }
-\DoxyCodeLine{00197\ }
-\DoxyCodeLine{00198\ \}}
-\DoxyCodeLine{00199\ }
-\DoxyCodeLine{00200\ \textcolor{keywordtype}{void}\ affObj(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ o,\mbox{\hyperlink{structmap__s}{map\_t}}\ map)\{}
-\DoxyCodeLine{00201\ \ \ \ \ SDL\_RenderCopy(renderer,\ map.tabTexture[o-\/>indTexture],\ NULL,\ \&(o-\/>cas-\/>Rectangle));}
-\DoxyCodeLine{00202\ \}}
-\DoxyCodeLine{00203\ }
-\DoxyCodeLine{00204\ \textcolor{keywordtype}{void}\ affTabObj(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structmap__s}{map\_t}}\ map,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ carte)\{}
-\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
-\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ 0;}
-\DoxyCodeLine{00207\ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;\ i\ <\ carte-\/>nbObj;i++)\{}
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map.Nightmare\ ==\ 1\ \&\&\ carte-\/>tabObj[i]-\/>typeObj\ <\ 3)n=map.nbN;}
-\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ n=0;}
-\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map.tabTexture[(carte-\/>tabObj[i]-\/>indTexture)+n],\ NULL,\ \&(carte-\/>tabObj[i]-\/>cas-\/>Rectangle));}
-\DoxyCodeLine{00211\ \ \ \ \ \}}
-\DoxyCodeLine{00212\ \}}
-\DoxyCodeLine{00213\ }
-\DoxyCodeLine{00214\ }
-\DoxyCodeLine{00230\ \textcolor{comment}{//fonction\ qui\ initialise\ un\ ennemi}}
-\DoxyCodeLine{00231\ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ init\_ennemi(\textcolor{keywordtype}{char}*\ nom,\textcolor{keywordtype}{int}\ pv,\textcolor{keywordtype}{int}\ vitesse,\textcolor{keywordtype}{int}\ camp,\textcolor{keywordtype}{int}\ indice\_portrait,\textcolor{keywordtype}{int}\ indice\_sprite,\textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{int}\ temps\_recharge\_max,\textcolor{keywordtype}{int}\ puissance,\textcolor{keywordtype}{int}\ forme)\{}
-\DoxyCodeLine{00232\ \ \ \ \ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ en\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structennemi__s}{ennemi\_t}}));}
-\DoxyCodeLine{00233\ \ \ \ \ en-\/>nom\ =\ malloc(strlen(nom)+1);}
-\DoxyCodeLine{00234\ \ \ \ \ strcpy(en-\/>nom,nom);}
-\DoxyCodeLine{00235\ \ \ \ \ en-\/>combat=0;}
-\DoxyCodeLine{00236\ \ \ \ \ en-\/>pv=pv;}
-\DoxyCodeLine{00237\ \ \ \ \ en-\/>type=type;}
-\DoxyCodeLine{00238\ \ \ \ \ en-\/>vitesse=vitesse;}
-\DoxyCodeLine{00239\ \ \ \ \ en-\/>mort=0;}
-\DoxyCodeLine{00240\ \ \ \ \ en-\/>temps\_recharge\_max=temps\_recharge\_max;}
-\DoxyCodeLine{00241\ \ \ \ \ en-\/>status=0;}
-\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
-\DoxyCodeLine{00243\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<4;i++)\{}
-\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ en-\/>combattant[i]=NULL;}
-\DoxyCodeLine{00245\ \ \ \ \ \}}
-\DoxyCodeLine{00246\ \ \ \ \ \textcolor{keywordflow}{if}(en-\/>combattant[0]\ !=\ NULL)desctruction\_combattant(en-\/>combattant[0]);}
-\DoxyCodeLine{00247\ \ \ \ \ en-\/>combattant[0]=init\_combattant(en-\/>nom,en-\/>pv,en-\/>vitesse,1,indice\_portrait,indice\_sprite,type,en-\/>temps\_recharge\_max,puissance,forme,pv);}
-\DoxyCodeLine{00248\ \ \ \ \ en-\/>indice\_portrait=indice\_portrait;}
-\DoxyCodeLine{00249\ \ \ \ \ en-\/>indice\_sprite=indice\_sprite;}
-\DoxyCodeLine{00250\ \ \ \ \ en-\/>forme=forme;}
-\DoxyCodeLine{00251\ \ \ \ \ \textcolor{keywordflow}{return}\ en;}
-\DoxyCodeLine{00252\ \}}
-\DoxyCodeLine{00253\ }
-\DoxyCodeLine{00254\ \textcolor{keywordtype}{int}\ newLeader(\mbox{\hyperlink{structpersonnage}{p\_mv}}\ pp)\{}
-\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordflow}{if}(!pp.equipe[1])\textcolor{keywordflow}{return}\ pp.equipe[0]-\/>type;}
-\DoxyCodeLine{00256\ \ \ \ \ srand(\ time(\ NULL\ )\ );}
-\DoxyCodeLine{00257\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
-\DoxyCodeLine{00258\ \ \ \ \ \textcolor{keywordflow}{do}\{}
-\DoxyCodeLine{00259\ \ \ \ \ \ \ \ \ i\ =\ rand()\%3+1;}
-\DoxyCodeLine{00260\ \ \ \ \ \}\textcolor{keywordflow}{while}(!pp.equipe[i]);}
-\DoxyCodeLine{00261\ \ \ \ \ \textcolor{keywordflow}{return}\ pp.equipe[i]-\/>type;}
-\DoxyCodeLine{00262\ \}}
-\DoxyCodeLine{00263\ }
-\DoxyCodeLine{00264\ \textcolor{keywordtype}{void}\ Boss(\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ boss,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ Leader)\{}
-\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keywordflow}{if}(boss-\/>typeObj\ ==\ 2)\{}
-\DoxyCodeLine{00266\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>forme\ ==\ 3)\{}
-\DoxyCodeLine{00267\ \ \ \ \ \ \ \ \ \ \ \ \ srand(\ time(\ NULL\ )\ );}
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ type\ =\ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>type;}
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i,y,j,combat\ =\ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combat;}
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(y\ =\ 0;Leader-\/>equipe[y]\ \&\&\ y\ <\ 4;y++);}
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y==4)\textcolor{keywordflow}{return};}
-\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ tab[y];}
-\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y>0)\{}
-\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=1;j<y;j++)\{}
-\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tab[j-\/1]\ =\ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combattant[j];}
-\DoxyCodeLine{00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00277\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00278\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;Leader-\/>equipe[i]\ \&\&\ Leader-\/>equipe[i]-\/>type\ !=\ type;i++);}
-\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!Leader-\/>equipe[i])\textcolor{keywordflow}{return};}
-\DoxyCodeLine{00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(Leader-\/>equipe[i]-\/>type\ ==\ type)\{}
-\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\{}
-\DoxyCodeLine{00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ rand()\%4;}
-\DoxyCodeLine{00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{while}(BoolTypein(type,Leader));}
-\DoxyCodeLine{00284\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00285\ \ \ \ \ \ \ \ \ \ \ \ \ dest\_ennemi((boss-\/>tabObj[0]));}
-\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)}
-\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\textcolor{comment}{//Alex}}
-\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
-\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=init\_ennemi(\textcolor{stringliteral}{"{}Alex"{}},190,60,0,136,135,0,2,27,0);}
-\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00292\ }
-\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\textcolor{comment}{//Lou}}
-\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
-\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=init\_ennemi(\textcolor{stringliteral}{"{}Lou"{}},180,75,0,138,137,1,3,23,0);}
-\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00297\ }
-\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\textcolor{comment}{//Finn}}
-\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
-\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=init\_ennemi(\textcolor{stringliteral}{"{}Finn"{}},230,70,0,140,139,2,3,15,0);}
-\DoxyCodeLine{00301\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00302\ }
-\DoxyCodeLine{00303\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\textcolor{comment}{//Ada}}
-\DoxyCodeLine{00304\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
-\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=init\_ennemi(\textcolor{stringliteral}{"{}Ada"{}},135,65,0,142,141,3,2,36,0);}
-\DoxyCodeLine{00306\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00308\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
-\DoxyCodeLine{00309\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00310\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combat\ =\ combat;}
-\DoxyCodeLine{00312\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y>0)\{}
-\DoxyCodeLine{00313\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=1;j<y;j++)\{}
-\DoxyCodeLine{00314\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combattant[j]\ =\ tab[j-\/1];}
-\DoxyCodeLine{00315\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00316\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00317\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00318\ \ \ \ \ \}}
-\DoxyCodeLine{00319\ \}}
-\DoxyCodeLine{00320\ }
-\DoxyCodeLine{00321\ }
-\DoxyCodeLine{00322\ }
-\DoxyCodeLine{00323\ \textcolor{keywordtype}{int}\ BoolTypein(\textcolor{keywordtype}{int}\ type,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ Leader)\{}
-\DoxyCodeLine{00324\ \ \ \ \ \textcolor{keywordtype}{int}\ nballie,i;}
-\DoxyCodeLine{00325\ \ \ \ \ \textcolor{keywordflow}{for}(nballie=0;Leader-\/>equipe[nballie]\ \&\&\ nballie\ <\ 4;nballie++);}
-\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keywordflow}{for}(i\ =0;i<nballie;i++)\{}
-\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(Leader-\/>equipe[i]-\/>type\ ==\ type)\{}
-\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00330\ \ \ \ \ \}}
-\DoxyCodeLine{00331\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{00332\ \}}
-\DoxyCodeLine{00333\ }
-\DoxyCodeLine{00334\ \textcolor{keywordtype}{void}\ dest\_obj(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ c,\textcolor{keywordtype}{int}\ ind)\{}
-\DoxyCodeLine{00335\ }
-\DoxyCodeLine{00336\ \ \ \ \ \textcolor{keywordflow}{if}(c-\/>nbObj\ >\ 0)\{}
-\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(c-\/>tabObj[ind]-\/>typeObj)\{}
-\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ dest\_ennemi(((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)(c-\/>tabObj[ind]-\/>tabObj[0])));}
-\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[ind]-\/>cas-\/>etat=1;}
-\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00341\ }
-\DoxyCodeLine{00342\ }
-\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ default\ :\ \textcolor{keywordflow}{break};}
-\DoxyCodeLine{00344\ }
-\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(c-\/>nbObj\ ==\ 1)\{}
-\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ free(c-\/>tabObj[ind]);}
-\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[ind]\ =\ NULL;}
-\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj-\/-\/;}
-\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
-\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ free(c-\/>tabObj[ind]);}
-\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
-\DoxyCodeLine{00353\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=ind;i<c-\/>nbObj-\/1;i++)\{}
-\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[i]\ =\ c-\/>tabObj[i+1];}
-\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj-\/-\/;}
-\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00358\ \ \ \ \ \}}
-\DoxyCodeLine{00359\ \}}
-\DoxyCodeLine{00360\ }
-\DoxyCodeLine{00361\ \textcolor{keywordtype}{void}\ dest\_all\_obj(\mbox{\hyperlink{structmap__s}{map\_t}}\ *m)\{}
-\DoxyCodeLine{00362\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
-\DoxyCodeLine{00363\ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;i<ROWS;i++)\{}
-\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j\ =\ 0;j\ <\ COLUMNS;j++)\{}
-\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(m-\/>tabMap[i][j].nbObj)\{}
-\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dest\_obj(\&m-\/>tabMap[i][j],0);}
-\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00369\ \ \ \ \ \}}
-\DoxyCodeLine{00370\ \}}
-\DoxyCodeLine{00371\ }
-\DoxyCodeLine{00372\ }
-\DoxyCodeLine{00373\ \textcolor{keywordtype}{void}\ dest\_ennemi(\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ en)\{}
-\DoxyCodeLine{00374\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
-\DoxyCodeLine{00375\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_ennemi=0;}
-\DoxyCodeLine{00376\ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;i<4;i++)\{}
-\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(en-\/>combattant[i]!=NULL)\{}
-\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \ \ \ \ nb\_ennemi++;}
-\DoxyCodeLine{00379\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00380\ \ \ \ \ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00141\ \textcolor{comment}{//fonction\ qui\ encapsule\ "{}debut\_loot"{}}}
+\DoxyCodeLine{00142\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_a455cd685c89376eb662404886a09c933}{debut\_loot\_encaps}}(SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ obj,\textcolor{keywordtype}{int}\ *\ etat\_dialogue,\textcolor{keywordtype}{void}\ *\ num\_dialogue)\{}
+\DoxyCodeLine{00143\ \ \ \ \ \mbox{\hyperlink{OBJ_8c_a86a7dfe3abc02f7c9a550208ada0d4df}{debut\_loot}}(event,pp,c,map,obj,etat\_dialogue,num\_dialogue);}
+\DoxyCodeLine{00144\ \}}
+\DoxyCodeLine{00145\ }
+\DoxyCodeLine{00158\ \textcolor{comment}{//fonction\ qui\ permet\ l'affichage\ du\ dialogue\ lors\ de\ la\ recuperation\ de\ l'objet}}
+\DoxyCodeLine{00159\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_a86a7dfe3abc02f7c9a550208ada0d4df}{debut\_loot}}(SDL\_Event\ event,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp,\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ c,\mbox{\hyperlink{structmap__s}{map\_t}}\ *\ map,\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ obj,\textcolor{keywordtype}{int}\ *\ etat\_dialogue,\textcolor{keywordtype}{int}\ *\ num\_dialogue)\{}
+\DoxyCodeLine{00160\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}{boolcol}}(c,pp)\ \ \&\&\ event.type\ ==\ SDL\_KEYDOWN\ \&\&\ event.key.keysym.sym==SDLK\_e)\{}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(*num\_dialogue)\{}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0\ :\ map-\/>plongee\ =\ 1;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1\ :\ map-\/>cle\ =\ 1;}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ map-\/>talisman\ =\ 1;}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ *etat\_dialogue=1;}
+\DoxyCodeLine{00170\ \ \ \ \ \}\ }
+\DoxyCodeLine{00171\ \}}
+\DoxyCodeLine{00172\ }
+\DoxyCodeLine{00180\ \textcolor{comment}{//fonction\ qui\ charge\ les\ objets\ lu\ dans\ un\ fichier}}
+\DoxyCodeLine{00181\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{OBJ_8c_a61e316e7d18a45229d43566278d49a90}{load\_obj}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *c,\ \textcolor{keywordtype}{char}\ *namefile)\{}
+\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordtype}{int}\ x,y,indText,type;}
+\DoxyCodeLine{00183\ \ \ \ \ FILE\ *\ file;}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00185\ }
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keywordtype}{char}\ nom[20];}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordtype}{int}\ pv,vitesse,camp,indice\_portait,indice\_sprite,typeE,temps\_recharge\_max,puissance,forme;}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordtype}{int}\ nbCombattant;}
+\DoxyCodeLine{00189\ \ \ \ \ \textcolor{keywordtype}{int}\ num\_dialogue;}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ file=fopen(namefile,\textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordflow}{if}(file)\{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(fscanf(file,\textcolor{stringliteral}{"{}\%d\ \%d\ \%d\ \%d\ "{}},\&x,\&y,\&indText,\&type)!=\ EOF)\{}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(type)\{}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0\ :}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type);}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1\ :}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type);}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%s\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ "{}},nom,\&pv,\&vitesse,\&camp,\&indice\_portait,\&indice\_sprite,\&typeE,\&temps\_recharge\_max,\&puissance,\&forme,\&nbCombattant);}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ newEnnemi=\mbox{\hyperlink{OBJ_8c_a97b8760f68ddb78a257083a820a71198}{init\_ennemi}}(nom,pv,vitesse,camp,indice\_portait,indice\_sprite,typeE,temps\_recharge\_max,puissance,forme);}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=1;i<=nbCombattant;i++)\{}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%s\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d\ \%d"{}},nom,\&pv,\&vitesse,\&camp,\&indice\_portait,\&indice\_sprite,\&typeE,\&temps\_recharge\_max,\&puissance,\&forme);}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newEnnemi-\/>combattant[i]=init\_combattant(nom,pv,vitesse,camp,indice\_portait,indice\_sprite,typeE,temps\_recharge\_max,puissance,forme,pv);}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type,newEnnemi);}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3\ :}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%d"{}},\&num\_dialogue);}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type,num\_dialogue);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 4\ :}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%d"{}},\&num\_dialogue);}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type,num\_dialogue);}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 5\ :}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\%d"{}},\&num\_dialogue);}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type,num\_dialogue);}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 6\ :}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type);}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 7\ :}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type);}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 8\ :}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type);}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00241\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 9\ :}
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[c-\/>nbObj]=\mbox{\hyperlink{OBJ_8c_a4820e96378f414782406bda749dfedce}{init\_obj}}(\&c-\/>grille.tabGrille[x][y],indText,type);}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj++;\ }
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \ \ \ \ fscanf(file,\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00248\ \ \ \ \ \}}
+\DoxyCodeLine{00249\ \ \ \ \ \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00251\ \ \ \ \ \}}
+\DoxyCodeLine{00252\ \ \ \ \ fclose(file);}
+\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00254\ }
+\DoxyCodeLine{00255\ }
+\DoxyCodeLine{00256\ \}}
+\DoxyCodeLine{00257\ }
+\DoxyCodeLine{00266\ \textcolor{comment}{//fonction\ qui\ affiche\ les\ objets\ de\ la\ carte}}
+\DoxyCodeLine{00267\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_ad0cd93c5d2d702e51ae366cc806d56e0}{affTabObj}}(SDL\_Renderer\ *renderer,\mbox{\hyperlink{structmap__s}{map\_t}}\ map,\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ carte)\{}
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00269\ \ \ \ \ \textcolor{keywordtype}{int}\ n\ =\ 0;}
+\DoxyCodeLine{00270\ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;\ i\ <\ carte-\/>nbObj;i++)\{}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(map.Nightmare\ ==\ 1\ \&\&\ carte-\/>tabObj[i]-\/>typeObj\ <\ 3)n=map.nbN;}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ n=0;}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ SDL\_RenderCopy(renderer,\ map.tabTexture[(carte-\/>tabObj[i]-\/>indTexture)+n],\ NULL,\ \&(carte-\/>tabObj[i]-\/>cas-\/>Rectangle));}
+\DoxyCodeLine{00274\ \ \ \ \ \}}
+\DoxyCodeLine{00275\ \}}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ }
+\DoxyCodeLine{00293\ \textcolor{comment}{//fonction\ qui\ initialise\ un\ ennemi}}
+\DoxyCodeLine{00294\ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ \mbox{\hyperlink{OBJ_8c_a97b8760f68ddb78a257083a820a71198}{init\_ennemi}}(\textcolor{keywordtype}{char}*\ nom,\textcolor{keywordtype}{int}\ pv,\textcolor{keywordtype}{int}\ vitesse,\textcolor{keywordtype}{int}\ camp,\textcolor{keywordtype}{int}\ indice\_portrait,\textcolor{keywordtype}{int}\ indice\_sprite,\textcolor{keywordtype}{int}\ type,\textcolor{keywordtype}{int}\ temps\_recharge\_max,\textcolor{keywordtype}{int}\ puissance,\textcolor{keywordtype}{int}\ forme)\{}
+\DoxyCodeLine{00295\ \ \ \ \ \mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ en\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structennemi__s}{ennemi\_t}}));}
+\DoxyCodeLine{00296\ \ \ \ \ en-\/>nom\ =\ malloc(strlen(nom)+1);}
+\DoxyCodeLine{00297\ \ \ \ \ strcpy(en-\/>nom,nom);}
+\DoxyCodeLine{00298\ \ \ \ \ en-\/>combat=0;}
+\DoxyCodeLine{00299\ \ \ \ \ en-\/>pv=pv;}
+\DoxyCodeLine{00300\ \ \ \ \ en-\/>type=type;}
+\DoxyCodeLine{00301\ \ \ \ \ en-\/>vitesse=vitesse;}
+\DoxyCodeLine{00302\ \ \ \ \ en-\/>mort=0;}
+\DoxyCodeLine{00303\ \ \ \ \ en-\/>temps\_recharge\_max=temps\_recharge\_max;}
+\DoxyCodeLine{00304\ \ \ \ \ en-\/>status=0;}
+\DoxyCodeLine{00305\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<4;i++)\{}
+\DoxyCodeLine{00307\ \ \ \ \ \ \ \ \ en-\/>combattant[i]=NULL;}
+\DoxyCodeLine{00308\ \ \ \ \ \}}
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{keywordflow}{if}(en-\/>combattant[0]\ !=\ NULL)desctruction\_combattant(en-\/>combattant[0]);}
+\DoxyCodeLine{00310\ \ \ \ \ en-\/>combattant[0]=init\_combattant(en-\/>nom,en-\/>pv,en-\/>vitesse,1,indice\_portrait,indice\_sprite,type,en-\/>temps\_recharge\_max,puissance,forme,pv);}
+\DoxyCodeLine{00311\ \ \ \ \ en-\/>indice\_portrait=indice\_portrait;}
+\DoxyCodeLine{00312\ \ \ \ \ en-\/>indice\_sprite=indice\_sprite;}
+\DoxyCodeLine{00313\ \ \ \ \ en-\/>forme=forme;}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{keywordflow}{return}\ en;}
+\DoxyCodeLine{00315\ \}}
+\DoxyCodeLine{00316\ }
+\DoxyCodeLine{00324\ \textcolor{comment}{//fonction\ qui\ choisis\ le\ boss\ a\ affronter\ pour\ ne\ pas\ que\ l'on\ affronte\ le\ joueur\ que\ l'on\ joue}}
+\DoxyCodeLine{00325\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_ad426cf8397c694cf9b1b5b5a1f0498b9}{Boss}}(\mbox{\hyperlink{structobj__s}{obj\_t}}\ *\ boss,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ Leader)\{}
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{keywordflow}{if}(boss-\/>typeObj\ ==\ 2)\{}
+\DoxyCodeLine{00327\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>forme\ ==\ 3)\{}
+\DoxyCodeLine{00328\ \ \ \ \ \ \ \ \ \ \ \ \ srand(\ time(\ NULL\ )\ );}
+\DoxyCodeLine{00329\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ type\ =\ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>type;}
+\DoxyCodeLine{00330\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i,y,j,combat\ =\ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combat;}
+\DoxyCodeLine{00331\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(y\ =\ 0;Leader-\/>equipe[y]\ \&\&\ y\ <\ 4;y++);}
+\DoxyCodeLine{00332\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y==4)\textcolor{keywordflow}{return};}
+\DoxyCodeLine{00333\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcombattant__s}{combattant\_t}}\ *\ tab[y];}
+\DoxyCodeLine{00334\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y>0)\{}
+\DoxyCodeLine{00335\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=1;j<y;j++)\{}
+\DoxyCodeLine{00336\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tab[j-\/1]\ =\ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combattant[j];}
+\DoxyCodeLine{00337\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00338\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00339\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;Leader-\/>equipe[i]\ \&\&\ Leader-\/>equipe[i]-\/>type\ !=\ type;i++);}
+\DoxyCodeLine{00340\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!Leader-\/>equipe[i])\textcolor{keywordflow}{return};}
+\DoxyCodeLine{00341\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(Leader-\/>equipe[i]-\/>type\ ==\ type)\{}
+\DoxyCodeLine{00342\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\{}
+\DoxyCodeLine{00343\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ type\ =\ rand()\%4;}
+\DoxyCodeLine{00344\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{while}(\mbox{\hyperlink{OBJ_8c_aec8b4c827119268888c4704ce53f4209}{BoolTypein}}(type,Leader));}
+\DoxyCodeLine{00345\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00346\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73}{dest\_ennemi}}((boss-\/>tabObj[0]));}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (type)}
+\DoxyCodeLine{00348\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00349\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 0:\textcolor{comment}{//Alex}}
+\DoxyCodeLine{00350\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
+\DoxyCodeLine{00351\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=\mbox{\hyperlink{OBJ_8c_a97b8760f68ddb78a257083a820a71198}{init\_ennemi}}(\textcolor{stringliteral}{"{}Alex"{}},190,60,0,136,135,0,2,27,0);}
+\DoxyCodeLine{00352\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00353\ }
+\DoxyCodeLine{00354\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 1:\textcolor{comment}{//Lou}}
+\DoxyCodeLine{00355\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
+\DoxyCodeLine{00356\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=\mbox{\hyperlink{OBJ_8c_a97b8760f68ddb78a257083a820a71198}{init\_ennemi}}(\textcolor{stringliteral}{"{}Lou"{}},180,75,0,138,137,1,3,23,0);}
+\DoxyCodeLine{00357\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00358\ }
+\DoxyCodeLine{00359\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2:\textcolor{comment}{//Finn}}
+\DoxyCodeLine{00360\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
+\DoxyCodeLine{00361\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=\mbox{\hyperlink{OBJ_8c_a97b8760f68ddb78a257083a820a71198}{init\_ennemi}}(\textcolor{stringliteral}{"{}Finn"{}},230,70,0,140,139,2,3,15,0);}
+\DoxyCodeLine{00362\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00364\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 3:\textcolor{comment}{//Ada}}
+\DoxyCodeLine{00365\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>indTexture\ =\ 0;}
+\DoxyCodeLine{00366\ \ \ \ \ \ \ \ \ \ \ \ \ boss-\/>tabObj[0]=\mbox{\hyperlink{OBJ_8c_a97b8760f68ddb78a257083a820a71198}{init\_ennemi}}(\textcolor{stringliteral}{"{}Ada"{}},135,65,0,142,141,3,2,36,0);}
+\DoxyCodeLine{00367\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00368\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00369\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00371\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00372\ \ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combat\ =\ combat;}
+\DoxyCodeLine{00373\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(y>0)\{}
+\DoxyCodeLine{00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j=1;j<y;j++)\{}
+\DoxyCodeLine{00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)boss-\/>tabObj[0])-\/>combattant[j]\ =\ tab[j-\/1];}
+\DoxyCodeLine{00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00377\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00378\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00379\ \ \ \ \ \}}
+\DoxyCodeLine{00380\ \}}
 \DoxyCodeLine{00381\ }
-\DoxyCodeLine{00382\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<nb\_ennemi;i++)\{}
-\DoxyCodeLine{00383\ \ \ \ \ \ \ \ \ desctruction\_combattant(en-\/>combattant[i]);\ }
-\DoxyCodeLine{00384\ \ \ \ \ \}}
-\DoxyCodeLine{00385\ }
-\DoxyCodeLine{00386\ \ \ \ \ free(en-\/>nom);}
-\DoxyCodeLine{00387\ \ \ \ \ free(en);}
-\DoxyCodeLine{00388\ \}}
-\DoxyCodeLine{00389\ }
-\DoxyCodeLine{00390\ }
-\DoxyCodeLine{00391\ }
-\DoxyCodeLine{00392\ }
-\DoxyCodeLine{00393\ }
-\DoxyCodeLine{00394\ \textcolor{keywordtype}{int}\ boolcol\ (\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ obj\_c,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp)\{}
-\DoxyCodeLine{00395\ \ \ \ \ \textcolor{keywordflow}{if}(pp-\/>c-\/>x+1\ ==\ obj\_c-\/>x\ \&\&\ pp-\/>c-\/>y\ ==\ obj\_c-\/>y)\{\ \textcolor{comment}{//verifie\ case\ droite}}
-\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00397\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(pp-\/>c-\/>x-\/1\ ==\ obj\_c-\/>x\ \&\&\ pp-\/>c-\/>y\ ==\ obj\_c-\/>y)\{\ \textcolor{comment}{//verifie\ case\ gauche}}
-\DoxyCodeLine{00398\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00399\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(pp-\/>c-\/>y+1\ ==\ obj\_c-\/>y\ \&\&\ pp-\/>c-\/>x\ ==\ obj\_c-\/>x)\{\ \textcolor{comment}{//verifie\ case\ bas}}
-\DoxyCodeLine{00400\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00401\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(pp-\/>c-\/>y-\/1\ ==\ obj\_c-\/>y\ \&\&\ pp-\/>c-\/>x\ ==\ obj\_c-\/>x)\{\ \textcolor{comment}{//verifie\ case\ haut}}
-\DoxyCodeLine{00402\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
-\DoxyCodeLine{00403\ \ \ \ \ \}}
-\DoxyCodeLine{00404\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
-\DoxyCodeLine{00405\ \}}
-\DoxyCodeLine{00406\ }
-\DoxyCodeLine{00407\ }
-\DoxyCodeLine{00408\ }
-\DoxyCodeLine{00409\ }
-\DoxyCodeLine{00421\ \textcolor{comment}{//fonction\ qui\ initialise\ un\ artefact}}
-\DoxyCodeLine{00422\ \mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ \mbox{\hyperlink{OBJ_8c_a7db3392d374e07d5c5a4420c5e119a4c}{init\_artefact}}(\textcolor{keywordtype}{char}*\ nom,\ \textcolor{keywordtype}{int}\ possession,\textcolor{keywordtype}{char}\ *\ descriptif,\textcolor{keywordtype}{int}\ indice,\textcolor{keywordtype}{int}\ prix,\textcolor{keywordtype}{int}\ indice\_texture)\{}
-\DoxyCodeLine{00423\ \ \ \ \ \mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ artefact\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structartefact__s}{artefact\_t}}));}
-\DoxyCodeLine{00424\ \ \ \ \ artefact-\/>nom\ =\ malloc(strlen(nom)+1);}
-\DoxyCodeLine{00425\ \ \ \ \ strcpy(artefact-\/>nom,nom);}
-\DoxyCodeLine{00426\ \ \ \ \ artefact-\/>descriptif\ =\ malloc(strlen(descriptif)+1);}
-\DoxyCodeLine{00427\ \ \ \ \ strcpy(artefact-\/>descriptif,descriptif);}
-\DoxyCodeLine{00428\ \ \ \ \ artefact-\/>possession=possession;}
-\DoxyCodeLine{00429\ \ \ \ \ artefact-\/>indice=indice;}
-\DoxyCodeLine{00430\ \ \ \ \ artefact-\/>prix=prix;}
-\DoxyCodeLine{00431\ \ \ \ \ artefact-\/>indice\_texture=indice\_texture;}
-\DoxyCodeLine{00432\ \ \ \ \ artefact-\/>equipe=0;}
-\DoxyCodeLine{00433\ \ \ \ \ \textcolor{keywordflow}{return}\ artefact;}
-\DoxyCodeLine{00434\ \}}
-\DoxyCodeLine{00440\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_adba78300c4894968ad14c25bab9ec281}{destruction\_artefact}}(\mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ artefact)\{}
-\DoxyCodeLine{00441\ \ \ \ \ free(artefact-\/>nom);}
-\DoxyCodeLine{00442\ \ \ \ \ free(artefact-\/>descriptif);}
-\DoxyCodeLine{00443\ \ \ \ \ free(artefact);}
-\DoxyCodeLine{00444\ }
-\DoxyCodeLine{00445\ \}}
+\DoxyCodeLine{00382\ }
+\DoxyCodeLine{00390\ \textcolor{comment}{//fonction\ qui\ permet\ de\ verifier\ si\ le\ type\ en\ parametre\ et\ le\ meme\ que\ celui\ du\ joueur}}
+\DoxyCodeLine{00391\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{OBJ_8c_aec8b4c827119268888c4704ce53f4209}{BoolTypein}}(\textcolor{keywordtype}{int}\ type,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ Leader)\{}
+\DoxyCodeLine{00392\ \ \ \ \ \textcolor{keywordtype}{int}\ nballie,i;}
+\DoxyCodeLine{00393\ \ \ \ \ \textcolor{keywordflow}{for}(nballie=0;Leader-\/>equipe[nballie]\ \&\&\ nballie\ <\ 4;nballie++);}
+\DoxyCodeLine{00394\ \ \ \ \ \textcolor{keywordflow}{for}(i\ =0;i<nballie;i++)\{}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(Leader-\/>equipe[i]-\/>type\ ==\ type)\{}
+\DoxyCodeLine{00396\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00397\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00398\ \ \ \ \ \}}
+\DoxyCodeLine{00399\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00400\ \}}
+\DoxyCodeLine{00401\ }
+\DoxyCodeLine{00409\ \textcolor{comment}{//fonction\ qui\ detruit\ un\ objet\ sur\ la\ carte}}
+\DoxyCodeLine{00410\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_a71c8e3e0e50b7ca6ff2c3f7509e38c0b}{dest\_obj}}(\mbox{\hyperlink{structcarte__s}{carte\_t}}\ *\ c,\textcolor{keywordtype}{int}\ ind)\{}
+\DoxyCodeLine{00411\ }
+\DoxyCodeLine{00412\ \ \ \ \ \textcolor{keywordflow}{if}(c-\/>nbObj\ >\ 0)\{}
+\DoxyCodeLine{00413\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(c-\/>tabObj[ind]-\/>typeObj)\{}
+\DoxyCodeLine{00414\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ 2\ :\ \mbox{\hyperlink{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73}{dest\_ennemi}}(((\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *)(c-\/>tabObj[ind]-\/>tabObj[0])));}
+\DoxyCodeLine{00415\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[ind]-\/>cas-\/>etat=1;}
+\DoxyCodeLine{00416\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00417\ }
+\DoxyCodeLine{00418\ }
+\DoxyCodeLine{00419\ \ \ \ \ \ \ \ \ \ \ \ \ default\ :\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00420\ }
+\DoxyCodeLine{00421\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00422\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(c-\/>nbObj\ ==\ 1)\{}
+\DoxyCodeLine{00423\ \ \ \ \ \ \ \ \ \ \ \ \ free(c-\/>tabObj[ind]);}
+\DoxyCodeLine{00424\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[ind]\ =\ NULL;}
+\DoxyCodeLine{00425\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj-\/-\/;}
+\DoxyCodeLine{00426\ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{00427\ \ \ \ \ \ \ \ \ \ \ \ \ free(c-\/>tabObj[ind]);}
+\DoxyCodeLine{00428\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00429\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(i=ind;i<c-\/>nbObj-\/1;i++)\{}
+\DoxyCodeLine{00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>tabObj[i]\ =\ c-\/>tabObj[i+1];}
+\DoxyCodeLine{00431\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00432\ \ \ \ \ \ \ \ \ \ \ \ \ c-\/>nbObj-\/-\/;}
+\DoxyCodeLine{00433\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00434\ \ \ \ \ \}}
+\DoxyCodeLine{00435\ \}}
+\DoxyCodeLine{00436\ }
+\DoxyCodeLine{00443\ \textcolor{comment}{//fonction\ qui\ detruit\ les\ objets\ sur\ la\ carte}}
+\DoxyCodeLine{00444\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_a9cf282411fe5582c1466e14b263517c6}{dest\_all\_obj}}(\mbox{\hyperlink{structmap__s}{map\_t}}\ *m)\{}
+\DoxyCodeLine{00445\ \ \ \ \ \textcolor{keywordtype}{int}\ i,j;}
+\DoxyCodeLine{00446\ \ \ \ \ \textcolor{keywordflow}{for}(i\ =\ 0;i<ROWS;i++)\{}
+\DoxyCodeLine{00447\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}(j\ =\ 0;j\ <\ COLUMNS;j++)\{}
+\DoxyCodeLine{00448\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(m-\/>tabMap[i][j].nbObj)\{}
+\DoxyCodeLine{00449\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{OBJ_8c_a71c8e3e0e50b7ca6ff2c3f7509e38c0b}{dest\_obj}}(\&m-\/>tabMap[i][j],0);}
+\DoxyCodeLine{00450\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00451\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00452\ \ \ \ \ \}}
+\DoxyCodeLine{00453\ \}}
+\DoxyCodeLine{00454\ }
+\DoxyCodeLine{00461\ \textcolor{comment}{//fonction\ qui\ detruit\ un\ ennemi\ et\ ses\ combattants}}
+\DoxyCodeLine{00462\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_a13b5073f774a9c9e6ec0673cdaf16d73}{dest\_ennemi}}(\mbox{\hyperlink{structennemi__s}{ennemi\_t}}\ *\ en)\{}
+\DoxyCodeLine{00463\ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00464\ \ \ \ \ \textcolor{keywordtype}{int}\ nb\_ennemi=0;}
+\DoxyCodeLine{00465\ \ \ \ \ \textcolor{keywordflow}{for}\ (i=0;i<4;i++)\{}
+\DoxyCodeLine{00466\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(en-\/>combattant[i]!=NULL)\{}
+\DoxyCodeLine{00467\ \ \ \ \ \ \ \ \ \ \ \ \ nb\_ennemi++;}
+\DoxyCodeLine{00468\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00469\ \ \ \ \ \}}
+\DoxyCodeLine{00470\ }
+\DoxyCodeLine{00471\ \ \ \ \ \textcolor{keywordflow}{for}(i=0;i<nb\_ennemi;i++)\{}
+\DoxyCodeLine{00472\ \ \ \ \ \ \ \ \ desctruction\_combattant(en-\/>combattant[i]);\ }
+\DoxyCodeLine{00473\ \ \ \ \ \}}
+\DoxyCodeLine{00474\ }
+\DoxyCodeLine{00475\ \ \ \ \ free(en-\/>nom);}
+\DoxyCodeLine{00476\ \ \ \ \ free(en);}
+\DoxyCodeLine{00477\ \}}
+\DoxyCodeLine{00478\ }
+\DoxyCodeLine{00479\ }
+\DoxyCodeLine{00480\ }
+\DoxyCodeLine{00481\ }
+\DoxyCodeLine{00489\ \textcolor{comment}{//fonction\ qui\ regarde\ si\ le\ joueur\ a\ des\ collisions\ avec\ l'objet}}
+\DoxyCodeLine{00490\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{OBJ_8c_a4211f8319756e4cf92807e54a6a83f38}{boolcol}}\ (\mbox{\hyperlink{structcase__s}{case\_t}}\ *\ obj\_c,\mbox{\hyperlink{structpersonnage}{p\_mv}}\ *\ pp)\{}
+\DoxyCodeLine{00491\ \ \ \ \ \textcolor{keywordflow}{if}(pp-\/>c-\/>x+1\ ==\ obj\_c-\/>x\ \&\&\ pp-\/>c-\/>y\ ==\ obj\_c-\/>y)\{\ \textcolor{comment}{//verifie\ case\ droite}}
+\DoxyCodeLine{00492\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00493\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(pp-\/>c-\/>x-\/1\ ==\ obj\_c-\/>x\ \&\&\ pp-\/>c-\/>y\ ==\ obj\_c-\/>y)\{\ \textcolor{comment}{//verifie\ case\ gauche}}
+\DoxyCodeLine{00494\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00495\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(pp-\/>c-\/>y+1\ ==\ obj\_c-\/>y\ \&\&\ pp-\/>c-\/>x\ ==\ obj\_c-\/>x)\{\ \textcolor{comment}{//verifie\ case\ bas}}
+\DoxyCodeLine{00496\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00497\ \ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(pp-\/>c-\/>y-\/1\ ==\ obj\_c-\/>y\ \&\&\ pp-\/>c-\/>x\ ==\ obj\_c-\/>x)\{\ \textcolor{comment}{//verifie\ case\ haut}}
+\DoxyCodeLine{00498\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{00499\ \ \ \ \ \}}
+\DoxyCodeLine{00500\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00501\ \}}
+\DoxyCodeLine{00502\ }
+\DoxyCodeLine{00503\ }
+\DoxyCodeLine{00504\ }
+\DoxyCodeLine{00505\ }
+\DoxyCodeLine{00517\ \textcolor{comment}{//fonction\ qui\ initialise\ un\ artefact}}
+\DoxyCodeLine{00518\ \mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ \mbox{\hyperlink{OBJ_8c_a7db3392d374e07d5c5a4420c5e119a4c}{init\_artefact}}(\textcolor{keywordtype}{char}*\ nom,\ \textcolor{keywordtype}{int}\ possession,\textcolor{keywordtype}{char}\ *\ descriptif,\textcolor{keywordtype}{int}\ indice,\textcolor{keywordtype}{int}\ prix,\textcolor{keywordtype}{int}\ indice\_texture)\{}
+\DoxyCodeLine{00519\ \ \ \ \ \mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ artefact\ =\ malloc(\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structartefact__s}{artefact\_t}}));}
+\DoxyCodeLine{00520\ \ \ \ \ artefact-\/>nom\ =\ malloc(strlen(nom)+1);}
+\DoxyCodeLine{00521\ \ \ \ \ strcpy(artefact-\/>nom,nom);}
+\DoxyCodeLine{00522\ \ \ \ \ artefact-\/>descriptif\ =\ malloc(strlen(descriptif)+1);}
+\DoxyCodeLine{00523\ \ \ \ \ strcpy(artefact-\/>descriptif,descriptif);}
+\DoxyCodeLine{00524\ \ \ \ \ artefact-\/>possession=possession;}
+\DoxyCodeLine{00525\ \ \ \ \ artefact-\/>indice=indice;}
+\DoxyCodeLine{00526\ \ \ \ \ artefact-\/>prix=prix;}
+\DoxyCodeLine{00527\ \ \ \ \ artefact-\/>indice\_texture=indice\_texture;}
+\DoxyCodeLine{00528\ \ \ \ \ artefact-\/>equipe=0;}
+\DoxyCodeLine{00529\ \ \ \ \ \textcolor{keywordflow}{return}\ artefact;}
+\DoxyCodeLine{00530\ \}}
+\DoxyCodeLine{00536\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{OBJ_8c_adba78300c4894968ad14c25bab9ec281}{destruction\_artefact}}(\mbox{\hyperlink{structartefact__s}{artefact\_t}}\ *\ artefact)\{}
+\DoxyCodeLine{00537\ \ \ \ \ free(artefact-\/>nom);}
+\DoxyCodeLine{00538\ \ \ \ \ free(artefact-\/>descriptif);}
+\DoxyCodeLine{00539\ \ \ \ \ free(artefact);}
+\DoxyCodeLine{00540\ }
+\DoxyCodeLine{00541\ \}}
 
 \end{DoxyCode}

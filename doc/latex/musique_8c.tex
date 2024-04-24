@@ -6,8 +6,7 @@ programme qui gere les musiques du jeu
 
 
 {\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
-Graphe des dépendances par inclusion de musique.\+c\+:
-\nopagebreak
+Graphe des dépendances par inclusion de musique.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -20,9 +19,8 @@ Graphe des dépendances par inclusion de musique.\+c\+:
 \Hypertarget{musique_8c_a4d48f93b5a9497288ecfd5bd8ee5717e}\label{musique_8c_a4d48f93b5a9497288ecfd5bd8ee5717e} 
 void {\bfseries pause\+\_\+\+SDL} (SDL\+\_\+\+Event event, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music)
 \item 
-\Hypertarget{musique_8c_ad6104c78ac4f864f8a686bce7d16204c}\label{musique_8c_ad6104c78ac4f864f8a686bce7d16204c} 
-void {\bfseries new\+Music} (int n\+Zone, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music)
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{musique_8c_ad6104c78ac4f864f8a686bce7d16204c}{new\+Music}} (int n\+Zone, Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}g\+Music)
+\begin{DoxyCompactList}\small\item\em fonction qui permet de jouer la musique de la zone \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Description détaillée}
@@ -37,3 +35,23 @@ Avril 2024
 \begin{DoxyVersion}{Version}
 1.\+0 
 \end{DoxyVersion}
+
+
+\doxysubsection{Documentation des fonctions}
+\Hypertarget{musique_8c_ad6104c78ac4f864f8a686bce7d16204c}\label{musique_8c_ad6104c78ac4f864f8a686bce7d16204c} 
+\index{musique.c@{musique.c}!newMusic@{newMusic}}
+\index{newMusic@{newMusic}!musique.c@{musique.c}}
+\doxysubsubsection{\texorpdfstring{newMusic()}{newMusic()}}
+{\footnotesize\ttfamily void new\+Music (\begin{DoxyParamCaption}\item[{int}]{n\+Zone,  }\item[{Mix\+\_\+\+Music \texorpdfstring{$\ast$}{*}}]{g\+Music }\end{DoxyParamCaption})}
+
+
+
+fonction qui permet de jouer la musique de la zone 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em n\+Zone} & numero de la zone d\textquotesingle{}où se trouve le personnage \\
+\hline
+{\em g\+Music} & pointeur sur la musique actuelle \\
+\hline
+\end{DoxyParams}

@@ -140,9 +140,10 @@ Fonctions</h2></td></tr>
 <tr class="separator:a800f73c2f9971267ab6c8ebca5e5c7cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e649397f1b21df57c13a1b49b7e3ed6"><td class="memItemLeft" align="right" valign="top"><a id="a1e649397f1b21df57c13a1b49b7e3ed6" name="a1e649397f1b21df57c13a1b49b7e3ed6"></a>
 <a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>pre_init_combattant</b> ()</td></tr>
+<tr class="memdesc:a1e649397f1b21df57c13a1b49b7e3ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">alloue la mémoire pour un combattant <br /></td></tr>
 <tr class="separator:a1e649397f1b21df57c13a1b49b7e3ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7272323e35c8bb1663ddb021ebd4fc80"><td class="memItemLeft" align="right" valign="top"><a id="a7272323e35c8bb1663ddb021ebd4fc80" name="a7272323e35c8bb1663ddb021ebd4fc80"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>remplir_combattant</b> (<a class="el" href="structcombattant__s.html">combattant_t</a> *combattant, char *nom, int pv, int vitesse, int camp, int indice_portrait, int indice_sprite, int type, int temps_recharge_max, int puissance, int forme)</td></tr>
+<tr class="memitem:a7272323e35c8bb1663ddb021ebd4fc80"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a7272323e35c8bb1663ddb021ebd4fc80">remplir_combattant</a> (<a class="el" href="structcombattant__s.html">combattant_t</a> *combattant, char *nom, int pv, int vitesse, int camp, int indice_portrait, int indice_sprite, int type, int temps_recharge_max, int puissance, int forme)</td></tr>
+<tr class="memdesc:a7272323e35c8bb1663ddb021ebd4fc80"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui initialise un combattant  <br /></td></tr>
 <tr class="separator:a7272323e35c8bb1663ddb021ebd4fc80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadd61c1a074ea6c286f7af664993242a"><td class="memItemLeft" align="right" valign="top"><a id="aadd61c1a074ea6c286f7af664993242a" name="aadd61c1a074ea6c286f7af664993242a"></a>
 <a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>init_combattant</b> (char *nom, int pv, int vitesse, int camp, int indice_portrait, int indice_sprite, int type, int temps_recharge_max, int puissance, int forme, int pvMax)</td></tr>
@@ -171,14 +172,11 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>affiche_point</b> (int
 <tr class="memitem:a8396277c7ae5e01d0e8dedb019c61e29"><td class="memItemLeft" align="right" valign="top"><a id="a8396277c7ae5e01d0e8dedb019c61e29" name="a8396277c7ae5e01d0e8dedb019c61e29"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>attaque_allie</b> (int *we, int *he, SDL_Event event, SDL_Renderer *renderer, <a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi, <a class="el" href="structcombattant__s.html">combattant_t</a> *combattant, int Nbennemi, <a class="el" href="structcombat__s.html">combat_t</a> *combat, int allie, <a class="el" href="structpersonnage.html">p_mv</a> *<a class="el" href="structpersonnage.html">personnage</a>, <a class="el" href="structmap__s.html">map_t</a> *map)</td></tr>
 <tr class="separator:a8396277c7ae5e01d0e8dedb019c61e29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab66e455ee98a4dfda8dcf23067525a6c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#ab66e455ee98a4dfda8dcf23067525a6c">debut_combat</a> (SDL_Event event, <a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structcase__s.html">case_t</a> *c)</td></tr>
-<tr class="memdesc:ab66e455ee98a4dfda8dcf23067525a6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui regarde si on a lancer un combat  <br /></td></tr>
-<tr class="separator:ab66e455ee98a4dfda8dcf23067525a6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad29d54adab0bade541c5b73bd9bfbb91"><td class="memItemLeft" align="right" valign="top"><a id="ad29d54adab0bade541c5b73bd9bfbb91" name="ad29d54adab0bade541c5b73bd9bfbb91"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>boolMemeCase</b> (<a class="el" href="structcase__s.html">case_t</a> c1, <a class="el" href="structcase__s.html">case_t</a> c2)</td></tr>
+<tr class="memitem:ad29d54adab0bade541c5b73bd9bfbb91"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#ad29d54adab0bade541c5b73bd9bfbb91">boolMemeCase</a> (<a class="el" href="structcase__s.html">case_t</a> c1, <a class="el" href="structcase__s.html">case_t</a> c2)</td></tr>
+<tr class="memdesc:ad29d54adab0bade541c5b73bd9bfbb91"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui renvoie un booleen si les deux cases sont au même endroit  <br /></td></tr>
 <tr class="separator:ad29d54adab0bade541c5b73bd9bfbb91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae33e0205ab126b5885d6d7118dbd74f6"><td class="memItemLeft" align="right" valign="top"><a id="ae33e0205ab126b5885d6d7118dbd74f6" name="ae33e0205ab126b5885d6d7118dbd74f6"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>boolDebutCombat</b> (<a class="el" href="structcarte__s.html">carte_t</a> *cartec, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structobj__s.html">obj_t</a> *ennemi)</td></tr>
+<tr class="memitem:ae33e0205ab126b5885d6d7118dbd74f6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#ae33e0205ab126b5885d6d7118dbd74f6">boolDebutCombat</a> (<a class="el" href="structcarte__s.html">carte_t</a> *cartec, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structobj__s.html">obj_t</a> *ennemi)</td></tr>
+<tr class="memdesc:ae33e0205ab126b5885d6d7118dbd74f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui renvoie un booleen si les deux cases sont au même endroit  <br /></td></tr>
 <tr class="separator:ae33e0205ab126b5885d6d7118dbd74f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14c2400b250f63a0567ea989e68f4254"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#a14c2400b250f63a0567ea989e68f4254">debut_combat_carte</a> (<a class="el" href="structcarte__s.html">carte_t</a> *cartec, SDL_Event event, <a class="el" href="structpersonnage.html">p_mv</a> *pp)</td></tr>
 <tr class="memdesc:a14c2400b250f63a0567ea989e68f4254"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui appelle debut_combat avec tout les ennemis sur la map  <br /></td></tr>
@@ -193,8 +191,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>compare_vitesse_enc</b
 <a class="el" href="structcombat__s.html">combat_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>init_combat</b> ()</td></tr>
 <tr class="memdesc:a4c96e4b113cdef70898987ec2643b58a"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction d'initialisation de la structure combat <br /></td></tr>
 <tr class="separator:a4c96e4b113cdef70898987ec2643b58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acbf05a68ba26c8c9aa226a6fdbfd5457"><td class="memItemLeft" align="right" valign="top"><a id="acbf05a68ba26c8c9aa226a6fdbfd5457" name="acbf05a68ba26c8c9aa226a6fdbfd5457"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>boolTousMort</b> (<a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi)</td></tr>
+<tr class="memitem:acbf05a68ba26c8c9aa226a6fdbfd5457"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#acbf05a68ba26c8c9aa226a6fdbfd5457">boolTousMort</a> (<a class="el" href="structennemi__s.html">ennemi_t</a> *ennemi)</td></tr>
+<tr class="memdesc:acbf05a68ba26c8c9aa226a6fdbfd5457"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui verifie si tout les membres de l'equipe de l'ennemi sont mort  <br /></td></tr>
 <tr class="separator:acbf05a68ba26c8c9aa226a6fdbfd5457"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afe0ef3cd6f4ea09245e5a79c3d038384"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="combat_8c.html#afe0ef3cd6f4ea09245e5a79c3d038384">combat_carte</a> (<a class="el" href="structcarte__s.html">carte_t</a> *cartec, int *we, int *he, SDL_Event event, SDL_Renderer *renderer, <a class="el" href="structpersonnage.html">p_mv</a> *pp, <a class="el" href="structmap__s.html">map_t</a> *map, int *etat_boss)</td></tr>
 <tr class="memdesc:afe0ef3cd6f4ea09245e5a79c3d038384"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui appelle combat avec tout les ennemis sur la map  <br /></td></tr>
@@ -506,6 +504,113 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>boolTousMort</b> (<a c
 
 </div>
 </div>
+<a id="ae33e0205ab126b5885d6d7118dbd74f6" name="ae33e0205ab126b5885d6d7118dbd74f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae33e0205ab126b5885d6d7118dbd74f6">&#9670;&#160;</a></span>boolDebutCombat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int boolDebutCombat </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcarte__s.html">carte_t</a> *&#160;</td>
+          <td class="paramname"><em>cartec</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>pp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structobj__s.html">obj_t</a> *&#160;</td>
+          <td class="paramname"><em>ennemi</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui renvoie un booleen si les deux cases sont au même endroit </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ennemi</td><td>structure de l'ennemi </td></tr>
+    <tr><td class="paramname">pp</td><td>structure du personnage jouer </td></tr>
+    <tr><td class="paramname">cartec</td><td>structure de la carte ou le personnage se trouve </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad29d54adab0bade541c5b73bd9bfbb91" name="ad29d54adab0bade541c5b73bd9bfbb91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad29d54adab0bade541c5b73bd9bfbb91">&#9670;&#160;</a></span>boolMemeCase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int boolMemeCase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcase__s.html">case_t</a>&#160;</td>
+          <td class="paramname"><em>c1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcase__s.html">case_t</a>&#160;</td>
+          <td class="paramname"><em>c2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui renvoie un booleen si les deux cases sont au même endroit </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">c1</td><td>structure de la premiere case </td></tr>
+    <tr><td class="paramname">c2</td><td>structure de la deuxieme case </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acbf05a68ba26c8c9aa226a6fdbfd5457" name="acbf05a68ba26c8c9aa226a6fdbfd5457"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbf05a68ba26c8c9aa226a6fdbfd5457">&#9670;&#160;</a></span>boolTousMort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int boolTousMort </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structennemi__s.html">ennemi_t</a> *&#160;</td>
+          <td class="paramname"><em>ennemi</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui verifie si tout les membres de l'equipe de l'ennemi sont mort </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ennemi</td><td>un ennemi et son equipe </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a02d1c5b8743c54a45036d74d517fe01b" name="a02d1c5b8743c54a45036d74d517fe01b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a02d1c5b8743c54a45036d74d517fe01b">&#9670;&#160;</a></span>combat()</h2>
 
@@ -741,57 +846,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>boolTousMort</b> (<a c
 
 </div>
 </div>
-<a id="ab66e455ee98a4dfda8dcf23067525a6c" name="ab66e455ee98a4dfda8dcf23067525a6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab66e455ee98a4dfda8dcf23067525a6c">&#9670;&#160;</a></span>debut_combat()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int debut_combat </td>
-          <td>(</td>
-          <td class="paramtype">SDL_Event&#160;</td>
-          <td class="paramname"><em>event</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structennemi__s.html">ennemi_t</a> *&#160;</td>
-          <td class="paramname"><em>ennemi</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
-          <td class="paramname"><em>pp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structcase__s.html">case_t</a> *&#160;</td>
-          <td class="paramname"><em>c</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>fonction qui regarde si on a lancer un combat </p>
-<dl class="params"><dt>Paramètres</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ennemi</td><td>structure d'un pnj ennemi </td></tr>
-    <tr><td class="paramname">event</td><td>evenement </td></tr>
-    <tr><td class="paramname">pp</td><td>structure du personnage jouer </td></tr>
-    <tr><td class="paramname">c</td><td>structure de la case </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a14c2400b250f63a0567ea989e68f4254" name="a14c2400b250f63a0567ea989e68f4254"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a14c2400b250f63a0567ea989e68f4254">&#9670;&#160;</a></span>debut_combat_carte()</h2>
 
@@ -1014,6 +1068,106 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>boolTousMort</b> (<a c
   <table class="params">
     <tr><td class="paramname">Leader</td><td>variable de sortie sur un pointeur d'entier </td></tr>
     <tr><td class="paramname">Boss</td><td>ennemi affronté </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7272323e35c8bb1663ddb021ebd4fc80" name="a7272323e35c8bb1663ddb021ebd4fc80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7272323e35c8bb1663ddb021ebd4fc80">&#9670;&#160;</a></span>remplir_combattant()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void remplir_combattant </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcombattant__s.html">combattant_t</a> *&#160;</td>
+          <td class="paramname"><em>combattant</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>nom</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>pv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>vitesse</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>camp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>indice_portrait</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>indice_sprite</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>temps_recharge_max</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>puissance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>forme</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui initialise un combattant </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">combattant</td><td>combattant a initialiser </td></tr>
+    <tr><td class="paramname">nom</td><td>nom du combattant </td></tr>
+    <tr><td class="paramname">pv</td><td>pv du combattant </td></tr>
+    <tr><td class="paramname">vitesse</td><td>vitesse du combattant </td></tr>
+    <tr><td class="paramname">camp</td><td>camp du combattant </td></tr>
+    <tr><td class="paramname">indice_portrait</td><td>indice dans le tableau de texture du portrait du combattant </td></tr>
+    <tr><td class="paramname">indice_sprite</td><td>indice dans le tableau de texture du sprite du combattant </td></tr>
+    <tr><td class="paramname">type</td><td>type du combattant </td></tr>
+    <tr><td class="paramname">temps_recharge_max</td><td>temps de recharge de la competence du combattant </td></tr>
+    <tr><td class="paramname">puissance</td><td>puissance du combattant </td></tr>
+    <tr><td class="paramname">forme</td><td>forme du combattant </td></tr>
   </table>
   </dd>
 </dl>

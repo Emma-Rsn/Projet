@@ -6,8 +6,7 @@ Programme qui s\textquotesingle{}occupe du combat.
 
 
 {\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
-Graphe des dépendances par inclusion de combat.\+c\+:
-\nopagebreak
+Graphe des dépendances par inclusion de combat.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -21,10 +20,9 @@ void \mbox{\hyperlink{combat_8c_a800f73c2f9971267ab6c8ebca5e5c7cf}{erreur\+\_\+s
 \begin{DoxyCompactList}\small\item\em fonction qui gere les erreurs de SDL \end{DoxyCompactList}\item 
 \Hypertarget{combat_8c_a1e649397f1b21df57c13a1b49b7e3ed6}\label{combat_8c_a1e649397f1b21df57c13a1b49b7e3ed6} 
 \mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries pre\+\_\+init\+\_\+combattant} ()
-\item 
-\Hypertarget{combat_8c_a7272323e35c8bb1663ddb021ebd4fc80}\label{combat_8c_a7272323e35c8bb1663ddb021ebd4fc80} 
-void {\bfseries remplir\+\_\+combattant} (\mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*}combattant, char \texorpdfstring{$\ast$}{*}nom, int pv, int vitesse, int camp, int indice\+\_\+portrait, int indice\+\_\+sprite, int type, int temps\+\_\+recharge\+\_\+max, int puissance, int forme)
-\item 
+\begin{DoxyCompactList}\small\item\em alloue la mémoire pour un combattant \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{combat_8c_a7272323e35c8bb1663ddb021ebd4fc80}{remplir\+\_\+combattant}} (\mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*}combattant, char \texorpdfstring{$\ast$}{*}nom, int pv, int vitesse, int camp, int indice\+\_\+portrait, int indice\+\_\+sprite, int type, int temps\+\_\+recharge\+\_\+max, int puissance, int forme)
+\begin{DoxyCompactList}\small\item\em fonction qui initialise un combattant \end{DoxyCompactList}\item 
 \Hypertarget{combat_8c_aadd61c1a074ea6c286f7af664993242a}\label{combat_8c_aadd61c1a074ea6c286f7af664993242a} 
 \mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries init\+\_\+combattant} (char \texorpdfstring{$\ast$}{*}nom, int pv, int vitesse, int camp, int indice\+\_\+portrait, int indice\+\_\+sprite, int type, int temps\+\_\+recharge\+\_\+max, int puissance, int forme, int pv\+Max)
 \item 
@@ -46,14 +44,10 @@ int \mbox{\hyperlink{combat_8c_a8a2ebe3dafdfa818fa29088616e163d5}{affichage\+\_\
 \Hypertarget{combat_8c_a8396277c7ae5e01d0e8dedb019c61e29}\label{combat_8c_a8396277c7ae5e01d0e8dedb019c61e29} 
 int {\bfseries attaque\+\_\+allie} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}ennemi, \mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*}combattant, int Nbennemi, \mbox{\hyperlink{structcombat__s}{combat\+\_\+t}} \texorpdfstring{$\ast$}{*}combat, int allie, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structpersonnage}{personnage}}, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \item 
-int \mbox{\hyperlink{combat_8c_ab66e455ee98a4dfda8dcf23067525a6c}{debut\+\_\+combat}} (SDL\+\_\+\+Event event, \mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}ennemi, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}c)
-\begin{DoxyCompactList}\small\item\em fonction qui regarde si on a lancer un combat \end{DoxyCompactList}\item 
-\Hypertarget{combat_8c_ad29d54adab0bade541c5b73bd9bfbb91}\label{combat_8c_ad29d54adab0bade541c5b73bd9bfbb91} 
-int {\bfseries bool\+Meme\+Case} (\mbox{\hyperlink{structcase__s}{case\+\_\+t}} c1, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} c2)
-\item 
-\Hypertarget{combat_8c_ae33e0205ab126b5885d6d7118dbd74f6}\label{combat_8c_ae33e0205ab126b5885d6d7118dbd74f6} 
-int {\bfseries bool\+Debut\+Combat} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}ennemi)
-\item 
+int \mbox{\hyperlink{combat_8c_ad29d54adab0bade541c5b73bd9bfbb91}{bool\+Meme\+Case}} (\mbox{\hyperlink{structcase__s}{case\+\_\+t}} c1, \mbox{\hyperlink{structcase__s}{case\+\_\+t}} c2)
+\begin{DoxyCompactList}\small\item\em fonction qui renvoie un booleen si les deux cases sont au même endroit \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{combat_8c_ae33e0205ab126b5885d6d7118dbd74f6}{bool\+Debut\+Combat}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}ennemi)
+\begin{DoxyCompactList}\small\item\em fonction qui renvoie un booleen si les deux cases sont au même endroit \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{combat_8c_a14c2400b250f63a0567ea989e68f4254}{debut\+\_\+combat\+\_\+carte}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec, SDL\+\_\+\+Event event, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp)
 \begin{DoxyCompactList}\small\item\em fonction qui appelle debut\+\_\+combat avec tout les ennemis sur la map \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{combat_8c_a11a01ef94ed383d1247ddd96defd67d5}{compare\+\_\+vitesse}} (const \mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*}const combattant1, const \mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*}const combattant2)
@@ -64,9 +58,8 @@ int {\bfseries compare\+\_\+vitesse\+\_\+enc} (const void \texorpdfstring{$\ast$
 \Hypertarget{combat_8c_a4c96e4b113cdef70898987ec2643b58a}\label{combat_8c_a4c96e4b113cdef70898987ec2643b58a} 
 \mbox{\hyperlink{structcombat__s}{combat\+\_\+t}} \texorpdfstring{$\ast$}{*} {\bfseries init\+\_\+combat} ()
 \begin{DoxyCompactList}\small\item\em fonction d\textquotesingle{}initialisation de la structure combat \end{DoxyCompactList}\item 
-\Hypertarget{combat_8c_acbf05a68ba26c8c9aa226a6fdbfd5457}\label{combat_8c_acbf05a68ba26c8c9aa226a6fdbfd5457} 
-int {\bfseries bool\+Tous\+Mort} (\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}ennemi)
-\item 
+int \mbox{\hyperlink{combat_8c_acbf05a68ba26c8c9aa226a6fdbfd5457}{bool\+Tous\+Mort}} (\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}ennemi)
+\begin{DoxyCompactList}\small\item\em fonction qui verifie si tout les membres de l\textquotesingle{}equipe de l\textquotesingle{}ennemi sont mort \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{combat_8c_afe0ef3cd6f4ea09245e5a79c3d038384}{combat\+\_\+carte}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}cartec, int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}etat\+\_\+boss)
 \begin{DoxyCompactList}\small\item\em fonction qui appelle combat avec tout les ennemis sur la map \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}{combat}} (int \texorpdfstring{$\ast$}{*}we, int \texorpdfstring{$\ast$}{*}he, SDL\+\_\+\+Event event, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer, \mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}ennemi, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pp, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}etat\+\_\+boss)
@@ -209,6 +202,57 @@ fonction qui affiche la barre de cauchemar
 {\em map} & structure de la map \\
 \hline
 \end{DoxyParams}
+\Hypertarget{combat_8c_ae33e0205ab126b5885d6d7118dbd74f6}\label{combat_8c_ae33e0205ab126b5885d6d7118dbd74f6} 
+\index{combat.c@{combat.c}!boolDebutCombat@{boolDebutCombat}}
+\index{boolDebutCombat@{boolDebutCombat}!combat.c@{combat.c}}
+\doxysubsubsection{\texorpdfstring{boolDebutCombat()}{boolDebutCombat()}}
+{\footnotesize\ttfamily int bool\+Debut\+Combat (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{cartec,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp,  }\item[{\mbox{\hyperlink{structobj__s}{obj\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ennemi }\end{DoxyParamCaption})}
+
+
+
+fonction qui renvoie un booleen si les deux cases sont au même endroit 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em ennemi} & structure de l\textquotesingle{}ennemi \\
+\hline
+{\em pp} & structure du personnage jouer \\
+\hline
+{\em cartec} & structure de la carte ou le personnage se trouve \\
+\hline
+\end{DoxyParams}
+\Hypertarget{combat_8c_ad29d54adab0bade541c5b73bd9bfbb91}\label{combat_8c_ad29d54adab0bade541c5b73bd9bfbb91} 
+\index{combat.c@{combat.c}!boolMemeCase@{boolMemeCase}}
+\index{boolMemeCase@{boolMemeCase}!combat.c@{combat.c}}
+\doxysubsubsection{\texorpdfstring{boolMemeCase()}{boolMemeCase()}}
+{\footnotesize\ttfamily int bool\+Meme\+Case (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}}}]{c1,  }\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}}}]{c2 }\end{DoxyParamCaption})}
+
+
+
+fonction qui renvoie un booleen si les deux cases sont au même endroit 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em c1} & structure de la premiere case \\
+\hline
+{\em c2} & structure de la deuxieme case \\
+\hline
+\end{DoxyParams}
+\Hypertarget{combat_8c_acbf05a68ba26c8c9aa226a6fdbfd5457}\label{combat_8c_acbf05a68ba26c8c9aa226a6fdbfd5457} 
+\index{combat.c@{combat.c}!boolTousMort@{boolTousMort}}
+\index{boolTousMort@{boolTousMort}!combat.c@{combat.c}}
+\doxysubsubsection{\texorpdfstring{boolTousMort()}{boolTousMort()}}
+{\footnotesize\ttfamily int bool\+Tous\+Mort (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ennemi }\end{DoxyParamCaption})}
+
+
+
+fonction qui verifie si tout les membres de l\textquotesingle{}equipe de l\textquotesingle{}ennemi sont mort 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em ennemi} & un ennemi et son equipe \\
+\hline
+\end{DoxyParams}
 \Hypertarget{combat_8c_a02d1c5b8743c54a45036d74d517fe01b}\label{combat_8c_a02d1c5b8743c54a45036d74d517fe01b} 
 \index{combat.c@{combat.c}!combat@{combat}}
 \index{combat@{combat}!combat.c@{combat.c}}
@@ -305,27 +349,6 @@ fonction qui copie un combattant dans un autre
 {\em combattant} & structure combattant \\
 \hline
 {\em combattantcopie} & structure combattant copier \\
-\hline
-\end{DoxyParams}
-\Hypertarget{combat_8c_ab66e455ee98a4dfda8dcf23067525a6c}\label{combat_8c_ab66e455ee98a4dfda8dcf23067525a6c} 
-\index{combat.c@{combat.c}!debut\_combat@{debut\_combat}}
-\index{debut\_combat@{debut\_combat}!combat.c@{combat.c}}
-\doxysubsubsection{\texorpdfstring{debut\_combat()}{debut\_combat()}}
-{\footnotesize\ttfamily int debut\+\_\+combat (\begin{DoxyParamCaption}\item[{SDL\+\_\+\+Event}]{event,  }\item[{\mbox{\hyperlink{structennemi__s}{ennemi\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{ennemi,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pp,  }\item[{\mbox{\hyperlink{structcase__s}{case\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{c }\end{DoxyParamCaption})}
-
-
-
-fonction qui regarde si on a lancer un combat 
-
-
-\begin{DoxyParams}{Paramètres}
-{\em ennemi} & structure d\textquotesingle{}un pnj ennemi \\
-\hline
-{\em event} & evenement \\
-\hline
-{\em pp} & structure du personnage jouer \\
-\hline
-{\em c} & structure de la case \\
 \hline
 \end{DoxyParams}
 \Hypertarget{combat_8c_a14c2400b250f63a0567ea989e68f4254}\label{combat_8c_a14c2400b250f63a0567ea989e68f4254} 
@@ -432,6 +455,41 @@ fonction qui qui permet de recuperer un compagnon apres l\textquotesingle{}avoir
 {\em Leader} & variable de sortie sur un pointeur d\textquotesingle{}entier \\
 \hline
 {\em Boss} & ennemi affronté \\
+\hline
+\end{DoxyParams}
+\Hypertarget{combat_8c_a7272323e35c8bb1663ddb021ebd4fc80}\label{combat_8c_a7272323e35c8bb1663ddb021ebd4fc80} 
+\index{combat.c@{combat.c}!remplir\_combattant@{remplir\_combattant}}
+\index{remplir\_combattant@{remplir\_combattant}!combat.c@{combat.c}}
+\doxysubsubsection{\texorpdfstring{remplir\_combattant()}{remplir\_combattant()}}
+{\footnotesize\ttfamily void remplir\+\_\+combattant (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcombattant__s}{combattant\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{combattant,  }\item[{char \texorpdfstring{$\ast$}{*}}]{nom,  }\item[{int}]{pv,  }\item[{int}]{vitesse,  }\item[{int}]{camp,  }\item[{int}]{indice\+\_\+portrait,  }\item[{int}]{indice\+\_\+sprite,  }\item[{int}]{type,  }\item[{int}]{temps\+\_\+recharge\+\_\+max,  }\item[{int}]{puissance,  }\item[{int}]{forme }\end{DoxyParamCaption})}
+
+
+
+fonction qui initialise un combattant 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em combattant} & combattant a initialiser \\
+\hline
+{\em nom} & nom du combattant \\
+\hline
+{\em pv} & pv du combattant \\
+\hline
+{\em vitesse} & vitesse du combattant \\
+\hline
+{\em camp} & camp du combattant \\
+\hline
+{\em indice\+\_\+portrait} & indice dans le tableau de texture du portrait du combattant \\
+\hline
+{\em indice\+\_\+sprite} & indice dans le tableau de texture du sprite du combattant \\
+\hline
+{\em type} & type du combattant \\
+\hline
+{\em temps\+\_\+recharge\+\_\+max} & temps de recharge de la competence du combattant \\
+\hline
+{\em puissance} & puissance du combattant \\
+\hline
+{\em forme} & forme du combattant \\
 \hline
 \end{DoxyParams}
 \Hypertarget{combat_8c_a7a699ed594a782ddb94670b35d996375}\label{combat_8c_a7a699ed594a782ddb94670b35d996375} 

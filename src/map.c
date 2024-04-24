@@ -840,6 +840,12 @@ int creer_map_layout(map_t * map){
     return (sauvegarde_map_layout(map));
 }
 
+/**
+*
+*\fn int sauvegarde_map_brouillard(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui sauvegarde le brouillard de la map
+*/
 int sauvegarde_map_brouillard(map_t * map){
     FILE * file;
     int x,y;
@@ -895,6 +901,12 @@ int sauvegarde_map_layout(map_t * map){
     return 0;
 }
 
+/**
+*
+*\fn int load_brouillard(map_t *map)
+\*\param map Map de jeu
+*\brief Fonction qui charge le brouillard de la map
+*/
 int load_brouillard(map_t *map){
     FILE * file;
     int x,y;

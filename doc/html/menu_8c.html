@@ -154,16 +154,88 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>menu_gameOver</b> (int
 <tr class="memitem:a24cf63a3608aa158ae1bd76266022026"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8c.html#a24cf63a3608aa158ae1bd76266022026">menu_FinPartie</a> (int *we, int *he, SDL_Event event, SDL_Renderer *renderer, int *run, <a class="el" href="structpersonnage.html">p_mv</a> *<a class="el" href="structpersonnage.html">personnage</a>, <a class="el" href="structmap__s.html">map_t</a> *map, int *etat_boss)</td></tr>
 <tr class="memdesc:a24cf63a3608aa158ae1bd76266022026"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui affiche l'ecran de fin de partie lorsque le joueur a gagne  <br /></td></tr>
 <tr class="separator:a24cf63a3608aa158ae1bd76266022026"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1f49f3d4b9a046a6ca6df19e1821536"><td class="memItemLeft" align="right" valign="top"><a id="aa1f49f3d4b9a046a6ca6df19e1821536" name="aa1f49f3d4b9a046a6ca6df19e1821536"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>choix_perso</b> (int *we, int *he, SDL_Event event, SDL_Renderer *renderer, <a class="el" href="structmap__s.html">map_t</a> *map, int *leader, <a class="el" href="structpersonnage.html">p_mv</a> *pp)</td></tr>
+<tr class="memitem:aa1f49f3d4b9a046a6ca6df19e1821536"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8c.html#aa1f49f3d4b9a046a6ca6df19e1821536">choix_perso</a> (int *we, int *he, SDL_Event event, SDL_Renderer *renderer, <a class="el" href="structmap__s.html">map_t</a> *map, int *leader, <a class="el" href="structpersonnage.html">p_mv</a> *pp)</td></tr>
+<tr class="memdesc:aa1f49f3d4b9a046a6ca6df19e1821536"><td class="mdescLeft">&#160;</td><td class="mdescRight">fonction qui affiche et permet de choisir le personnage a jouer  <br /></td></tr>
 <tr class="separator:aa1f49f3d4b9a046a6ca6df19e1821536"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
 <div class="textblock"><p>programme pour afficher tous les menus </p>
 <dl class="section author"><dt>Auteur</dt><dd>Moreau Enzo Pasquier Lina </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>Janvier 2024 </dd></dl>
-<dl class="section version"><dt>Version</dt><dd></dd></dl>
+<dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 </div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="aa1f49f3d4b9a046a6ca6df19e1821536" name="aa1f49f3d4b9a046a6ca6df19e1821536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1f49f3d4b9a046a6ca6df19e1821536">&#9670;&#160;</a></span>choix_perso()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int choix_perso </td>
+          <td>(</td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>we</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>he</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Event&#160;</td>
+          <td class="paramname"><em>event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SDL_Renderer *&#160;</td>
+          <td class="paramname"><em>renderer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmap__s.html">map_t</a> *&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>leader</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structpersonnage.html">p_mv</a> *&#160;</td>
+          <td class="paramname"><em>pp</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>fonction qui affiche et permet de choisir le personnage a jouer </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">we</td><td>Largeur de l'ecran </td></tr>
+    <tr><td class="paramname">he</td><td>Longueur de l'ecran </td></tr>
+    <tr><td class="paramname">event</td><td>permet de savoir si il y a un evenement </td></tr>
+    <tr><td class="paramname">renderer</td><td>rendu de la fenetre </td></tr>
+    <tr><td class="paramname">map</td><td>structure de la map </td></tr>
+    <tr><td class="paramname">leader</td><td>variable qui permet de savoir qui est le personnage joue </td></tr>
+    <tr><td class="paramname">pp</td><td>structure du personnage jouer </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aa0dea1e510b75502550a28de7982a1b4" name="aa0dea1e510b75502550a28de7982a1b4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa0dea1e510b75502550a28de7982a1b4">&#9670;&#160;</a></span>inventaire()</h2>
 
