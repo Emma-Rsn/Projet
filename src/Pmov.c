@@ -29,13 +29,18 @@ void lower(char *input, char *output){
 
 /**
 *
-*\fn void pinput(p_mv * pmv,SDL_Event event)
+*\fn void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement)
 *\param event permet de savoir si il y a un evenement
 *\param pmv structure du personnage
-*\brief fonction qui detecte si unetouche est presser et modifie ses coordonées
+*\param carte structure de la carte
+*\param map structure de la map
+*\param renderer rendu de la fenetre
+*\param transi etat de la transition
+*\param gMusic pointeur sur la musique
+*\param toucheDeplacement entier de la touche de deplacement
+*\brief fonction qui permet de deplacer le personnage
 */
-
-//detection de touche presser et modification des coordonées
+//fonction qui permet de deplacer le personnage
 void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer * renderer,int * transi,Mix_Music* gMusic,int * toucheDeplacement){
     if(*transi || pmv->lock){
         while (SDL_PollEvent(&event) != 0);
@@ -250,7 +255,15 @@ void pinput(p_mv * pmv,SDL_Event event,carte_t ** carte,map_t *map,SDL_Renderer 
         }
     }
 }
-
+/**
+*
+*\fn int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event)
+*\param event permet de savoir si il y a un evenement
+*\param pmv structure du personnage
+*\param renderer rendu de la fenetre
+*\brief fonction qui affiche le personnage jouer
+*/
+//fonction qui affiche le personnage jouer
 int affp(p_mv * pmv,SDL_Renderer *renderer,SDL_Event event){
     SDL_Surface* perso=NULL;
     SDL_Texture * tperso=NULL;
@@ -624,7 +637,16 @@ void remplirp(p_mv * p,case_t * c,int leader){
     }
 }
      
-
+/**
+*
+*\fn void transition(SDL_Renderer * renderer,int * transi,int we,int he)
+*\param we Largeur de l'ecran
+*\param he Longueur de l'ecran
+*\param transi pointeur sur l'etat de la transition
+*\param renderer rendu de la fenetre
+*\brief fonction qui affiche la transition
+*/
+//fonction qui affiche la transition
 void transition(SDL_Renderer * renderer,int * transi,int we,int he){
     if(*transi){
         SDL_Surface* surface = SDL_CreateRGBSurface(0, we, he, 32,0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);

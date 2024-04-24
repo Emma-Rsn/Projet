@@ -40,7 +40,7 @@ int save_settings(void)
  *\fn int load_settings(int * lEcran,int * LEcran)
  *\param lEcran Largeur de l'ecran
  *\param LEcran Longueur de l'ecran
- *\brief fonction de sauvegarde des parametres
+ *\brief fonction de chargement des parametres
  *
  */
 
@@ -57,6 +57,18 @@ int load_settings(int *wEcran, int *hEcran)
     return 0;
 }
 
+/**
+*
+*\fn int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche,int leader)
+*\param xcarte position x sur la carte
+*\param ycarte position y sur la carte
+*\param pmv structure du personnage a jouer
+*\param map structure de la map
+*\param touche touche de deplacement
+*\param leader numero de personnage joue
+*\brief fonction qui sauvegarde les informations importantes
+*/
+//fonction qui sauvegarde les informations importantes
 int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche,int leader)
 {
     int i,y;
@@ -107,6 +119,22 @@ int save_pos(int xcarte, int ycarte, p_mv pmv, map_t map,int touche,int leader)
     return 0;
 }
 
+/**
+*
+*\fn int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv, p_mv *pmv, int **tabparam,int * touche,int * leader)
+*\param xcarte position x sur la carte
+*\param ycarte position y sur la carte
+*\param xpos position x du personnage
+*\param ypos position y du personnage
+*\param pmv structure du personnage a jouer
+*\param pv pv du personnage
+*\param map structure de la map
+*\param touche touche de deplacement
+*\param leader numero de personnage joue
+*\param tabparam tableau des éléments a charger
+*\brief fonction qui charge les informations importantes
+*/
+//fonction qui charge les informations importantes
 int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv, p_mv *pmv, int **tabparam,int * touche,int * leader)
 {
     int y;
@@ -141,6 +169,15 @@ int load_pos(int *xcarte, int *ycarte, int *xpos, int *ypos, map_t *map, int *pv
     return last;
 }
 
+
+/**
+*
+*\fn void save_ennemi(carte_t cartec,obj_t ennemi)
+*\param cartec structure de la carte du personnage
+*\param ennemi structure de l'ennemi
+*\brief fonction qui sauvegarde un ennemi mort
+*/
+//fonction qui sauvegarde un ennemi mort
 void save_ennemi(carte_t cartec,obj_t ennemi){
     if(ennemi.typeObj == 2 && (boolTousMort((ennemi_t *)ennemi.tabObj[0]))){
         FILE *fichier = NULL;
@@ -154,6 +191,13 @@ void save_ennemi(carte_t cartec,obj_t ennemi){
         fclose(fichier);
     }
 }
+/**
+*
+*\fn void load_ennemi(map_t * map)
+*\param map structure de la map
+*\brief fonction qui charge les ennemis
+*/
+//fonction qui charge les ennemis
 void load_ennemi(map_t * map){
     FILE *fichier = NULL;
     fichier = fopen("save/ennemi.txt", "r+");
@@ -172,7 +216,14 @@ void load_ennemi(map_t * map){
     fclose(fichier);
 }
 
-//param = 1 pour garder la progression et = 0 pour effacer la progression
+
+/**
+*
+*\fn void nouvelle_partie(int param)
+*\param param param = 1 pour garder la progression et = 0 pour effacer la progression
+*\brief fonction qui permet de relancer une partie 
+*/
+//fonction qui permet de relancer une partie (param = 1 pour garder la progression et = 0 pour effacer la progression)
 void nouvelle_partie(int param){
     FILE *fichier = fopen("save/save.txt", "w");
     if(param == 1){
@@ -183,18 +234,14 @@ void nouvelle_partie(int param){
     fclose(fichier);
 }
 
+/**
+*
+*\fn void effacer_sauvg()
+*\brief fonction qui permet d'effacer une sauvegarde
+*/
+//fonction qui permet d'effacer une sauvegarde
 void effacer_sauvg(){
     FILE *fichier = fopen("save/save.txt", "w");
     fprintf(fichier, "%d", 0);
     fclose(fichier);
 }
-
-
-
-    /*
-boss boss /2
-
-chargement layout objet cas particulier
-
-bug plusieurs loot sur la carte
-*/

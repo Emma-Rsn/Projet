@@ -9,6 +9,8 @@
 
 #include "../libs/commun.h"
 
+
+
 void pause_SDL(SDL_Event event,Mix_Music* gMusic){
     if(event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_9)){
         if( Mix_PlayingMusic() == 0 ){
@@ -29,6 +31,15 @@ void pause_SDL(SDL_Event event,Mix_Music* gMusic){
         }
     }
 }
+
+/**
+*\fn void newMusic(int nZone, Mix_Music * gMusic)
+*\param nZone numero de la zone d'où se trouve le personnage
+*\param gMusic pointeur sur la musique actuelle
+*\brief fonction qui permet de jouer la musique de la zone
+*/
+
+//fonction qui permet de jouer la musique de la zone
 void newMusic(int nZone, Mix_Music * gMusic){
     // Libérer la mémoire si une musique est déjà chargée
     if (gMusic != NULL) {

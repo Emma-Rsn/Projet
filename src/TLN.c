@@ -336,7 +336,7 @@ int main(){
         affp(Alex,renderer,event);
         affTabObj(renderer,map,cartec);
 
-        //if(ouilumiere || map.zoneChargee == 5)lumiere(renderer,cartec,Alex->c);
+        if(ouilumiere || map.zoneChargee == 5)lumiere(renderer,cartec,Alex->c);
 
         affHud(renderer,hEcran,wEcran,map,*Alex);
 

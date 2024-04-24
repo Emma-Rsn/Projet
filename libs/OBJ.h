@@ -69,7 +69,7 @@ struct artefact_s{
 };
 
 void debut_loot_carte(carte_t ** cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue);
-void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int * num_dialogue);
+void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int num_dialogue);
 obj_t * init_obj(case_t * c,int indText,int type,...);
 int newLeader(p_mv pp);
 int load_obj(carte_t *c, char *namefile);
@@ -84,6 +84,5 @@ void destruction_artefact(artefact_t * artefact);
 artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture);
 void Boss(obj_t * boss,p_mv * Leader);
 int BoolTypein(int type,p_mv * Leader);
-void debut_loot_encaps(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,void * num_dialogue);
 
 #endif

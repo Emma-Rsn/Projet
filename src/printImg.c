@@ -52,11 +52,7 @@ int NB_Fps(int *nfps,Uint32 * t0,Uint32 * t1){
 *
 */
 
-
-
 //fonction pour afficher le nombre de FPS 
-
-//optimiser le chargement du font
 int aff_Fps(int cmpfps,SDL_Renderer *renderer){
     //chargement de la police d'écriture
     TTF_Font* font = TTF_OpenFont("fonts/alagard.ttf", 20);
@@ -133,7 +129,7 @@ void  affHud(SDL_Renderer * renderer,int * he,int * we,map_t map,p_mv pmv){
     else if (*(pmv.equipe[0]->pv)>pmv.equipe[0]->pvMax){
         *(pmv.equipe[0]->pv)=pmv.equipe[0]->pvMax;
     }
-    int p = (144*(*pmv.equipe[0]->pv))/pmv.equipe[0]->pvMax;
+    int p = (144*((*pmv.equipe[0]->pv)*map.nvZone))/(pmv.equipe[0]->pvMax*map.nvZone);
 
     //Variable Night
     int xn = 1000;

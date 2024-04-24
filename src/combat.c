@@ -1076,6 +1076,14 @@ int attaque_allie(int *we,int *he,SDL_Event event,SDL_Renderer * renderer,ennemi
      return 0;
 }
 
+/**
+*
+*\fn int boolMemeCase(case_t c1, case_t c2)
+*\param c1 structure de la premiere case
+*\param c2 structure de la deuxieme case
+*\brief fonction qui renvoie un booleen si les deux cases sont au même endroit
+*/
+//fonction qui renvoie un booleen si les deux cases sont au même endroit
 int boolMemeCase(case_t c1, case_t c2){
     if(c1.x == c2.x && c1.y == c2.y){
         return 1;
@@ -1084,6 +1092,15 @@ int boolMemeCase(case_t c1, case_t c2){
     }
 }
 
+/**
+*
+*\fn int boolDebutCombat(carte_t * cartec,p_mv * pp,obj_t * ennemi)
+*\param ennemi structure de l'ennemi
+*\param pp structure du personnage jouer
+*\param cartec structure de la carte ou le personnage se trouve
+*\brief fonction qui renvoie un booleen si les deux cases sont au même endroit
+*/
+//fonction qui renvoie un booleen si les deux cases sont au même endroit
 int boolDebutCombat(carte_t * cartec,p_mv * pp,obj_t * ennemi){
     int i,j;
     int xp = pp->c->x,yp = pp->c->y;
@@ -1222,15 +1239,15 @@ void combat_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Renderer 
                     switch (map->zoneChargee)
                     {
                     case 4 :
-                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,5,2);
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,5,9);
                         cartec->nbObj++; 
                         break;
                     case 2 :
-                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,5,1);
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,5,10);
                         cartec->nbObj++; 
                         break;
                     case 3 :
-                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,5,3);
+                        cartec->tabObj[cartec->nbObj]=init_obj(cartec->tabObj[i]->cas,197,5,11);
                         cartec->nbObj++; 
                         break;
                     default:

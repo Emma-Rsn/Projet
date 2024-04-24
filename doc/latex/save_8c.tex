@@ -6,8 +6,7 @@ programme pour la sauvegarde
 
 
 {\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
-Graphe des dépendances par inclusion de save.\+c\+:
-\nopagebreak
+Graphe des dépendances par inclusion de save.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -20,25 +19,20 @@ Graphe des dépendances par inclusion de save.\+c\+:
 int \mbox{\hyperlink{save_8c_a35983513891778dde0734ee2e508953c}{save\+\_\+settings}} (void)
 \begin{DoxyCompactList}\small\item\em fonction de sauvegarde des parametres \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{save_8c_ab1a79f4e0da37eaac88524048fa19d17}{load\+\_\+settings}} (int \texorpdfstring{$\ast$}{*}w\+Ecran, int \texorpdfstring{$\ast$}{*}h\+Ecran)
-\begin{DoxyCompactList}\small\item\em fonction de sauvegarde des parametres \end{DoxyCompactList}\item 
-\Hypertarget{save_8c_a65c0a7032d30048d76acc3e56a6ad7ee}\label{save_8c_a65c0a7032d30048d76acc3e56a6ad7ee} 
-int {\bfseries save\+\_\+pos} (int xcarte, int ycarte, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} pmv, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map, int touche, int leader)
-\item 
-\Hypertarget{save_8c_a994abdf1db1ea34704b08165f18bb5f8}\label{save_8c_a994abdf1db1ea34704b08165f18bb5f8} 
-int {\bfseries load\+\_\+pos} (int \texorpdfstring{$\ast$}{*}xcarte, int \texorpdfstring{$\ast$}{*}ycarte, int \texorpdfstring{$\ast$}{*}xpos, int \texorpdfstring{$\ast$}{*}ypos, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}pv, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}tabparam, int \texorpdfstring{$\ast$}{*}touche, int \texorpdfstring{$\ast$}{*}leader)
-\item 
-\Hypertarget{save_8c_acacc0709518058282ee7f025246415ca}\label{save_8c_acacc0709518058282ee7f025246415ca} 
-void {\bfseries save\+\_\+ennemi} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} cartec, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} ennemi)
-\item 
-\Hypertarget{save_8c_a1bcb2eee6b5b77dee4a6c420f63440ae}\label{save_8c_a1bcb2eee6b5b77dee4a6c420f63440ae} 
-void {\bfseries load\+\_\+ennemi} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
-\item 
-\Hypertarget{save_8c_a94e10f726f700c02866555ba6fedf1a5}\label{save_8c_a94e10f726f700c02866555ba6fedf1a5} 
-void {\bfseries nouvelle\+\_\+partie} (int param)
-\item 
+\begin{DoxyCompactList}\small\item\em fonction de chargement des parametres \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{save_8c_a65c0a7032d30048d76acc3e56a6ad7ee}{save\+\_\+pos}} (int xcarte, int ycarte, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} pmv, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} map, int touche, int leader)
+\begin{DoxyCompactList}\small\item\em fonction qui sauvegarde les informations importantes \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{save_8c_a994abdf1db1ea34704b08165f18bb5f8}{load\+\_\+pos}} (int \texorpdfstring{$\ast$}{*}xcarte, int \texorpdfstring{$\ast$}{*}ycarte, int \texorpdfstring{$\ast$}{*}xpos, int \texorpdfstring{$\ast$}{*}ypos, \mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map, int \texorpdfstring{$\ast$}{*}pv, \mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}pmv, int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}tabparam, int \texorpdfstring{$\ast$}{*}touche, int \texorpdfstring{$\ast$}{*}leader)
+\begin{DoxyCompactList}\small\item\em fonction qui charge les informations importantes \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{save_8c_acacc0709518058282ee7f025246415ca}{save\+\_\+ennemi}} (\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}} cartec, \mbox{\hyperlink{structobj__s}{obj\+\_\+t}} ennemi)
+\begin{DoxyCompactList}\small\item\em fonction qui sauvegarde un ennemi mort \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{save_8c_a1bcb2eee6b5b77dee4a6c420f63440ae}{load\+\_\+ennemi}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em fonction qui charge les ennemis \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{save_8c_a94e10f726f700c02866555ba6fedf1a5}{nouvelle\+\_\+partie}} (int param)
+\begin{DoxyCompactList}\small\item\em fonction qui permet de relancer une partie \end{DoxyCompactList}\item 
 \Hypertarget{save_8c_ad0a1cbe543e72a4fc8863714a108007c}\label{save_8c_ad0a1cbe543e72a4fc8863714a108007c} 
 void {\bfseries effacer\+\_\+sauvg} ()
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em fonction qui permet d\textquotesingle{}effacer une sauvegarde \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Description détaillée}
@@ -56,6 +50,54 @@ Moreau Enzo
 
 
 \doxysubsection{Documentation des fonctions}
+\Hypertarget{save_8c_a1bcb2eee6b5b77dee4a6c420f63440ae}\label{save_8c_a1bcb2eee6b5b77dee4a6c420f63440ae} 
+\index{save.c@{save.c}!load\_ennemi@{load\_ennemi}}
+\index{load\_ennemi@{load\_ennemi}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{load\_ennemi()}{load\_ennemi()}}
+{\footnotesize\ttfamily void load\+\_\+ennemi (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+fonction qui charge les ennemis 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em map} & structure de la map \\
+\hline
+\end{DoxyParams}
+\Hypertarget{save_8c_a994abdf1db1ea34704b08165f18bb5f8}\label{save_8c_a994abdf1db1ea34704b08165f18bb5f8} 
+\index{save.c@{save.c}!load\_pos@{load\_pos}}
+\index{load\_pos@{load\_pos}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{load\_pos()}{load\_pos()}}
+{\footnotesize\ttfamily int load\+\_\+pos (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{xcarte,  }\item[{int \texorpdfstring{$\ast$}{*}}]{ycarte,  }\item[{int \texorpdfstring{$\ast$}{*}}]{xpos,  }\item[{int \texorpdfstring{$\ast$}{*}}]{ypos,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map,  }\item[{int \texorpdfstring{$\ast$}{*}}]{pv,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}} \texorpdfstring{$\ast$}{*}}]{pmv,  }\item[{int \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{tabparam,  }\item[{int \texorpdfstring{$\ast$}{*}}]{touche,  }\item[{int \texorpdfstring{$\ast$}{*}}]{leader }\end{DoxyParamCaption})}
+
+
+
+fonction qui charge les informations importantes 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em xcarte} & position x sur la carte \\
+\hline
+{\em ycarte} & position y sur la carte \\
+\hline
+{\em xpos} & position x du personnage \\
+\hline
+{\em ypos} & position y du personnage \\
+\hline
+{\em pmv} & structure du personnage a jouer \\
+\hline
+{\em pv} & pv du personnage \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em touche} & touche de deplacement \\
+\hline
+{\em leader} & numero de personnage joue \\
+\hline
+{\em tabparam} & tableau des éléments a charger \\
+\hline
+\end{DoxyParams}
 \Hypertarget{save_8c_ab1a79f4e0da37eaac88524048fa19d17}\label{save_8c_ab1a79f4e0da37eaac88524048fa19d17} 
 \index{save.c@{save.c}!load\_settings@{load\_settings}}
 \index{load\_settings@{load\_settings}!save.c@{save.c}}
@@ -64,13 +106,70 @@ Moreau Enzo
 
 
 
-fonction de sauvegarde des parametres 
+fonction de chargement des parametres 
 
 
 \begin{DoxyParams}{Paramètres}
 {\em l\+Ecran} & Largeur de l\textquotesingle{}ecran \\
 \hline
 {\em LEcran} & Longueur de l\textquotesingle{}ecran  \\
+\hline
+\end{DoxyParams}
+\Hypertarget{save_8c_a94e10f726f700c02866555ba6fedf1a5}\label{save_8c_a94e10f726f700c02866555ba6fedf1a5} 
+\index{save.c@{save.c}!nouvelle\_partie@{nouvelle\_partie}}
+\index{nouvelle\_partie@{nouvelle\_partie}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{nouvelle\_partie()}{nouvelle\_partie()}}
+{\footnotesize\ttfamily void nouvelle\+\_\+partie (\begin{DoxyParamCaption}\item[{int}]{param }\end{DoxyParamCaption})}
+
+
+
+fonction qui permet de relancer une partie 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em param} & param = 1 pour garder la progression et = 0 pour effacer la progression \\
+\hline
+\end{DoxyParams}
+\Hypertarget{save_8c_acacc0709518058282ee7f025246415ca}\label{save_8c_acacc0709518058282ee7f025246415ca} 
+\index{save.c@{save.c}!save\_ennemi@{save\_ennemi}}
+\index{save\_ennemi@{save\_ennemi}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{save\_ennemi()}{save\_ennemi()}}
+{\footnotesize\ttfamily void save\+\_\+ennemi (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcarte__s}{carte\+\_\+t}}}]{cartec,  }\item[{\mbox{\hyperlink{structobj__s}{obj\+\_\+t}}}]{ennemi }\end{DoxyParamCaption})}
+
+
+
+fonction qui sauvegarde un ennemi mort 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em cartec} & structure de la carte du personnage \\
+\hline
+{\em ennemi} & structure de l\textquotesingle{}ennemi \\
+\hline
+\end{DoxyParams}
+\Hypertarget{save_8c_a65c0a7032d30048d76acc3e56a6ad7ee}\label{save_8c_a65c0a7032d30048d76acc3e56a6ad7ee} 
+\index{save.c@{save.c}!save\_pos@{save\_pos}}
+\index{save\_pos@{save\_pos}!save.c@{save.c}}
+\doxysubsubsection{\texorpdfstring{save\_pos()}{save\_pos()}}
+{\footnotesize\ttfamily int save\+\_\+pos (\begin{DoxyParamCaption}\item[{int}]{xcarte,  }\item[{int}]{ycarte,  }\item[{\mbox{\hyperlink{structpersonnage}{p\+\_\+mv}}}]{pmv,  }\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}}}]{map,  }\item[{int}]{touche,  }\item[{int}]{leader }\end{DoxyParamCaption})}
+
+
+
+fonction qui sauvegarde les informations importantes 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em xcarte} & position x sur la carte \\
+\hline
+{\em ycarte} & position y sur la carte \\
+\hline
+{\em pmv} & structure du personnage a jouer \\
+\hline
+{\em map} & structure de la map \\
+\hline
+{\em touche} & touche de deplacement \\
+\hline
+{\em leader} & numero de personnage joue \\
 \hline
 \end{DoxyParams}
 \Hypertarget{save_8c_a35983513891778dde0734ee2e508953c}\label{save_8c_a35983513891778dde0734ee2e508953c} 

@@ -2802,18 +2802,18 @@ int menu_FinPartie(int * we, int * he, SDL_Event event, SDL_Renderer * renderer,
 
 
 /**
-*\fn int menu_option(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, int * run, int * etatoption,map_t * map,p_mv * pp)
+*\fn int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map_t * map,int * leader,p_mv * pp)
 *\param we Largeur de l'ecran
 *\param he Longueur de l'ecran
 *\param event permet de savoir si il y a un evenement
 *\param renderer rendu de la fenetre
-*\param etatoption etat du menu des options 
 *\param map structure de la map
+*\param leader variable qui permet de savoir qui est le personnage joue
 *\param pp structure du personnage jouer
-*\brief fonction qui affiche le menu dans le jeu
+*\brief fonction qui affiche et permet de choisir le personnage a jouer
 */
 
-//fonction qui affiche le menu dans le jeu
+//fonction qui affiche et permet de choisir le personnage a jouer
 int choix_perso(int * we, int * he, SDL_Event event, SDL_Renderer * renderer, map_t * map,int * leader,p_mv * pp) {
 
     SDL_Rect r_hautEcran = {0,0,( * we),56};

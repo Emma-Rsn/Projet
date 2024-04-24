@@ -9,6 +9,15 @@
 
 #include "../libs/commun.h"
 
+/**
+*\fn obj_t * init_obj(case_t * c,int indText,int type,...)
+*\param c structure de la case ou se trouve le personnage
+*\param indText indice de la texture de l'objet dans le tableau
+*\param type type de l'objet
+*\brief fonction qui permet de creer un objet 
+*/
+
+//fonction qui permet de creer un objet 
 obj_t * init_obj(case_t * c,int indText,int type,...){
     obj_t * newObj = malloc(sizeof(obj_t));
     newObj->cas = c;
@@ -66,11 +75,22 @@ obj_t * init_obj(case_t * c,int indText,int type,...){
     return newObj;
 }
 
+/**
+*\fn void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue)
+*\param cartec structure de la case ou se trouve le personnage
+*\param event pile d'evenement
+*\param pp structure du personnage
+*\param map structure de la map
+*\param etat_dialogue variable d'etat du dialogue
+*\brief fonction qui permet de faire les interaction entre le personnage et les objets
+*/
+
+//fonction qui permet de faire les interaction entre le personnage et les objets
 void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int * etat_dialogue){
     int i;
     for(i=0;i<(*cartec)->nbObj;i++){
         if((*cartec)->tabObj[i]->typeObj==5){
-            debut_loot_encaps(event,pp,(*cartec)->tabObj[i]->cas,map,(*cartec)->tabObj[i],etat_dialogue,(*cartec)->tabObj[i]->tabObj[0]);
+            debut_loot(event,pp,(*cartec)->tabObj[i]->cas,map,(*cartec)->tabObj[i],etat_dialogue,(int *)(*cartec)->tabObj[i]->tabObj[0]);
         }else if((*cartec)->tabObj[i]->typeObj==6){
             if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e && map->cle == 1){
                 (*cartec) = &map->tabMap[(*cartec)->xcarte][(*cartec)->ycarte+1];
@@ -80,6 +100,7 @@ void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int
             }
         }else if((*cartec)->tabObj[i]->typeObj==7){
             if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e && map->plongee == 1){
+                //printf("avant %d %d\n",cartec)
                 (*cartec) = &map->tabMap[(*cartec)->xcarte+1][(*cartec)->ycarte];
                 (*cartec)->etat_brouillard = 0;
                 pp->c = &((*cartec)->grille.tabGrille[14][1]);
@@ -105,13 +126,23 @@ void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int
     }
 }
 
-void debut_loot_encaps(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,void * num_dialogue){
-    debut_loot(event,pp,c,map,obj,etat_dialogue,num_dialogue);
-}
 
-void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int * num_dialogue){
+/**
+*\fn void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int * num_dialogue)
+*\param c structure d'une case
+*\param event pile d'evenement
+*\param pp structure du personnage
+*\param map structure de la map
+*\param etat_dialogue variable d'etat du dialogue
+*\param obj structure de l'objet
+*\param num_dialogue numero du dialogue a afficher
+*\brief fonction qui permet l'affichage du dialogue lors de la recuperation de l'objet
+*/
+
+//fonction qui permet l'affichage du dialogue lors de la recuperation de l'objet
+void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int num_dialogue){
     if(boolcol(c,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
-        switch(*num_dialogue){
+        switch(num_dialogue){
             case 0 : map->plongee = 1;
             break;
             case 1 : map->cle = 1;
@@ -123,7 +154,14 @@ void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int
     } 
 }
 
+/**
+*\fn int load_obj(carte_t *c, char *namefile)
+*\param c structure d'une case
+*\param namefile nom du fichier
+*\brief fonction qui charge les objets lu dans un fichier
+*/
 
+//fonction qui charge les objets lu dans un fichier
 int load_obj(carte_t *c, char *namefile){
     int x,y,indText,type;
     FILE * file;
@@ -201,10 +239,15 @@ int load_obj(carte_t *c, char *namefile){
 
 }
 
-void affObj(SDL_Renderer *renderer,obj_t * o,map_t map){
-    SDL_RenderCopy(renderer, map.tabTexture[o->indTexture], NULL, &(o->cas->Rectangle));
-}
+/**
+*\fn void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte)
+*\param renderer rendu de la fenetre
+*\param carte structure de la carte
+*\param map structure de la map
+*\brief fonction qui affiche les objets de la carte
+*/
 
+//fonction qui affiche les objets de la carte
 void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
     int i;
     int n = 0;
@@ -218,7 +261,7 @@ void affTabObj(SDL_Renderer *renderer,map_t map,carte_t * carte){
 
 /**
 *
-*\fn artefact_t * init_artefact(char* nom, int possession,char * descriptif,int indice,int prix,int indice_texture)
+*\fn ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait,int indice_sprite,int type,int temps_recharge_max,int puissance,int forme)
 *\param nom nom de l'ennemi
 *\param pv nombre de pv de l'ennemi
 *\param vitesse vitesse de l'ennemi
@@ -255,16 +298,14 @@ ennemi_t * init_ennemi(char* nom,int pv,int vitesse,int camp,int indice_portrait
     return en;
 }
 
-int newLeader(p_mv pp){
-    if(!pp.equipe[1])return pp.equipe[0]->type;
-    srand( time( NULL ) );
-    int i;
-    do{
-        i = rand()%3+1;
-    }while(!pp.equipe[i]);
-    return pp.equipe[i]->type;
-}
+/**
+*\fn void Boss(obj_t * boss,p_mv * Leader)
+*\param boss structure de l'objet qui sert comme boss
+*\param Leader structure du personnage que le joueur joue
+*\brief fonction qui choisis le boss a affronter pour ne pas que l'on affronte le joueur que l'on joue
+*/
 
+//fonction qui choisis le boss a affronter pour ne pas que l'on affronte le joueur que l'on joue
 void Boss(obj_t * boss,p_mv * Leader){
     if(boss->typeObj == 2){
         if(((ennemi_t *)boss->tabObj[0])->forme == 3){
@@ -323,7 +364,14 @@ void Boss(obj_t * boss,p_mv * Leader){
 }
 
 
+/**
+*\fn int BoolTypein(int type,p_mv * Leader)
+*\param type type
+*\param Leader structure du personnage que le joueur joue
+*\brief fonction qui permet de verifier si le type en parametre et le meme que celui du joueur
+*/
 
+//fonction qui permet de verifier si le type en parametre et le meme que celui du joueur
 int BoolTypein(int type,p_mv * Leader){
     if(type < 0 || type > 3)return -1;
     int nballie,i;
@@ -336,6 +384,14 @@ int BoolTypein(int type,p_mv * Leader){
     return 0;
 }
 
+/**
+*\fn void dest_obj(carte_t * c,int ind)
+*\param c structure de la carte 
+*\param ind indice de l'objet a detruire dans le tableau
+*\brief fonction qui detruit un objet sur la carte
+*/
+
+//fonction qui detruit un objet sur la carte
 void dest_obj(carte_t * c,int ind){
 
     if(c->nbObj > 0){
@@ -363,6 +419,13 @@ void dest_obj(carte_t * c,int ind){
     }
 }
 
+/**
+*\fn void dest_all_obj(map_t *m)
+*\param m structure de la map
+*\brief fonction qui detruit les objets sur la carte
+*/
+
+//fonction qui detruit les objets sur la carte
 void dest_all_obj(map_t *m){
     int i,j;
     for(i = 0;i<ROWS;i++){
@@ -374,7 +437,13 @@ void dest_all_obj(map_t *m){
     }
 }
 
+/**
+*\fn void dest_ennemi(ennemi_t * en)
+*\param en structure de l'ennemi
+*\brief fonction qui detruit un ennemi et ses combattants
+*/
 
+//fonction qui detruit un ennemi et ses combattants
 void dest_ennemi(ennemi_t * en){
     int i;
     int nb_ennemi=0;
@@ -395,7 +464,14 @@ void dest_ennemi(ennemi_t * en){
 
 
 
+/**
+*\fn int boolcol (case_t * obj_c,p_mv * pp)
+*\param obj_c structure de l'objet
+*\param pp structure du personnage jouer
+*\brief fonction qui regarde si le joueur a des collisions avec l'objet
+*/
 
+//fonction qui regarde si le joueur a des collisions avec l'objet
 int boolcol (case_t * obj_c,p_mv * pp){
     if(pp->c->x+1 == obj_c->x && pp->c->y == obj_c->y){ //verifie case droite
         return 1;

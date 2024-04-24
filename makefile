@@ -78,6 +78,16 @@ restart:
 	@rm -f -R $(BINDIR)
 	@rm -f -R $(OBJDIR)
 
+#Commande à exécuter pour la documentation
+DOXYGEN = doxygen
+DOC_DIR = doc
+doc:
+	@$(DOXYGEN) Doxyfile
+	@browse $(DOC_DIR)/html/index.html
+
+clean_doc:
+	@rm -rf $(DOC_DIR)/html
+
 
 
 

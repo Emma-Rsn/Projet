@@ -6,8 +6,7 @@ Programme s\textquotesingle{}occupant de la création, l\textquotesingle{}initia
 
 
 {\ttfamily \#include \"{}../libs/commun.\+h\"{}}\newline
-Graphe des dépendances par inclusion de map.\+c\+:
-\nopagebreak
+Graphe des dépendances par inclusion de map.\+c\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -37,19 +36,16 @@ int \mbox{\hyperlink{map_8c_abb40b6cbc30b6570dccbe61399794b37}{sauvegarde\+\_\+m
 \begin{DoxyCompactList}\small\item\em Fonction qui sauvegarde le numéro de zone de chaque carte de la map dans un fichier. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{map_8c_a8184bfc0eefea91f2eaecabeccbcaafa}{creer\+\_\+map\+\_\+layout}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \begin{DoxyCompactList}\small\item\em Fonction qui initialise les layouts carte par carte procéduralement. \end{DoxyCompactList}\item 
-\Hypertarget{map_8c_a53675df43af665584095d12cced4ee83}\label{map_8c_a53675df43af665584095d12cced4ee83} 
-int {\bfseries sauvegarde\+\_\+map\+\_\+brouillard} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
-\item 
+int \mbox{\hyperlink{map_8c_a53675df43af665584095d12cced4ee83}{sauvegarde\+\_\+map\+\_\+brouillard}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui sauvegarde le brouillard de la map. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{map_8c_acbca9c046e5c09910b503fa40435ad71}{sauvegarde\+\_\+map\+\_\+layout}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \begin{DoxyCompactList}\small\item\em Fonction qui sauvegarde le numéro de layout de chaque carte de la map dans un fichier. \end{DoxyCompactList}\item 
-\Hypertarget{map_8c_acbff3981afe39adc26ac20b4a3c396fa}\label{map_8c_acbff3981afe39adc26ac20b4a3c396fa} 
-int {\bfseries load\+\_\+brouillard} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
-\item 
+int \mbox{\hyperlink{map_8c_acbff3981afe39adc26ac20b4a3c396fa}{load\+\_\+brouillard}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui charge le brouillard de la map. \end{DoxyCompactList}\item 
 int \mbox{\hyperlink{map_8c_ab5362b98d7760ec3e3ee588d482dc705}{remplir\+\_\+map}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \begin{DoxyCompactList}\small\item\em Fonction qui soit charge à partir d\textquotesingle{}un fichier, s\textquotesingle{}il existe, les numéros de zone dans chaque carte de la map soit appelle la fonction \doxylink{map_8c_a3b830088159139c640bdfcab6ec2f78c}{creer\+\_\+map()} \end{DoxyCompactList}\item 
-\Hypertarget{map_8c_ac64f340a5823a1a65b6e1950d05ccaf5}\label{map_8c_ac64f340a5823a1a65b6e1950d05ccaf5} 
-int {\bfseries load\+\_\+layout\+\_\+texture} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
-\item 
+int \mbox{\hyperlink{map_8c_ac64f340a5823a1a65b6e1950d05ccaf5}{load\+\_\+layout\+\_\+texture}} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
+\begin{DoxyCompactList}\small\item\em Fonction qui charge les données d\textquotesingle{}un fichier pour les layout de texture. \end{DoxyCompactList}\item 
 \Hypertarget{map_8c_ab3b3572cf3ebcc870b3867b0124fe321}\label{map_8c_ab3b3572cf3ebcc870b3867b0124fe321} 
 int {\bfseries load\+\_\+layout\+\_\+obj} (\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}map)
 \item 
@@ -285,6 +281,21 @@ Fonction qui détruit le tableau de chemin des textures.
 {\em map} & Map du jeu \\
 \hline
 \end{DoxyParams}
+\Hypertarget{map_8c_acbff3981afe39adc26ac20b4a3c396fa}\label{map_8c_acbff3981afe39adc26ac20b4a3c396fa} 
+\index{map.c@{map.c}!load\_brouillard@{load\_brouillard}}
+\index{load\_brouillard@{load\_brouillard}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{load\_brouillard()}{load\_brouillard()}}
+{\footnotesize\ttfamily int load\+\_\+brouillard (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui charge le brouillard de la map. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
 \Hypertarget{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d}\label{map_8c_aae59b6b3023d678aebf23ab08bdf8c3d} 
 \index{map.c@{map.c}!load\_layout@{load\_layout}}
 \index{load\_layout@{load\_layout}!map.c@{map.c}}
@@ -300,6 +311,23 @@ Fonction qui charge un layout à partir d\textquotesingle{}un fichier dans une c
 {\em c} & Carte dans laquelle on a chargé le layout \texorpdfstring{$\ast$}{*}\\
 \hline
 {\em namefile} & nom du fichier à charger \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_ac64f340a5823a1a65b6e1950d05ccaf5}\label{map_8c_ac64f340a5823a1a65b6e1950d05ccaf5} 
+\index{map.c@{map.c}!load\_layout\_texture@{load\_layout\_texture}}
+\index{load\_layout\_texture@{load\_layout\_texture}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{load\_layout\_texture()}{load\_layout\_texture()}}
+{\footnotesize\ttfamily int load\+\_\+layout\+\_\+texture (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui charge les données d\textquotesingle{}un fichier pour les layout de texture. 
+
+Fonction qui charge les données d\textquotesingle{}un fichier pour les layout d\textquotesingle{}objets.
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
 \hline
 \end{DoxyParams}
 \Hypertarget{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94}\label{map_8c_a78c5ac700803f3cc4fe6cc0352e1cb94} 
@@ -379,6 +407,21 @@ Fonction qui soit charge à partir d\textquotesingle{}un fichier, s\textquotesin
 
 
 Fonction qui sauvegarde le numéro de zone de chaque carte de la map dans un fichier. 
+
+\texorpdfstring{$\ast$}{*}
+\begin{DoxyParams}{Paramètres}
+{\em map} & Map de jeu \\
+\hline
+\end{DoxyParams}
+\Hypertarget{map_8c_a53675df43af665584095d12cced4ee83}\label{map_8c_a53675df43af665584095d12cced4ee83} 
+\index{map.c@{map.c}!sauvegarde\_map\_brouillard@{sauvegarde\_map\_brouillard}}
+\index{sauvegarde\_map\_brouillard@{sauvegarde\_map\_brouillard}!map.c@{map.c}}
+\doxysubsubsection{\texorpdfstring{sauvegarde\_map\_brouillard()}{sauvegarde\_map\_brouillard()}}
+{\footnotesize\ttfamily int sauvegarde\+\_\+map\+\_\+brouillard (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structmap__s}{map\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{map }\end{DoxyParamCaption})}
+
+
+
+Fonction qui sauvegarde le brouillard de la map. 
 
 \texorpdfstring{$\ast$}{*}
 \begin{DoxyParams}{Paramètres}
