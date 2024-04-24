@@ -965,6 +965,12 @@ int remplir_map(map_t *map){
     }
 }
 
+/**
+*
+*\fn int load_layout_texture(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui charge les données d'un fichier pour les layout de texture
+*/
 int load_layout_texture(map_t * map) {
     FILE *file;
     file = fopen("save/maplayout.txt", "r");
@@ -998,6 +1004,12 @@ int load_layout_texture(map_t * map) {
     return 1;
 }
 
+/**
+*
+*\fn int load_layout_texture(map_t * map)
+\*\param map Map de jeu
+*\brief Fonction qui charge les données d'un fichier pour les layout d'objets
+*/
 int load_layout_obj(map_t * map) {
     int i = 0, j = 0,nr;
     char num[5];
@@ -1026,54 +1038,7 @@ int load_layout_obj(map_t * map) {
 \*\param c Carte dans laquelle on a chargé le layout
 \*\param namefile nom du fichier à charger
 *\brief Fonction qui charge un layout à partir d'un fichier dans une carte
-*//*
-int load_layout(carte_t *c, char *namefile) {
-    FILE *file;
-    file = fopen(namefile, "r");
-    char input;
-    int i = 0, j = 0;
-    int len = strlen(namefile);
-    char digit[2];
-
-    if(namefile[len-6]=='_'){
-        c->nrlayout = atoi(&namefile[len-5]);
-    }
-    else{
-        digit[0]=namefile[len-6];
-        digit[1]=namefile[len-5];
-        c->nrlayout = atoi(digit);
-    }
-
-    if (file) {
-        while ((fscanf(file, "%c", &input)) != EOF) { // Utilise le résultat de fscanf pour contrôler la boucle
-            if (input != '\n') {
-                if (i < LONG && j < LARG) { 
-                    c->grille.tabGrille[i][j].ntexture = input - '0';
-                    i++;
-                }
-            } else {
-                i = 0;
-                j++;
-                if (j >= LARG) break; // Sort de la boucle si on dépasse la limite de lignes
-            }
-        }
-    } else {
-        printf("Fichier inexistant\n");
-        return 1;
-    }
-    fclose(file);
-    
-    return 0;
-}*/
-
-/**
-*
-*\fn int load_layout(carte_t *c, char *namefile)
-\*\param c Carte dans laquelle on a chargé le layout
-\*\param namefile nom du fichier à charger
-*\brief Fonction qui charge un layout à partir d'un fichier dans une carte
 */
-//IMPORTANT !!! NE PAS SUPPRIMER !!!
 
 int load_layout(carte_t *c, char *namefile) {
     FILE *file;

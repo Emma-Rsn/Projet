@@ -115,6 +115,7 @@ int main(){
     //debut sauvegarde
     int q,s,ii,last,jj;
     int * pv = malloc(sizeof(int));
+    *pv=100;
     int * leader = malloc(sizeof(int));
     * leader = 0;
     int * tabparam[NB_PARAM];
@@ -154,6 +155,20 @@ int main(){
     map.Nightmare=*Alex->Nightmare;
     carte_t * cartec =&map.tabMap[q][s];
     remplirp(Alex,&(cartec->grille.tabGrille[xp][yp]),*leader);
+    switch(Alex->equipe[0]->type){
+        case 0:
+            *Alex->equipe[0]->pv =last!=1?190:*pv;
+            break;
+        case 1:
+            *Alex->equipe[0]->pv=last!=1?180:*pv;
+            break;
+        case 2:
+            *Alex->equipe[0]->pv=last!=1?230:*pv;
+            break;
+        case 3:
+            *Alex->equipe[0]->pv=last!=1?135:*pv;
+            break;
+    }
     for(ii = 0,jj = 1;ii<((*tabparam[26]-1)*2) && ii < 8;ii=ii+2,jj++){
         switch(*tabparam[27+ii]){
             case 0 :
@@ -329,9 +344,6 @@ int main(){
         if(ouifps)aff_Fps(cmpfps,renderer);
 
         transition(renderer,transi,*wEcran,*hEcran);
-
-        //afficher dialogue
-        //pnj_dialogue (event,pAlex2,renderer,hEcran,wEcran);
 
         //afficher map
         afficher_map(event,map,renderer,wEcran,hEcran,etat_map,cartec);
