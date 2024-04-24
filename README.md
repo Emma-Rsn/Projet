@@ -22,27 +22,32 @@ La carte étant générée procéduralement (c-à-d de manière plus ou moins al
 **Commandes MAKEFILE :**
 
 Compile le programme :
+
     make all
 
 Nettoie tous les nouveautés créées avec la commande _all_ :
+
     make clean
 
 Pareil que la commande _clean_ mais laisse le fichier save intact :
+
     make restart 
 
 Compile le fichier de test :
+
     make test
 
-Nettoie l'éxécutable et le .o dans le dossier test :    
+Nettoie l'éxécutable et le .o dans le dossier test :
+
     make testclean
 
 Produit la documentation doxygen et l'ouvre :
+
     make doc
 
 Nettoie le dossier doc/html :
+
     make docclean
-
-
 
 
 Projet réalisé par MOREAU Enzo / PASQUIER Lina / RASSON Emma
