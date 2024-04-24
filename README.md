@@ -21,26 +21,27 @@ La carte étant générée procéduralement (c-à-d de manière plus ou moins al
 
 **Commandes MAKEFILE :**
 
-    all
-compile le programme
+Compile le programme :
+    make all
 
-    clean
-nettoie tous les nouveautés créées avec la commande _all_
+Nettoie tous les nouveautés créées avec la commande _all_ :
+    make clean
 
-    restart 
-pareil que la commande _clean_ mais laisse le fichier save intact
+Pareil que la commande _clean_ mais laisse le fichier save intact :
+    make restart 
 
-    test
-compile le fichier de test
+Compile le fichier de test :
+    make test
 
-    testclean
-nettoie l'éxécutable et le .o dans le dossier test
+Nettoie l'éxécutable et le .o dans le dossier test :    
+    make testclean
 
-    doc
-produit la documentation doxygen et l'ouvre
+Produit la documentation doxygen et l'ouvre :
+    make doc
 
-    docclean
-nettoie le dossier doc/html
+Nettoie le dossier doc/html :
+    make docclean
+
 
 
 
