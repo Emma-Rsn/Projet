@@ -90,7 +90,7 @@ void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int
     int i;
     for(i=0;i<(*cartec)->nbObj;i++){
         if((*cartec)->tabObj[i]->typeObj==5){
-            debut_loot_encaps(event,pp,(*cartec)->tabObj[i]->cas,map,(*cartec)->tabObj[i],etat_dialogue,(*cartec)->tabObj[i]->tabObj[0]);
+            debut_loot(event,pp,(*cartec)->tabObj[i]->cas,map,(*cartec)->tabObj[i],etat_dialogue,(int *)(*cartec)->tabObj[i]->tabObj[0]);
         }else if((*cartec)->tabObj[i]->typeObj==6){
             if(boolcol((*cartec)->tabObj[i]->cas,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e && map->cle == 1){
                 (*cartec) = &map->tabMap[(*cartec)->xcarte][(*cartec)->ycarte+1];
@@ -127,23 +127,6 @@ void debut_loot_carte(carte_t **cartec,SDL_Event event,p_mv * pp,map_t * map,int
 
 
 /**
-*\fn void debut_loot_encaps(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,void * num_dialogue)
-*\param c structure d'une case
-*\param event pile d'evenement
-*\param pp structure du personnage
-*\param map structure de la map
-*\param etat_dialogue variable d'etat du dialogue
-*\param obj structure de l'objet
-*\param num_dialogue numero du dialogue a afficher
-*\brief fonction qui encapsule "debut_loot"
-*/
-
-//fonction qui encapsule "debut_loot"
-void debut_loot_encaps(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,void * num_dialogue){
-    debut_loot(event,pp,c,map,obj,etat_dialogue,num_dialogue);
-}
-
-/**
 *\fn void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int * num_dialogue)
 *\param c structure d'une case
 *\param event pile d'evenement
@@ -156,9 +139,9 @@ void debut_loot_encaps(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * 
 */
 
 //fonction qui permet l'affichage du dialogue lors de la recuperation de l'objet
-void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int * num_dialogue){
+void debut_loot(SDL_Event event,p_mv * pp,case_t * c,map_t * map,obj_t * obj,int * etat_dialogue,int num_dialogue){
     if(boolcol(c,pp)  && event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
-        switch(*num_dialogue){
+        switch(num_dialogue){
             case 0 : map->plongee = 1;
             break;
             case 1 : map->cle = 1;

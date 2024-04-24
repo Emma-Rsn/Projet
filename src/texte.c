@@ -128,29 +128,10 @@ void dialogue_carte(carte_t * cartec,int *we,int *he,SDL_Event event,SDL_Rendere
     for(i=0;i<cartec->nbObj;i++){
         if(cartec->tabObj[i]->typeObj==3|| cartec->tabObj[i]->typeObj==4 || cartec->tabObj[i]->typeObj==5){
             int dialentree = *etat_dialogue;
-            pnj_dialogue_encaps(event,renderer,he,we,map,etat_dialogue,cartec->tabObj[i]->tabObj[0],pp);
+            pnj_dialogue(event,renderer,he,we,map,etat_dialogue,cartec->tabObj[i]->tabObj[0],pp);
             if(cartec->tabObj[i]->typeObj==5 && dialentree == 1 && *etat_dialogue == 0)dest_obj(cartec,i);
         }
     }
-}
-
-
-
-/**
-*\fn void pnj_dialogue_encaps (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,void * num_dialogue,p_mv * pp)
-*\param event pile d'evenement
-*\param rendu rendu de la fenetre
-*\param we Largeur de l'ecran
-*\param he Longueur de l'ecran
-*\param map structure de la map
-*\param etat_dialogue pointeur pour savoir si le joueur est en dialogue ou non
-*\param num_dialogue numero du dialogue a afficher
-*\param pp structure du personnage joue
-*\brief fonction encapsuler de pnj_dialogue
-*/
-//fonction qui choisis le bon texte a afficher
-void pnj_dialogue_encaps(SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,void * num_dialogue,p_mv * pp){
-    pnj_dialogue(event,renderer,he,we,map,etat_dialogue,num_dialogue,pp);
 }
 
 
@@ -168,7 +149,7 @@ void pnj_dialogue_encaps(SDL_Event event,SDL_Renderer * renderer,int * he,int * 
 *\brief fonction qui choisis le bon texte a afficher
 */
 //fonction qui choisis le bon texte a afficher
-void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int * num_dialogue,p_mv * pp){
+void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map_t * map,int *etat_dialogue,int num_dialogue,p_mv * pp){
 
     if(*etat_dialogue == 1){
         char * texte1="";
@@ -186,61 +167,61 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
         SDL_Rect tecran = {0,0,*we,*he};
         int etat=1;
         while(etat){
-            switch(*num_dialogue){
+            switch(num_dialogue){
                         case 1: 
                             texte1="Il me faut la clef du manoir pour rentrer dedans.";
                             portrait=pp->equipe[0]->indice_portrait;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 2: 
                             texte1="Il me faudrait une combinaison de plongee pour aller sous l'eau.";
                             portrait=pp->equipe[0]->indice_portrait;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 3: 
                             texte1="Une puissante force me repousse.";
                             portrait=pp->equipe[0]->indice_portrait;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 4: 
                             texte1="Merci de m'avoir sauvee.";
                             portrait=0;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 5: 
                             texte1="Merci de m'avoir sauve.";
                             portrait=0;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 6: 
                             texte1="Merci de m'avoir sauvee.";
                             portrait=0;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 7: 
                             texte1="Merci de m'avoir sauve.";
                             portrait=0;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 8: 
                             texte1="Oh non tu m'as tue !";
                             portrait=0;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 9: 
                             texte1="J'ai recupere une tenue de plongee !";
                             portrait=pp->equipe[0]->indice_portrait;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 10: 
                             texte1="J'ai recupere une clef !";
                             portrait=pp->equipe[0]->indice_portrait;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         case 11: 
                             texte1="J'ai recupere un talisman !";
                             portrait=pp->equipe[0]->indice_portrait;
-                            *num_dialogue=-1;
+                            num_dialogue=-1;
                             break;
                         default:
                             
@@ -250,7 +231,7 @@ void pnj_dialogue (SDL_Event event,SDL_Renderer * renderer,int * he,int * we,map
             while (SDL_PollEvent(&event) != 0) {
             	//si une touche est presser
                 if(event.type == SDL_KEYDOWN && event.key.keysym.sym==SDLK_e){
-                     switch(*num_dialogue){
+                     switch(num_dialogue){
                         case -1: 
                             etat=0;
                             *etat_dialogue = 0;
